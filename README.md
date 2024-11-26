@@ -11,7 +11,7 @@ _Footer_
 
 ## dependencies
 
-1. Python
+1. Python (v2.7.18)
 
 ```
 pip install -r requirements.txt
@@ -30,6 +30,10 @@ npx tailwindcss -i ./app/static/css/input.css -o ./app/static/css/tailwind.css -
 
 2. Events
    The `app/data/events.py` file contains a list of events organized by name, description, and date. Here's the structure:
+
+## Precautions
+
+- **Avoid f-strings:** Use .format() or string concatenation for string interpolation (f-strings are Python 3.6+).
 
 ## build.sh
 

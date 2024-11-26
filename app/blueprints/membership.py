@@ -14,7 +14,7 @@ CACHE_EXPIRY = 30000
 
 def fetch_membership_data():
     """Fetch membership data from API and update cache."""
-    headers = {"Authorization": f"Bearer {BEARER_TOKEN}"}
+    headers = {"Authorization": "Bearer " + BEARER_TOKEN}
     try:
         response = requests.get(API_URL, headers=headers)
         response.raise_for_status()
@@ -24,7 +24,7 @@ def fetch_membership_data():
         cache["timestamp"] = time.time()
         return members
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching data: {e}")
+        print("Error fetching data: {}".format(e))
         # Return cached data if available, otherwise return an empty list
         return cache["data"] if cache["data"] else []
 
@@ -44,6 +44,6 @@ def membership_status():
         members = cache["data"]
 
     # Sort members by full name
-    members = sorted(members, key=lambda m: f"{m['First Name']} {m['Last Name']}")
+    members = sorted(members, key=lambda m: "{} {}".format(m["First Name"], m["Last Name"]))
 
     return render_template("membership_status.html", members=members)

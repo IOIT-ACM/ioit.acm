@@ -13,7 +13,7 @@ def team():
 
     # Add URLs for static image paths
     for member in selected_team_data:
-        member["image_url"] = url_for("static", filename=f"img/team/{member['image']}")
+        member["image_url"] = url_for("static", filename="img/team/" + member["image"])
 
     return render_template(
         "team.html",
@@ -30,26 +30,44 @@ def fetch_team():
 
     # Add URLs for static image paths
     for member in selected_team_data:
-        member["image_url"] = url_for("static", filename=f"img/team/{member['image']}")
+        member["image_url"] = url_for("static", filename="img/team/" + member["image"])
 
     # Render team members in grid layout with consistent styles
     rendered_cards = ""
     for member in selected_team_data:
-        rendered_cards += f"""
+        rendered_cards += """
         <div class="flex flex-col md:mx-auto md:w-[400px] w-auto bg-white text-blue-600 rounded-lg overflow-hidden shadow-lg">
             <!-- Image Section -->
-            <img src="{member['image_url']}" alt="{member['name']}" class="w-full md:h-64 h-40 object-cover">
+            <img src="{image_url}" alt="{name}" class="w-full md:h-64 h-40 object-cover">
             <!-- Text Section -->
             <div class="p-3 md:p-4 w-full text-left">
-                <h3 class="text-sm md:text-2xl font-semibold">{member['name']}</h3>
-                <p class="text-xs md:text-lg text-gray-400">{member['title']}</p>
+                <h3 class="text-sm md:text-2xl font-semibold">{name}</h3>
+                <p class="text-xs md:text-lg text-gray-400">{title}</p>
                 <div class="flex gap-2 mt-2">
-                    {f'<a href="{member["github"]}" target="_blank" class="text-gray-500 hover:text-gray-300 transition duration-200"><i class="fab fa-github text-sm md:text-base"></i></a>' if member.get("github") else ''}
-                    {f'<a href="{member["linkedin"]}" target="_blank" class="text-blue-500 hover:text-blue-300 transition duration-200"><i class="fab fa-linkedin text-sm md:text-base"></i></a>' if member.get("linkedin") else ''}
+                    {github_link}
+                    {linkedin_link}
                 </div>
             </div>
         </div>
-        """
+        """.format(
+            image_url=member["image_url"],
+            name=member["name"],
+            title=member["title"],
+            github_link=(
+                '<a href="{url}" target="_blank" class="text-gray-500 hover:text-gray-300 transition duration-200"><i class="fab fa-github text-sm md:text-base"></i></a>'.format(
+                    url=member["github"]
+                )
+                if member.get("github")
+                else ""
+            ),
+            linkedin_link=(
+                '<a href="{url}" target="_blank" class="text-blue-500 hover:text-blue-300 transition duration-200"><i class="fab fa-linkedin text-sm md:text-base"></i></a>'.format(
+                    url=member["linkedin"]
+                )
+                if member.get("linkedin")
+                else ""
+            ),
+        )
 
     # Return the rendered HTML as a response
     return rendered_cards
