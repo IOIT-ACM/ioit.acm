@@ -1,0 +1,97 @@
+body::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Event card styles */
+.event-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Title section styles */
+#upcoming-events-section,
+#past-events-section {
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+a {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Spinner styles */
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: #3182ce;
+  padding: 30px;
+}
+
+/* Grid adjustments for responsive design */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-content-slow {
+  display: inline-block;
+  animation: marquee 490s linear infinite;
+}
+
+/* Marquee effect for images on footer */
+.image-marquee-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: #f0f0f0;
+  margin: 0px;
+}
+
+.image-marquee-content {
+  display: flex;
+  animation: marquee 30s linear infinite;
+}
+
+.image-marquee-content img {
+  margin: 0px;
+}

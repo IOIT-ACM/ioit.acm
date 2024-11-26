@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}IOIT ACM{% endblock %}</title>
+
+    <!-- TailwindCSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/tailwind.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+
+    <!-- Favicon Configuration -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="{{ url_for('static', filename='favicon-96x96.png') }}"
+      sizes="96x96"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="{{ url_for('static', filename='favicon.svg') }}"
+    />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{ url_for('static', filename='apple-touch-icon.png') }}"
+    />
+    <meta name="apple-mobile-web-app-title" content="IOIT ACM" />
+    <link
+      rel="manifest"
+      href="{{ url_for('static', filename='site.webmanifest') }}"
+    />
+
+    <meta
+      name="description"
+      content="IOIT ACM Student Chapter - Innovating technology education and research."
+    />
+    <meta
+      name="keywords"
+      content="ACM, technology, student chapter, research, computing"
+    />
+
+    {% block head %}
+    <!-- Additional head content can be injected here -->
+    {% endblock %}
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white shadow-lg">
+      <div class="flex items-center justify-between md:px-6 md:py-4 px-2 py-2">
+        <div class="flex items-center">
+          <img
+            src="{{ url_for('static', filename='img/assets/acm.png') }}"
+            alt="IOIT ACM Logo"
+            class="w-10 h-10 mr-3"
+          />
+          <a href="/" class="text-2xl font-bold text-blue-600">IOIT ACM</a>
+        </div>
+        <button
+          class="block sm:hidden text-blue-600 focus:outline-none"
+          onclick="toggleNav()"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        </button>
+        <ul class="hidden sm:flex space-x-8 font-medium">
+          <li>
+            <a
+              href="/"
+              class="text-gray-700 hover:text-blue-600 transition relative {{ 'text-blue-600 underline' if request.path == '/' else '' }}"
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              href="/team"
+              class="text-gray-700 hover:text-blue-600 transition relative {{ 'text-blue-600 underline' if request.path == '/team' else '' }}"
+            >
+              Team
+            </a>
+          </li>
+          <li>
+            <a
+              href="/membership"
+              class="text-gray-700 hover:text-blue-600 transition relative {{ 'text-blue-600 underline' if request.path == '/membership' else '' }}"
+            >
+              Membership
+            </a>
+          </li>
+          <li>
+            <a
+              href="/events"
+              class="text-gray-700 hover:text-blue-600 transition relative {{ 'text-blue-600 underline' if request.path == '/events' else '' }}"
+            >
+              Events
+            </a>
+          </li>
+          <li>
+            <a
+              href="/about"
+              class="text-gray-700 hover:text-blue-600 transition relative {{ 'text-blue-600 underline' if request.path == '/about' else '' }}"
+            >
+              About
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- Mobile Menu -->
+      <div
+        id="mobile-nav"
+        class="hidden sm:hidden absolute top-20 left-0 w-full bg-white shadow-lg rounded-lg overflow-hidden transform transition-transform duration-300"
+      >
+        <a
+          href="/"
+          class="block px-6 py-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition font-medium border-b border-gray-200
+      {{ 'underline text-blue-600' if request.path == '/' else '' }}"
+        >
+          Home
+        </a>
+        <a
+          href="/team"
+          class="block px-6 py-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition font-medium border-b border-gray-200
+      {{ 'underline text-blue-600' if request.path == '/team' else '' }}"
+        >
+          Team
+        </a>
+        <a
+          href="/membership"
+          class="block px-6 py-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition font-medium border-b border-gray-200
+      {{ 'underline text-blue-600' if request.path == '/membership' else '' }}"
+        >
+          Membership
+        </a>
+        <a
+          href="/events"
+          class="block px-6 py-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition font-medium border-b border-gray-200
+      {{ 'underline text-blue-600' if request.path == '/events' else '' }}"
+        >
+          Events
+        </a>
+        <a
+          href="/about"
+          class="block px-6 py-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition font-medium border-b border-gray-200
+      {{ 'underline text-blue-600' if request.path == '/about' else '' }}"
+        >
+          About
+        </a>
+      </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="m-0 min-h-screen">
+      {% block content %}
+      <!-- Default content will be replaced here -->
+      {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300">
+      <!-- Main Content -->
+      <div
+        class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8 py-12"
+      >
+        <!-- IOIT ACM Section -->
+        <div class="md:col-span-2">
+          <img
+            src="{{ url_for('static', filename='img/assets/acm.png') }}"
+            alt="IOIT ACM Logo"
+            class="h-16 mb-4"
+          />
+          <p class="text-sm leading-relaxed">
+            IOIT ACM Student Chapter is a part of ACM, the world’s largest
+            educational and scientific computing society. Dedicated to fostering
+            a community of innovation, collaboration, and excellence in
+            technology.
+          </p>
+        </div>
+
+        <!-- ACM Section -->
+        <div class="md:col-span-2">
+          <img
+            src="{{ url_for('static', filename='img/assets/acm-logo.png') }}"
+            alt="ACM Logo"
+            class="h-16 mb-4"
+          />
+          <p class="text-sm leading-relaxed">
+            ACM is the global leader in advancing computing as a science and
+            profession. Our mission is to increase the impact and visibility of
+            ACM activities worldwide.
+          </p>
+          <a
+            href="https://dl.acm.org/"
+            target="_blank"
+            class="inline-block mt-4 text-blue-400 hover:text-blue-500 underline transition"
+            >Explore ACM Digital Library</a
+          >
+        </div>
+
+        <!-- Quick Links -->
+        <div class="md:col-span-1 md:text-right">
+          <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="#memberships" class="hover:text-white transition"
+                >Memberships</a
+              >
+            </li>
+            <li>
+              <a href="#about" class="hover:text-white transition">About</a>
+            </li>
+            <li>
+              <a href="#contact" class="hover:text-white transition">Contact</a>
+            </li>
+            <li>
+              <a href="#events" class="hover:text-white transition">Events</a>
+            </li>
+            <li>
+              <a
+                href="https://www.ioittenet.com/"
+                class="hover:text-white transition"
+                >IOIT TENET</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.ioitmun.com/"
+                class="hover:text-white transition"
+                >IOIT MUN</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Social Links Section -->
+      <div
+        class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-5 md:gap-0 p-6"
+      >
+        <!-- Social Links on the Left -->
+        <div class="flex space-x-6">
+          <a href="#" class="hover:text-white transition" aria-label="Facebook">
+            <i class="fab fa-facebook text-2xl"></i>
+          </a>
+          <a
+            href="#"
+            class="hover:text-white transition"
+            aria-label="Instagram"
+          >
+            <i class="fab fa-instagram text-2xl"></i>
+          </a>
+          <a href="#" class="hover:text-white transition" aria-label="LinkedIn">
+            <i class="fab fa-linkedin text-2xl"></i>
+          </a>
+          <a href="#" class="hover:text-white transition" aria-label="Twitter">
+            <i class="fab fa-twitter text-2xl"></i>
+          </a>
+          <a href="#" class="hover:text-white transition" aria-label="YouTube">
+            <i class="fab fa-youtube text-2xl"></i>
+          </a>
+        </div>
+
+        <!-- Email Section on the Right -->
+        <div class="flex items-center space-x-2">
+          <a
+            href="mailto:acm.ioit@gmail.com"
+            class="flex items-center text-gray-300 space-x-2 hover:text-white transition"
+          >
+            <span>acm.ioit@gmail.com</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Section -->
+      <div class="border-t border-gray-700 py-6">
+        <div class="w-full">
+          <!-- Credits -->
+          <div class="text-center">
+            <p>© IOIT ACM Student Chapter, 2024</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      function toggleNav() {
+        const nav = document.getElementById("mobile-nav");
+        if (nav.classList.contains("hidden")) {
+          nav.classList.remove("hidden");
+        } else {
+          nav.classList.add("hidden");
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,250 @@
+{% extends "base.html" %} {% block title %}Events{% endblock %} {% block content
+%}
+<div
+  class="relative bg-cover bg-center h-[80vh]"
+  style="background-image: url('{{ url_for('static', filename='img/assets/keyboard-header.jpg') }}');)"
+>
+  <div
+    class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black bg-opacity-60 grid place-items-center text-white px-4"
+  >
+    <div class="max-w-3xl text-center space-y-6">
+      <h1 class="text-3xl md:text-6xl font-extrabold leading-tight">
+        What Happens at IOIT ACM?
+      </h1>
+      <p class="text-xs md:text-xl font-medium leading-relaxed">
+        IOIT ACM is the student chapter organization subsidiary of ACM. It
+        offers students an exceptional platform to excel in both technical and
+        non-technical domains. By participating in thought-provoking events,
+        Special Interest Groups (SIGs), workshops, and prestigious contests,
+        students can enhance their skills, apply their knowledge, and gain
+        unparalleled expertise under the guidance of the IOIT ACM Student
+        Chapter.
+      </p>
+    </div>
+  </div>
+</div>
+
+<section
+  class="bg-gradient-to-r from-blue-800 to-blue-600 py-5 flex items-center justify-center"
+>
+  <div class="marquee w-full">
+    <div class="marquee-content-slow text-2xl md:text-3xl font-bold text-white">
+      {% for _ in range(97) %}
+      People&nbsp;&nbsp;&nbsp;&nbsp;Passion&nbsp;&nbsp;&nbsp;&nbsp;Professionalism&nbsp;&nbsp;&nbsp;&nbsp;
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<div class="container mx-auto p-6 mt-12">
+  <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
+    FLAGSHIP Events
+  </h2>
+  <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <!-- IOIT TENET 2024 -->
+    <div
+      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
+    >
+      <div class="flex flex-col items-center">
+        <img
+          src="https://ioit.acm.org/tenet/gallery/24/drone/12.jpeg"
+          alt="IOIT TENET 2024"
+          class="w-64 h-64 object-cover rounded-lg mb-4"
+        />
+        <div class="text-center">
+          <h3 class="text-2xl font-semibold text-blue-800">IOIT TENET 2024</h3>
+          <p class="text-gray-600 mt-2">
+            The annual technical festival showcasing innovative projects,
+            technical competitions, and workshops to inspire the next generation
+            of engineers and innovators.
+          </p>
+          <a
+            href="https://ioittenet.com/"
+            class="text-blue-600 mt-4 inline-block"
+            >Learn More &rarr;</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- IOIT MUN 2023 -->
+    <div
+      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
+    >
+      <div class="flex flex-col items-center">
+        <img
+          src="https://ioit.acm.org/tenet/gallery/24/mun-closing/15.jpeg"
+          alt="IOIT MUN 2023"
+          class="w-64 h-64 object-cover rounded-lg mb-4"
+        />
+        <div class="text-center">
+          <h3 class="text-2xl font-semibold text-green-800">IOIT MUN 2023</h3>
+          <p class="text-gray-600 mt-2">
+            An engaging Model United Nations event that brought together
+            students to discuss global issues, foster diplomacy, and promote
+            leadership.
+          </p>
+          <a
+            href="https://www.ioitmun.com/"
+            class="text-green-600 mt-4 inline-block"
+            >Learn More &rarr;</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- IOIT MUN 2024 -->
+    <div
+      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
+    >
+      <div class="flex flex-col items-center">
+        <img
+          src="https://ioit.acm.org/tenet/mun/2024/9.jpeg"
+          alt="IOIT MUN 2024"
+          class="w-64 h-64 object-cover rounded-lg mb-4"
+        />
+        <div class="text-center">
+          <h3 class="text-2xl font-semibold text-yellow-800">IOIT MUN 2024</h3>
+          <p class="text-gray-600 mt-2">
+            The upcoming MUN conference promising dynamic debates, collaborative
+            resolutions, and a platform for young minds to make their voices
+            heard on international platforms.
+          </p>
+          <a
+            href="https://www.ioitmun.com/"
+            class="text-yellow-600 mt-4 inline-block"
+            >Learn More &rarr;</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- What is TENET? Section -->
+  <div class="mt-12 p-6 bg-blue-50 rounded-lg shadow-lg">
+    <h3 class="text-xl font-semibold text-blue-800">What is TENET?</h3>
+    <p class="text-gray-700 mt-4">
+      TENET 2024 is a multi-faceted event hosted by the IOIT ACM Student
+      Chapter, featuring thrilling experiences in technology, entrepreneurship,
+      global diplomacy, and e-sports. From tech conferences and workshops to MUN
+      simulations and LAN tournaments, it offers something for everyone. Join us
+      to connect, learn, and showcase your skills at AISSMS IOIT, Pune—where
+      passion meets innovation.
+    </p>
+  </div>
+</div>
+
+<div class="bg-gray-100 py-10 px-6 sm:px-12">
+  <div class="max-w-5xl mx-auto text-center">
+    <h1 class="text-3xl font-bold text-blue-600">
+      Special Interest Groups (SIGs)
+    </h1>
+    <p class="text-gray-700 mt-4 text-lg">
+      The IOIT ACM Student Chapter organizes Special Interest Groups (SIGs) to
+      foster collaboration and learning in various domains. SIGs provide a
+      platform for students to explore, innovate, and overcome challenges
+      together while delving into technical and non-technical areas.
+    </p>
+  </div>
+
+  <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-5xl mx-auto">
+    <!-- Technical SIG -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <img
+        src="https://via.placeholder.com/400x200?text=Technical+SIG"
+        alt="Technical SIG"
+        class="w-full h-48 object-cover rounded-t-lg"
+      />
+      <div class="mt-4">
+        <h2 class="text-2xl font-semibold text-blue-500">Technical SIG</h2>
+        <p class="text-gray-700 mt-3">
+          Focused on enhancing technical expertise, the Technical SIG conducts
+          seminars, hands-on sessions, and discussions on projects involving
+          cutting-edge technologies such as Artificial Intelligence, Blockchain,
+          and Web Development.
+        </p>
+        <ul class="mt-4 text-gray-600 list-disc list-inside">
+          <li>Workshops on upcoming technologies</li>
+          <li>Collaborative projects</li>
+          <li>Problem-solving sessions</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Entrepreneurship SIG -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <img
+        src="https://via.placeholder.com/400x200?text=Entrepreneurship+SIG"
+        alt="Entrepreneurship SIG"
+        class="w-full h-48 object-cover rounded-t-lg"
+      />
+      <div class="mt-4">
+        <h2 class="text-2xl font-semibold text-green-500">
+          Entrepreneurship SIG
+        </h2>
+        <p class="text-gray-700 mt-3">
+          Geared towards fostering entrepreneurial skills, the Entrepreneurship
+          SIG hosts sessions on startup building, ideation, and problem-solving
+          in real-world scenarios. It also includes guest lectures by successful
+          entrepreneurs.
+        </p>
+        <ul class="mt-4 text-gray-600 list-disc list-inside">
+          <li>Startup ideation workshops</li>
+          <li>Networking opportunities</li>
+          <li>Case studies and success stories</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mx-auto p-6">
+  <h1 class="text-3xl font-bold text-center mb-6">All Events</h1>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for event in events %}
+    <div
+      class="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200"
+    >
+      <div class="p-4">
+        <h2 class="text-xl font-semibold text-gray-800">{{ event.name }}</h2>
+        <p class="text-gray-600 mt-2">{{ event.description }}</p>
+        <p class="text-gray-500 mt-4 text-sm font-medium">
+          📅 {{ event.date }}
+        </p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div
+  class="bg-gradient-to-r mt-20 from-blue-800 to-blue-600 py-8 px-6 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg"
+>
+  <h2 class="text-2xl md:text-4xl font-bold mb-6 md:mb-0">
+    Become a part of such awesomeness
+  </h2>
+  <a
+    href="/join"
+    class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+  >
+    Join IOIT ACM
+  </a>
+</div>
+
+<div>
+  <div class="image-marquee-container">
+    <div class="image-marquee-content md:h-48 h-32">
+      {% for _ in range(20) %} {% for image in images %}
+      <img src="{{ image }}" alt="Event Image" class="bg-gray-300" />
+      {% endfor %} {% endfor %}
+    </div>
+  </div>
+  <div class="image-marquee-container">
+    <div class="image-marquee-content md:h-48 h-32">
+      {% for _ in range(20) %} {% for image in images_2 %}
+      <img src="{{ image }}" alt="Event Image" class="bg-gray-300" />
+      {% endfor %} {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

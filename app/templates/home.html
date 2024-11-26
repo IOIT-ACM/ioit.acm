@@ -1,0 +1,480 @@
+{% extends "base.html" %} {% block title %}IOIT ACM Student Chapter{% endblock
+%} {% block content %}
+<div class="bg-gray-100 min-h-screen">
+  <!-- Header Section -->
+  <div
+    class="relative h-screen flex items-center justify-center text-center bg-cover bg-center"
+    style="background-image: url('{{ url_for('static', filename='img/assets/desktop-bg.jpg') }}');"
+  >
+    <!-- Overlay with gradient -->
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80 w-full h-full"
+    ></div>
+
+    <!-- Content -->
+    <div class="relative z-10 px-6">
+      <!-- ACM Logo -->
+      <div class="md:mb-8 mb-4">
+        <img
+          src="{{ url_for('static', filename='img/assets/acm.png') }}"
+          alt="ACM Logo"
+          class="h-32 md:h-40 mx-auto"
+        />
+      </div>
+
+      <h1
+        class="text-2xl md:text-6xl font-bold text-white mb-4 hidden md:block"
+      >
+        IOIT ACM STUDENT CHAPTER
+      </h1>
+      <p
+        class="text-sm md:text-xl text-gray-300 max-w-3xl mx-auto md:mb-12 mb-4"
+      >
+        IOIT ACM Student Chapter is an auxiliary organization of ACM. IOIT ACM
+        is one of the most reputed and distinguished technical chapters working
+        with vision and determination since its inception in 2019.
+      </p>
+
+      <!-- Rhombus Links -->
+      <div class="md:flex justify-center gap-8 flex-wrap mt-8 hidden">
+        <a href="/events" class="w-40 h-40 relative group">
+          <div
+            class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
+          ></div>
+          <div
+            class="absolute inset-0 flex flex-col items-center justify-center"
+          >
+            <img
+              src="{{ url_for('static', filename='img/assets/events-icon.svg') }}"
+              alt="Events Icon"
+              class="w-12 h-12 mb-2 text-blue-400"
+            />
+            <h3 class="text-blue-400 font-semibold">Events</h3>
+            <p class="text-gray-300 text-sm">Activities</p>
+          </div>
+        </a>
+
+        <a href="https://www.ioittenet.com/" class="w-40 h-40 relative group">
+          <div
+            class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
+          ></div>
+          <div
+            class="absolute inset-0 flex flex-col items-center justify-center"
+          >
+            <img
+              src="{{ url_for('static', filename='img/assets/tenet-logo.png') }}"
+              alt="Tenet Icon"
+              class="w-12 h-12 mb-2 text-blue-400"
+            />
+            <h3 class="text-blue-400 font-semibold">Flagship Events</h3>
+            <p class="text-gray-300 text-sm">
+              TENET & <br />
+              IOIT MUN
+            </p>
+          </div>
+        </a>
+
+        <a href="/about" class="w-40 h-40 relative group">
+          <div
+            class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
+          ></div>
+          <div
+            class="absolute inset-0 flex flex-col items-center justify-center"
+          >
+            <img
+              src="{{ url_for('static', filename='img/assets/achievements-icon.svg') }}"
+              alt="Achievements Icon"
+              class="w-12 h-12 mb-2 text-blue-400"
+            />
+            <h3 class="text-blue-400 font-semibold">Achievements</h3>
+            <p class="text-gray-300 text-sm">Our Success</p>
+          </div>
+        </a>
+
+        <a href="/gallery" class="w-40 h-40 relative group">
+          <div
+            class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
+          ></div>
+          <div
+            class="absolute inset-0 flex flex-col items-center justify-center"
+          >
+            <img
+              src="{{ url_for('static', filename='img/assets/gallery.svg') }}"
+              alt="Social Icon"
+              class="w-12 h-12 mb-2 text-blue-400"
+            />
+            <h3 class="text-blue-400 font-semibold">Gallery</h3>
+            <p class="text-gray-300 text-sm">View glimpses</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="text-sm align-center flex flex-col gap-3 px-4 md:hidden">
+        <a
+          href="/join"
+          class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline backdrop-blur-sm"
+        >
+          Become a member
+        </a>
+        <a
+          href="/membership/status"
+          class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline backdrop-blur-sm"
+        >
+          Check membership status
+        </a>
+      </div>
+
+      <div class="block md:hidden px-4 py-2 text-left text-white">
+        <div class="space-y-2">
+          <a
+            href="/events"
+            class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
+          >
+            <img
+              src="{{ url_for('static', filename='img/assets/events-icon.svg') }}"
+              alt="Events Icon"
+              class="w-8 h-8 mr-4"
+            />
+            <div>
+              <h3 class="text-blue-400 font-semibold text-sm">Events</h3>
+              <p class="text-gray-300 text-xs">Activities</p>
+            </div>
+          </a>
+          <a
+            href="https://www.ioittenet.com/"
+            class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
+          >
+            <img
+              src="{{ url_for('static', filename='img/assets/tenet-logo.png') }}"
+              alt="Tenet Icon"
+              class="w-8 h-8 mr-4"
+            />
+            <div>
+              <h3 class="text-blue-400 font-semibold text-sm">
+                Flagship Events
+              </h3>
+              <p class="text-gray-300 text-xs">TENET & IOIT MUN</p>
+            </div>
+          </a>
+          <a
+            href="/about"
+            class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
+          >
+            <img
+              src="{{ url_for('static', filename='img/assets/achievements-icon.svg') }}"
+              alt="Achievements Icon"
+              class="w-8 h-8 mr-4"
+            />
+            <div>
+              <h3 class="text-blue-400 font-semibold text-sm">Achievements</h3>
+              <p class="text-gray-300 text-xs">Our Success</p>
+            </div>
+          </a>
+          <a
+            href="/gallery"
+            class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
+          >
+            <img
+              src="{{ url_for('static', filename='img/assets/gallery.svg') }}"
+              alt="Gallery Icon"
+              class="w-8 h-8 mr-4"
+            />
+            <div>
+              <h3 class="text-blue-400 font-semibold text-sm">Gallery</h3>
+              <p class="text-gray-300 text-xs">View glimpses</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button -->
+    <div
+      class="absolute text-base bottom-4 right-4 bottom-3 align-center md:flex flex-col gap-3 hidden"
+    >
+      <a
+        href="/join"
+        class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+      >
+        Become a member
+      </a>
+      <a
+        href="/membership/status"
+        class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+      >
+        Check membership status
+      </a>
+    </div>
+  </div>
+
+  <section
+    class="bg-gradient-to-r from-blue-800 to-blue-600 py-5 flex items-center justify-center"
+  >
+    <div class="marquee w-full">
+      <div
+        class="marquee-content-slow text-2xl md:text-3xl font-bold text-white"
+      >
+        {% for _ in range(97) %}
+        People&nbsp;&nbsp;&nbsp;&nbsp;Passion&nbsp;&nbsp;&nbsp;&nbsp;Professionalism&nbsp;&nbsp;&nbsp;&nbsp;
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 container mx-auto px-4 md:px-20">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <!-- People Section -->
+      <div
+        class="flex flex-col items-center bg-white p-8 rounded-lg shadow-xl hover:scale-105 transition-transform"
+      >
+        <h3 class="text-3xl font-semibold mb-4 text-blue-800">People</h3>
+        <p class="text-gray-700 text-center">
+          The heart of our chapter lies in the people — students coming together
+          to innovate, collaborate, and grow. Building a community of
+          like-minded individuals fosters learning and long-lasting
+          relationships.
+        </p>
+      </div>
+
+      <!-- Passion Section -->
+      <div
+        class="flex flex-col items-center bg-white p-8 rounded-lg shadow-xl hover:scale-105 transition-transform"
+      >
+        <h3 class="text-3xl font-semibold mb-4 text-blue-800">Passion</h3>
+        <p class="text-gray-700 text-center">
+          Passion is the driving force. Our members bring an infectious
+          enthusiasm for technology and a love for learning that fuels
+          innovation, pushing the boundaries of what's possible in the tech
+          world.
+        </p>
+      </div>
+
+      <!-- Professionalism Section -->
+      <div
+        class="flex flex-col items-center bg-white p-8 rounded-lg shadow-xl hover:scale-105 transition-transform"
+      >
+        <h3 class="text-3xl font-semibold mb-4 text-blue-800">
+          Professionalism
+        </h3>
+        <p class="text-gray-700 text-center">
+          Professionalism ensures quality and impact. By respecting deadlines,
+          collaborating effectively, and communicating clearly, we ensure our
+          initiatives meet the highest standards.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4">
+        We are the
+        <span class="bg-yellow-300 text-black font-semibold"
+          >largest computer science community</span
+        >
+        at AISSMS IOIT
+      </h1>
+      <p class="text-lg md:text-xl mb-6">
+        The ACM Student Chapter at AISSMS IOIT, Pune, is the largest computer
+        science student organization in our college, fostering a community of
+        tech enthusiasts. We welcome students of all backgrounds, interests, and
+        skill levels to join us in sharing a passion for technology.
+      </p>
+      <div class="flex justify-center space-x-6 mt-6">
+        <a href="#" class="hover:text-blue-500 transition" aria-label="Facebook"
+          ><i class="fab fa-facebook fa-2x"></i
+        ></a>
+        <a
+          href="#"
+          class="hover:text-pink-500 transition"
+          aria-label="Instagram"
+          ><i class="fab fa-instagram fa-2x"></i
+        ></a>
+        <a href="#" class="hover:text-blue-700 transition" aria-label="LinkedIn"
+          ><i class="fab fa-linkedin fa-2x"></i
+        ></a>
+        <a href="#" class="hover:text-blue-400 transition" aria-label="Twitter"
+          ><i class="fab fa-twitter fa-2x"></i
+        ></a>
+      </div>
+    </div>
+  </section>
+
+  <div
+    class="grid container mx-auto gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+  >
+    <!-- IOIT TENET 2024 -->
+    <div
+      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
+    >
+      <div class="flex flex-col items-center">
+        <img
+          src="https://ioit.acm.org/tenet/gallery/24/drone/12.jpeg"
+          alt="IOIT TENET 2024"
+          class="w-64 h-64 object-cover rounded-lg mb-4"
+        />
+        <div class="text-center">
+          <h3 class="text-2xl font-semibold text-blue-800">IOIT TENET 2024</h3>
+          <p class="text-gray-600 mt-2">
+            The annual technical festival showcasing innovative projects,
+            technical competitions, and workshops to inspire the next generation
+            of engineers and innovators.
+          </p>
+          <a
+            href="https://ioittenet.com/"
+            class="text-blue-600 mt-4 inline-block"
+            >Learn More &rarr;</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- IOIT MUN 2023 -->
+    <div
+      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
+    >
+      <div class="flex flex-col items-center">
+        <img
+          src="https://ioit.acm.org/tenet/gallery/24/mun-closing/15.jpeg"
+          alt="IOIT MUN 2023"
+          class="w-64 h-64 object-cover rounded-lg mb-4"
+        />
+        <div class="text-center">
+          <h3 class="text-2xl font-semibold text-green-800">IOIT MUN 2023</h3>
+          <p class="text-gray-600 mt-2">
+            An engaging Model United Nations event that brought together
+            students to discuss global issues, foster diplomacy, and promote
+            leadership.
+          </p>
+          <a
+            href="https://www.ioitmun.com/"
+            class="text-green-600 mt-4 inline-block"
+            >Learn More &rarr;</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- IOIT MUN 2024 -->
+    <div
+      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
+    >
+      <div class="flex flex-col items-center">
+        <img
+          src="https://ioit.acm.org/tenet/mun/2024/9.jpeg"
+          alt="IOIT MUN 2024"
+          class="w-64 h-64 object-cover rounded-lg mb-4"
+        />
+        <div class="text-center">
+          <h3 class="text-2xl font-semibold text-yellow-800">IOIT MUN 2024</h3>
+          <p class="text-gray-600 mt-2">
+            The upcoming MUN conference promising dynamic debates, collaborative
+            resolutions, and a platform for young minds to make their voices
+            heard on international platforms.
+          </p>
+          <a
+            href="https://www.ioitmun.com/"
+            class="text-yellow-600 mt-4 inline-block"
+            >Learn More &rarr;</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 mt-10">
+    <div id="past-events-section">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-semibold text-gray-800">Recent Events</h2>
+        <a href="/events" class="text-blue-500 hover:text-blue-700 text-sm"
+          >View All Events & Activities</a
+        >
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for event in events %}
+        <div
+          class="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200"
+        >
+          <div class="p-4">
+            <h2 class="text-xl font-semibold text-gray-800">
+              {{ event.name }}
+            </h2>
+            <p class="text-gray-600 mt-2">{{ event.description }}</p>
+            <p class="text-gray-500 mt-4 text-sm font-medium">
+              📅 {{ event.date }}
+            </p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-6xl mx-auto my-20 px-4 sm:px-6 lg:px-8">
+    <div
+      class="bg-white shadow-xl rounded-lg overflow-hidden flex flex-col sm:flex-row"
+    >
+      <div class="sm:w-1/3">
+        <img
+          src="{{ url_for('static', filename='img/assets/acm-award-23.jpeg') }}"
+          alt="ACM Award Image"
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <div class="sm:w-2/3 py-8 px-6 sm:px-12">
+        <!-- Title -->
+        <h2 class="text-3xl font-semibold text-gray-800 mb-4">
+          National Achievement of Outstanding Community Service
+        </h2>
+        <p class="text-xl text-gray-600 mb-6">
+          Awarded to IOIT ACM Student Chapter for reporting the highest number
+          of activities in the ACM India Student Chapter Awards 2023
+        </p>
+
+        <p class="text-base text-gray-700 text-justify leading-relaxed mb-4">
+          The IOIT ACM Student Chapter has been recognized for its exceptional
+          contribution to the community. By reporting the highest number of
+          activities, the chapter has demonstrated commitment to growth,
+          service, and innovation in the field of technology and community
+          engagement.
+        </p>
+
+        <div class="text-center text-sm font-medium text-gray-600">
+          <span>ACM India Student Chapter Awards 2023</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="bg-gradient-to-r mt-20 from-blue-800 to-blue-600 py-8 px-6 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg"
+>
+  <h2 class="text-2xl md:text-4xl font-bold mb-6 md:mb-0">
+    Become a part of such awesomeness
+  </h2>
+  <a
+    href="/join"
+    class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+  >
+    Join IOIT ACM
+  </a>
+</div>
+
+<div>
+  <div class="image-marquee-container">
+    <div class="image-marquee-content md:h-48 h-32">
+      {% for _ in range(20) %} {% for image in images %}
+      <img src="{{ image }}" alt="Event Image" class="bg-gray-300" />
+      {% endfor %} {% endfor %}
+    </div>
+  </div>
+  <div class="image-marquee-container">
+    <div class="image-marquee-content md:h-48 h-32">
+      {% for _ in range(20) %} {% for image in images_2 %}
+      <img src="{{ image }}" alt="Event Image" class="bg-gray-300" />
+      {% endfor %} {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

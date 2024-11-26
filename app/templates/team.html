@@ -1,0 +1,140 @@
+{% extends "base.html" %} {% block title %}Our Team{% endblock %} {% block
+content %}
+<div
+  class="relative h-auto md:mt-0 mt-20 md:h-[100vh] flex flex-col md:flex-row items-center justify-between bg-gray-100"
+>
+  <!-- Team Image -->
+  <div class="w-full h-auto md:w-1/2 md:h-full">
+    <img
+      src="{{ url_for('static', filename='img/team/team.webp') }}"
+      alt="Team Header Image"
+      class="object-cover h-full w-full rounded-br-[200px] md:rounded-br-[200px] rounded-tl-[200px] md:rounded-none"
+    />
+  </div>
+
+  <!-- Text Content -->
+  <div class="w-full md:w-1/2 text-left p-8 md:p-16">
+    <h1 class="text-3xl md:text-5xl font-extrabold text-blue-600 mb-4">
+      We are IOIT ACM
+    </h1>
+    <p class="text-gray-700 mb-6 text-base md:text-lg">
+      A group of passionate individuals striving to innovate and build
+      world-class applications. Our team consists of technically sound members
+      that transform novel ideas into real-life experiences.
+    </p>
+  </div>
+</div>
+
+<div id="team-section" class="text-center my-16 px-4">
+  <h2 class="text-4xl font-bold text-blue-600 mb-6">Meet Our Team</h2>
+
+  <!-- Dropdown for Year Selection -->
+  <div class="mb-6">
+    <label for="year-select" class="text-lg font-semibold">Select Year</label>
+    <select id="year-select" class="p-2 rounded-md border border-gray-300">
+      {% for year in years %}
+      <option value="{{ year }}">{{ year }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- Faculty Sponsor Centered -->
+  <div class="flex justify-center mb-12">
+    <div
+      class="p-4 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300 w-full max-w-sm"
+    >
+      <img
+        src="img/team/meenakshi.jpg"
+        alt="Dr. Meenakshi Thalor"
+        class="w-full h-48 object-cover rounded-t-lg"
+      />
+      <div class="text-center mt-4">
+        <h3 class="text-xl font-semibold text-blue-600">
+          Dr. Meenakshi Thalor
+        </h3>
+        <p class="text-gray-500">Faculty Sponsor</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team Members Grid -->
+  <div
+    id="team-cards"
+    class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-10 p-0 sm:p-4 mx-auto max-w-[1500px]"
+  >
+    {% for member in selected_team_data %}
+    <div
+      class="flex flex-col md:mx-auto md:w-[400px] w-auto bg-white text-blue-600 rounded-lg overflow-hidden shadow-lg"
+    >
+      <!-- Image Section -->
+      <img
+        src="{{ member.image_url }}"
+        alt="{{ member.name }}"
+        class="w-full md:h-64 h-40 object-cover"
+      />
+      <!-- Text Section -->
+      <div class="p-3 md:p-4 w-full text-left">
+        <h3 class="text-sm md:text-2xl font-semibold">{{ member.name }}</h3>
+        <p class="text-xs md:text-lg text-gray-400">{{ member.title }}</p>
+        <div class="flex gap-2 mt-2">
+          {% if member.github %}
+          <a
+            href="{{ member.github }}"
+            target="_blank"
+            class="text-gray-500 hover:text-gray-300 transition duration-200"
+          >
+            <i class="fab fa-github text-sm md:text-base"></i>
+          </a>
+          {% endif %} {% if member.linkedin %}
+          <a
+            href="{{ member.linkedin }}"
+            target="_blank"
+            class="text-blue-500 hover:text-blue-300 transition duration-200"
+          >
+            <i class="fab fa-linkedin text-sm md:text-base"></i>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  // Handle the year selection and load team members
+  document
+    .getElementById("year-select")
+    .addEventListener("change", function (e) {
+      var year = e.target.value;
+
+      // Show the loading skeleton while data is being fetched
+      document.getElementById("team-cards").innerHTML = `
+    <div class="animate-pulse">
+      <div class="p-4 bg-gray-200 rounded-lg w-48 h-64"></div>
+      <div class="mt-4 bg-gray-200 h-6 w-32 mx-auto rounded"></div>
+      <div class="mt-2 bg-gray-200 h-4 w-24 mx-auto rounded"></div>
+    </div>
+  `;
+
+      // Fetch team data for the selected year
+      fetch(`/fetch-team?year=${year}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to fetch team data.");
+          }
+          return response.text();
+        })
+        .then((html) => {
+          document.getElementById("team-cards").innerHTML = html;
+        })
+        .catch((error) => {
+          console.error(error);
+          document.getElementById("team-cards").innerHTML = `
+        <p class="text-red-500">Failed to load team data. Please try again later.</p>
+      `;
+        });
+    });
+</script>
+
+{% endblock %}
