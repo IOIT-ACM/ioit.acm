@@ -5,6 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}IOIT ACM{% endblock %}</title>
 
+
+    <!-- SEO Metadata -->
+    <meta
+      name="description"
+      content="IOIT ACM Student Chapter - Innovating technology education and research. Join us to explore events, workshops, and networking opportunities in the world of computing."
+    />
+    <meta
+      name="keywords"
+      content="ACM, computing, technology, research, student chapter, events, workshops, education, networking"
+    />
+    <meta name="author" content="IOIT ACM Student Chapter" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="theme-color" content="#007BFF" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Open Graph (OG) Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="IOIT ACM Student Chapter" />
+    <meta
+      property="og:description"
+      content="Join the IOIT ACM Student Chapter to explore computing, innovation, and networking. Participate in events, workshops, and research collaborations."
+    />
+    <meta property="og:url" content="https://ioit.acm.org/" />
+    <meta
+      property="og:image"
+      content="{{ url_for('static', filename='og-image.png') }}"
+    />
+    <meta property="og:site_name" content="IOIT ACM" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card Metadata -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="IOIT ACM Student Chapter" />
+    <meta
+      name="twitter:description"
+      content="Explore the world of computing with the IOIT ACM Student Chapter. Join us for events, workshops, and networking opportunities."
+    />
+    <meta
+      name="twitter:image"
+      content="{{ url_for('static', filename='og-image') }}"
+    />
+    <meta name="twitter:site" content="@IOITACM" />
+    <meta name="twitter:creator" content="@IOITACM" />
+    
+  
     <!-- TailwindCSS -->
     <link
       rel="stylesheet"
