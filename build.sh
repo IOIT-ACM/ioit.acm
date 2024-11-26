@@ -11,6 +11,8 @@ EXCLUDE_LIST=(
 	".venv"
 	".gitignore"
 	".DS_Store"
+	"README.md"
+	"docs"
 )
 
 error_exit() {
