@@ -22,6 +22,12 @@ body::-webkit-scrollbar {
   column-count: 3;
 }
 
+@media (max-width: 768px) {
+  .gallery-columns {
+    column-count: 2;
+  }
+}
+
 /* Title section styles */
 #upcoming-events-section,
 #past-events-section {

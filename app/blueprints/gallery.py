@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, jsonify
 
 gallery_bp = Blueprint("gallery", __name__, template_folder="../templates")
 
-ITEMS_PER_PAGE = 20
+ITEMS_PER_PAGE = 30
 
 
 def paginate_collections(collections, page, per_page):
