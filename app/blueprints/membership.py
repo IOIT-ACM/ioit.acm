@@ -1,5 +1,6 @@
 import requests
 import time
+import json
 from flask import Blueprint, render_template
 
 membership_bp = Blueprint("membership", __name__, template_folder="../templates")
@@ -10,10 +11,10 @@ BEARER_TOKEN = "3zwed407ppm56msmwv87jng9ir30dcfd9qyvjack"
 # In-memory cache
 cache = {"data": None, "timestamp": 0}
 CACHE_EXPIRY = 30000
-
+DATA_JSON_FILE = "snapshot.json"
 
 def fetch_membership_data():
-    """Fetch membership data from API and update cache."""
+    """Fetch membership data from API, cache it, or load from fallback JSON file."""
     headers = {"Authorization": "Bearer " + BEARER_TOKEN}
     try:
         response = requests.get(API_URL, headers=headers)
@@ -24,10 +25,19 @@ def fetch_membership_data():
         cache["timestamp"] = time.time()
         return members
     except requests.exceptions.RequestException as e:
-        print("Error fetching data: {}".format(e))
-        # Return cached data if available, otherwise return an empty list
-        return cache["data"] if cache["data"] else []
+        print("Error fetching data from API: {}".format(e))
+        
+        if cache["data"]:
+            return cache["data"]
 
+        try:
+            with open(DATA_JSON_FILE, "r") as file:
+                print("Loading data from fallback file...")
+                fallback_data = json.load(file)
+                return fallback_data
+        except (FileNotFoundError, json.JSONDecodeError) as json_error:
+            print("Error loading fallback data: {}".format(json_error))
+            return []
 
 @membership_bp.route("/membership")
 def team():
