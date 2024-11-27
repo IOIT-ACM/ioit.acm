@@ -4,15 +4,22 @@ DEST_DIR=~/Downloads/ioit.acm.org
 
 EXCLUDE_LIST=(
 	".git"
-	"__pycache__"
-	"pycache"
+	"*__pycache__"
+	"*pycache"
 	"node_modules"
 	"package-lock.json"
 	".venv"
 	".gitignore"
-	".DS_Store"
+	"*.DS_Store"
 	"README.md"
 	"docs"
+	"*.pyc"
+	"tailwind.config.js"
+	"run.py"
+	"README.md"
+	".gitignore"
+	"build.sh"
+	"package.json"
 )
 
 error_exit() {
