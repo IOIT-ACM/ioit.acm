@@ -191,7 +191,7 @@
       <!-- Mobile Menu -->
       <div
         id="mobile-nav"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center md:hidden"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center md:hidden hidden"
         onclick="closeNav(event)"
       >
         <div
@@ -221,42 +221,49 @@
             <a
               href="/"
               class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == '/' else '' }}"
+              onclick="closeNav()"
             >
               Home
             </a>
             <a
               href="/team"
               class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == '/team' else '' }}"
+              onclick="closeNav()"
             >
               Team
             </a>
             <a
               href="/membership"
               class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == '/membership' else '' }}"
+              onclick="closeNav()"
             >
               Membership
             </a>
             <a
               href="/membership/status"
               class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == '/membership/status' else '' }}"
+              onclick="closeNav()"
             >
-              membership status
+              Membership Status
             </a>
             <a
               href="/events"
               class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == '/events' else '' }}"
+              onclick="closeNav()"
             >
               Events
             </a>
             <a
               href="/gallery"
               class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == '/gallery' else '' }}"
+              onclick="closeNav()"
             >
               Gallery
             </a>
             <a
               href="/about"
               class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == '/about' else '' }}"
+              onclick="closeNav()"
             >
               About
             </a>
