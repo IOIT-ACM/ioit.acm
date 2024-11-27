@@ -1,7 +1,23 @@
 import os
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, jsonify
 
 gallery_bp = Blueprint("gallery", __name__, template_folder="../templates")
+
+ITEMS_PER_PAGE = 20
+
+
+def paginate_collections(collections, page, per_page):
+    """
+    Paginate a list of collections.
+
+    :param collections: The complete list of collections.
+    :param page: The current page number (1-based).
+    :param per_page: Number of items per page.
+    :return: A slice of the list for the current page.
+    """
+    start = (page - 1) * per_page
+    end = start + per_page
+    return collections[start:end]
 
 
 def generate_collections(static_path):
@@ -37,4 +53,16 @@ def generate_collections(static_path):
 def home():
     static_path = os.path.join(os.getcwd(), "app/static/img/gallery/")
     collections = generate_collections(static_path)
-    return render_template("gallery.html", collections=collections)
+    first_page_collections = paginate_collections(collections, 1, ITEMS_PER_PAGE)
+    return render_template(
+        "gallery.html", collections=first_page_collections, total=len(collections)
+    )
+
+
+@gallery_bp.route("/gallery/load-more", methods=["GET"])
+def load_more():
+    static_path = os.path.join(os.getcwd(), "app/static/img/gallery/")
+    collections = generate_collections(static_path)
+    page = int(request.args.get("page", 1))
+    paginated_collections = paginate_collections(collections, page, ITEMS_PER_PAGE)
+    return jsonify(paginated_collections)
