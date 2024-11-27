@@ -166,6 +166,14 @@
           </li>
           <li>
             <a
+              href="/gallery"
+              class="text-gray-700 hover:text-blue-600 transition relative {{ 'text-blue-500 underline' if request.path == '/gallery' else '' }}"
+            >
+              Gallery
+            </a>
+          </li>
+          <li>
+            <a
               href="/about"
               class="text-gray-700 hover:text-blue-600 transition relative {{ 'text-blue-500 underline' if request.path == '/about' else '' }}"
             >
@@ -177,7 +185,7 @@
       <!-- Mobile Menu -->
       <div
         id="mobile-nav"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center md:hidden"
         onclick="closeNav(event)"
       >
         <div
@@ -233,6 +241,12 @@
               class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == '/events' else '' }}"
             >
               Events
+            </a>
+            <a
+              href="/gallery"
+              class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == '/gallery' else '' }}"
+            >
+              Gallery
             </a>
             <a
               href="/about"
