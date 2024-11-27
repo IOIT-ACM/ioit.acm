@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Blueprint, render_template
 from app.data.events import events
+from app.data.stories import stories
 
 # Define the blueprint
 home_bp = Blueprint("home", __name__, template_folder="../templates")
@@ -30,5 +31,9 @@ images_2 = [
 @home_bp.route("/")
 def home():
     return render_template(
-        "home.html", events=events[:6], images=images, images_2=images_2
+        "home.html",
+        events=events[:6],
+        images=images,
+        images_2=images_2,
+        stories=stories[:4],
     )

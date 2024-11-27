@@ -221,14 +221,16 @@
     </div>
   </section>
 
-  <section class="py-16 container mx-auto px-4 md:px-20">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+  <section class="md:py-16 py-10 mx-auto max-w-7xl px-4 md:px-20">
+    <div class="grid grid-cols-1 md:grid-cols-3 md:gap-12 gap-8">
       <!-- People Section -->
       <div
-        class="flex flex-col items-center bg-white p-8 rounded-lg shadow-xl hover:scale-105 transition-transform"
+        class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl hover:scale-105 transition-transform"
       >
-        <h3 class="text-3xl font-semibold mb-4 text-blue-800">People</h3>
-        <p class="text-gray-700 text-center">
+        <h3 class="md:text-3xl text-xl font-semibold mb-4 text-blue-800">
+          People
+        </h3>
+        <p class="text-gray-700 text-center md:text-base text-sm">
           The heart of our chapter lies in the people — students coming together
           to innovate, collaborate, and grow. Building a community of
           like-minded individuals fosters learning and long-lasting
@@ -238,10 +240,12 @@
 
       <!-- Passion Section -->
       <div
-        class="flex flex-col items-center bg-white p-8 rounded-lg shadow-xl hover:scale-105 transition-transform"
+        class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl hover:scale-105 transition-transform"
       >
-        <h3 class="text-3xl font-semibold mb-4 text-blue-800">Passion</h3>
-        <p class="text-gray-700 text-center">
+        <h3 class="md:text-3xl text-xl font-semibold mb-4 text-blue-800">
+          Passion
+        </h3>
+        <p class="text-gray-700 text-center md:text-base text-sm">
           Passion is the driving force. Our members bring an infectious
           enthusiasm for technology and a love for learning that fuels
           innovation, pushing the boundaries of what's possible in the tech
@@ -251,12 +255,12 @@
 
       <!-- Professionalism Section -->
       <div
-        class="flex flex-col items-center bg-white p-8 rounded-lg shadow-xl hover:scale-105 transition-transform"
+        class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl hover:scale-105 transition-transform"
       >
-        <h3 class="text-3xl font-semibold mb-4 text-blue-800">
+        <h3 class="md:text-3xl text-xl font-semibold mb-4 text-blue-800">
           Professionalism
         </h3>
-        <p class="text-gray-700 text-center">
+        <p class="text-gray-700 text-center md:text-base text-sm">
           Professionalism ensures quality and impact. By respecting deadlines,
           collaborating effectively, and communicating clearly, we ensure our
           initiatives meet the highest standards.
@@ -301,7 +305,7 @@
   </section>
 
   <div
-    class="grid container mx-auto gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+    class="grid container mx-auto max-w-7xl gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
   >
     <!-- IOIT TENET 2024 -->
     <div
@@ -311,7 +315,7 @@
         <img
           src="https://ioit.acm.org/tenet/gallery/24/drone/12.jpeg"
           alt="IOIT TENET 2024"
-          class="w-64 h-64 object-cover rounded-lg mb-4"
+          class="w-64 h-64 bg-gray-300 object-cover rounded-lg mb-4"
         />
         <div class="text-center">
           <h3 class="text-2xl font-semibold text-blue-800">IOIT TENET 2024</h3>
@@ -337,7 +341,7 @@
         <img
           src="https://ioit.acm.org/tenet/gallery/24/mun-closing/15.jpeg"
           alt="IOIT MUN 2023"
-          class="w-64 h-64 object-cover rounded-lg mb-4"
+          class="w-64 h-64 bg-gray-300 object-cover rounded-lg mb-4"
         />
         <div class="text-center">
           <h3 class="text-2xl font-semibold text-green-800">IOIT MUN 2023</h3>
@@ -363,7 +367,7 @@
         <img
           src="https://ioit.acm.org/tenet/mun/2024/9.jpeg"
           alt="IOIT MUN 2024"
-          class="w-64 h-64 object-cover rounded-lg mb-4"
+          class="w-64 h-64 object-cover bg-gray-300 rounded-lg mb-4"
         />
         <div class="text-center">
           <h3 class="text-2xl font-semibold text-yellow-800">IOIT MUN 2024</h3>
@@ -382,7 +386,75 @@
     </div>
   </div>
 
-  <div class="container mx-auto px-4 mt-10">
+  <!--latest stories section-->
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 gap-8 mx-auto my-20 max-w-7xl px-10 md:px-0"
+  >
+    <h1 class="text-3xl font-bold mb-6 md:col-span-2 sticky top-20">
+      Latest Stories
+    </h1>
+    <div class="overflow-hidden w-full">
+      {% if stories|length > 0 %}
+      <img
+        src="{{ url_for('static', filename='img/stories/' + stories[0].imageURL) }}"
+        alt="{{ stories[0].title }}"
+        class="md:w-full h-72 max-h-4xl object-cover bg-gray-500 rounded-lg"
+      />
+      <div class="py-6">
+        <span
+          class="text-gray-500 text-sm uppercase font-semibold tracking-wide block mb-2"
+        >
+          {{ stories[0].category }}
+        </span>
+        <h2
+          class="text-2xl font-bold text-gray-900 mb-4 hover:text-blue-500 transition duration-300"
+        >
+          {{ stories[0].title }}
+        </h2>
+        <p class="text-gray-600 mb-4 line-clamp-3">
+          {{ stories[0].description }}
+        </p>
+        <p class="text-gray-500 text-sm mb-2">{{ stories[0].date }}</p>
+        <a
+          href="{{ stories[0].link }}"
+          class="text-blue-500 hover:text-blue-700 font-medium underline transition duration-300"
+          >Read More</a
+        >
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="grid grid-cols-1 gap-8">
+      {% for story in stories %} {% if loop.index > 1 %}
+      <div class="grid md:grid-cols-2 grid-cols-1 gap-0">
+        <img
+          src="{{ url_for('static', filename='img/stories/' + story.imageURL) }}"
+          alt="{{ story.title }}"
+          class="md:w-64 w-full h-32 min-h-32 bg-gray-300 md:hover:scale-105 object-cover rounded-lg mr-4 transition-all duration-300"
+        />
+        <div>
+          <p class="text-gray-500 text-sm">{{ story.date }}</p>
+          <span
+            class="text-gray-500 text-sm uppercase font-semibold block mb-1"
+          >
+            {{ story.category }}
+          </span>
+          <a
+            href="{{story.link}}"
+            class="text-lg font-bold text-gray-900 hover:text-blue-500 transition duration-300"
+          >
+            {{ story.title }}
+          </a>
+          <p class="text-gray-500 text-sm mb-2 line-clamp-2">
+            {{ story.description }}
+          </p>
+        </div>
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-7xl px-4 mt-10">
     <div id="past-events-section">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-3xl font-semibold text-gray-800">Recent Events</h2>
@@ -477,4 +549,5 @@
     </div>
   </div>
 </div>
+
 {% endblock %}

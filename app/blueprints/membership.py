@@ -13,6 +13,7 @@ cache = {"data": None, "timestamp": 0}
 CACHE_EXPIRY = 30000
 DATA_JSON_FILE = "snapshot.json"
 
+
 def fetch_membership_data():
     """Fetch membership data from API, cache it, or load from fallback JSON file."""
     headers = {"Authorization": "Bearer " + BEARER_TOKEN}
@@ -26,7 +27,7 @@ def fetch_membership_data():
         return members
     except requests.exceptions.RequestException as e:
         print("Error fetching data from API: {}".format(e))
-        
+
         if cache["data"]:
             return cache["data"]
 
@@ -38,6 +39,7 @@ def fetch_membership_data():
         except (FileNotFoundError, json.JSONDecodeError) as json_error:
             print("Error loading fallback data: {}".format(json_error))
             return []
+
 
 @membership_bp.route("/membership")
 def team():
@@ -54,6 +56,8 @@ def membership_status():
         members = cache["data"]
 
     # Sort members by full name
-    members = sorted(members, key=lambda m: "{} {}".format(m["First Name"], m["Last Name"]))
+    members = sorted(
+        members, key=lambda m: "{} {}".format(m["First Name"], m["Last Name"])
+    )
 
     return render_template("membership_status.html", members=members)

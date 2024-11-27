@@ -36,7 +36,7 @@
   </div>
 </section>
 
-<div class="container mx-auto p-6 mt-12">
+<div class="container mx-auto p-6 mt-12 max-w-7xl">
   <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
     Flagship Events
   </h2>
@@ -121,7 +121,7 @@
   </div>
 
   <!-- What is TENET? Section -->
-  <div class="mt-12 p-6 bg-blue-50 rounded-lg shadow-lg">
+  <div class="mt-12 p-6 bg-blue-50 rounded-lg shadow-lg max-w-7xl">
     <h3 class="text-xl font-semibold text-blue-800">What is TENET?</h3>
     <p class="text-gray-700 mt-4">
       TENET 2024 is a multi-faceted event hosted by the IOIT ACM Student
@@ -134,7 +134,7 @@
   </div>
 </div>
 
-<div class="bg-gray-100 py-10 px-6 sm:px-12">
+<div class="bg-gray-100 py-10 px-6 sm:px-12 max-w-7xl mx-auto">
   <div class="max-w-5xl mx-auto text-center">
     <h1 class="text-3xl font-bold text-blue-600">
       Special Interest Groups (SIGs)
@@ -147,13 +147,13 @@
     </p>
   </div>
 
-  <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-5xl mx-auto">
+  <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8">
     <!-- Technical SIG -->
     <div class="bg-white rounded-lg shadow-md p-6">
       <img
-        src="https://via.placeholder.com/400x200?text=Technical+SIG"
+        src="{{ url_for('static', filename='img/events/sig-tech.jpeg') }}"
         alt="Technical SIG"
-        class="w-full h-48 object-cover rounded-t-lg"
+        class="w-full h-64 object-cover rounded-t-lg"
       />
       <div class="mt-4">
         <h2 class="text-2xl font-semibold text-blue-500">Technical SIG</h2>
@@ -174,9 +174,9 @@
     <!-- Entrepreneurship SIG -->
     <div class="bg-white rounded-lg shadow-md p-6">
       <img
-        src="https://via.placeholder.com/400x200?text=Entrepreneurship+SIG"
+        src="{{ url_for('static', filename='img/events/sig-ent.jpeg') }}"
         alt="Entrepreneurship SIG"
-        class="w-full h-48 object-cover rounded-t-lg"
+        class="w-full h-64 object-cover rounded-t-lg"
       />
       <div class="mt-4">
         <h2 class="text-2xl font-semibold text-green-500">
@@ -198,7 +198,7 @@
   </div>
 </div>
 
-<div class="container mx-auto p-6">
+<div class="container mx-auto p-6 max-w-7xl">
   <h1 class="text-3xl font-bold text-center mb-6">All Events</h1>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     {% for event in events %}
