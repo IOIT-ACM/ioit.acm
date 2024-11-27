@@ -1,9 +1,18 @@
-{% extends "base.html" %} {% block title %}Membership{% endblock %} {% block
-content %}
+{% extends "base.html" %} {% block title %}Membership - IOIT ACM{% endblock %}
+{% block og_title %}Join IOIT ACM Student Chapter{% endblock %} {% block
+og_description %}Become a part of IOIT ACM to enhance your skills, participate
+in exciting contests, workshops, and grow as a professional in both technical
+and non-technical domains.{% endblock %} {% block og_image %}{{
+url_for('static', filename='img/assets/membership.jpeg') }}{% endblock %} {%
+block twitter_image %}{{ url_for('static',
+filename='img/assets/membership.jpeg') }}{% endblock %} {% block twitter_title
+%}Membership - IOIT ACM{% endblock %} {% block twitter_description %}Join IOIT
+ACM and be a part of a thriving community of students in technical and
+non-technical fields. Enhance your skills and grow with us.{% endblock %} {%
+block content %}
 <div
   class="relative h-auto md:mt-0 mt-20 md:h-[100vh] flex flex-col md:flex-row items-center justify-between bg-gray-100"
 >
-  <!-- Team Image -->
   <div class="w-full h-auto md:w-1/2 md:h-full">
     <img
       src="{{ url_for('static', filename='img/assets/membership.jpeg') }}"

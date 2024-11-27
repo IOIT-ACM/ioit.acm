@@ -1,4 +1,9 @@
-{% extends "base.html" %} {% block title %} Gallery {% endblock %} {% block
+{% extends "base.html" %} {% block title %}Gallery{% endblock %} {% block
+og_title %}Gallery - IOIT ACM Student Chapter{% endblock %} {% block
+og_description %}Explore our team gallery and get to know the faces behind the
+IOIT ACM Student Chapter.{% endblock %} {% block og_image %}{{ url_for('static',
+filename='img/gallery/team.jpeg') }}{% endblock %} {% block twitter_image %}{{
+url_for('static', filename='img/gallery/team.jpeg') }}{% endblock %} {% block
 content %}
 <div
   class="relative bg-cover bg-center h-[80vh]"

@@ -1,5 +1,14 @@
-{% extends "base.html" %} {% block title %}Our Team{% endblock %} {% block
-content %}
+{% extends "base.html" %} {% block title %}Our Team - IOIT ACM{% endblock %} {%
+block og_title %}We are IOIT ACM - Our Team{% endblock %} {% block
+og_description %}Meet the passionate individuals behind IOIT ACM. A team of
+skilled members dedicated to innovating and building world-class applications
+and experiences.{% endblock %} {% block og_image %}{{ url_for('static',
+filename='img/team/team.jpeg') }}{% endblock %} {% block twitter_image %}{{
+url_for('static', filename='img/team/team.jpeg') }}{% endblock %} {% block
+twitter_title %}Our Team - IOIT ACM{% endblock %} {% block twitter_description
+%}Meet the IOIT ACM team: a group of passionate individuals transforming novel
+ideas into real-life applications. Join us in our journey to innovate.{%
+endblock %} {% block content %}
 <div
   class="relative h-auto md:mt-0 mt-20 md:h-[100vh] flex flex-col md:flex-row items-center justify-between bg-gray-100"
 >

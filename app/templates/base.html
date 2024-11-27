@@ -8,7 +8,7 @@
     <!-- SEO Metadata -->
     <meta
       name="description"
-      content="IOIT ACM Student Chapter - Innovating technology education and research. Join us to explore events, workshops, and networking opportunities in the world of computing."
+      content="{% block description %}IOIT ACM Student Chapter - Innovating technology education and research. Join us to explore events, workshops, and networking opportunities in the world of computing.{% endblock %}"
     />
     <meta
       name="keywords"
@@ -23,29 +23,35 @@
 
     <!-- Open Graph (OG) Tags -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="IOIT ACM Student Chapter" />
+    <meta
+      property="og:title"
+      content="{% block og_title %}IOIT ACM Student Chapter{% endblock %}"
+    />
     <meta
       property="og:description"
-      content="Join the IOIT ACM Student Chapter to explore computing, innovation, and networking. Participate in events, workshops, and research collaborations."
+      content="{% block og_description %}Join the IOIT ACM Student Chapter to explore computing, innovation, and networking. Participate in events, workshops, and research collaborations.{% endblock %}"
     />
     <meta property="og:url" content="https://ioit.acm.org/" />
     <meta
       property="og:image"
-      content="{{ url_for('static', filename='og-image.png') }}"
+      content="{% block og_image %}{{ url_for('static', filename='og-image.png') }}{% endblock %}"
     />
     <meta property="og:site_name" content="IOIT ACM" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card Metadata -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="IOIT ACM Student Chapter" />
+    <meta
+      name="twitter:title"
+      content="{% block twitter_title %}IOIT ACM Student Chapter{% endblock %}"
+    />
     <meta
       name="twitter:description"
-      content="Explore the world of computing with the IOIT ACM Student Chapter. Join us for events, workshops, and networking opportunities."
+      content="{% block twitter_description %}Explore the world of computing with the IOIT ACM Student Chapter. Join us for events, workshops, and networking opportunities.{% endblock %}"
     />
     <meta
       name="twitter:image"
-      content="{{ url_for('static', filename='og-image') }}"
+      content="{% block twitter_image %}{{ url_for('static', filename='og-image.png') }}{% endblock %}"
     />
     <meta name="twitter:site" content="@IOITACM" />
     <meta name="twitter:creator" content="@IOITACM" />

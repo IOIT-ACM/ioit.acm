@@ -1,5 +1,14 @@
-{% extends "base.html" %} {% block title %}Events{% endblock %} {% block content
-%}
+{% extends "base.html" %} {% block title %}Events - IOIT ACM{% endblock %} {%
+block og_title %}What Happens at IOIT ACM?{% endblock %} {% block og_description
+%}Explore exciting events, workshops, and contests organized by IOIT ACM to
+enhance your technical and non-technical skills.{% endblock %} {% block og_image
+%}{{ url_for('static', filename='img/assets/keyboard-header.jpg') }}{% endblock
+%} {% block twitter_image %}{{ url_for('static',
+filename='img/assets/keyboard-header.jpg') }}{% endblock %} {% block
+twitter_title %}Events - IOIT ACM{% endblock %} {% block twitter_description
+%}Join IOIT ACM for an enriching experience through engaging events, workshops,
+and contests that help you grow professionally and academically.{% endblock %}
+{% block content %}
 <div
   class="relative bg-cover bg-center h-[80vh]"
   style="background-image: url('{{ url_for('static', filename='img/assets/keyboard-header.jpg') }}');)"

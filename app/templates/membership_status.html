@@ -1,5 +1,15 @@
-{% extends "base.html" %} {% block title %}Membership{% endblock %} {% block
-content %}
+{% extends "base.html" %} {% block title %}Membership status - IOIT ACM{%
+endblock %} {% block og_title %}Join IOIT ACM Student Chapter{% endblock %} {%
+block og_description %}Check your membership status and membership IDs. Become a
+part of IOIT ACM to enhance your skills, participate in exciting contests,
+workshops, and grow as a professional in both technical and non-technical
+domains.{% endblock %} {% block og_image %}{{ url_for('static',
+filename='img/assets/membership.jpeg') }}{% endblock %} {% block twitter_image
+%}{{ url_for('static', filename='img/assets/membership.jpeg') }}{% endblock %}
+{% block twitter_title %}Membership - IOIT ACM{% endblock %} {% block
+twitter_description %}Join IOIT ACM and be a part of a thriving community of
+students in technical and non-technical fields. Enhance your skills and grow
+with us.{% endblock %} {% block content %}
 
 <div class="flex flex-col min-h-screen m-0">
   <div class="flex-grow mt-20">
