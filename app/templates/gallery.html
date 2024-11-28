@@ -33,7 +33,7 @@ content %}
         </div>
         <div class="overflow-hidden rounded-xl mb-6">
           <img
-            src="{{ url_for('static', filename='img/gallery/bit-by-bit/1.jpeg') }}"
+            src="{{ url_for('static', filename='img/gallery/bbb.jpeg') }}"
             alt="Bit by Bit"
             class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
           />
@@ -57,7 +57,7 @@ content %}
         </div>
         <div class="overflow-hidden rounded-xl mb-6">
           <img
-            src="{{ url_for('static', filename='img/gallery/drive/1.jpeg') }}"
+            src="{{ url_for('static', filename='img/gallery/drive.jpeg') }}"
             alt="Awareness Drive"
             class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
           />
@@ -82,7 +82,7 @@ content %}
         </div>
         <div class="overflow-hidden rounded-xl mb-6">
           <img
-            src="{{ url_for('static', filename='img/gallery/events/1.jpeg') }}"
+            src="{{ url_for('static', filename='img/gallery/events.jpeg') }}"
             alt="Speaker Sessions"
             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
           />
@@ -127,51 +127,30 @@ content %}
 
   <div id="gallery" class="gallery-columns">
     {% for image in collections %}
-    <img
-      src="{{ url_for('static', filename='img/gallery/' + image.name) }}"
-      alt="{{ image.desc }}"
-      class="mb-4 bg-gray-800"
-    />
+    <div class="mb-4 grid">
+      <img
+        src="{{ url_for('static', filename='img/gallery/' + image.name) }}"
+        alt="{{ image.desc }}"
+        class="bg-gray-800 w-full h-auto"
+      />
+      <p class="folder-name">{{ image.desc }}</p>
+    </div>
     {% endfor %}
   </div>
-
-  {% if total > 20 %}
-  <button
-    id="load-more"
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-10 mx-auto block"
-    data-page="2"
-  >
-    Load More
-  </button>
-  {% endif %}
 </section>
 
-<script>
-  const loadMoreButton = document.getElementById("load-more");
-  if (loadMoreButton) {
-    loadMoreButton.addEventListener("click", () => {
-      const gallery = document.getElementById("gallery");
-      const page = parseInt(loadMoreButton.dataset.page);
-
-      fetch(`/gallery/load-more?page=${page}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.length > 0) {
-            data.forEach((image) => {
-              const img = document.createElement("img");
-              img.src = `/static/img/gallery/${image.name}`;
-              img.alt = image.desc;
-              img.className = "mb-4";
-              gallery.appendChild(img);
-            });
-            loadMoreButton.dataset.page = page + 1;
-          } else {
-            loadMoreButton.style.display = "none";
-          }
-        })
-        .catch((err) => console.error(err));
-    });
-  }
-</script>
+<div
+  class="bg-gradient-to-r mt-20 from-blue-800 to-blue-600 py-8 px-6 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg"
+>
+  <h2 class="text-2xl md:text-4xl font-bold mb-6 md:mb-0">
+    Become a part of such awesomeness
+  </h2>
+  <a
+    href="/join"
+    class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+  >
+    Join IOIT ACM
+  </a>
+</div>
 
 {% endblock %}
