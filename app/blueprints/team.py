@@ -28,45 +28,73 @@ def fetch_team():
     year = request.args.get("year", max(team_data.keys(), key=int))
     selected_team_data = team_data.get(year, [])
 
-    # Add URLs for static image paths
-    for member in selected_team_data:
-        member["image_url"] = url_for("static", filename="img/team/" + member["image"])
-
-    # Render team members in grid layout with consistent styles
+    # Render team members in a modern card layout
     rendered_cards = ""
     for member in selected_team_data:
+        # Generate social media links
+        social_links = ""
+
+        if member.get("socials", {}).get("github"):
+            social_links += """
+            <a href="{github_url}" target="_blank"
+                class="text-gray-600 hover:text-gray-400 transition duration-200">
+                <i class="fab fa-github text-base"></i>
+            </a>
+            """.format(github_url=member["socials"]["github"])
+
+        if member.get("socials", {}).get("linkedin"):
+            social_links += """
+            <a href="{linkedin_url}" target="_blank"
+                class="text-blue-600 hover:text-blue-400 transition duration-200">
+                <i class="fab fa-linkedin text-base"></i>
+            </a>
+            """.format(linkedin_url=member["socials"]["linkedin"])
+
+        if member.get("socials", {}).get("instagram"):
+            social_links += """
+            <a href="{instagram_url}" target="_blank"
+                class="text-pink-600 hover:text-pink-400 transition duration-200">
+                <i class="fab fa-instagram text-base"></i>
+            </a>
+            """.format(instagram_url=member["socials"]["instagram"])
+
+        if member.get("socials", {}).get("linktree"):
+            social_links += """
+            <a href="{linktree_url}" target="_blank"
+                class="text-green-600 hover:text-green-400 transition duration-200">
+                <i class="fas fa-link text-base"></i>
+            </a>
+            """.format(linktree_url=member["socials"]["linktree"])
+
+        # Render member card
         rendered_cards += """
-        <div class="flex flex-col md:mx-auto md:w-[400px] w-auto bg-white text-blue-600 rounded-lg overflow-hidden shadow-lg">
-            <!-- Image Section -->
-            <img src="{image_url}" alt="{name}" class="w-full md:h-64 h-40 object-cover">
-            <!-- Text Section -->
-            <div class="p-3 md:p-4 w-full text-left">
-                <h3 class="text-sm md:text-2xl font-semibold">{name}</h3>
-                <p class="text-xs md:text-lg text-gray-400">{title}</p>
-                <div class="flex gap-2 mt-2">
-                    {github_link}
-                    {linkedin_link}
-                </div>
+        <div
+          class="flex flex-col items-center text-blue-600 rounded-lg overflow-hidden"
+        >
+          <!-- Image Section -->
+          <div
+            class="w-44 h-44 md:w-48 md:h-48 bg-gray-100 border border-gray-300 overflow-hidden rounded-full mb-4 shadow-lg"
+          >
+            <img
+              src="{image_url}"
+              alt="{name}"
+              class="w-full h-full object-cover object-top transition-transform duration-300 hover:scale-110"
+            />
+          </div>
+          <!-- Text Section -->
+          <div class="p-4 text-center">
+            <h3 class="text-lg font-semibold text-blue-800">{name}</h3>
+            <p class="text-sm text-gray-500">{title}</p>
+            <div class="flex justify-center gap-4 mt-3">
+              {social_links}
             </div>
+          </div>
         </div>
         """.format(
-            image_url=member["image_url"],
+            image_url=url_for("static", filename="img/team/" + member["image"]),
             name=member["name"],
             title=member["title"],
-            github_link=(
-                '<a href="{url}" target="_blank" class="text-gray-500 hover:text-gray-300 transition duration-200"><i class="fab fa-github text-sm md:text-base"></i></a>'.format(
-                    url=member["github"]
-                )
-                if member.get("github")
-                else ""
-            ),
-            linkedin_link=(
-                '<a href="{url}" target="_blank" class="text-blue-500 hover:text-blue-300 transition duration-200"><i class="fab fa-linkedin text-sm md:text-base"></i></a>'.format(
-                    url=member["linkedin"]
-                )
-                if member.get("linkedin")
-                else ""
-            ),
+            social_links=social_links,
         )
 
     # Return the rendered HTML as a response

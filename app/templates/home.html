@@ -3,7 +3,7 @@
 <div class="bg-gray-100 min-h-screen">
   <!-- Header Section -->
   <div
-    class="relative h-screen flex items-center justify-center text-center bg-cover bg-center"
+    class="relative min-h-screen h-auto flex pt-12 md:pt-0 items-center justify-center text-center bg-cover bg-center"
     style="background-image: url('{{ url_for('static', filename='img/assets/desktop-bg.jpg') }}');"
   >
     <!-- Overlay with gradient -->
@@ -12,7 +12,7 @@
     ></div>
 
     <!-- Content -->
-    <div class="relative z-10 px-6">
+    <div class="relative z-10 px-6 md:px-8 py-4 w-full">
       <!-- ACM Logo -->
       <div class="md:mb-8 mb-4">
         <img
@@ -35,7 +35,7 @@
         with vision and determination since its inception in 2019.
       </p>
 
-      <!-- Rhombus Links -->
+      <!-- Rhombus Links (Ensure they stay inside on small screens) -->
       <div class="md:flex justify-center gap-8 flex-wrap mt-8 hidden">
         <a href="/events" class="w-40 h-40 relative group">
           <div
@@ -67,10 +67,7 @@
               class="w-12 h-12 mb-2 text-blue-400"
             />
             <h3 class="text-blue-400 font-semibold">Flagship Events</h3>
-            <p class="text-gray-300 text-sm">
-              TENET & <br />
-              IOIT MUN
-            </p>
+            <p class="text-gray-300 text-sm">TENET & <br />IOIT MUN</p>
           </div>
         </a>
 
@@ -126,6 +123,7 @@
 
       <div class="block md:hidden px-4 py-2 text-left text-white">
         <div class="space-y-2">
+          <!-- Mobile Menu -->
           <a
             href="/events"
             class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
@@ -140,6 +138,7 @@
               <p class="text-gray-300 text-xs">Activities</p>
             </div>
           </a>
+          <!-- Additional Mobile Links -->
           <a
             href="https://www.ioittenet.com/"
             class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
@@ -156,6 +155,7 @@
               <p class="text-gray-300 text-xs">TENET & IOIT MUN</p>
             </div>
           </a>
+          <!-- Other Mobile Menu Items -->
           <a
             href="/about"
             class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
