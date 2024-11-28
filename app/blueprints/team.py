@@ -13,6 +13,7 @@ def team():
 
     # Add URLs for static image paths
     for member in selected_team_data:
+        member.setdefault("socials", {})
         member["image_url"] = url_for("static", filename="img/team/" + member["image"])
 
     return render_template(
