@@ -13,7 +13,7 @@ endblock %} {% block content %}
   class="relative h-auto md:mt-0 mt-20 md:h-[100vh] flex flex-col md:flex-row items-center justify-between bg-gray-100"
 >
   <!-- Team Image -->
-  <div class="w-full h-auto md:w-1/2 md:h-full">
+  <div class="w-full h-auto md:w-1/2 md:h-full px-4 md:px-0">
     <img
       src="{{ url_for('static', filename='img/team/team.jpeg') }}"
       alt="Team Header Image"
@@ -50,20 +50,32 @@ endblock %} {% block content %}
   <!-- Faculty Sponsor Centered -->
   <div class="flex justify-center mb-12">
     <div
-      class="p-6 bg-white shadow-lg rounded-xl hover:shadow-2xl w-full h-auto max-w-sm mx-auto"
+      class="p-6 bg-white shadow-md rounded-lg hover:shadow-xl transition-shadow duration-300 w-full max-w-sm mx-auto"
+      role="presentation"
     >
       <img
         src="/static/img/team/meenakshi-thalor.jpg"
-        alt="Dr. Meenakshi Thalor"
-        class="w-full h-auto object-cover rounded-t-xl shadow-md transition-shadow duration-200 hover:shadow-lg"
+        alt="Portrait of Dr. Meenakshi Thalor"
+        class="w-full h-auto object-cover rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
       />
-      <div class="text-center mt-6">
+      <div class="text-center mt-4">
         <h3
-          class="text-2xl font-semibold text-blue-700 hover:text-blue-800 transition-colors duration-200"
+          class="text-xl font-medium text-gray-800 hover:text-blue-600 transition-colors duration-200"
         >
           Dr. Meenakshi Thalor
         </h3>
-        <p class="text-gray-600 text-sm mt-2">Faculty Sponsor</p>
+        <p class="text-gray-500 text-sm mt-1">Faculty Sponsor</p>
+        <div class="mt-3">
+          <a
+            href="https://www.linkedin.com/in/dr-meenakshi-thalor-03937840/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-600 hover:text-blue-400 transition duration-200 inline-flex gap-2 items-center"
+          >
+            <i class="fab fa-linkedin text-lg mr-1"></i>
+            <span class="text-sm">Connect on LinkedIn</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>

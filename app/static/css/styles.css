@@ -2,22 +2,6 @@ body::-webkit-scrollbar {
   width: 0px;
 }
 
-/* Event card styles */
-.event-card {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition:
-    transform 0.3s,
-    box-shadow 0.3s;
-}
-
-.event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-}
-
 .gallery-columns {
   column-count: 3;
 }
@@ -26,12 +10,6 @@ body::-webkit-scrollbar {
   .gallery-columns {
     column-count: 2;
   }
-}
-
-/* Title section styles */
-#upcoming-events-section,
-#past-events-section {
-  margin-bottom: 30px;
 }
 
 h2 {
@@ -48,17 +26,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Spinner styles */
-.spinner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1rem;
-  color: #3182ce;
-  padding: 30px;
-}
-
-/* Grid adjustments for responsive design */
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr 1fr;

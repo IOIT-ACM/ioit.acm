@@ -109,14 +109,18 @@
   <body class="bg-gray-100 text-gray-800">
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 w-full z-50 bg-white shadow-lg">
-      <div class="flex items-center justify-between md:px-6 md:py-4 px-2 py-2">
+      <div class="flex items-center justify-between md:px-6 md:py-3 px-4 py-2">
         <div class="flex items-center">
           <img
             src="{{ url_for('static', filename='img/assets/acm.png') }}"
             alt="IOIT ACM Logo"
-            class="w-10 h-10 mr-3"
+            class="w-auto h-10 mr-3"
           />
-          <a href="/" class="text-2xl font-bold text-blue-600">IOIT ACM</a>
+          <a
+            href="/"
+            class="md:text-2xl text-xl font-bold text-blue-600 font-sans"
+            >IOIT ACM</a
+          >
         </div>
         <button
           class="block sm:hidden text-blue-600 focus:outline-none"
@@ -330,10 +334,10 @@
               >
             </li>
             <li>
-              <a href="/about" class="hover:text-white transition">About</a>
+              <a href="/gallery" class="hover:text-white transition">Gallery</a>
             </li>
             <li>
-              <a href="/contact" class="hover:text-white transition">Contact</a>
+              <a href="/about" class="hover:text-white transition">About</a>
             </li>
             <li>
               <a href="/events" class="hover:text-white transition">Events</a>
@@ -362,34 +366,41 @@
       >
         <!-- Social Links on the Left -->
         <div class="flex space-x-6">
-          <a href="#" class="hover:text-white transition" aria-label="Facebook">
+          <a
+            href="https://m.facebook.com/ioit.acm/"
+            class="hover:text-white transition"
+            aria-label="Facebook"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i class="fab fa-facebook text-2xl"></i>
           </a>
           <a
-            href="#"
+            href="https://www.instagram.com/ioit__acm"
             class="hover:text-white transition"
             aria-label="Instagram"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <i class="fab fa-instagram text-2xl"></i>
           </a>
-          <a href="#" class="hover:text-white transition" aria-label="LinkedIn">
+          <a
+            href="https://www.linkedin.com/company/ioit-acm/"
+            class="hover:text-white transition"
+            aria-label="LinkedIn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i class="fab fa-linkedin text-2xl"></i>
           </a>
-          <a href="#" class="hover:text-white transition" aria-label="Twitter">
-            <i class="fab fa-twitter text-2xl"></i>
-          </a>
-          <a href="#" class="hover:text-white transition" aria-label="YouTube">
-            <i class="fab fa-youtube text-2xl"></i>
-          </a>
-        </div>
-
-        <!-- Email Section on the Right -->
-        <div class="flex items-center space-x-2">
           <a
-            href="mailto:acm.ioit@gmail.com"
-            class="flex items-center text-gray-300 space-x-2 hover:text-white transition"
+            href="https://x.com/IOIT_ACM"
+            class="hover:text-white transition"
+            aria-label="Twitter"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <span>acm.ioit@gmail.com</span>
+            <i class="fab fa-twitter text-2xl"></i>
           </a>
         </div>
       </div>
