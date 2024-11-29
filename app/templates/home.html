@@ -326,7 +326,7 @@
   </section>
 
   <div
-    class="grid container mx-auto max-w-7xl gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+    class="grid container px-8 md:px-0 mx-auto max-w-7xl gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
   >
     <!-- IOIT TENET 2024 -->
     <div
@@ -336,7 +336,7 @@
         <img
           src="https://ioit.acm.org/tenet/gallery/24/drone/12.jpeg"
           alt="IOIT TENET 2024"
-          class="w-64 h-64 bg-gray-300 object-cover rounded-lg mb-4"
+          class="md:w-64 md:h-64 h-44 w-full object-cover rounded-lg mb-4 shadow-lg"
         />
         <div class="text-center">
           <h3 class="text-2xl font-semibold text-blue-800">IOIT TENET 2024</h3>
@@ -362,7 +362,7 @@
         <img
           src="https://ioit.acm.org/tenet/gallery/24/mun-closing/15.jpeg"
           alt="IOIT MUN 2023"
-          class="w-64 h-64 bg-gray-300 object-cover rounded-lg mb-4"
+          class="md:w-64 md:h-64 h-44 w-full object-cover rounded-lg mb-4 shadow-lg"
         />
         <div class="text-center">
           <h3 class="text-2xl font-semibold text-green-800">IOIT MUN 2023</h3>
@@ -388,7 +388,7 @@
         <img
           src="https://ioit.acm.org/tenet/mun/2024/9.jpeg"
           alt="IOIT MUN 2024"
-          class="w-64 h-64 object-cover bg-gray-300 rounded-lg mb-4"
+          class="md:w-64 md:h-64 h-44 w-full object-cover rounded-lg mb-4 shadow-lg"
         />
         <div class="text-center">
           <h3 class="text-2xl font-semibold text-yellow-800">IOIT MUN 2024</h3>
@@ -473,9 +473,11 @@
     </div>
   </div>
 
-  <div class="mx-auto max-w-7xl px-4 mt-10">
+  <div class="mx-auto max-w-7xl px-4 md:px-0 mt-10">
     <div id="past-events-section">
-      <div class="flex justify-between items-center mb-6">
+      <div
+        class="flex justify-between md:items-center mb-6 gap-3 md:gap-0 flex-col md:flex-row w-full"
+      >
         <h2 class="text-3xl font-semibold text-gray-800">Recent Events</h2>
         <a href="/events" class="text-blue-500 hover:text-blue-700 text-sm"
           >View All Events & Activities</a
@@ -501,7 +503,7 @@
     </div>
   </div>
 
-  <div class="max-w-6xl mx-auto my-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto my-20 px-8 sm:px-6 lg:px-8">
     <div
       class="bg-white shadow-xl rounded-lg overflow-hidden flex flex-col sm:flex-row"
     >
@@ -515,15 +517,17 @@
 
       <div class="sm:w-2/3 py-8 px-6 sm:px-12">
         <!-- Title -->
-        <h2 class="text-3xl font-semibold text-gray-800 mb-4">
+        <h2 class="md:text-3xl text-2xl font-semibold text-gray-800 mb-4">
           National Achievement of Outstanding Community Service
         </h2>
-        <p class="text-xl text-gray-600 mb-6">
+        <p class="md:text-xl text-lg text-gray-600 mb-6">
           Awarded to IOIT ACM Student Chapter for reporting the highest number
           of activities in the ACM India Student Chapter Awards 2023
         </p>
 
-        <p class="text-base text-gray-700 text-justify leading-relaxed mb-4">
+        <p
+          class="md:text-base tetx-xs text-gray-700 text-justify leading-relaxed mb-4"
+        >
           The IOIT ACM Student Chapter has been recognized for its exceptional
           contribution to the community. By reporting the highest number of
           activities, the chapter has demonstrated commitment to growth,
