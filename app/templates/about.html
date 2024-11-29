@@ -1,17 +1,201 @@
-{% extends "base.html" %} {% block title %} About {% endblock %} {% block
-content %}
-<div class="min-h-screen bg-gray-100 flex items-center justify-center">
-  <div class="text-center p-8 bg-white shadow-lg rounded-lg">
-    <h1 class="text-3xl font-bold text-gray-800 mb-4">
-      Website is under active development
-    </h1>
-    <p class="text-xl text-gray-600 mb-6">This page will be avaliable soon!</p>
-    <p class="text-lg text-gray-700">
-      For more details, contact
-      <a href="mailto:adimail2404@gmail.com" class="text-blue-500 underline"
-        >Aditya Godse</a
-      >.
-    </p>
+{% extends "base.html" %}
+{% block title %}About Us - IOIT ACM{% endblock %}
+{% block og_title %}About IOIT ACM Student Chapter{% endblock %}
+{% block og_description %}Discover the vision, mission, and goals of the IOIT ACM Student Chapter. Learn how we strive to create a community fostering innovation, collaboration, and professional growth.{% endblock %}
+{% block og_image %}{{ url_for('static', filename='img/assets/about_us.jpeg') }}{% endblock %}
+{% block twitter_image %}{{ url_for('static', filename='img/assets/about_us.jpeg') }}{% endblock %}
+{% block twitter_title %}About Us - IOIT ACM{% endblock %}
+{% block twitter_description %}Learn more about the IOIT ACM Student Chapter and our dedication to creating a thriving community for learning, collaboration, and growth.{% endblock %}
+
+{% block content %}
+<div
+  class="relative h-auto md:mt-0 mt-20 md:h-[100vh] flex flex-col md:flex-row items-center justify-between bg-gray-100"
+>
+  <!-- Image Section -->
+  <div class="w-full h-auto md:w-1/2 md:h-full">
+    <img
+      src="{{ url_for('static', filename='img/gallery/award-2024/4.jpeg') }}"
+      alt="About Us Image"
+      class="object-cover h-full w-full bg-dark-300 rounded-br-[200px] md:rounded-br-[200px] rounded-tl-[200px] md:rounded-none"
+    />
   </div>
+
+  <!-- Text Section -->
+  <div class="w-full md:w-1/2 text-left p-8 md:p-16">
+    <h1 class="text-3xl md:text-5xl font-extrabold text-blue-600 mb-4">
+      About IOIT ACM
+    </h1>
+    <p class="text-gray-700 mb-6 text-base md:text-lg">
+      IOIT ACM Student Chapter is a thriving community that bridges the gap
+      between students and the professional world. We focus on innovation,
+      collaboration, and growth, empowering students to excel in both technical
+      and non-technical domains.
+    </p>
+    <p class="text-gray-700 mb-6 text-base md:text-lg">
+      Our mission is to foster a culture of learning, creativity, and
+      professional development. We believe in nurturing talent, encouraging
+      exploration, and providing the tools and resources needed to thrive in
+      today’s competitive world.
+    </p>
+    <div class="flex gap-4 text-xs sm:text-base">
+      <a
+        href="/team"
+        class="bg-blue-400 hover:bg-blue-500 text-white font-semibold md:px-8 md:py-3 px-4 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+      >
+        Meet Our Team
+      </a>
+      <a
+        href="/contact"
+        class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold md:px-8 md:py-3 px-4 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+      >
+        Contact Us
+      </a>
+    </div>
+
+        <!-- Social Media Section -->
+        <div class="mt-8 flex gap-6 justify-start">
+          <a
+            href="https://facebook.com/ioitacm"
+            class="text-gray-700 hover:text-blue-600 text-4xl transition-transform transform hover:scale-125"
+            aria-label="Facebook"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a
+            href="https://twitter.com/ioitacm"
+            class="text-gray-700 hover:text-blue-400 text-4xl transition-transform transform hover:scale-125"
+            aria-label="Twitter"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a
+            href="https://linkedin.com/company/ioitacm"
+            class="text-gray-700 hover:text-blue-800 text-4xl transition-transform transform hover:scale-125"
+            aria-label="LinkedIn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a
+            href="https://instagram.com/ioitacm"
+            class="text-gray-700 hover:text-pink-600 text-4xl transition-transform transform hover:scale-125"
+            aria-label="Instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a
+            href="https://github.com/ioitacm"
+            class="text-gray-700 hover:text-black text-4xl transition-transform transform hover:scale-125"
+            aria-label="GitHub"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+
+
+<!-- Values Section -->
+<div class="py-12">
+  <div class="max-w-7xl mx-auto text-center">
+    <h2 class="text-3xl font-extrabold text-blue-600 mb-8">Our Core Values</h2>
+    <p class="text-lg text-gray-700 mb-12">
+      At IOIT ACM, we believe in fostering a community driven by these core
+      principles:
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Innovation -->
+      <div
+        class="bg-white p-6 rounded-lg shadow-md relative transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-blue-50 hover:text-blue-600 hover:translate-y-2"
+      >
+        <h3 class="text-xl font-semibold text-blue-600 mb-4">Innovation</h3>
+        <p class="text-gray-700">
+          Encouraging creativity and original thinking to develop solutions for
+          real-world challenges.
+        </p>
+      </div>
+
+      <!-- Collaboration -->
+      <div
+        class="bg-white p-6 rounded-lg shadow-md relative transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-blue-50 hover:text-blue-600 hover:translate-y-2"
+      >
+        <h3 class="text-xl font-semibold text-blue-600 mb-4">Collaboration</h3>
+        <p class="text-gray-700">
+          Building connections and working together to achieve greater success.
+        </p>
+      </div>
+
+      <!-- Growth -->
+      <div
+        class="bg-white p-6 rounded-lg shadow-md relative transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-blue-50 hover:text-blue-600 hover:translate-y-2"
+      >
+        <h3 class="text-xl font-semibold text-blue-600 mb-4">Growth</h3>
+        <p class="text-gray-700">
+          Supporting personal and professional development through opportunities
+          and resources.
+        </p>
+      </div>
+
+      <!-- Excellence -->
+      <div
+        class="bg-white p-6 rounded-lg shadow-md relative transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-blue-50 hover:text-blue-600 hover:translate-y-2"
+      >
+        <h3 class="text-xl font-semibold text-blue-600 mb-4">Excellence</h3>
+        <p class="text-gray-700">
+          Striving to achieve the highest standards in everything we do.
+        </p>
+      </div>
+
+      <!-- Inclusivity -->
+      <div
+        class="bg-white p-6 rounded-lg shadow-md relative transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-blue-50 hover:text-blue-600 hover:translate-y-2"
+      >
+        <h3 class="text-xl font-semibold text-blue-600 mb-4">Inclusivity</h3>
+        <p class="text-gray-700">
+          Promoting diversity and creating an environment where everyone feels
+          welcome.
+        </p>
+      </div>
+
+      <!-- Leadership -->
+      <div
+        class="bg-white p-6 rounded-lg shadow-md relative transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-blue-50 hover:text-blue-600 hover:translate-y-2"
+      >
+        <h3 class="text-xl font-semibold text-blue-600 mb-4">Leadership</h3>
+        <p class="text-gray-700">
+          Inspiring individuals to lead initiatives and make a meaningful
+          impact.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Closing Section -->
+<div
+  class="bg-gradient-to-r mt-20 from-blue-800 to-blue-600 py-8 px-6 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg"
+>
+  <h2 class="text-2xl md:text-4xl font-bold mb-6 md:mb-0">
+    Join our community and grow with us
+  </h2>
+  <a
+    href="/join"
+    class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+  >
+    Join IOIT ACM
+  </a>
 </div>
 {% endblock %}
