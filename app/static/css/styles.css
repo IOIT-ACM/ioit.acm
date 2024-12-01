@@ -72,3 +72,16 @@ a:hover {
 .image-marquee-content img {
   margin: 0px;
 }
+
+@keyframes rotate {
+  0% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(405deg);
+  }
+}
+
+.animate-rotate {
+  animation: rotate 10s linear infinite;
+}

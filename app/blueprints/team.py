@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, request
+from flask import Blueprint, render_template, request
 from app.data.teams import team_data
 
 # Define the blueprint

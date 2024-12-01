@@ -1,241 +1,253 @@
-{% extends "base.html" %}
-{% block title %}About Us - IOIT ACM{% endblock %}
-{% block og_title %}About IOIT ACM Student Chapter{% endblock %}
-{% block og_description %}Discover the vision, mission, and goals of the IOIT ACM Student Chapter. Learn how we strive to create a community fostering innovation, collaboration, and professional growth.{% endblock %}
-{% block og_image %}{{ url_for('static', filename='img/assets/about_us.jpeg') }}{% endblock %}
-{% block twitter_image %}{{ url_for('static', filename='img/assets/about_us.jpeg') }}{% endblock %}
-{% block twitter_title %}About Us - IOIT ACM{% endblock %}
-{% block twitter_description %}Learn more about the IOIT ACM Student Chapter and our dedication to creating a thriving community for learning, collaboration, and growth.{% endblock %}
+{% extends "base.html" %} {% block title %}About Us - IOIT ACM{% endblock %} {%
+block og_title %}About IOIT ACM Student Chapter{% endblock %} {% block
+og_description %}Discover the vision, mission, and goals of the IOIT ACM Student
+Chapter. Learn how we strive to create a community fostering innovation,
+collaboration, and professional growth.{% endblock %} {% block og_image %}{{
+url_for('static', filename='img/team/team.jpeg') }}{% endblock %} {% block
+twitter_image %}{{ url_for('static', filename='img/assets/about_us.jpeg') }}{%
+endblock %} {% block twitter_title %}About Us - IOIT ACM{% endblock %} {% block
+twitter_description %}Learn more about the IOIT ACM Student Chapter and our
+dedication to creating a thriving community for learning, collaboration, and
+growth.{% endblock %} {% block content %}
 
-{% block content %}
-
-<style>
-  .gallery {
---size: 100px;
-display: grid;
-grid-template-columns: repeat(6, var(--size));
-grid-auto-rows: var(--size);
-margin-bottom: var(--size);
-place-items: start center;
-gap: 5px;
-
-&:has(:hover) img:not(:hover),
-&:has(:focus) img:not(:focus){
-  filter: brightness(0.5) contrast(0.5);
-}
-
-& img {
-  object-fit: cover;
-  width: calc(var(--size) * 2);
-  height: calc(var(--size) * 2);
-  clip-path: path("M90,10 C100,0 100,0 110,10 190,90 190,90 190,90 200,100 200,100 190,110 190,110 110,190 110,190 100,200 100,200 90,190 90,190 10,110 10,110 0,100 0,100 10,90Z");
-  transition: clip-path 0.25s, filter 0.75s;
-  grid-column: auto / span 2;
-  border-radius: 5px;
-
-  &:nth-child(5n - 1) { 
-    grid-column: 2 / span 2 
-  }
-
-  &:hover,
-  &:focus {
-    clip-path: path("M0,0 C0,0 200,0 200,0 200,0 200,100 200,100 200,100 200,200 200,200 200,200 100,200 100,200 100,200 100,200 0,200 0,200 0,100 0,100 0,100 0,100 0,100Z");
-    z-index: 1;
-    transition: clip-path 0.25s, filter 0.25s;
-  }
-  
-  &:focus {
-    outline: 1px dashed black;
-    outline-offset: -5px;
-  }
-}
-}
-</style>
-
-<div
-  class="relative h-auto md:mt-0 mt-20 md:h-[100vh] flex flex-col md:flex-row items-center justify-between bg-gray-100"
->
-  <!-- Image Section -->
-  <div class="w-full h-auto md:w-1/2 md:h-full">
-    <img
-      src="{{ url_for('static', filename='img/gallery/award-2024/4.jpeg') }}"
-      alt="About Us Image"
-      class="object-cover h-full w-full bg-dark-300 rounded-br-[200px] md:rounded-br-[200px] rounded-tl-[200px] md:rounded-none"
-    />
+<section class="mt-32 grid grid-cols-1 md:grid-cols-2 mx-auto max-w-6xl p-8">
+  <div class="flex justify-center mb-10">
+    <div class="w-2/3 md:mt-20 relative h-fit sticky top-32">
+      <div
+        class="aspect-square bg-blue-500 w-1/2 h-auto transform rotate-45 absolute border border-white rounded-xl"
+      ></div>
+      <div
+        class="aspect-square overflow-hidden bg-blue-500 w-full h-auto transform -rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400"
+      >
+        <video
+          id="about-video"
+          src="{{ url_for('static', filename='img/about/clip.mp4') }}"
+          alt="About Us Image"
+          class="object-cover h-full w-full cursor-pointer"
+          muted
+          autoplay
+          loop
+          playsinline
+        ></video>
+      </div>
+      <div
+        class="aspect-square absolute md:bottom-3 bottom-2 md:right-2 right-1 bg-blue-500 w-1/3 h-auto transform rotate-45 border border-white rounded-xl backdrop-blur-sm backdrop-opacity-80 bg-opacity-60 animate-rotate"
+      ></div>
+    </div>
   </div>
-  <!-- Text Section -->
-  <div class="w-full md:w-1/2 text-left p-8 md:p-16">
-    <h1 class="text-3xl md:text-5xl font-extrabold text-blue-600 mb-4">
-      About IOIT ACM
-    </h1>
-    <p class="text-gray-700 mb-6 text-base md:text-lg">
-      IOIT ACM Student Chapter is a thriving community that bridges the gap
-      between students and the professional world. We focus on innovation,
-      collaboration, and growth, empowering students to excel in both technical
-      and non-technical domains.
-    </p>
-    <div class="flex gap-4 text-xs sm:text-base">
+  <div class="flex flex-col gap-10 z-50">
+    <div>
+      <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
+        What is ACM?
+      </h2>
+      <hr class="border-t-2 border-gray-500 my-6" />
+      <p class="text-gray-600 text-sm md:text-lg mb-6">
+        As a proud student chapter of the international
+        <a href="https://www.acm.org/" class="text-blue-600 hover:underline"
+          >Association for Computing Machinery (ACM)</a
+        >, the AISSMS IOIT ACM Student Chapter is a vibrant and inclusive
+        community at AISSMS Institute of Information Technology. As one of the
+        premier technology-focused organizations in the region, we welcome
+        students from all disciplines and skill levels to collaborate, innovate,
+        and share our passion for technology.
+        <br />
+        <br />
+        Through a diverse range of initiatives, including flagship events like
+        <a href="https://ioittenet.com/" class="text-blue-600 hover:underline"
+          >TENET 2024</a
+        >,
+        <a href="https://www.ioitmun.com/" class="text-blue-600 hover:underline"
+          >IOIT MUN</a
+        >, Tech SIGs, and our monthly coding contest Bit by Bit, we aim to
+        inspire and engage students in cutting-edge domains such as artificial
+        intelligence, cybersecurity, virtual reality, web and mobile
+        development, and more. With workshops, speaker panels, hackathons, and
+        competitions, our chapter fosters learning, creativity, and leadership,
+        creating opportunities for all to thrive in the ever-evolving tech
+        landscape.
+        <br />
+        <br />
+        Explore our
+        <a href="/gallery" class="text-blue-600 hover:underline">gallery</a> to
+        see highlights from our ACM events.
+      </p>
+    </div>
+    <div class="text-sm md:text-lg">
+      <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
+        What we do?
+      </h2>
+      <hr class="border-t-2 border-gray-500 my-6" />
+      <p class="text-gray-600 mb-6">
+        An ACM Student Chapter, affiliated with the
+        <a href="https://www.acm.org/" class="text-blue-600 hover:underline"
+          >Association for Computing Machinery (ACM)</a
+        >, primarily focuses on providing a platform for computer science
+        students to network, learn, and develop their skills through organizing
+        technical talks, workshops, coding competitions, and other events,
+        essentially acting as a hub for connecting students with industry
+        professionals and fostering a vibrant computing community within their
+        university.
+      </p>
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">
+          Key Functions of an ACM Student Chapter
+        </h2>
+        <ul class="list-none list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Educational events:</strong> Hosting guest lectures,
+            seminars, and workshops on current trends in computing by industry
+            experts.
+          </li>
+          <li>
+            <strong>Competitions:</strong> Organizing coding competitions and
+            hackathons to encourage problem-solving and practical application of
+            skills.
+          </li>
+          <li>
+            <strong>Mentorship opportunities:</strong> Connecting students with
+            experienced professionals for guidance and career advice.
+          </li>
+          <li>
+            <strong>Networking events:</strong> Facilitating interaction among
+            students, faculty, and industry professionals through social
+            gatherings and meetups.
+          </li>
+          <li>
+            <strong>Community outreach:</strong> Participating in local tech
+            events, volunteering activities, and promoting computer science
+            education.
+          </li>
+          <li>
+            <strong>Professional development:</strong> Providing resources for
+            career preparation like resume workshops and interview skills
+            training.
+          </li>
+        </ul>
+      </section>
+    </div>
+    <div>
+      <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
+        Achievements
+      </h2>
+      <hr class="border-t-2 border-gray-500 my-6" />
       <a
-        href="/team"
-        class="bg-blue-400 hover:bg-blue-500 text-white font-semibold md:px-8 md:py-3 px-4 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+        href="https://www.acm.org/articles/acm-india-bulletins/2024/2023-student-chapter-awards"
+        class="text-base md:text-lg text-center md:text-left font-bold md:mb-4 mb-3 text-blue-600 hover:underline"
       >
-        Meet Our Team
+        National Achievement of Outstanding Community Service
       </a>
-      <a
-        href="https://linktr.ee/ioitacm"
-        class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold md:px-8 md:py-3 px-4 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
-      >
-        Contact Us
-      </a>
+      <p class="text-gray-600 text-sm md:text-lg mb-6">
+        The IOIT ACM Student Chapter has been recognized for its exceptional
+        contribution to the community. By reporting the highest number of
+        activities, the chapter has demonstrated commitment to growth, service,
+        and innovation in the field of technology and community engagement.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
+        How do I get involved?
+      </h2>
+      <hr class="border-t-2 border-gray-500 my-6" />
+      <p class="text-gray-600 text-sm md:text-lg mb-6">
+        No matter what your background or interest is, we would love to have you
+        at our events and activities! To keep up with what’s happening, we
+        recommend joining our membership portal. We will keep you up to date
+        with everything ACM
+        <br />
+        <br />
+        Here’s our social media, where you can see what we’re up to:
+      </p>
+      <div class="mt-8 flex gap-6 justify-start">
+        <a
+          href="https://facebook.com/ioitacm"
+          class="text-gray-700 hover:text-blue-600 text-3xl"
+          aria-label="Facebook"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a
+          href="https://twitter.com/ioit_acm"
+          class="text-gray-700 hover:text-blue-400 text-3xl"
+          aria-label="Twitter"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a
+          href="https://linkedin.com/company/ioit-acm"
+          class="text-gray-700 hover:text-blue-800 text-3xl"
+          aria-label="LinkedIn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a
+          href="https://instagram.com/ioit__acm"
+          class="text-gray-700 hover:text-pink-600 text-3xl"
+          aria-label="Instagram"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a
+          href="https://github.com/ioit-acm"
+          class="text-gray-700 hover:text-black text-3xl"
+          aria-label="GitHub"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
+        Sponsorships and collaborations
+      </h2>
+      <hr class="border-t-2 border-gray-500 my-6" />
+      <p class="text-gray-600 text-sm md:text-lg mb-6">
+        For sponsorship inquiries, please contact Devang Gandhi, Secretary at
+        AISSMS IOIT ACM Student chapter, at
+        <a href="tel:7385234057" class="text-blue-500 hover:underline">
+          7385234057
+        </a>
+        or email us at
+        <a
+          href="mailto:acm.studentbranch@aissmsioit.org"
+          class="text-blue-500 hover:underline"
+        >
+          acm.studentbranch@aissmsioit.org </a
+        >. We look forward to collaborating with you!
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="mt-12 mx-auto max-w-6xl p-8">
+  <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold mb-4">
+    Leadership
+  </h2>
+  <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-8">
+    {% for member in leadership %}
+
+    <div class="text-center">
+      <div
+        class="w-24 h-24 rounded-full border border-gray-300 mx-auto bg-cover bg-center"
+        style="background-image: url('{{ member.image }}');"
+      ></div>
+      <p class="mt-4">{{ member.name }}</p>
+      <p class="text-gray-500">{{ member.title }}</p>
     </div>
 
-        <!-- Social Media Section -->
-        <div class="mt-8 flex gap-6 justify-start">
-          <a
-            href="https://facebook.com/ioitacm"
-            class="text-gray-700 hover:text-blue-600 text-4xl transition-transform transform hover:scale-125"
-            aria-label="Facebook"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i class="fab fa-facebook"></i>
-          </a>
-          <a
-            href="https://twitter.com/ioit_acm"
-            class="text-gray-700 hover:text-blue-400 text-4xl transition-transform transform hover:scale-125"
-            aria-label="Twitter"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a
-            href="https://linkedin.com/company/ioit-acm"
-            class="text-gray-700 hover:text-blue-800 text-4xl transition-transform transform hover:scale-125"
-            aria-label="LinkedIn"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i class="fab fa-linkedin"></i>
-          </a>
-          <a
-            href="https://instagram.com/ioit__acm"
-            class="text-gray-700 hover:text-pink-600 text-4xl transition-transform transform hover:scale-125"
-            aria-label="Instagram"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a
-            href="https://github.com/ioit-acm"
-            class="text-gray-700 hover:text-black text-4xl transition-transform transform hover:scale-125"
-            aria-label="GitHub"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i class="fab fa-github"></i>
-          </a>
-
-          
-        </div>
-      </div>
-          
-      <article class="gallery">
-        <img src="{{ url_for('static', filename='img/about/image1.jpeg') }}" alt="image1" />
-        <img src="{{ url_for('static', filename='img/about/image2.jpeg') }}" alt="image1" />
-        <img src="{{ url_for('static', filename='img/about/image3.jpeg') }}" alt="image1" />
-        <img src="{{ url_for('static', filename='img/about/image4.jpeg') }}" alt="image1" />
-        <img src="{{ url_for('static', filename='img/about/image5.jpeg') }}" alt="image1" />
-        <img src="{{ url_for('static', filename='img/about/image6.jpeg') }}" alt="image1" />
-        <img src="{{ url_for('static', filename='img/about/image7.jpeg') }}" alt="image1" />
-        <img src="{{ url_for('static', filename='img/about/image8.jpeg') }}" alt="image1" />
-      </article>
-      
-
+    {% endfor %}
   </div>
 </div>
 
-
-
-<!-- Values Section -->
-<div class="py-12">
-  <div class="max-w-7xl mx-auto text-center">
-    <h2 class="text-3xl font-extrabold text-blue-600 mb-8">Our Core Values</h2>
-    <p class="text-lg text-gray-700 mb-12">
-      At IOIT ACM, we believe in fostering a community driven by these core
-      principles:
-    </p>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Innovation -->
-      <div
-        class="bg-white p-6 rounded-lg shadow-md relative transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-blue-50 hover:text-blue-600 hover:translate-y-2"
-      >
-        <h3 class="text-xl font-semibold text-blue-600 mb-4">Innovation</h3>
-        <p class="text-gray-700">
-          Encouraging creativity and original thinking to develop solutions for
-          real-world challenges.
-        </p>
-      </div>
-
-      <!-- Collaboration -->
-      <div
-        class="bg-white p-6 rounded-lg shadow-md relative transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-blue-50 hover:text-blue-600 hover:translate-y-2"
-      >
-        <h3 class="text-xl font-semibold text-blue-600 mb-4">Collaboration</h3>
-        <p class="text-gray-700">
-          Building connections and working together to achieve greater success.
-        </p>
-      </div>
-
-      <!-- Growth -->
-      <div
-        class="bg-white p-6 rounded-lg shadow-md relative transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-blue-50 hover:text-blue-600 hover:translate-y-2"
-      >
-        <h3 class="text-xl font-semibold text-blue-600 mb-4">Growth</h3>
-        <p class="text-gray-700">
-          Supporting personal and professional development through opportunities
-          and resources.
-        </p>
-      </div>
-
-      <!-- Excellence -->
-      <div
-        class="bg-white p-6 rounded-lg shadow-md relative transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-blue-50 hover:text-blue-600 hover:translate-y-2"
-      >
-        <h3 class="text-xl font-semibold text-blue-600 mb-4">Excellence</h3>
-        <p class="text-gray-700">
-          Striving to achieve the highest standards in everything we do.
-        </p>
-      </div>
-
-      <!-- Inclusivity -->
-      <div
-        class="bg-white p-6 rounded-lg shadow-md relative transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-blue-50 hover:text-blue-600 hover:translate-y-2"
-      >
-        <h3 class="text-xl font-semibold text-blue-600 mb-4">Inclusivity</h3>
-        <p class="text-gray-700">
-          Promoting diversity and creating an environment where everyone feels
-          welcome.
-        </p>
-      </div>
-
-      <!-- Leadership -->
-      <div
-        class="bg-white p-6 rounded-lg shadow-md relative transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-blue-50 hover:text-blue-600 hover:translate-y-2"
-      >
-        <h3 class="text-xl font-semibold text-blue-600 mb-4">Leadership</h3>
-        <p class="text-gray-700">
-          Inspiring individuals to lead initiatives and make a meaningful
-          impact.
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Closing Section -->
 <div
   class="bg-gradient-to-r mt-20 from-blue-800 to-blue-600 py-8 px-6 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg"
 >
@@ -249,4 +261,17 @@ gap: 5px;
     Join IOIT ACM
   </a>
 </div>
+
+<script>
+  const video = document.getElementById("about-video");
+
+  video.addEventListener("click", () => {
+    if (video.muted) {
+      video.muted = false;
+    } else {
+      video.muted = true;
+    }
+  });
+</script>
+
 {% endblock %}
