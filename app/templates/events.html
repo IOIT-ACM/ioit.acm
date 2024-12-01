@@ -45,199 +45,275 @@ and contests that help you grow professionally and academically.{% endblock %}
   </div>
 </section>
 
-<div class="container mx-auto p-6 mt-12 max-w-7xl">
-  <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
-    Flagship Events
-  </h2>
-  <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-    <!-- IOIT TENET 2024 -->
+<div class="mx-auto px-8 max-w-7xl">
+  <div class="mt-12">
+    <h2 class="text-3xl md:4xl font-bold text-center mb-8 text-gray-800">
+      Flagship Events
+    </h2>
     <div
-      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
+      class="grid container gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10"
     >
-      <div class="flex flex-col items-center">
+      <!-- IOIT TENET 2024 -->
+      <div
+        class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
+      >
+        <div class="flex flex-col items-center">
+          <div
+            class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative group cursor-pointer video-hover-group"
+          >
+            <!-- Image -->
+            <img
+              src="https://ioit.acm.org/tenet/gallery/24/drone/12.jpeg"
+              alt="IOIT TENET 2024"
+              class="h-full w-full object-cover absolute"
+              loading="lazy"
+            />
+            <!-- Video -->
+            <video
+              data-src="/static/vid/tenet24.mp4"
+              muted
+              loop
+              class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video"
+            ></video>
+          </div>
+          <div class="text-center">
+            <h3 class="text-2xl font-semibold text-blue-800">
+              IOIT TENET 2024
+            </h3>
+            <p class="text-gray-600 mt-2">
+              The annual technical festival showcasing innovative projects,
+              technical competitions, and workshops to inspire the next
+              generation of engineers and innovators.
+            </p>
+            <a
+              href="https://ioittenet.com/"
+              class="text-blue-600 mt-4 inline-block"
+              >Learn More &rarr;</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- IOIT MUN 2023 -->
+      <div
+        class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
+      >
+        <div class="flex flex-col items-center">
+          <div
+            class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative group cursor-pointer video-hover-group"
+          >
+            <!-- Image -->
+            <img
+              src="https://ioit.acm.org/tenet/gallery/24/mun-closing/15.jpeg"
+              alt="IOIT MUN 2023"
+              class="h-full w-full object-cover absolute"
+              loading="lazy"
+            />
+            <!-- Video -->
+            <video
+              data-src="/static/vid/mun23.mp4"
+              muted
+              loop
+              class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video"
+            ></video>
+          </div>
+          <div class="text-center">
+            <h3 class="text-2xl font-semibold text-green-800">IOIT MUN 2023</h3>
+            <p class="text-gray-600 mt-2">
+              An engaging Model United Nations event that brought together
+              students to discuss global issues, foster diplomacy, and promote
+              leadership.
+            </p>
+            <a
+              href="https://www.ioitmun.com/"
+              class="text-green-600 mt-4 inline-block"
+              >Learn More &rarr;</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- IOIT MUN 2024 -->
+      <div
+        class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
+      >
+        <div class="flex flex-col items-center">
+          <div
+            class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative group cursor-pointer video-hover-group"
+          >
+            <!-- Image -->
+            <img
+              src="https://ioit.acm.org/tenet/mun/2024/9.jpeg"
+              alt="IOIT MUN 2024"
+              class="h-full w-full object-cover absolute"
+              loading="lazy"
+            />
+            <!-- Video -->
+            <video
+              data-src="/static/vid/mun24.mp4"
+              muted
+              loop
+              class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video"
+            ></video>
+          </div>
+          <div class="text-center">
+            <h3 class="text-2xl font-semibold text-yellow-800">
+              IOIT MUN 2024
+            </h3>
+            <p class="text-gray-600 mt-2">
+              The upcoming MUN conference promising dynamic debates,
+              collaborative resolutions, and a platform for young minds to make
+              their voices heard on international platforms.
+            </p>
+            <a
+              href="https://www.ioitmun.com/"
+              class="text-yellow-600 mt-4 inline-block"
+              >Learn More &rarr;</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 py-3 mt-10">
+    <div class="grid gap-10">
+      <div class="p-6 bg-blue-100 rounded-lg shadow-lg">
+        <h3 class="text-xl font-semibold text-blue-800">What is TENET?</h3>
+        <p class="text-gray-700 mt-4">
+          TENET 2024 is a multi-faceted event hosted by the IOIT ACM Student
+          Chapter, featuring thrilling experiences in technology,
+          entrepreneurship, global diplomacy, and e-sports. From tech
+          conferences and workshops to MUN simulations and LAN tournaments, it
+          offers something for everyone. Join us to connect, learn, and showcase
+          your skills at AISSMS IOIT, Pune—where passion meets innovation.
+        </p>
+      </div>
+
+      <div class="p-6 bg-blue-100 rounded-lg shadow-lg">
+        <h3 class="text-xl font-semibold text-green-800">What is MUN?</h3>
+        <p class="text-gray-700 mt-4">
+          Model United Nations (MUN) is an educational simulation where
+          participants role-play as diplomats representing different countries.
+          It aims to engage students in global issues and diplomatic
+          negotiation, fostering critical thinking, public speaking, and
+          collaboration skills. Delegates debate current events, draft
+          resolutions, and vote on solutions to global challenges, all while
+          striving for consensus. MUN conferences are a great opportunity for
+          students to deepen their understanding of international relations and
+          contribute to global discourse.
+        </p>
+      </div>
+    </div>
+    <div class="w-full">
+      <div
+        class="sticky top-32 w-64 h-80 md:mt-0 mt-8 w-full mx-auto rounded-lg mb-4 shadow-lg overflow-hidden relative group cursor-pointer"
+        id="videoContainer"
+      >
         <img
-          src="https://ioit.acm.org/tenet/gallery/24/drone/12.jpeg"
+          src="/static/img/events/mun-under-a-min.jpeg"
           alt="IOIT TENET 2024"
-          class="md:w-64 md:h-64 h-44 w-full object-cover rounded-lg mb-4 shadow-lg"
+          class="h-full w-full object-cover absolute"
+          loading="lazy"
+          id="eventImage"
         />
-        <div class="text-center">
-          <h3 class="text-2xl font-semibold text-blue-800">IOIT TENET 2024</h3>
-          <p class="text-gray-600 mt-2">
-            The annual technical festival showcasing innovative projects,
-            technical competitions, and workshops to inspire the next generation
-            of engineers and innovators.
-          </p>
-          <a
-            href="https://ioittenet.com/"
-            class="text-blue-600 mt-4 inline-block"
-            >Learn More &rarr;</a
-          >
+        <video
+          src="/static/img/events/mun-under-a-min.mp4"
+          class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 mun-video"
+          id="eventVideo"
+        ></video>
+        <!-- Overlay Text -->
+        <div
+          class="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          id="overlayText"
+        >
+          <span class="text-white text-lg font-bold">Watch Video</span>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- IOIT MUN 2023 -->
-    <div
-      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
-    >
-      <div class="flex flex-col items-center">
+  <div class="bg-gray-100 py-16">
+    <div class="max-w-5xl mx-auto text-center">
+      <h1 class="text-3xl font-bold text-blue-600">
+        Special Interest Groups (SIGs)
+      </h1>
+      <p class="text-gray-700 mt-4 text-lg">
+        The IOIT ACM Student Chapter organizes Special Interest Groups (SIGs) to
+        foster collaboration and learning in various domains. SIGs provide a
+        platform for students to explore, innovate, and overcome challenges
+        together while delving into technical and non-technical areas.
+      </p>
+    </div>
+
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8">
+      <!-- Technical SIG -->
+      <div class="bg-white rounded-lg shadow-md p-6">
         <img
-          src="https://ioit.acm.org/tenet/gallery/24/mun-closing/15.jpeg"
-          alt="IOIT MUN 2023"
-          class="md:w-64 md:h-64 h-44 w-full object-cover rounded-lg mb-4 shadow-lg"
+          src="{{ url_for('static', filename='img/events/sig-tech.jpeg') }}"
+          alt="Technical SIG"
+          class="w-full h-64 object-cover rounded-t-lg"
         />
-        <div class="text-center">
-          <h3 class="text-2xl font-semibold text-green-800">IOIT MUN 2023</h3>
-          <p class="text-gray-600 mt-2">
-            An engaging Model United Nations event that brought together
-            students to discuss global issues, foster diplomacy, and promote
-            leadership.
+        <div class="mt-4">
+          <h2 class="text-2xl font-semibold text-blue-500">Technical SIG</h2>
+          <p class="text-gray-700 mt-3">
+            Focused on enhancing technical expertise, the Technical SIG conducts
+            seminars, hands-on sessions, and discussions on projects involving
+            cutting-edge technologies such as Artificial Intelligence,
+            Blockchain, and Web Development.
           </p>
-          <a
-            href="https://www.ioitmun.com/"
-            class="text-green-600 mt-4 inline-block"
-            >Learn More &rarr;</a
-          >
+          <ul class="mt-4 text-gray-600 list-disc list-inside">
+            <li>Workshops on upcoming technologies</li>
+            <li>Collaborative projects</li>
+            <li>Problem-solving sessions</li>
+          </ul>
         </div>
       </div>
-    </div>
 
-    <!-- IOIT MUN 2024 -->
-    <div
-      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
-    >
-      <div class="flex flex-col items-center">
+      <!-- Entrepreneurship SIG -->
+      <div class="bg-white rounded-lg shadow-md p-6">
         <img
-          src="https://ioit.acm.org/tenet/mun/2024/9.jpeg"
-          alt="IOIT MUN 2024"
-          class="md:w-64 md:h-64 h-44 w-full object-cover rounded-lg mb-4 shadow-lg"
+          src="{{ url_for('static', filename='img/events/sig-ent.jpeg') }}"
+          alt="Entrepreneurship SIG"
+          class="w-full h-64 object-cover rounded-t-lg"
         />
-        <div class="text-center">
-          <h3 class="text-2xl font-semibold text-yellow-800">IOIT MUN 2024</h3>
-          <p class="text-gray-600 mt-2">
-            The upcoming MUN conference promising dynamic debates, collaborative
-            resolutions, and a platform for young minds to make their voices
-            heard on international platforms.
+        <div class="mt-4">
+          <h2 class="text-2xl font-semibold text-green-500">
+            Entrepreneurship SIG
+          </h2>
+          <p class="text-gray-700 mt-3">
+            Geared towards fostering entrepreneurial skills, the
+            Entrepreneurship SIG hosts sessions on startup building, ideation,
+            and problem-solving in real-world scenarios. It also includes guest
+            lectures by successful entrepreneurs.
           </p>
-          <a
-            href="https://www.ioitmun.com/"
-            class="text-yellow-600 mt-4 inline-block"
-            >Learn More &rarr;</a
-          >
+          <ul class="mt-4 text-gray-600 list-disc list-inside">
+            <li>Startup ideation workshops</li>
+            <li>Networking opportunities</li>
+            <li>Case studies and success stories</li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- What is TENET? Section -->
-  <div class="mt-12 p-6 bg-blue-50 rounded-lg shadow-lg max-w-7xl">
-    <h3 class="text-xl font-semibold text-blue-800">What is TENET?</h3>
-    <p class="text-gray-700 mt-4">
-      TENET 2024 is a multi-faceted event hosted by the IOIT ACM Student
-      Chapter, featuring thrilling experiences in technology, entrepreneurship,
-      global diplomacy, and e-sports. From tech conferences and workshops to MUN
-      simulations and LAN tournaments, it offers something for everyone. Join us
-      to connect, learn, and showcase your skills at AISSMS IOIT, Pune—where
-      passion meets innovation.
-    </p>
-  </div>
-
-  <!-- What is MUN? Section -->
-  <div class="mt-12 p-6 bg-blue-50 rounded-lg shadow-lg max-w-7xl">
-    <h3 class="text-xl font-semibold text-green-800">What is MUN?</h3>
-    <p class="text-gray-700 mt-4">
-      Model United Nations (MUN) is an educational simulation where participants
-      role-play as diplomats representing different countries. It aims to engage
-      students in global issues and diplomatic negotiation, fostering critical
-      thinking, public speaking, and collaboration skills. Delegates debate
-      current events, draft resolutions, and vote on solutions to global
-      challenges, all while striving for consensus. MUN conferences are a great
-      opportunity for students to deepen their understanding of international
-      relations and contribute to global discourse.
-    </p>
-  </div>
-</div>
-
-<div class="bg-gray-100 py-10 px-6 sm:px-12 max-w-7xl mx-auto">
-  <div class="max-w-5xl mx-auto text-center">
-    <h1 class="text-3xl font-bold text-blue-600">
-      Special Interest Groups (SIGs)
-    </h1>
-    <p class="text-gray-700 mt-4 text-lg">
-      The IOIT ACM Student Chapter organizes Special Interest Groups (SIGs) to
-      foster collaboration and learning in various domains. SIGs provide a
-      platform for students to explore, innovate, and overcome challenges
-      together while delving into technical and non-technical areas.
-    </p>
-  </div>
-
-  <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8">
-    <!-- Technical SIG -->
-    <div class="bg-white rounded-lg shadow-md p-6">
-      <img
-        src="{{ url_for('static', filename='img/events/sig-tech.jpeg') }}"
-        alt="Technical SIG"
-        class="w-full h-64 object-cover rounded-t-lg"
-      />
-      <div class="mt-4">
-        <h2 class="text-2xl font-semibold text-blue-500">Technical SIG</h2>
-        <p class="text-gray-700 mt-3">
-          Focused on enhancing technical expertise, the Technical SIG conducts
-          seminars, hands-on sessions, and discussions on projects involving
-          cutting-edge technologies such as Artificial Intelligence, Blockchain,
-          and Web Development.
-        </p>
-        <ul class="mt-4 text-gray-600 list-disc list-inside">
-          <li>Workshops on upcoming technologies</li>
-          <li>Collaborative projects</li>
-          <li>Problem-solving sessions</li>
-        </ul>
+  <div class="">
+    <h1 class="text-3xl font-bold text-center mb-6">All Events</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for event in events %}
+      <div
+        class="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200"
+      >
+        <div class="p-4">
+          <h2 class="text-xl font-semibold text-gray-800">{{ event.name }}</h2>
+          <p class="text-gray-600 mt-2">{{ event.description }}</p>
+          <p class="text-gray-500 mt-4 text-sm font-medium">
+            📅 {{ event.date }}
+          </p>
+        </div>
       </div>
+      {% endfor %}
     </div>
-
-    <!-- Entrepreneurship SIG -->
-    <div class="bg-white rounded-lg shadow-md p-6">
-      <img
-        src="{{ url_for('static', filename='img/events/sig-ent.jpeg') }}"
-        alt="Entrepreneurship SIG"
-        class="w-full h-64 object-cover rounded-t-lg"
-      />
-      <div class="mt-4">
-        <h2 class="text-2xl font-semibold text-green-500">
-          Entrepreneurship SIG
-        </h2>
-        <p class="text-gray-700 mt-3">
-          Geared towards fostering entrepreneurial skills, the Entrepreneurship
-          SIG hosts sessions on startup building, ideation, and problem-solving
-          in real-world scenarios. It also includes guest lectures by successful
-          entrepreneurs.
-        </p>
-        <ul class="mt-4 text-gray-600 list-disc list-inside">
-          <li>Startup ideation workshops</li>
-          <li>Networking opportunities</li>
-          <li>Case studies and success stories</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container mx-auto p-6 max-w-7xl">
-  <h1 class="text-3xl font-bold text-center mb-6">All Events</h1>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    {% for event in events %}
-    <div
-      class="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200"
-    >
-      <div class="p-4">
-        <h2 class="text-xl font-semibold text-gray-800">{{ event.name }}</h2>
-        <p class="text-gray-600 mt-2">{{ event.description }}</p>
-        <p class="text-gray-500 mt-4 text-sm font-medium">
-          📅 {{ event.date }}
-        </p>
-      </div>
-    </div>
-    {% endfor %}
   </div>
 </div>
 
@@ -271,4 +347,6 @@ and contests that help you grow professionally and academically.{% endblock %}
     </div>
   </div>
 </div>
+
+<script src="/static/js/utils.js"></script>
 {% endblock %}

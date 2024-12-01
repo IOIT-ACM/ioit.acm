@@ -1,231 +1,214 @@
 {% extends "base.html" %} {% block title %}IOIT ACM Student Chapter{% endblock
 %} {% block content %}
-<div class="bg-gray-100 min-h-screen">
-  <!-- Header Section -->
+<div
+  class="relative min-h-screen h-auto flex pt-12 md:pt-0 items-center justify-center text-center bg-cover bg-center"
+  style="background-image: url('{{ url_for('static', filename='img/assets/desktop-bg.jpg') }}');"
+>
+  <!-- Overlay with gradient -->
   <div
-    class="relative min-h-screen h-auto flex pt-12 md:pt-0 items-center justify-center text-center bg-cover bg-center"
-    style="background-image: url('{{ url_for('static', filename='img/assets/desktop-bg.jpg') }}');"
-  >
-    <!-- Overlay with gradient -->
-    <div
-      class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80 w-full h-full"
-    ></div>
+    class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80 w-full h-full"
+  ></div>
 
-    <!-- Content -->
-    <div class="relative z-10 px-6 md:px-8 py-4 w-full">
-      <!-- ACM Logo -->
-      <div class="md:mb-8 mb-4">
-        <img
-          src="{{ url_for('static', filename='img/assets/acm.png') }}"
-          alt="ACM Logo"
-          class="h-32 md:h-40 mx-auto"
-        />
-      </div>
-
-      <h1
-        class="text-2xl md:text-6xl font-bold text-white mb-4 hidden md:block"
-      >
-        IOIT ACM STUDENT CHAPTER
-      </h1>
-      <p
-        class="text-sm md:text-xl text-gray-300 max-w-3xl mx-auto md:mb-12 mb-4"
-      >
-        IOIT ACM Student Chapter is an auxiliary organization of ACM. IOIT ACM
-        is one of the most reputed and distinguished technical chapters working
-        with vision and determination since its inception in 2019.
-      </p>
-
-      <!-- Rhombus Links (Ensure they stay inside on small screens) -->
-      <div class="md:flex justify-center gap-8 flex-wrap mt-8 hidden">
-        <a href="/events" class="w-40 h-40 relative group">
-          <div
-            class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
-          ></div>
-          <div
-            class="absolute inset-0 flex flex-col items-center justify-center"
-          >
-            <img
-              src="{{ url_for('static', filename='img/assets/events-icon.svg') }}"
-              alt="Events Icon"
-              class="w-12 h-12 mb-2 text-blue-400"
-            />
-            <h3 class="text-blue-400 font-semibold">Events</h3>
-            <p class="text-gray-300 text-sm">Activities</p>
-          </div>
-        </a>
-
-        <a href="https://www.ioittenet.com/" class="w-40 h-40 relative group">
-          <div
-            class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
-          ></div>
-          <div
-            class="absolute inset-0 flex flex-col items-center justify-center"
-          >
-            <img
-              src="{{ url_for('static', filename='img/assets/tenet-logo.png') }}"
-              alt="Tenet Icon"
-              class="w-12 h-12 mb-2 text-blue-400"
-            />
-            <h3 class="text-blue-400 font-semibold">Flagship Events</h3>
-            <p class="text-gray-300 text-sm">TENET & <br />IOIT MUN</p>
-          </div>
-        </a>
-
-        <a href="/about" class="w-40 h-40 relative group">
-          <div
-            class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
-          ></div>
-          <div
-            class="absolute inset-0 flex flex-col items-center justify-center"
-          >
-            <img
-              src="{{ url_for('static', filename='img/assets/achievements-icon.svg') }}"
-              alt="Achievements Icon"
-              class="w-12 h-12 mb-2 text-blue-400"
-            />
-            <h3 class="text-blue-400 font-semibold">Achievements</h3>
-            <p class="text-gray-300 text-sm">Our Success</p>
-          </div>
-        </a>
-
-        <a href="/gallery" class="w-40 h-40 relative group">
-          <div
-            class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
-          ></div>
-          <div
-            class="absolute inset-0 flex flex-col items-center justify-center"
-          >
-            <img
-              src="{{ url_for('static', filename='img/assets/gallery.svg') }}"
-              alt="Social Icon"
-              class="w-12 h-12 mb-2 text-blue-400"
-            />
-            <h3 class="text-blue-400 font-semibold">Gallery</h3>
-            <p class="text-gray-300 text-sm">View glimpses</p>
-          </div>
-        </a>
-      </div>
-
-      <div class="text-sm align-center flex flex-col gap-3 px-4 md:hidden">
-        <a
-          href="/join"
-          class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline backdrop-blur-sm"
-        >
-          Become a member
-        </a>
-        <a
-          href="/membership/status"
-          class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline backdrop-blur-sm"
-        >
-          Check membership status
-        </a>
-      </div>
-
-      <div class="block md:hidden px-4 py-2 text-left text-white">
-        <div class="space-y-2">
-          <!-- Mobile Menu -->
-          <a
-            href="/events"
-            class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
-          >
-            <img
-              src="{{ url_for('static', filename='img/assets/events-icon.svg') }}"
-              alt="Events Icon"
-              class="w-8 h-8 mr-4"
-            />
-            <div>
-              <h3 class="text-blue-400 font-semibold text-sm">Events</h3>
-              <p class="text-gray-300 text-xs">Activities</p>
-            </div>
-          </a>
-          <!-- Additional Mobile Links -->
-          <a
-            href="https://www.ioittenet.com/"
-            class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
-          >
-            <img
-              src="{{ url_for('static', filename='img/assets/tenet-logo.png') }}"
-              alt="Tenet Icon"
-              class="w-8 h-8 mr-4"
-            />
-            <div>
-              <h3 class="text-blue-400 font-semibold text-sm">
-                Flagship Events
-              </h3>
-              <p class="text-gray-300 text-xs">TENET & IOIT MUN</p>
-            </div>
-          </a>
-          <!-- Other Mobile Menu Items -->
-          <a
-            href="/about"
-            class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
-          >
-            <img
-              src="{{ url_for('static', filename='img/assets/achievements-icon.svg') }}"
-              alt="Achievements Icon"
-              class="w-8 h-8 mr-4"
-            />
-            <div>
-              <h3 class="text-blue-400 font-semibold text-sm">Achievements</h3>
-              <p class="text-gray-300 text-xs">Our Success</p>
-            </div>
-          </a>
-          <a
-            href="/gallery"
-            class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
-          >
-            <img
-              src="{{ url_for('static', filename='img/assets/gallery.svg') }}"
-              alt="Gallery Icon"
-              class="w-8 h-8 mr-4"
-            />
-            <div>
-              <h3 class="text-blue-400 font-semibold text-sm">Gallery</h3>
-              <p class="text-gray-300 text-xs">View glimpses</p>
-            </div>
-          </a>
-        </div>
-      </div>
+  <!-- Content -->
+  <div class="relative z-10 px-6 md:px-8 py-4 w-full">
+    <!-- ACM Logo -->
+    <div class="md:mb-8 mb-4">
+      <img
+        src="{{ url_for('static', filename='img/assets/acm.png') }}"
+        alt="ACM Logo"
+        class="h-32 md:h-40 mx-auto"
+      />
     </div>
 
-    <!-- Button -->
-    <div
-      class="absolute text-base bottom-4 right-4 bottom-3 align-center md:flex flex-col gap-3 hidden"
-    >
+    <h1 class="text-2xl md:text-6xl font-bold text-white mb-4 hidden md:block">
+      IOIT ACM STUDENT CHAPTER
+    </h1>
+    <p class="text-sm md:text-xl text-gray-300 max-w-3xl mx-auto md:mb-12 mb-4">
+      IOIT ACM Student Chapter is an auxiliary organization of ACM. IOIT ACM is
+      one of the most reputed and distinguished technical chapters working with
+      vision and determination since its inception in 2019.
+    </p>
+
+    <!-- Rhombus Links (Ensure they stay inside on small screens) -->
+    <div class="md:flex justify-center gap-8 flex-wrap mt-8 hidden">
+      <a href="/events" class="w-40 h-40 relative group">
+        <div
+          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
+        ></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+          <img
+            src="{{ url_for('static', filename='img/assets/events-icon.svg') }}"
+            alt="Events Icon"
+            class="w-12 h-12 mb-2 text-blue-400"
+          />
+          <h3 class="text-blue-400 font-semibold">Events</h3>
+          <p class="text-gray-300 text-sm">Activities</p>
+        </div>
+      </a>
+
+      <a href="https://www.ioittenet.com/" class="w-40 h-40 relative group">
+        <div
+          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
+        ></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+          <img
+            src="{{ url_for('static', filename='img/assets/tenet-logo.png') }}"
+            alt="Tenet Icon"
+            class="w-12 h-12 mb-2 text-blue-400"
+          />
+          <h3 class="text-blue-400 font-semibold">Flagship Events</h3>
+          <p class="text-gray-300 text-sm">TENET & <br />IOIT MUN</p>
+        </div>
+      </a>
+
+      <a href="/about" class="w-40 h-40 relative group">
+        <div
+          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
+        ></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+          <img
+            src="{{ url_for('static', filename='img/assets/achievements-icon.svg') }}"
+            alt="Achievements Icon"
+            class="w-12 h-12 mb-2 text-blue-400"
+          />
+          <h3 class="text-blue-400 font-semibold">Achievements</h3>
+          <p class="text-gray-300 text-sm">Our Success</p>
+        </div>
+      </a>
+
+      <a href="/gallery" class="w-40 h-40 relative group">
+        <div
+          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
+        ></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+          <img
+            src="{{ url_for('static', filename='img/assets/gallery.svg') }}"
+            alt="Social Icon"
+            class="w-12 h-12 mb-2 text-blue-400"
+          />
+          <h3 class="text-blue-400 font-semibold">Gallery</h3>
+          <p class="text-gray-300 text-sm">View glimpses</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="text-sm align-center flex flex-col gap-3 px-4 md:hidden">
       <a
         href="/join"
-        class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+        class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline backdrop-blur-sm"
       >
         Become a member
       </a>
       <a
         href="/membership/status"
-        class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+        class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline backdrop-blur-sm"
       >
         Check membership status
       </a>
     </div>
-  </div>
 
-  <section
-    class="bg-gradient-to-r from-blue-800 to-blue-600 md:py-5 py-3 flex items-center justify-center"
-  >
-    <div class="marquee w-full">
-      <div
-        class="marquee-content-slow text-xl md:text-3xl font-bold text-white"
-      >
-        {% for _ in range(97) %}
-        People&nbsp;&nbsp;&nbsp;&nbsp;Passion&nbsp;&nbsp;&nbsp;&nbsp;Professionalism&nbsp;&nbsp;&nbsp;&nbsp;
-        {% endfor %}
+    <div class="block md:hidden px-4 py-2 text-left text-white">
+      <div class="space-y-2">
+        <!-- Mobile Menu -->
+        <a
+          href="/events"
+          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
+        >
+          <img
+            src="{{ url_for('static', filename='img/assets/events-icon.svg') }}"
+            alt="Events Icon"
+            class="w-8 h-8 mr-4"
+          />
+          <div>
+            <h3 class="text-blue-400 font-semibold text-sm">Events</h3>
+            <p class="text-gray-300 text-xs">Activities</p>
+          </div>
+        </a>
+        <!-- Additional Mobile Links -->
+        <a
+          href="https://www.ioittenet.com/"
+          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
+        >
+          <img
+            src="{{ url_for('static', filename='img/assets/tenet-logo.png') }}"
+            alt="Tenet Icon"
+            class="w-8 h-8 mr-4"
+          />
+          <div>
+            <h3 class="text-blue-400 font-semibold text-sm">Flagship Events</h3>
+            <p class="text-gray-300 text-xs">TENET & IOIT MUN</p>
+          </div>
+        </a>
+        <!-- Other Mobile Menu Items -->
+        <a
+          href="/about"
+          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
+        >
+          <img
+            src="{{ url_for('static', filename='img/assets/achievements-icon.svg') }}"
+            alt="Achievements Icon"
+            class="w-8 h-8 mr-4"
+          />
+          <div>
+            <h3 class="text-blue-400 font-semibold text-sm">Achievements</h3>
+            <p class="text-gray-300 text-xs">Our Success</p>
+          </div>
+        </a>
+        <a
+          href="/gallery"
+          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
+        >
+          <img
+            src="{{ url_for('static', filename='img/assets/gallery.svg') }}"
+            alt="Gallery Icon"
+            class="w-8 h-8 mr-4"
+          />
+          <div>
+            <h3 class="text-blue-400 font-semibold text-sm">Gallery</h3>
+            <p class="text-gray-300 text-xs">View glimpses</p>
+          </div>
+        </a>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="md:py-16 py-10 mx-auto max-w-7xl px-4 md:px-20">
+  <!-- Button -->
+  <div
+    class="absolute text-base bottom-4 right-4 bottom-3 align-center md:flex flex-col gap-3 hidden"
+  >
+    <a
+      href="/join"
+      class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+    >
+      Become a member
+    </a>
+    <a
+      href="/membership/status"
+      class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+    >
+      Check membership status
+    </a>
+  </div>
+</div>
+
+<section
+  class="bg-gradient-to-r from-blue-800 to-blue-600 md:py-5 py-3 flex items-center justify-center"
+>
+  <div class="marquee w-full">
+    <div class="marquee-content-slow text-xl md:text-3xl font-bold text-white">
+      {% for _ in range(97) %}
+      People&nbsp;&nbsp;&nbsp;&nbsp;Passion&nbsp;&nbsp;&nbsp;&nbsp;Professionalism&nbsp;&nbsp;&nbsp;&nbsp;
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<div class="mx-auto max-w-7xl px-6">
+  <section class="md:py-16 py-10">
     <div class="grid grid-cols-1 md:grid-cols-3 md:gap-12 gap-8">
       <!-- People Section -->
       <div
-        class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl hover:scale-105 transition-transform"
+        class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl"
       >
         <h3 class="md:text-3xl text-xl font-semibold mb-4 text-blue-800">
           People
@@ -240,7 +223,7 @@
 
       <!-- Passion Section -->
       <div
-        class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl hover:scale-105 transition-transform"
+        class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl"
       >
         <h3 class="md:text-3xl text-xl font-semibold mb-4 text-blue-800">
           Passion
@@ -255,7 +238,7 @@
 
       <!-- Professionalism Section -->
       <div
-        class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl hover:scale-105 transition-transform"
+        class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl"
       >
         <h3 class="md:text-3xl text-xl font-semibold mb-4 text-blue-800">
           Professionalism
@@ -269,7 +252,7 @@
     </div>
   </section>
 
-  <section class="py-12 px-6">
+  <section class="">
     <div class="max-w-4xl mx-auto text-center">
       <h1 class="text-3xl md:text-4xl font-bold mb-4">
         We are the
@@ -326,18 +309,31 @@
   </section>
 
   <div
-    class="grid container px-8 md:px-0 mx-auto max-w-7xl gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+    class="grid container gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10"
   >
     <!-- IOIT TENET 2024 -->
     <div
       class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
     >
       <div class="flex flex-col items-center">
-        <img
-          src="https://ioit.acm.org/tenet/gallery/24/drone/12.jpeg"
-          alt="IOIT TENET 2024"
-          class="md:w-64 md:h-64 h-44 w-full object-cover rounded-lg mb-4 shadow-lg"
-        />
+        <div
+          class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative group cursor-pointer video-hover-group"
+        >
+          <!-- Image -->
+          <img
+            src="https://ioit.acm.org/tenet/gallery/24/drone/12.jpeg"
+            alt="IOIT TENET 2024"
+            class="h-full w-full object-cover absolute"
+            loading="lazy"
+          />
+          <!-- Video -->
+          <video
+            data-src="/static/vid/tenet24.mp4"
+            muted
+            loop
+            class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video"
+          ></video>
+        </div>
         <div class="text-center">
           <h3 class="text-2xl font-semibold text-blue-800">IOIT TENET 2024</h3>
           <p class="text-gray-600 mt-2">
@@ -359,11 +355,24 @@
       class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
     >
       <div class="flex flex-col items-center">
-        <img
-          src="https://ioit.acm.org/tenet/gallery/24/mun-closing/15.jpeg"
-          alt="IOIT MUN 2023"
-          class="md:w-64 md:h-64 h-44 w-full object-cover rounded-lg mb-4 shadow-lg"
-        />
+        <div
+          class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative group cursor-pointer video-hover-group"
+        >
+          <!-- Image -->
+          <img
+            src="https://ioit.acm.org/tenet/gallery/24/mun-closing/15.jpeg"
+            alt="IOIT MUN 2023"
+            class="h-full w-full object-cover absolute"
+            loading="lazy"
+          />
+          <!-- Video -->
+          <video
+            data-src="/static/vid/mun23.mp4"
+            muted
+            loop
+            class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video"
+          ></video>
+        </div>
         <div class="text-center">
           <h3 class="text-2xl font-semibold text-green-800">IOIT MUN 2023</h3>
           <p class="text-gray-600 mt-2">
@@ -385,11 +394,24 @@
       class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
     >
       <div class="flex flex-col items-center">
-        <img
-          src="https://ioit.acm.org/tenet/mun/2024/9.jpeg"
-          alt="IOIT MUN 2024"
-          class="md:w-64 md:h-64 h-44 w-full object-cover rounded-lg mb-4 shadow-lg"
-        />
+        <div
+          class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative group cursor-pointer video-hover-group"
+        >
+          <!-- Image -->
+          <img
+            src="https://ioit.acm.org/tenet/mun/2024/9.jpeg"
+            alt="IOIT MUN 2024"
+            class="h-full w-full object-cover absolute"
+            loading="lazy"
+          />
+          <!-- Video -->
+          <video
+            data-src="/static/vid/mun24.mp4"
+            muted
+            loop
+            class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video"
+          ></video>
+        </div>
         <div class="text-center">
           <h3 class="text-2xl font-semibold text-yellow-800">IOIT MUN 2024</h3>
           <p class="text-gray-600 mt-2">
@@ -406,28 +428,27 @@
       </div>
     </div>
   </div>
-
   <!--latest stories section-->
-  <div
-    class="grid grid-cols-1 md:grid-cols-2 gap-8 mx-auto my-20 max-w-7xl px-10 md:px-0"
-  >
-    <h1 class="text-3xl font-bold mb-6 md:col-span-2">Latest Stories</h1>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-20">
+    <h1 class="text-3xl md:text-4xl font-bold mb-6 md:col-span-2">
+      Latest Stories
+    </h1>
     <div class="overflow-hidden w-full">
       {% if stories|length > 0 %}
-      <img
-        src="{{ url_for('static', filename='img/stories/' + stories[0].imageURL) }}"
-        alt="{{ stories[0].title }}"
-        class="md:w-full h-72 max-h-4xl object-cover bg-gray-500 rounded-lg"
-      />
+      <div class="md:w-full h-72 max-h-4xl overflow-hidden rounded-xl border">
+        <img
+          src="{{ url_for('static', filename='img/stories/' + stories[0].imageURL) }}"
+          alt="{{ stories[0].title }}"
+          class="h-full w-full object-cover bg-gray-500 hover:scale-105 transition-all"
+        />
+      </div>
       <div class="py-6">
         <span
           class="text-gray-500 text-sm uppercase font-semibold tracking-wide block mb-2"
         >
           {{ stories[0].category }}
         </span>
-        <h2
-          class="text-2xl font-bold text-gray-900 mb-4 hover:text-blue-500 transition duration-300"
-        >
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">
           {{ stories[0].title }}
         </h2>
         <p class="text-gray-600 mb-4 line-clamp-3">
@@ -446,11 +467,16 @@
     <div class="grid grid-cols-1 gap-8">
       {% for story in stories %} {% if loop.index > 1 %}
       <div class="grid md:grid-cols-2 grid-cols-1 gap-0">
-        <img
-          src="{{ url_for('static', filename='img/stories/' + story.imageURL) }}"
-          alt="{{ story.title }}"
-          class="md:w-64 w-full h-32 min-h-32 bg-gray-300 md:hover:scale-105 object-cover rounded-lg mr-4 transition-all duration-300"
-        />
+        <div
+          class="md:w-64 w-full h-40 md:h-32 min-h-32 bg-gray-300 overflow-hidden rounded-lg shadow-xl"
+        >
+          <img
+            src="{{ url_for('static', filename='img/stories/' + story.imageURL) }}"
+            alt="{{ story.title }}"
+            class="h-full w-full md:hover:scale-105 object-cover transition-all duration-300"
+            loading="lazy"
+          />
+        </div>
         <div>
           <p class="text-gray-500 text-sm">{{ story.date }}</p>
           <span
@@ -459,8 +485,8 @@
             {{ story.category }}
           </span>
           <a
-            href="{{story.link}}"
-            class="text-lg font-bold text-gray-900 hover:text-blue-500 transition duration-300"
+            href="{{ story.link }}"
+            class="text-lg font-bold text-blue-600 hover:text-blue-700 transition duration-300"
           >
             {{ story.title }}
           </a>
@@ -473,7 +499,7 @@
     </div>
   </div>
 
-  <div class="mx-auto max-w-7xl px-4 md:px-0 mt-10">
+  <div class="mt-10">
     <div id="past-events-section">
       <div
         class="flex justify-between md:items-center mb-6 gap-3 md:gap-0 flex-col md:flex-row w-full"
@@ -503,7 +529,7 @@
     </div>
   </div>
 
-  <div class="max-w-6xl mx-auto my-20 px-8 sm:px-6 lg:px-8">
+  <div class="my-20">
     <div
       class="bg-white shadow-xl rounded-lg overflow-hidden flex flex-col sm:flex-row"
     >
@@ -542,6 +568,7 @@
     </div>
   </div>
 </div>
+
 <div
   class="bg-gradient-to-r mt-20 from-blue-800 to-blue-600 py-8 px-6 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg"
 >
@@ -573,4 +600,5 @@
   </div>
 </div>
 
+<script src="/static/js/utils.js"></script>
 {% endblock %}
