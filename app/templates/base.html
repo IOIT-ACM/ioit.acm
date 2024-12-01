@@ -82,6 +82,21 @@
       href="{{ url_for('static', filename='site.webmanifest') }}"
     />
 
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-Y6Z6G51Z27"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-Y6Z6G51Z27");
+    </script>
+
     <!-- Stylesheets -->
     <link
       rel="stylesheet"
