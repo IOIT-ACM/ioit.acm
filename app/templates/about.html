@@ -8,6 +8,50 @@
 {% block twitter_description %}Learn more about the IOIT ACM Student Chapter and our dedication to creating a thriving community for learning, collaboration, and growth.{% endblock %}
 
 {% block content %}
+
+<style>
+  .gallery {
+--size: 100px;
+display: grid;
+grid-template-columns: repeat(6, var(--size));
+grid-auto-rows: var(--size);
+margin-bottom: var(--size);
+place-items: start center;
+gap: 5px;
+
+&:has(:hover) img:not(:hover),
+&:has(:focus) img:not(:focus){
+  filter: brightness(0.5) contrast(0.5);
+}
+
+& img {
+  object-fit: cover;
+  width: calc(var(--size) * 2);
+  height: calc(var(--size) * 2);
+  clip-path: path("M90,10 C100,0 100,0 110,10 190,90 190,90 190,90 200,100 200,100 190,110 190,110 110,190 110,190 100,200 100,200 90,190 90,190 10,110 10,110 0,100 0,100 10,90Z");
+  transition: clip-path 0.25s, filter 0.75s;
+  grid-column: auto / span 2;
+  border-radius: 5px;
+
+  &:nth-child(5n - 1) { 
+    grid-column: 2 / span 2 
+  }
+
+  &:hover,
+  &:focus {
+    clip-path: path("M0,0 C0,0 200,0 200,0 200,0 200,100 200,100 200,100 200,200 200,200 200,200 100,200 100,200 100,200 100,200 0,200 0,200 0,100 0,100 0,100 0,100 0,100Z");
+    z-index: 1;
+    transition: clip-path 0.25s, filter 0.25s;
+  }
+  
+  &:focus {
+    outline: 1px dashed black;
+    outline-offset: -5px;
+  }
+}
+}
+</style>
+
 <div
   class="relative h-auto md:mt-0 mt-20 md:h-[100vh] flex flex-col md:flex-row items-center justify-between bg-gray-100"
 >
@@ -19,7 +63,6 @@
       class="object-cover h-full w-full bg-dark-300 rounded-br-[200px] md:rounded-br-[200px] rounded-tl-[200px] md:rounded-none"
     />
   </div>
-
   <!-- Text Section -->
   <div class="w-full md:w-1/2 text-left p-8 md:p-16">
     <h1 class="text-3xl md:text-5xl font-extrabold text-blue-600 mb-4">
@@ -30,12 +73,6 @@
       between students and the professional world. We focus on innovation,
       collaboration, and growth, empowering students to excel in both technical
       and non-technical domains.
-    </p>
-    <p class="text-gray-700 mb-6 text-base md:text-lg">
-      Our mission is to foster a culture of learning, creativity, and
-      professional development. We believe in nurturing talent, encouraging
-      exploration, and providing the tools and resources needed to thrive in
-      today’s competitive world.
     </p>
     <div class="flex gap-4 text-xs sm:text-base">
       <a
@@ -99,9 +136,23 @@
           >
             <i class="fab fa-github"></i>
           </a>
+
+          
         </div>
       </div>
-    
+          
+      <article class="gallery">
+        <img src="{{ url_for('static', filename='img/about/image1.jpeg') }}" alt="image1" />
+        <img src="{{ url_for('static', filename='img/about/image2.jpeg') }}" alt="image1" />
+        <img src="{{ url_for('static', filename='img/about/image3.jpeg') }}" alt="image1" />
+        <img src="{{ url_for('static', filename='img/about/image4.jpeg') }}" alt="image1" />
+        <img src="{{ url_for('static', filename='img/about/image5.jpeg') }}" alt="image1" />
+        <img src="{{ url_for('static', filename='img/about/image6.jpeg') }}" alt="image1" />
+        <img src="{{ url_for('static', filename='img/about/image7.jpeg') }}" alt="image1" />
+        <img src="{{ url_for('static', filename='img/about/image8.jpeg') }}" alt="image1" />
+      </article>
+      
+
   </div>
 </div>
 
