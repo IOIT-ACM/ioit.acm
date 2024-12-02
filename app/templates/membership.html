@@ -14,7 +14,7 @@ block content %}
 <div
   class="relative h-auto md:mt-0 mt-20 md:h-[100vh] flex flex-col md:flex-row items-center justify-between bg-gray-100"
 >
-  <div class="w-full h-auto md:w-1/2 md:h-full px-4 md:px-0">
+  <div class="w-full h-auto md:w-1/2 md:h-full px-4 md:px-0 parallax-scroll">
     <img
       src="{{ url_for('static', filename='img/assets/membership.jpeg') }}"
       alt="Team Header Image"
@@ -200,5 +200,15 @@ block content %}
     Join IOIT ACM
   </a>
 </div>
+
+<script>
+  document.addEventListener("scroll", function () {
+    const parallaxElements = document.querySelectorAll(".parallax-scroll");
+    parallaxElements.forEach((element) => {
+      let offset = window.scrollY * 0.2;
+      element.style.transform = `translateY(-${offset}px)`;
+    });
+  });
+</script>
 
 {% endblock %}

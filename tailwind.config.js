@@ -5,7 +5,17 @@ module.exports = {
     "./app/**/*.html", // Add this if your templates are nested
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        "grow-shrink": "growShrink 3s ease-in-out infinite",
+      },
+      keyframes: {
+        growShrink: {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.1)" },
+        },
+      },
+    },
   },
   plugins: [],
 };

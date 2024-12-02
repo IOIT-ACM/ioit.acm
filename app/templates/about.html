@@ -14,7 +14,8 @@ growth.{% endblock %} {% block content %}
   <div class="flex justify-center mb-10">
     <div class="w-2/3 md:mt-20 relative h-fit sticky top-32">
       <div
-        class="aspect-square bg-blue-500 w-1/2 h-auto transform rotate-45 absolute border border-white rounded-xl"
+        id="rotate"
+        class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl"
       ></div>
       <div
         class="aspect-square overflow-hidden bg-blue-500 w-full h-auto transform -rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400"
@@ -151,13 +152,16 @@ growth.{% endblock %} {% block content %}
       <p class="text-gray-600 text-sm md:text-lg mb-6">
         No matter what your background or interest is, we would love to have you
         at our events and activities! To keep up with what’s happening, we
-        recommend joining our membership portal. We will keep you up to date
-        with everything ACM
+        recommend joining via our
+        <a href="/join" class="text-blue-500 hover:underline">
+          membership portal
+        </a>
+        . We will keep you up to date with everything ACM
         <br />
         <br />
         Here’s our social media, where you can see what we’re up to:
       </p>
-      <div class="mt-8 flex gap-6 justify-start">
+      <div class="mt-8 flex gap-6 md:justify-start justify-center">
         <a
           href="https://facebook.com/ioitacm"
           class="text-gray-700 hover:text-blue-600 text-3xl"
@@ -271,6 +275,15 @@ growth.{% endblock %} {% block content %}
     } else {
       video.muted = true;
     }
+  });
+
+  const rotatingDiv = document.getElementById("rotate");
+
+  window.addEventListener("scroll", function () {
+    const scrollPosition = window.scrollY * 0.5;
+    const rotationDegree = scrollPosition % 360;
+
+    rotatingDiv.style.transform = `rotate(${rotationDegree}deg)`;
   });
 </script>
 

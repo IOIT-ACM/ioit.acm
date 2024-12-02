@@ -2,6 +2,30 @@ body::-webkit-scrollbar {
   width: 0px;
 }
 
+::selection {
+  background-color: #46c4ff;
+  color: #323232;
+}
+
+.parallax {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform-origin: center;
+}
+
+@media (min-width: 768px) {
+  .parallax {
+    background-attachment: fixed;
+  }
+}
+
+@media (max-width: 767px) {
+  .parallax {
+    background-attachment: scroll;
+  }
+}
+
 .gallery-columns {
   column-count: 3;
 }

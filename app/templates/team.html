@@ -13,11 +13,11 @@ endblock %} {% block content %}
   class="relative h-auto md:mt-0 mt-20 md:h-[100vh] flex flex-col md:flex-row items-center justify-between bg-gray-100"
 >
   <!-- Team Image -->
-  <div class="w-full h-auto md:w-1/2 md:h-full px-4 md:px-0">
+  <div class="w-full h-auto md:w-1/2 md:h-full px-4 md:px-0 parallax-scroll">
     <img
       src="{{ url_for('static', filename='img/team/team.jpeg') }}"
       alt="Team Header Image"
-      class="object-cover bg-gray-300 h-full w-full rounded-br-[200px] md:rounded-br-[200px] rounded-tl-[200px] md:rounded-none"
+      class="object-cover bg-gray-300 h-full w-full rounded-br-[200px] md:rounded-br-[200px] rounded-tl-[200px] md:rounded-none border-2 border-blue-400 sm:border-none md:border-none"
     />
   </div>
 
@@ -178,6 +178,14 @@ endblock %} {% block content %}
       `;
         });
     });
+
+  document.addEventListener("scroll", function () {
+    const parallaxElements = document.querySelectorAll(".parallax-scroll");
+    parallaxElements.forEach((element) => {
+      let offset = window.scrollY * 0.2;
+      element.style.transform = `translateY(-${offset}px)`;
+    });
+  });
 </script>
 
 {% endblock %}

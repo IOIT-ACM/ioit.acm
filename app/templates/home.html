@@ -1,29 +1,45 @@
 {% extends "base.html" %} {% block title %}IOIT ACM Student Chapter{% endblock
 %} {% block content %}
 <div
-  class="relative min-h-screen h-auto flex pt-12 md:pt-0 items-center justify-center text-center bg-cover bg-center"
+  class="relative min-h-screen h-auto flex pt-12 md:pt-0 items-center justify-center text-center bg-cover bg-center parallax"
   style="background-image: url('{{ url_for('static', filename='img/assets/desktop-bg.jpg') }}');"
 >
   <!-- Overlay with gradient -->
   <div
-    class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80 w-full h-full"
+    style="
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.9),
+        rgba(0, 0, 0, 0.79),
+        rgba(0, 0, 0, 0.75)
+      );
+      width: 100%;
+      height: 100%;
+    "
   ></div>
 
   <!-- Content -->
   <div class="relative z-10 px-6 md:px-8 py-4 w-full">
     <!-- ACM Logo -->
-    <div class="md:mb-8 mb-4">
+    <div class="md:mb-8 mb-4 parallax-scroll">
       <img
+        id="zoomImage"
         src="{{ url_for('static', filename='img/assets/acm.png') }}"
         alt="ACM Logo"
-        class="h-32 md:h-40 mx-auto"
+        class="h-32 md:h-40 mx-auto animate-grow-shrink"
       />
     </div>
 
-    <h1 class="text-2xl md:text-6xl font-bold text-white mb-4 hidden md:block">
+    <h1
+      class="text-2xl md:text-6xl font-bold text-white mb-4 hidden md:block parallax-scroll-2"
+    >
       IOIT ACM STUDENT CHAPTER
     </h1>
-    <p class="text-sm md:text-xl text-gray-300 max-w-3xl mx-auto md:mb-12 mb-4">
+    <p
+      class="text-sm md:text-xl text-gray-300 max-w-3xl mx-auto md:mb-12 mb-4 parallax-scroll-3"
+    >
       IOIT ACM Student Chapter is an auxiliary organization of ACM. IOIT ACM is
       one of the most reputed and distinguished technical chapters working with
       vision and determination since its inception in 2019.
@@ -112,7 +128,7 @@
         <!-- Mobile Menu -->
         <a
           href="/events"
-          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
+          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline"
         >
           <img
             src="{{ url_for('static', filename='img/assets/events-icon.svg') }}"
@@ -127,7 +143,7 @@
         <!-- Additional Mobile Links -->
         <a
           href="https://www.ioittenet.com/"
-          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
+          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline"
         >
           <img
             src="{{ url_for('static', filename='img/assets/tenet-logo.png') }}"
@@ -142,7 +158,7 @@
         <!-- Other Mobile Menu Items -->
         <a
           href="/about"
-          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
+          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline"
         >
           <img
             src="{{ url_for('static', filename='img/assets/achievements-icon.svg') }}"
@@ -156,7 +172,7 @@
         </a>
         <a
           href="/gallery"
-          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all"
+          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline"
         >
           <img
             src="{{ url_for('static', filename='img/assets/gallery.svg') }}"
@@ -601,4 +617,29 @@
 </div>
 
 <script src="/static/js/utils.js"></script>
+<script>
+  document.addEventListener("scroll", function () {
+    const parallaxElements = document.querySelectorAll(".parallax-scroll");
+    parallaxElements.forEach((element) => {
+      let offset = window.scrollY * 0.4;
+      element.style.transform = `translateY(-${offset}px)`;
+    });
+
+    const parallaxScroll2 = document.querySelectorAll(".parallax-scroll-2");
+    parallaxScroll2.forEach((element) => {
+      let offset = window.scrollY * 0.3;
+      element.style.transform = `translateY(-${offset}px)`;
+    });
+
+    const parallaxScroll3 = document.querySelectorAll(".parallax-scroll-3");
+    parallaxScroll3.forEach((element) => {
+      let offset = window.scrollY * 0.2;
+      element.style.transform = `translateY(-${offset}px)`;
+    });
+
+    const zoomImage = document.getElementById("zoomImage");
+    let zoom = 1 + window.scrollY * 0.0015;
+    zoomImage.style.transform = `scale(${zoom})`;
+  });
+</script>
 {% endblock %}
