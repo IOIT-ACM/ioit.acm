@@ -77,10 +77,8 @@ canvas.addEventListener("mouseleave", () => {
   isDragging = false;
 });
 
-// Touch Event Listeners
 canvas.addEventListener("touchstart", (event) => {
   isDragging = true;
-  // Store the initial touch position
   const touch = event.touches[0];
   previousMousePosition.x = touch.clientX;
   previousMousePosition.y = touch.clientY;
@@ -88,16 +86,24 @@ canvas.addEventListener("touchstart", (event) => {
 
 canvas.addEventListener("touchmove", (event) => {
   if (isDragging) {
-    event.preventDefault(); // Prevent scrolling while rotating
     const touch = event.touches[0];
     const deltaMove = {
       x: touch.clientX - previousMousePosition.x,
       y: touch.clientY - previousMousePosition.y,
     };
 
-    dragRotation.y += deltaMove.x * 0.01;
-    dragRotation.x += deltaMove.y * 0.01;
+    // Determine if movement is more vertical (Y-axis) or horizontal (X-axis)
+    const absDeltaX = Math.abs(deltaMove.x);
+    const absDeltaY = Math.abs(deltaMove.y);
 
+    if (absDeltaX > absDeltaY) {
+      // Horizontal movement: rotate the object
+      event.preventDefault(); // Prevent scrolling only for horizontal movement
+      dragRotation.y += deltaMove.x * 0.01;
+      dragRotation.x += deltaMove.y * 0.01;
+    }
+
+    // Update previous position
     previousMousePosition.x = touch.clientX;
     previousMousePosition.y = touch.clientY;
   }
