@@ -141,11 +141,13 @@ endblock %} {% block content %}
 
   <div id="gallery" class="gallery-columns py-2 my-2">
     {% for image in collections %}
-    <div class="mb-2 md:mb-4 flex flex-col">
+    <div
+      class="mb-2 md:mb-4 flex shadow-md rounded-lg flex-col overflow-hidden"
+    >
       <img
         src="{{ url_for('static', filename='img/gallery/' + image.name) }}"
         alt="{{ image.desc }}"
-        class="w-full h-auto rounded-lg shadow-md transition-transform duration-300 cursor-pointer group-hover:scale-105"
+        class="w-full h-auto transition-transform duration-300 cursor-pointer hover:scale-110"
       />
     </div>
     {% endfor %}
