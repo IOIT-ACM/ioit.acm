@@ -5,9 +5,16 @@ behind the IOIT ACM Student Chapter.{% endblock %} {% block og_image %}{{
 url_for('static', filename='img/gallery/team.jpeg') }}{% endblock %} {% block
 twitter_image %}{{ url_for('static', filename='img/gallery/team.jpeg') }}{%
 endblock %} {% block content %}
+
+<script src="{{ url_for('static', filename='gallery/lightgallery.bundle.js') }}"></script>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='gallery/lightgallery-bundle.css') }}"
+/>
+
 <div
   class="relative bg-cover bg-center h-[50vh] md:h-[80vh]"
-  style="background-image: url('{{ url_for('static', filename='img/gallery/team.jpeg') }}');)"
+  style="background-image: url('{{ url_for('static', filename='img/gallery/team.jpeg') }}')"
 >
   <div
     class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black bg-opacity-60 grid place-items-center text-white px-4"
@@ -138,7 +145,7 @@ endblock %} {% block content %}
       <img
         src="{{ url_for('static', filename='img/gallery/' + image.name) }}"
         alt="{{ image.desc }}"
-        class="w-full h-auto rounded-lg shadow-md transition-transform duration-300 group-hover:scale-105"
+        class="w-full h-auto rounded-lg shadow-md transition-transform duration-300 cursor-pointer group-hover:scale-105"
       />
     </div>
     {% endfor %}
@@ -158,5 +165,48 @@ endblock %} {% block content %}
     Join IOIT ACM
   </a>
 </div>
+
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", () => {
+    const galleryContainer = document.getElementById("gallery");
+    const nav = document.querySelector("nav");
+
+    if (galleryContainer) {
+      const galleryItems = Array.from(
+        galleryContainer.querySelectorAll("img"),
+      ).map((img) => ({
+        src: img.src,
+        thumb: img.src,
+        subHtml: img.alt ? `<h4>${img.alt}</h4>` : "",
+      }));
+
+      const lgInstance = lightGallery(galleryContainer, {
+        dynamic: true,
+        dynamicEl: galleryItems,
+        plugins: [lgZoom, lgThumbnail, lgShare],
+        speed: 500,
+        fullScreen: true,
+        zoom: true,
+        thumbnail: true,
+        share: true,
+      });
+
+      galleryContainer.addEventListener("lgBeforeOpen", () => {
+        nav.style.display = "none";
+      });
+
+      galleryContainer.addEventListener("lgBeforeClose", () => {
+        nav.style.display = "block";
+      });
+
+      galleryContainer.querySelectorAll("img").forEach((img, index) => {
+        img.addEventListener("click", (e) => {
+          e.preventDefault();
+          lgInstance.openGallery(index);
+        });
+      });
+    }
+  });
+</script>
 
 {% endblock %}

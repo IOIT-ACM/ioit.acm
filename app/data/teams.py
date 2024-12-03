@@ -94,10 +94,10 @@ team_data = {
             "name": "Swaroop Patil",
             "title": "Web team Executive",
             "image": "static/img/team/2024/web-swaroop.jpeg",
-            "linktree": "",
+            "linktree": "https://linktr.ee/swarooppatilx",
             "github": "https://github.com/swarooppatilx",
             "linkedin": "https://www.linkedin.com/in/swarooppatilx",
-            "instagram": "",
+            "instagram": "https://www.instagram.com/swarooppatilx",
             "domain": "web",
         },
         {

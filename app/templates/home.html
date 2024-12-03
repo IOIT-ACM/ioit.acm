@@ -49,7 +49,7 @@
     <div class="md:flex justify-center gap-8 flex-wrap mt-8 hidden">
       <a href="/events" class="w-40 h-40 relative group">
         <div
-          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
+          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm rotate-on-scroll"
         ></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center">
           <img
@@ -64,7 +64,7 @@
 
       <a href="https://www.ioittenet.com/" class="w-40 h-40 relative group">
         <div
-          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
+          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm rotate-on-scroll"
         ></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center">
           <img
@@ -79,7 +79,7 @@
 
       <a href="/about" class="w-40 h-40 relative group">
         <div
-          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
+          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm rotate-on-scroll"
         ></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center">
           <img
@@ -94,7 +94,7 @@
 
       <a href="/gallery" class="w-40 h-40 relative group">
         <div
-          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm"
+          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm rotate-on-scroll"
         ></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center">
           <img
@@ -631,27 +631,43 @@
 <script type="module" src="/static/js/award-three.js"></script>
 <script>
   document.addEventListener("scroll", function () {
-    const parallaxElements = document.querySelectorAll(".parallax-scroll");
-    parallaxElements.forEach((element) => {
-      let offset = window.scrollY * 0.4;
-      element.style.transform = `translateY(-${offset}px)`;
+    const scrollY = window.scrollY;
+
+    // parallax scrolling
+    const parallaxConfig = [
+      { selector: ".parallax-scroll", speed: 0.4 },
+      { selector: ".parallax-scroll-2", speed: 0.3 },
+      { selector: ".parallax-scroll-3", speed: 0.2 },
+    ];
+
+    parallaxConfig.forEach(({ selector, speed }) => {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach((element) => {
+        const offset = scrollY * speed;
+        element.style.transform = `translateY(-${offset}px)`;
+      });
     });
 
-    const parallaxScroll2 = document.querySelectorAll(".parallax-scroll-2");
-    parallaxScroll2.forEach((element) => {
-      let offset = window.scrollY * 0.3;
-      element.style.transform = `translateY(-${offset}px)`;
-    });
-
-    const parallaxScroll3 = document.querySelectorAll(".parallax-scroll-3");
-    parallaxScroll3.forEach((element) => {
-      let offset = window.scrollY * 0.2;
-      element.style.transform = `translateY(-${offset}px)`;
-    });
-
+    // image zoom effect
     const zoomImage = document.getElementById("zoomImage");
-    let zoom = 1 + window.scrollY * 0.0015;
-    zoomImage.style.transform = `scale(${zoom})`;
+    if (zoomImage) {
+      const zoom = 1 + scrollY * 0.0015;
+      zoomImage.style.transform = `scale(${zoom})`;
+    }
+
+    // rotation effect
+    const rotatingElements = document.querySelectorAll(".rotate-on-scroll");
+    const maxScrollDistance = 500;
+
+    window.addEventListener("scroll", () => {
+      const scrollY = Math.min(window.scrollY, maxScrollDistance);
+
+      const newRotation = 45 + (scrollY / maxScrollDistance) * 45;
+
+      rotatingElements.forEach((element) => {
+        element.style.transform = `rotate(${newRotation}deg)`;
+      });
+    });
   });
 </script>
 {% endblock %}
