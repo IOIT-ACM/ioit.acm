@@ -1,0 +1,55 @@
+/* Container styling remains the same */
+#container {
+  position: relative;
+}
+
+#menu {
+  position: absolute;
+  bottom: 20px; /* Keep the bottom spacing */
+  width: 100%;
+  text-align: center;
+}
+
+/* Member card styling with improvements */
+.member {
+  width: 240px;
+  height: 350px;
+  box-shadow: 0px 0px 15px rgba(0, 128, 128, 0.4);
+  border: 2px solid rgba(0, 128, 128, 0.3);
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+  line-height: normal;
+  cursor: default;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 12px;
+}
+
+.member:hover {
+  box-shadow: 0px 0px 15px rgba(34, 139, 34, 0.7);
+  border: 2px solid rgba(34, 139, 34, 0.7);
+}
+
+.member .name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(0, 128, 128);
+  text-shadow: 0 0 12px rgba(0, 255, 255, 0.6);
+}
+
+.member .details {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  font-size: 16px;
+  text-align: center;
+  color: rgb(0, 128, 128);
+  text-shadow: 0 0 12px rgba(255, 255, 255, 1);
+}

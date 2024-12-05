@@ -1,5 +1,6 @@
 {% extends "base.html" %} {% block title %}IOIT ACM Student Chapter{% endblock
 %} {% block content %}
+
 <div
   class="relative min-h-screen h-auto flex pt-12 md:pt-0 items-center justify-center text-center bg-cover bg-center parallax"
   style="background-image: url('{{ url_for('static', filename='img/assets/desktop-bg.jpg') }}');"
@@ -268,7 +269,7 @@
     </div>
   </section>
 
-  <section class="">
+  <section class="mt-10">
     <div class="max-w-4xl mx-auto text-center">
       <h1 class="text-3xl md:text-4xl font-bold mb-4">
         We are the
@@ -325,15 +326,15 @@
   </section>
 
   <div
-    class="grid container gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10"
+    class="grid container gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 cursor-pointer"
   >
     <!-- IOIT TENET 2024 -->
     <div
-      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
+      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group"
     >
       <div class="flex flex-col items-center">
         <div
-          class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative group cursor-pointer video-hover-group"
+          class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer"
         >
           <!-- Image -->
           <img
@@ -351,7 +352,11 @@
           ></video>
         </div>
         <div class="text-center">
-          <h3 class="text-2xl font-semibold text-blue-800">IOIT TENET 2024</h3>
+          <a
+            href="https://ioittenet.com/"
+            class="text-2xl font-semibold text-blue-800 inline-block hover:no-underline"
+            >IOIT TENET 2024</a
+          >
           <p class="text-gray-600 mt-2">
             The annual technical festival showcasing innovative projects,
             technical competitions, and workshops to inspire the next generation
@@ -368,11 +373,11 @@
 
     <!-- IOIT MUN 2023 -->
     <div
-      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
+      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group"
     >
       <div class="flex flex-col items-center">
         <div
-          class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative group cursor-pointer video-hover-group"
+          class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer"
         >
           <!-- Image -->
           <img
@@ -390,7 +395,11 @@
           ></video>
         </div>
         <div class="text-center">
-          <h3 class="text-2xl font-semibold text-green-800">IOIT MUN 2023</h3>
+          <a
+            href="https://www.ioitmun.com/"
+            class="text-2xl font-semibold text-green-800 inline-block hover:no-underline"
+            >IOIT MUN 2023</a
+          >
           <p class="text-gray-600 mt-2">
             An engaging Model United Nations event that brought together
             students to discuss global issues, foster diplomacy, and promote
@@ -407,11 +416,11 @@
 
     <!-- IOIT MUN 2024 -->
     <div
-      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out"
+      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group"
     >
       <div class="flex flex-col items-center">
         <div
-          class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative group cursor-pointer video-hover-group"
+          class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer"
         >
           <!-- Image -->
           <img
@@ -429,7 +438,11 @@
           ></video>
         </div>
         <div class="text-center">
-          <h3 class="text-2xl font-semibold text-yellow-800">IOIT MUN 2024</h3>
+          <a
+            href="https://www.ioitmun.com/"
+            class="text-2xl font-semibold text-yellow-800 inline-block hover:no-underline"
+            >IOIT MUN 2024</a
+          >
           <p class="text-gray-600 mt-2">
             The upcoming MUN conference promising dynamic debates, collaborative
             resolutions, and a platform for young minds to make their voices
@@ -596,8 +609,25 @@
   </div>
 </div>
 
+<div id="container" class="md:block min-h-screen cursor-move hidden">
+  <div id="menu" class="w-full flex gap-5 justify-center text-center z-50">
+    <button
+      id="table"
+      class="bg-green-400/70 hover:bg-green-500/50 text-gray-900 md:font-semibold md:px-5 md:py-3 px-3 py-2 text-sm md:text-lg rounded-lg shadow-md transition-all backdrop-blur-sm"
+    >
+      GALLERY
+    </button>
+    <button
+      id="sphere"
+      class="bg-green-400/70 hover:bg-green-500/50 text-gray-900 md:font-semibold md:px-5 md:py-3 px-3 py-2 text-sm md:text-lg rounded-lg shadow-md transition-all backdrop-blur-sm"
+    >
+      SPHERE
+    </button>
+  </div>
+</div>
+
 <div
-  class="bg-gradient-to-r mt-20 from-blue-800 to-blue-600 py-8 px-6 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg"
+  class="bg-gradient-to-r from-blue-800 to-blue-600 py-8 px-6 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg mt-20 md:mt-0"
 >
   <h2 class="text-2xl md:text-4xl font-bold mb-6 md:mb-0">
     Become a part of such awesomeness
@@ -629,6 +659,7 @@
 
 <script src="/static/js/utils.js"></script>
 <script type="module" src="/static/js/award-three.js"></script>
+<script type="module" src="/static/js/home-team.js"></script>
 <script>
   document.addEventListener("scroll", function () {
     const scrollY = window.scrollY;
@@ -670,4 +701,6 @@
     });
   });
 </script>
+<link rel="stylesheet" href="/static/css/home-gallery.css" />
+
 {% endblock %}
