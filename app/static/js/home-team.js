@@ -6,7 +6,7 @@ import {
   CSS3DObject,
 } from "three/addons/renderers/CSS3DRenderer.js";
 
-let table = [
+const table = [
   {
     name: "Chaitali Khachane",
     title: "Chair",
@@ -302,7 +302,6 @@ let table = [
 let camera, scene, renderer;
 let controls;
 let currentTarget = "table";
-let shuffleInterval;
 
 const objects = [];
 const targets = { table: [], sphere: [] };
@@ -327,16 +326,34 @@ function init() {
     const element = document.createElement("div");
     element.className = "member";
     element.style.backgroundImage = `url(${table[i].image})`;
+    element.style.backgroundSize = "cover";
+    element.style.backgroundPosition = "center";
+    element.style.borderRadius = "10px";
+    element.style.overflow = "hidden";
+    element.style.position = "relative";
+    element.style.width = "200px";
+    element.style.height = "300px";
+    element.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
 
-    //const name = document.createElement("div");
-    //name.className = "name";
-    //name.textContent = table[i].name;
-    //element.appendChild(name);
-    //
-    //const details = document.createElement("div");
-    //details.className = "details";
-    //details.innerHTML = table[i].title;
-    //element.appendChild(details);
+    const labelContainer = document.createElement("div");
+    labelContainer.className = "label-container";
+    labelContainer.style.position = "absolute";
+    labelContainer.style.bottom = "0";
+    labelContainer.style.left = "0";
+    labelContainer.style.width = "100%";
+    labelContainer.style.background = "rgba(0, 0, 0, 0.6)";
+    labelContainer.style.color = "#fff";
+    labelContainer.style.padding = "10px 0";
+    labelContainer.style.textAlign = "center";
+
+    const title = document.createElement("div");
+    title.className = "title";
+    title.textContent = table[i].title;
+    title.style.fontSize = "12px";
+    title.style.opacity = "0.8";
+    labelContainer.appendChild(title);
+
+    element.appendChild(labelContainer);
 
     const objectCSS = new CSS3DObject(element);
     objectCSS.position.x = Math.random() * 4000 - 2000;
@@ -378,12 +395,55 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.getElementById("container").appendChild(renderer.domElement);
 
+  // Initialize OrbitControls
   controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.25;
-  controls.screenSpacePanning = false;
+  controls.screenSpacePanning = true;
   controls.maxPolarAngle = Math.PI / 2;
-  controls.enableZoom = false;
+  controls.enableZoom = false; // Disable zoom by default
+
+  // Event listeners to enable zoom when Ctrl key is pressed
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Control") {
+      controls.enableZoom = true;
+    }
+  });
+
+  window.addEventListener("keyup", (event) => {
+    if (event.key === "Control") {
+      controls.enableZoom = false;
+    }
+  });
+
+  // For touch devices, use a flag to simulate the Ctrl key behavior
+  let isCtrlPressed = false;
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Control") {
+      isCtrlPressed = true;
+    }
+  });
+
+  window.addEventListener("keyup", (event) => {
+    if (event.key === "Control") {
+      isCtrlPressed = false;
+    }
+  });
+
+  // Override the OrbitControls `onMouseWheel` and `onTouchMove` handlers
+  const originalMouseWheelHandler = controls.mouseButtons.WHEEL;
+  const originalTouchMoveHandler = controls.touches.ONE;
+
+  controls.addEventListener("start", () => {
+    if (!isCtrlPressed) {
+      controls.mouseButtons.WHEEL = null;
+      controls.touches.ONE = null;
+    } else {
+      controls.mouseButtons.WHEEL = originalMouseWheelHandler;
+      controls.touches.ONE = originalTouchMoveHandler;
+    }
+  });
   controls.addEventListener("change", render);
 
   const buttonTable = document.getElementById("table");
