@@ -301,6 +301,8 @@ let table = [
 
 let camera, scene, renderer;
 let controls;
+let currentTarget = "table";
+let shuffleInterval;
 
 const objects = [];
 const targets = { table: [], sphere: [] };
@@ -386,11 +388,13 @@ function init() {
 
   const buttonTable = document.getElementById("table");
   buttonTable.addEventListener("click", function () {
+    currentTarget = "table";
     transform(targets.table, 2000);
   });
 
   const buttonSphere = document.getElementById("sphere");
   buttonSphere.addEventListener("click", function () {
+    currentTarget = "sphere";
     transform(targets.sphere, 2000);
   });
 
@@ -401,6 +405,8 @@ function init() {
 
 function transform(targets, duration) {
   TWEEN.removeAll();
+
+  shuffleArray(targets);
 
   for (let i = 0; i < objects.length; i++) {
     const object = objects[i];
@@ -448,12 +454,31 @@ function onWindowResize() {
 
 function animate() {
   requestAnimationFrame(animate);
-
   TWEEN.update();
-
   controls.update();
 }
 
 function render() {
   renderer.render(scene, camera);
 }
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function startShuffling() {
+  shuffleInterval = setInterval(() => {
+    if (currentTarget === "sphere") {
+      shuffleArray(targets.sphere);
+      transform(targets.sphere, 2000);
+    } else {
+      shuffleArray(targets.table);
+      transform(targets.table, 2000);
+    }
+  }, 7000);
+}
+
+startShuffling();
