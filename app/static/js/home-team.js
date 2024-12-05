@@ -302,6 +302,7 @@ const table = [
 let camera, scene, renderer;
 let controls;
 let currentTarget = "table";
+let shuffleInterval;
 
 const objects = [];
 const targets = { table: [], sphere: [] };

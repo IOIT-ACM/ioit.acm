@@ -116,9 +116,7 @@
     />
 
     <!-- Scripts -->
-    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
-    <script defer src="/static/js/gsap.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.2" defer></script>
 
     <!--import maps-->
     <script type="importmap">
@@ -153,7 +151,9 @@
         <button
           class="block sm:hidden text-blue-600 focus:outline-none"
           onclick="toggleNav()"
+          aria-label="Toggle navigation"
         >
+          <span class="sr-only">Toggle navigation</span>
           <svg
             class="w-6 h-6"
             fill="none"
