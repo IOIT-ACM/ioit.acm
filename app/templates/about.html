@@ -37,7 +37,7 @@ growth.{% endblock %} {% block content %}
     </div>
   </div>
   <div class="flex flex-col gap-10 z-50">
-    <div>
+    <div class="gsap-reveal">
       <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
         What is ACM?
       </h2>
@@ -73,7 +73,7 @@ growth.{% endblock %} {% block content %}
         see highlights from our ACM events.
       </p>
     </div>
-    <div class="text-sm md:text-lg">
+    <div class="text-sm md:text-lg gsap-reveal">
       <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
         What we do?
       </h2>
@@ -126,7 +126,7 @@ growth.{% endblock %} {% block content %}
         </ul>
       </section>
     </div>
-    <div>
+    <div class="gsap-reveal">
       <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
         Achievements
       </h2>
@@ -159,7 +159,7 @@ growth.{% endblock %} {% block content %}
         and innovation in the field of technology and community engagement.
       </p>
     </div>
-    <div>
+    <div class="gsap-reveal">
       <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
         How do I get involved?
       </h2>
@@ -224,7 +224,7 @@ growth.{% endblock %} {% block content %}
         </a>
       </div>
     </div>
-    <div>
+    <div class="gsap-reveal">
       <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
         Sponsorships and collaborations
       </h2>
@@ -244,7 +244,7 @@ growth.{% endblock %} {% block content %}
         >. We look forward to collaborating with you!
       </p>
     </div>
-    <div class="text-sm md:text-lg">
+    <div class="text-sm md:text-lg gsap-reveal">
       <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
         Credits
       </h2>
@@ -305,6 +305,13 @@ growth.{% endblock %} {% block content %}
           any compatible browser, without needing plugins.
         </li>
         <li>
+          <a href="https://gsap.com/" class="text-blue-500 hover:underline"
+            >GSAP</a
+          >
+          – Aa JavaScript animation library that allows developers to create
+          high-performance HTML5 animations for websites.
+        </li>
+        <li>
           <a href="https://htmx.org/" class="text-blue-500 hover:underline"
             >HTMX</a
           >
@@ -319,8 +326,7 @@ growth.{% endblock %} {% block content %}
             >LightGallery</a
           >
           – A lightweight, modular JavaScript plugin for creating image and
-          video lightbox galleries. It supports React.js, Vue.js, Angular, and
-          TypeScript.
+          video lightbox galleries.
         </li>
       </ul>
     </div>
@@ -334,7 +340,7 @@ growth.{% endblock %} {% block content %}
   <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-8">
     {% for member in leadership %}
 
-    <div class="text-center">
+    <div class="text-center gsap-reveal">
       <div
         class="w-24 h-24 rounded-full border border-gray-300 mx-auto bg-cover bg-center"
         style="background-image: url('{{ member.image }}');"
