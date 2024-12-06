@@ -1,10 +1,10 @@
 {% extends "base.html" %} {% block title %}Event Details{% endblock %} {% block
 content %}
-<div class="flex h-screen">
-  <!-- Sidebar with a fixed title -->
+<div class="flex md:h-screen min-h-screen">
+  <!-- Sidebar with a fixed title (for desktop) -->
   <div
     id="sidebar"
-    class="w-1/3 bg-gray-100 border-r border-gray-300 flex flex-col overflow-y-auto no-scroll-bar"
+    class="w-1/3 bg-gray-100 border-r border-gray-300 flex flex-col overflow-y-auto no-scroll-bar hidden md:block"
   >
     <!-- Fixed title -->
     <div
@@ -36,7 +36,7 @@ content %}
   </div>
 
   <!-- Event details section -->
-  <div class="w-2/3 p-8 mt-20">
+  <div class="w-full md:w-2/3 p-8 mt-20">
     {% block event_content %}
     <div class="text-center text-gray-500">
       Select an event to view details.
@@ -45,7 +45,54 @@ content %}
   </div>
 </div>
 
-<!-- JavaScript to Scroll the Sidebar Only -->
+<!-- Mobile: Button to open event menu -->
+<div class="md:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 z-20">
+  <button
+    id="openMenuButton"
+    class="bg-blue-600 text-white py-2 px-4 rounded-full shadow-lg"
+  >
+    View events menu
+  </button>
+</div>
+
+<!-- Mobile Modal (Event List) -->
+<div
+  id="eventMenuModal"
+  class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30 h-screen"
+>
+  <div
+    class="bg-white w-4/5 md:w-1/3 p-6 rounded-lg shadow-lg max-h-[60vh] overflow-y-auto"
+  >
+    <button
+      id="closeModalButton"
+      class="absolute top-4 right-4 text-xl text-gray-500"
+    >
+      &times;
+    </button>
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">All Events</h2>
+    <ul class="divide-y divide-gray-300">
+      {% for event in events %}
+      <li
+        id="event-{{ event.slug }}"
+        class="p-4 {% if event.slug == event_slug %}bg-blue-100 border-blue-500 border-l-4 {% endif %}"
+      >
+        <a
+          href="{{ url_for('events.event_detail', event_slug=event.slug) }}"
+          class="block"
+        >
+          <h3 class="text-lg font-semibold text-blue-600 hover:underline">
+            {{ event.name }}
+          </h3>
+          <p class="text-sm text-gray-700">{{ event.description }}</p>
+          <p class="text-sm text-gray-500 mt-1">{{ event.date }}</p>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<!-- JavaScript to Scroll the Sidebar and Handle Modal -->
 <script>
   window.onload = function () {
     const eventSlug = "{{ event_slug }}"; // Get the current event's slug
@@ -65,6 +112,21 @@ content %}
         });
       }
     }
+
+    // Event menu modal toggle functionality
+    const openMenuButton = document.getElementById("openMenuButton");
+    const closeModalButton = document.getElementById("closeModalButton");
+    const eventMenuModal = document.getElementById("eventMenuModal");
+
+    // Open the modal when the button is clicked
+    openMenuButton.addEventListener("click", function () {
+      eventMenuModal.classList.remove("hidden");
+    });
+
+    // Close the modal when the close button is clicked
+    closeModalButton.addEventListener("click", function () {
+      eventMenuModal.classList.add("hidden");
+    });
   };
 </script>
 {% endblock %}
