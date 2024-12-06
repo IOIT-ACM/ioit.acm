@@ -1,16 +1,87 @@
 {% extends "event_detail_base.html" %} {% block title %}{{ event.name }} - IOIT
 ACM{% endblock %} {% block og_title %}{{ event.name }}{% endblock %} {% block
 og_description %}{{ event.description[:150] }}{% endblock %} {% block og_image
-%}{{ event.image_url if event.image_url else url_for('static',
-filename='img/assets/keyboard-header.jpg') }}{% endblock %} {% block
-twitter_image %}{{ event.image_url if event.image_url else url_for('static',
-filename='img/assets/keyboard-header.jpg') }}{% endblock %} {% block
+%} {{ event.image_url if event.image_url else url_for('static',
+filename='img/assets/keyboard-header.jpg') }} {% endblock %} {% block
+twitter_image %} {{ event.image_url if event.image_url else url_for('static',
+filename='img/assets/keyboard-header.jpg') }} {% endblock %} {% block
 twitter_title %}{{ event.name }}{% endblock %} {% block twitter_description %}{{
 event.description[:150] }}{% endblock %} {% block event_content %}
 
-<div class="bg-white shadow-md rounded-lg p-6">
-  <h1 class="text-2xl font-bold text-gray-800">{{ event.name }}</h1>
-  <p class="text-gray-700 mt-4">{{ event.description }}</p>
-  <p class="text-gray-500 mt-6">📅 Date: {{ event.date }}</p>
+<!-- Event Header with Image and Content in a Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <!-- Left Column: Image (spans 1 column) -->
+  <div class="flex justify-center aspect-square col-span-1">
+    <img
+      src="{{ url_for('static', filename=event.image_url if event.image_url else 'img/gallery/team.jpeg') }}"
+      alt="{{ event.name }}"
+      class="w-full h-auto aspect-square rounded-lg object-cover shadow-lg"
+    />
+  </div>
+
+  <!-- Event Details  -->
+  <div class="col-span-2">
+    <h1 class="text-3xl font-semibold text-gray-800">{{ event.name }}</h1>
+    <p class="text-gray-700 mt-2 text-lg">{{ event.description }}</p>
+
+    <p class="text-gray-500 mt-2 text-base">{{ event.date }}</p>
+    <hr class="my-6 border-t-2 border-gray-500" />
+
+    <!-- Topics Covered Section -->
+    <div class="mt-6">
+      <h3 class="text-xl font-semibold text-gray-800">Topics Covered</h3>
+      <ul class="list-disc list-inside text-gray-700 mt-4 space-y-2">
+        {% for topic in event.topics %}
+        <li>{{ topic }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Social Media Links Section -->
+    <div class="mt-6 flex space-x-6">
+      {% if event.facebook_link %}
+      <a
+        href="{{ event.facebook_link }}"
+        target="_blank"
+        class="text-blue-600 hover:text-blue-800"
+      >
+        <i class="fab fa-facebook-square fa-2x"></i>
+      </a>
+      {% else %}
+      <a
+        href="https://facebook.com/ioitacm"
+        target="_blank"
+        class="text-blue-600 hover:text-blue-800"
+      >
+        <i class="fab fa-facebook-square fa-2x"></i>
+      </a>
+      {% endif %} {% if event.instagram_link %}
+      <a
+        href="{{ event.instagram_link }}"
+        target="_blank"
+        class="text-pink-600 hover:text-pink-800"
+      >
+        <i class="fab fa-instagram fa-2x"></i>
+      </a>
+      {% else %}
+      <a
+        href="https://instagram.com/ioit__acm"
+        target="_blank"
+        class="text-pink-600 hover:text-pink-800"
+      >
+        <i class="fab fa-instagram fa-2x"></i>
+      </a>
+      {% endif %}
+
+      <a
+        href="https://linkedin.com/company/ioit-acm"
+        target="_blank"
+        class="text-blue-700 hover:text-blue-900"
+      >
+        <i class="fab fa-linkedin fa-2x"></i>
+      </a>
+    </div>
+  </div>
 </div>
+
 {% endblock %}

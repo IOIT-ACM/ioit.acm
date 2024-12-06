@@ -42,7 +42,7 @@ def event_detail(event_slug):
 
     event = next((e for e in events if e["name"] == decoded_name), None)
     if not event:
-        return "Event not found", 404
+        return render_template("event_detail_404.html", events=events)
 
     return render_template(
         "event_detail.html", event=event, events=events, event_slug=event_slug

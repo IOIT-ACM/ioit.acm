@@ -2,6 +2,10 @@ body::-webkit-scrollbar {
   width: 0px;
 }
 
+.no-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+
 ::selection {
   background-color: #46c4ff;
   color: #323232;
