@@ -25,25 +25,32 @@ images_2 = [
     "https://ioit.acm.org/tenet/mun/2024/16.jpeg",
 ]
 
+
+def safe_slug(name):
+    return urllib.quote(name.encode("utf-8"))
+
+
+def decode_slug(slug):
+    return urllib.unquote(slug).decode("utf-8")
+
+
 for event in events:
-    event["slug"] = urllib.quote(event["name"])
+    event["slug"] = safe_slug(event["name"])
+
+
+@events_bp.route("/events/<string:event_slug>")
+def event_detail(event_slug):
+    decoded_name = decode_slug(event_slug)
+    event = next((e for e in events if e["name"] == decoded_name), None)
+    if not event:
+        return render_template("event_detail_404.html", events=events)
+    return render_template(
+        "event_detail.html", event=event, events=events, event_slug=event_slug
+    )
 
 
 @events_bp.route("/events")
 def home():
     return render_template(
         "events.html", events=events, images=images, images_2=images_2
-    )
-
-
-@events_bp.route("/events/<string:event_slug>")
-def event_detail(event_slug):
-    decoded_name = urllib.unquote(event_slug)
-
-    event = next((e for e in events if e["name"] == decoded_name), None)
-    if not event:
-        return render_template("event_detail_404.html", events=events)
-
-    return render_template(
-        "event_detail.html", event=event, events=events, event_slug=event_slug
     )

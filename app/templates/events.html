@@ -314,7 +314,7 @@ and contests that help you grow professionally and academically.{% endblock %}
       >
         <div class="p-4">
           <a
-            href="{{ url_for('events.event_detail', event_slug=event.slug) }}"
+            href="{{ url_for('events.event_detail', event_slug=event.name) }}"
             class="hover:underline text-blue-600"
           >
             {{ event.name }}
