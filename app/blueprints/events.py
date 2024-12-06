@@ -1,3 +1,4 @@
+import urllib
 from flask import Blueprint, render_template
 from app.data.events import events
 
@@ -24,9 +25,25 @@ images_2 = [
     "https://ioit.acm.org/tenet/mun/2024/16.jpeg",
 ]
 
+for event in events:
+    event["slug"] = urllib.quote(event["name"])
+
 
 @events_bp.route("/events")
 def home():
     return render_template(
         "events.html", events=events, images=images, images_2=images_2
+    )
+
+
+@events_bp.route("/events/<string:event_slug>")
+def event_detail(event_slug):
+    decoded_name = urllib.unquote(event_slug)
+
+    event = next((e for e in events if e["name"] == decoded_name), None)
+    if not event:
+        return "Event not found", 404
+
+    return render_template(
+        "event_detail.html", event=event, events=events, event_slug=event_slug
     )

@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block title %}Event Details{% endblock %} {% block
+content %}
+<div class="flex h-screen">
+  <!-- Sidebar with a fixed title -->
+  <div class="w-1/3 bg-gray-100 border-r border-gray-300 flex flex-col">
+    <!-- Fixed title -->
+    <div
+      class="bg-gray-200 text-center p-4 sticky top-0 z-10 border-b border-gray-300"
+    >
+      <h2 class="text-xl font-bold text-gray-800 pt-20">All Events</h2>
+    </div>
+
+    <!-- Event list -->
+    <ul class="divide-y divide-gray-300 flex-1 overflow-y-auto">
+      {% for event in events %}
+      <li
+        class="p-4 {% if event.slug == event_slug %}bg-blue-100 border-l-4 border-blue-500{% endif %}"
+      >
+        <a
+          href="{{ url_for('events.event_detail', event_slug=event.slug) }}"
+          class="block"
+        >
+          <h3 class="text-lg font-semibold text-blue-600 hover:underline">
+            {{ event.name }}
+          </h3>
+          <p class="text-sm text-gray-700">{{ event.description }}</p>
+          <p class="text-sm text-gray-500 mt-1">📅 {{ event.date }}</p>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Event details section -->
+  <div class="w-2/3 p-8 mt-20">
+    {% block event_content %}
+    <div class="text-center text-gray-500">
+      Select an event to view details.
+    </div>
+    {% endblock %}
+  </div>
+</div>
+{% endblock %}
