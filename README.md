@@ -1,6 +1,8 @@
 # IOIT ACM Student Chapter Flask Project
 
-This is a Flask project for the IOIT ACM Student Chapter website. Tech stack for this site includes Flask, HTMX, TailwwindCSS, [sheetdb](https://sheetdb.io/)
+This is a Flask project for the IOIT ACM Student Chapter website.
+
+[Production site](https://ioit.acm.org/)
 
 ![Home page](./docs/home.png)
 _Home page_
@@ -62,16 +64,90 @@ Currently, there is no Git integration in this project. However, the `build.sh` 
 The following routes are available in the project:
 
 - [x] **`/`**: The home page of the site.
-- [ ] **`/about`**: The about page.
+- [x] **`/about`**: The about page.
 - [x] **`/membership`**: The membership page.
 - [x] **`/membership/status`**: A page showing membership status.
-- [ ] **`/gallery`**: A page (currently under development) displaying images or events.
+- [x] **`/gallery`**: A page (currently under development) displaying images or events.
 - [x] **`/team`**: A page with details of the IOIT ACM committee members.
 - [x] **`/events`**: A page displaying upcoming events.
+- [x] **`/events/{event.name}`**: Event details page.
 
-## TO-DOs
+## Update data
 
-- Collect team images
-- About page
-- Gallery page
-- Search feature on `/membership/status` page
+Python files for data are located in `app/static/data`.
+
+---
+
+### 1. Events (`events.py`)
+
+#### Structure:
+
+- The `events.py` file contains a list of events in the form of dictionaries.
+- Each event has the following fields:
+  - **`name`**: The title of the event (e.g., "National Level FDP on Cyber Security").
+  - **`description`**: A brief overview of the event.
+  - **`date`**: The date(s) of the event (e.g., "October 21, 2024 - October 25, 2024").
+  - **`image_url`**: A URL to an image representing the event, which can be used for display purposes.
+  - **`instagram_link`**: The Instagram link for the event, if available.
+  - **`facebook_link`**: The Facebook link for the event, if available.
+  - **`topics`**: A list of topics covered during the event.
+
+Example:
+
+```python
+events = [
+    {
+        "name": "National Level FDP on Cyber Security",
+        "description": "A faculty development program focused on cyber security topics.",
+        "date": "October 21, 2024 - October 25, 2024",
+        "image_url": "",
+        "instagram_link": "",
+        "facebook_link": "",
+        "topics": [
+            "We discussed the fundamentals of cyber security, including key concepts such as firewalls, encryption, and authentication.",
+            "We explored network security techniques to prevent unauthorized access and attacks on computer networks.",
+            "We learned about cryptographic methods used to secure communications and protect sensitive information.",
+            "We talked about emerging cyber threats like ransomware and phishing, and how to mitigate them using various defense strategies.",
+            "We covered risk management approaches to identify vulnerabilities and create robust protection strategies.",
+        ],
+    },
+]
+```
+
+#### Usage in the Codebase:
+
+- Events are dynamically rendered in Jinja2 templates via a `for` loop, typically used on event listing or event detail pages.
+- The route for each individual event details page is dynamically created using the event’s name as a slug: `/events/{event.name}`. For example, a URL for "National Level FDP on Cyber Security" would be `/events/National%20Level%20FDP%20on Cyber Security`.
+
+#### Precautions:
+
+- **Event name formatting**:
+
+  - Do not use special characters in event names (e.g., `@`, `#`, `&`).
+  - Avoid using hyphens (`-`) and slashes (`/`) in event names, as they may conflict with route generation and URL structure.
+  - If an event name contains spaces, consider replacing them with underscores (`_`) for compatibility with the URL structure.
+
+- **Image URLs**:
+  - Only use appropriate image paths from the `static` folder.
+  - If no image is available for an event, leave the `image_url` field empty.
+
+---
+
+### 2. Teams (`teams.py`)
+
+#### Structure:
+
+- The `team_data` variable contains a dictionary with team members categorized by year (e.g., "2024", "2023", "2022").
+- Each team entry includes the following fields:
+  - **`name`**: The name of the team member.
+  - **`title`**: The role or title of the team member (e.g., "Chair", "Vice Chair").
+  - **`image`**: The file path to an image of the team member, typically located under `static/img/team/{year}/`.
+  - **`linktree`**: A link to the team member's Linktree, if available.
+  - **`github`**: The team member's GitHub profile link, if available.
+  - **`linkedin`**: The team member's LinkedIn profile link, if available.
+  - **`instagram`**: The team member's Instagram profile link, if available.
+  - **`domain`**: The domain of work the team member belongs to (e.g., "core", "events", "web", "documentation").
+
+#### Usage in the Codebase:
+
+- This file is used to render team members' information on team-related pages or sections of the website, with each member's details linked to their social media profiles (LinkedIn, GitHub, etc.).

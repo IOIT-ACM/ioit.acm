@@ -80,6 +80,10 @@ const table = [
     image: "static/img/gallery/award-2024/3.jpeg",
   },
   {
+    title: "award-2024",
+    image: "static/img/gallery/award-2024/4.jpeg",
+  },
+  {
     title: "drive",
     image: "static/img/gallery/drive/1.jpeg",
   },
@@ -90,6 +94,10 @@ const table = [
   {
     title: "drive",
     image: "static/img/gallery/drive/3.jpeg",
+  },
+  {
+    title: "drive",
+    image: "static/img/gallery/drive/4.jpeg",
   },
   {
     title: "esp",
@@ -104,6 +112,10 @@ const table = [
     image: "static/img/gallery/esp/3.jpeg",
   },
   {
+    title: "esp",
+    image: "static/img/gallery/esp/4.jpeg",
+  },
+  {
     title: "events",
     image: "static/img/gallery/events/1.jpeg",
   },
@@ -114,6 +126,10 @@ const table = [
   {
     title: "events",
     image: "static/img/gallery/events/3.jpeg",
+  },
+  {
+    title: "events",
+    image: "static/img/gallery/events/4.jpeg",
   },
   {
     title: "tenet-2024",
@@ -127,8 +143,27 @@ const table = [
     title: "tenet-2024",
     image: "static/img/gallery/tenet-2024/3.jpeg",
   },
+  {
+    title: "tenet-2024",
+    image: "static/img/gallery/tenet-2024/4.jpeg",
+  },
+  {
+    title: "bit-by-bit",
+    image: "static/img/gallery/bit-by-bit/1.jpeg",
+  },
+  {
+    title: "bit-by-bit",
+    image: "static/img/gallery/bit-by-bit/2.jpeg",
+  },
+  {
+    title: "bit-by-bit",
+    image: "static/img/gallery/bit-by-bit/3.jpeg",
+  },
+  {
+    title: "bit-by-bit",
+    image: "static/img/gallery/bit-by-bit/4.jpeg",
+  },
 ];
-
 let camera, scene, renderer;
 let controls;
 let currentTarget = "table";
@@ -369,7 +404,7 @@ function startShuffling() {
       shuffleArray(targets.table);
       transform(targets.table, 2000);
     }
-  }, 7000);
+  }, 10000);
 }
 
 startShuffling();

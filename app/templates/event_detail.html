@@ -2,10 +2,10 @@
 ACM{% endblock %} {% block og_title %}{{ event.name }}{% endblock %} {% block
 og_description %}{{ event.description[:150] }}{% endblock %} {% block og_image
 %} {{ event.image_url if event.image_url else url_for('static',
-filename='img/assets/keyboard-header.jpg') }} {% endblock %} {% block
-twitter_image %} {{ event.image_url if event.image_url else url_for('static',
-filename='img/assets/keyboard-header.jpg') }} {% endblock %} {% block
-twitter_title %}{{ event.name }}{% endblock %} {% block twitter_description %}{{
+filename='img/assets/logo.jpeg') }} {% endblock %} {% block twitter_image %} {{
+event.image_url if event.image_url else url_for('static',
+filename='img/assets/logo.jpeg') }} {% endblock %} {% block twitter_title %}{{
+event.name }}{% endblock %} {% block twitter_description %}{{
 event.description[:150] }}{% endblock %} {% block event_content %}
 
 <!-- Event Header with Image and Content in a Grid Layout -->
@@ -13,9 +13,9 @@ event.description[:150] }}{% endblock %} {% block event_content %}
   <!-- Left Column: Image (spans 1 column) -->
   <div class="flex justify-center aspect-square col-span-1">
     <img
-      src="{{ url_for('static', filename=event.image_url if event.image_url else 'img/gallery/team.jpeg') }}"
+      src="{{ url_for('static', filename=event.image_url if event.image_url else 'img/assets/logo.jpeg') }}"
       alt="{{ event.name }}"
-      class="w-full h-auto aspect-square rounded-lg object-cover shadow-lg"
+      class="w-full h-auto aspect-square rounded-lg object-cover shadow-lg bg-white"
     />
   </div>
 
