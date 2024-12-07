@@ -58,8 +58,11 @@
             alt="Events Icon"
             class="w-12 h-12 mb-2 text-blue-400"
           />
-          <h3 class="text-blue-400 font-semibold">Events</h3>
-          <p class="text-gray-300 text-sm">Activities</p>
+          <h2 class="text-blue-400 font-semibold text-base">Events at ACM</h2>
+          <p class="text-gray-300 text-sm">
+            Activities and <br />
+            sessions
+          </p>
         </div>
       </a>
 
@@ -69,11 +72,11 @@
         ></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center">
           <img
-            src="{{ url_for('static', filename='img/assets/tenet-logo.png') }}"
+            src="{{ url_for('static', filename='img/assets/tenet-logo.svg') }}"
             alt="Tenet Icon"
             class="w-12 h-12 mb-2 text-blue-400"
           />
-          <h3 class="text-blue-400 font-semibold">Flagship Events</h3>
+          <h2 class="text-blue-400 font-semibold text-base">Flagship Events</h2>
           <p class="text-gray-300 text-sm">TENET & <br />IOIT MUN</p>
         </div>
       </a>
@@ -88,7 +91,7 @@
             alt="Achievements Icon"
             class="w-12 h-12 mb-2 text-blue-400"
           />
-          <h3 class="text-blue-400 font-semibold">Achievements</h3>
+          <h2 class="text-blue-400 font-semibold text-base">Achievements</h2>
           <p class="text-gray-300 text-sm">Our Success</p>
         </div>
       </a>
@@ -103,7 +106,7 @@
             alt="Social Icon"
             class="w-12 h-12 mb-2 text-blue-400"
           />
-          <h3 class="text-blue-400 font-semibold">Gallery</h3>
+          <h2 class="text-blue-400 font-semibold text-base">Gallery</h2>
           <p class="text-gray-300 text-sm">View glimpses</p>
         </div>
       </a>
@@ -137,8 +140,10 @@
             class="w-8 h-8 mr-4"
           />
           <div>
-            <h3 class="text-blue-400 font-semibold text-sm">Events</h3>
-            <p class="text-gray-300 text-xs">Activities</p>
+            <h2 class="text-blue-400 font-semibold text-sm">Events at ACM</h2>
+            <p class="text-gray-300 text-xs">
+              Activities, sessions and workshops
+            </p>
           </div>
         </a>
         <!-- Additional Mobile Links -->
@@ -147,12 +152,12 @@
           class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline"
         >
           <img
-            src="{{ url_for('static', filename='img/assets/tenet-logo.png') }}"
+            src="{{ url_for('static', filename='img/assets/tenet-logo.svg') }}"
             alt="Tenet Icon"
             class="w-8 h-8 mr-4"
           />
           <div>
-            <h3 class="text-blue-400 font-semibold text-sm">Flagship Events</h3>
+            <h2 class="text-blue-400 font-semibold text-sm">Flagship Events</h2>
             <p class="text-gray-300 text-xs">TENET & IOIT MUN</p>
           </div>
         </a>
@@ -167,7 +172,7 @@
             class="w-8 h-8 mr-4"
           />
           <div>
-            <h3 class="text-blue-400 font-semibold text-sm">Achievements</h3>
+            <h2 class="text-blue-400 font-semibold text-sm">Achievements</h2>
             <p class="text-gray-300 text-xs">Our Success</p>
           </div>
         </a>
@@ -181,7 +186,7 @@
             class="w-8 h-8 mr-4"
           />
           <div>
-            <h3 class="text-blue-400 font-semibold text-sm">Gallery</h3>
+            <h2 class="text-blue-400 font-semibold text-sm">Gallery</h2>
             <p class="text-gray-300 text-xs">View glimpses</p>
           </div>
         </a>
@@ -523,7 +528,7 @@
       </div>
       <div class="py-6">
         <span
-          class="text-gray-500 text-sm uppercase font-semibold tracking-wide block mb-2"
+          class="text-gray-800 text-sm uppercase font-semibold tracking-wide block mb-2"
         >
           {{ stories[0].category }}
         </span>
@@ -533,10 +538,10 @@
         <p class="text-gray-600 mb-4 line-clamp-3">
           {{ stories[0].description }}
         </p>
-        <p class="text-gray-500 text-sm mb-2">{{ stories[0].date }}</p>
+        <p class="text-gray-800 text-sm mb-2">{{ stories[0].date }}</p>
         <a
           href="{{ stories[0].link }}"
-          class="text-blue-500 hover:text-blue-700 font-medium underline transition duration-300"
+          class="text-blue-800 hover:text-blue-700 font-medium underline transition duration-300"
           >Read More on our blog</a
         >
       </div>
@@ -557,9 +562,9 @@
           />
         </div>
         <div>
-          <p class="text-gray-500 text-sm">{{ story.date }}</p>
+          <p class="text-gray-800 text-sm">{{ story.date }}</p>
           <span
-            class="text-gray-500 text-sm uppercase font-semibold block mb-1"
+            class="text-gray-800 text-sm uppercase font-semibold block mb-1"
           >
             {{ story.category }}
           </span>
@@ -569,7 +574,7 @@
           >
             {{ story.title }}
           </a>
-          <p class="text-gray-500 text-sm mb-2 line-clamp-2">
+          <p class="text-gray-800 text-sm mb-2 line-clamp-2">
             {{ story.description }}
           </p>
         </div>
@@ -584,7 +589,7 @@
         class="flex justify-between md:items-center mb-6 gap-3 md:gap-0 flex-col md:flex-row w-full"
       >
         <h2 class="text-3xl font-semibold text-gray-800">Recent Events</h2>
-        <a href="/events" class="text-blue-500 hover:text-blue-700 text-sm"
+        <a href="/events" class="text-blue-800 hover:text-blue-700 text-sm"
           >View All Events & Activities</a
         >
       </div>
