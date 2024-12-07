@@ -10,7 +10,9 @@ twitter_description %}Learn more about the IOIT ACM Student Chapter and our
 dedication to creating a thriving community for learning, collaboration, and
 growth.{% endblock %} {% block content %}
 
-<section class="mt-32 grid grid-cols-1 md:grid-cols-2 mx-auto max-w-6xl p-8">
+<section
+  class="mt-32 grid grid-cols-1 md:grid-cols-2 mx-auto max-w-6xl p-8 mb-8"
+>
   <div class="flex justify-center mb-10">
     <div class="w-2/3 md:mt-20 relative h-fit sticky top-32">
       <div
@@ -168,7 +170,7 @@ growth.{% endblock %} {% block content %}
         No matter what your background or interest is, we would love to have you
         at our events and activities! To keep up with what’s happening, we
         recommend joining via our
-        <a href="/join" class="text-blue-500 hover:underline">
+        <a href="/join" class="text-blue-600 hover:underline">
           membership portal
         </a>
         . We will keep you up to date with everything ACM
@@ -232,13 +234,13 @@ growth.{% endblock %} {% block content %}
       <p class="text-gray-600 text-sm md:text-lg mb-6">
         For sponsorship inquiries, please contact Devang Gandhi, Secretary at
         AISSMS IOIT ACM Student chapter, at
-        <a href="tel:7385234057" class="text-blue-500 hover:underline">
+        <a href="tel:7385234057" class="text-blue-600 hover:underline">
           7385234057
         </a>
         or email us at
         <a
           href="mailto:acm.studentbranch@aissmsioit.org"
-          class="text-blue-500 hover:underline"
+          class="text-blue-600 hover:underline"
         >
           acm.studentbranch@aissmsioit.org </a
         >. We look forward to collaborating with you!
@@ -253,18 +255,18 @@ growth.{% endblock %} {% block content %}
         This site is a collaborative effort of the ACM web team:
         <a
           href="https://github.com/adimail"
-          class="text-blue-500 hover:underline"
+          class="text-blue-600 hover:underline"
           >Aditya Godse</a
         >,
         <a
           href="https://github.com/swarooppatilx"
-          class="text-blue-500 hover:underline"
+          class="text-blue-600 hover:underline"
           >Swaroop Patil</a
         >
         &
         <a
           href="https://www.linkedin.com/in/aayush-musale-517a7326a/"
-          class="text-blue-500 hover:underline"
+          class="text-blue-600 hover:underline"
           >Ayush Musale</a
         >.
       </p>
@@ -273,7 +275,7 @@ growth.{% endblock %} {% block content %}
         <li>
           <a
             href="https://flask.palletsprojects.com/"
-            class="text-blue-500 hover:underline"
+            class="text-blue-600 hover:underline"
             >Flask</a
           >
           – A lightweight Python web framework used to create robust and
@@ -282,14 +284,14 @@ growth.{% endblock %} {% block content %}
         <li>
           <a
             href="https://tailwindcss.com/"
-            class="text-blue-500 hover:underline"
+            class="text-blue-600 hover:underline"
             >TailwindCSS</a
           >
           – A utility-first CSS framework that provides pre-defined classes to
           build modern, responsive designs quickly.
         </li>
         <li>
-          <a href="https://threejs.org/" class="text-blue-500 hover:underline"
+          <a href="https://threejs.org/" class="text-blue-600 hover:underline"
             >ThreeJS</a
           >
           – A JavaScript library that makes it easy to create and display 3D
@@ -298,14 +300,14 @@ growth.{% endblock %} {% block content %}
         <li>
           <a
             href="https://www.khronos.org/webgl/"
-            class="text-blue-500 hover:underline"
+            class="text-blue-600 hover:underline"
             >WebGL</a
           >
           – A web standard for rendering interactive 2D and 3D graphics within
           any compatible browser, without needing plugins.
         </li>
         <li>
-          <a href="https://htmx.org/" class="text-blue-500 hover:underline"
+          <a href="https://htmx.org/" class="text-blue-600 hover:underline"
             >HTMX</a
           >
           – htmx is a lightweight JavaScript library that allows you to build
@@ -315,19 +317,25 @@ growth.{% endblock %} {% block content %}
         <li>
           <a
             href="https://www.lightgalleryjs.com/"
-            class="text-blue-500 hover:underline"
+            class="text-blue-600 hover:underline"
             >LightGallery</a
           >
           – A lightweight, modular JavaScript plugin for creating image and
           video lightbox galleries.
         </li>
       </ul>
+      <img
+        src="/static/img/assets/lighthouse.jpeg"
+        alt="IOIT TENET 2024"
+        class="h-auto w-full rounded-3xl mt-8"
+        loading="lazy"
+      />
     </div>
   </div>
 </section>
 
 <div class="mt-12 mx-auto max-w-6xl p-8">
-  <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold mb-4">
+  <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold mb-10">
     Leadership
   </h2>
   <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-8">
@@ -338,8 +346,8 @@ growth.{% endblock %} {% block content %}
         class="w-24 h-24 rounded-full border border-gray-300 mx-auto bg-cover bg-center"
         style="background-image: url('{{ member.image }}');"
       ></div>
-      <p class="mt-4">{{ member.name }}</p>
-      <p class="text-gray-500">{{ member.title }}</p>
+      <p class="mt-4 text-gray-900">{{ member.name }}</p>
+      <p class="text-gray-600">{{ member.title }}</p>
     </div>
 
     {% endfor %}
