@@ -17,8 +17,8 @@ content %}
     <ul class="divide-y divide-gray-300 flex-1">
       {% for event in events %}
       <li
-        id="event-{{ event.slug }}"
-        class="p-4 {% if event.slug == event_slug %}bg-blue-100 border-blue-500 border-l-4 {% endif %}"
+        id="event-{{ event.name }}"
+        class="p-4 {% if event.name == eventname %}bg-blue-100 border-blue-500 border-l-4 {% endif %}"
       >
         <a
           href="{{ url_for('events.event_detail', event_slug=event.name) }}"
@@ -42,26 +42,25 @@ content %}
       Select an event to view details.
     </div>
     {% endblock %}
+    <!-- Mobile: Button to open event menu -->
+    <div class="md:hidden sticky bottom-4 z-20 w-full flex justify-center">
+      <button
+        id="openMenuButton"
+        class="bg-blue-600 text-white py-2 px-4 rounded-full shadow-lg backdrop-blur-sm"
+      >
+        View events menu
+      </button>
+    </div>
   </div>
-</div>
-
-<!-- Mobile: Button to open event menu -->
-<div class="md:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 z-20">
-  <button
-    id="openMenuButton"
-    class="bg-blue-600 text-white py-2 px-4 rounded-full shadow-lg"
-  >
-    View events menu
-  </button>
 </div>
 
 <!-- Mobile Modal (Event List) -->
 <div
   id="eventMenuModal"
-  class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30 h-screen"
+  class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 h-screen"
 >
   <div
-    class="bg-white w-4/5 md:w-1/3 p-6 rounded-lg shadow-lg max-h-[60vh] overflow-y-auto"
+    class="bg-white w-4/5 md:w-1/3 p-6 rounded-lg shadow-lg max-h-[70vh] overflow-y-auto"
   >
     <button
       id="closeModalButton"
@@ -73,8 +72,8 @@ content %}
     <ul class="divide-y divide-gray-300">
       {% for event in events %}
       <li
-        id="event-{{ event.slug }}"
-        class="p-4 {% if event.slug == event_slug %}bg-blue-100 border-blue-500 border-l-4 {% endif %}"
+        id="event-{{ event.name }}"
+        class="p-4 {% if event.name == eventname %}bg-blue-100 border-blue-500 border-l-4 {% endif %}"
       >
         <a
           href="{{ url_for('events.event_detail', event_slug=event.name) }}"
@@ -95,13 +94,12 @@ content %}
 <!-- JavaScript to Scroll the Sidebar and Handle Modal -->
 <script>
   window.onload = function () {
-    const eventSlug = "{{ event_slug }}"; // Get the current event's slug
-    if (eventSlug) {
-      const eventElement = document.getElementById("event-" + eventSlug); // Get the event element by its ID
-      const sidebar = document.getElementById("sidebar"); // Get the sidebar
+    const eventname = "{{ eventname }}";
+    if (eventname) {
+      const eventElement = document.getElementById("event-" + eventname);
+      const sidebar = document.getElementById("sidebar");
 
       if (eventElement && sidebar) {
-        // Scroll the sidebar to center the event in the view
         sidebar.scrollTo({
           top:
             eventElement.offsetTop -
@@ -113,17 +111,14 @@ content %}
       }
     }
 
-    // Event menu modal toggle functionality
     const openMenuButton = document.getElementById("openMenuButton");
     const closeModalButton = document.getElementById("closeModalButton");
     const eventMenuModal = document.getElementById("eventMenuModal");
 
-    // Open the modal when the button is clicked
     openMenuButton.addEventListener("click", function () {
       eventMenuModal.classList.remove("hidden");
     });
 
-    // Close the modal when the close button is clicked
     closeModalButton.addEventListener("click", function () {
       eventMenuModal.classList.add("hidden");
     });

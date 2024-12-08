@@ -562,7 +562,7 @@
           />
         </div>
         <div>
-          <p class="text-gray-800 text-sm">{{ story.date }}</p>
+          <p class="text-gray-800 text-sm mt-2">{{ story.date }}</p>
           <span
             class="text-gray-800 text-sm uppercase font-semibold block mb-1"
           >
@@ -670,14 +670,14 @@
 <div>
   <div class="image-marquee-container">
     <div class="image-marquee-content md:h-48 h-32">
-      {% for _ in range(20) %} {% for image in images %}
+      {% for _ in range(15) %} {% for image in images %}
       <img src="{{ image }}" alt="Event Image" class="bg-gray-300" />
       {% endfor %} {% endfor %}
     </div>
   </div>
   <div class="image-marquee-container">
     <div class="image-marquee-content md:h-48 h-32">
-      {% for _ in range(20) %} {% for image in images_2 %}
+      {% for _ in range(15) %} {% for image in images_2 %}
       <img src="{{ image }}" alt="Event Image" class="bg-gray-300" />
       {% endfor %} {% endfor %}
     </div>
@@ -729,17 +729,21 @@
   });
 </script>
 <link rel="stylesheet" href="/static/css/home-gallery.css" defer />
-  <!-- Add service worker -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register("/static/sw.js")
-        .then((registration) => {
-          console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch((error) => {
-          console.error('Service Worker registration failed:', error);
-        });
-    }
-  </script>
+<!-- Add service worker -->
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("/static/sw.js")
+      .then((registration) => {
+        console.log(
+          "Service Worker registered with scope:",
+          registration.scope,
+        );
+      })
+      .catch((error) => {
+        console.error("Service Worker registration failed:", error);
+      });
+  }
+</script>
 
 {% endblock %}

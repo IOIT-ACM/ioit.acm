@@ -65,11 +65,11 @@ def fetch_team():
         # Render member card
         rendered_cards += """
         <div
-          class="flex flex-col items-center text-blue-600 rounded-lg overflow-hidden"
+          class="flex flex-col items-center text-blue-600 rounded-lg overflow-hidden gsap-reveal"
         >
           <!-- Image Section -->
           <div
-            class="w-44 h-44 md:w-48 md:h-48 bg-gray-100 border border-gray-300 overflow-hidden rounded-full mb-4 shadow-lg"
+            class="w-44 h-44 md:w-52 md:h-52 bg-gray-100 border border-gray-300 overflow-hidden rounded-full mb-4 shadow-lg"
           >
             <img
               src="{image}"

@@ -1,0 +1,14 @@
+{
+  "js": {
+    "input": "app/static/js",
+    "output": "app/static/js"
+  },
+  "css": {
+    "input": "app/static/css",
+    "output": "app/static/css",
+    "ignore": [
+      "tailwind.css",
+      "input.css"
+    ]
+  }
+}

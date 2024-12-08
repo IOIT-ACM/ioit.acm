@@ -42,10 +42,15 @@ for event in events:
 def event_detail(event_slug):
     decoded_name = decode_slug(event_slug)
     event = next((e for e in events if e["name"] == decoded_name), None)
+    eventname = event["name"] if event else None
     if not event:
         return render_template("event_detail_404.html", events=events)
     return render_template(
-        "event_detail.html", event=event, events=events, event_slug=event_slug
+        "event_detail.html",
+        event=event,
+        events=events,
+        event_slug=event_slug,
+        eventname=eventname,
     )
 
 

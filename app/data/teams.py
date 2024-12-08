@@ -131,7 +131,7 @@ team_data = {
             "domain": "tech",
         },
         {
-            "name": "Madhia",
+            "name": "Madiha",
             "title": "Technical Member",
             "image": "static/img/team/2024/tech-madhia.jpeg",
             "linktree": "",

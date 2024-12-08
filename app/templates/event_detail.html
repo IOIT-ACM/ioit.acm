@@ -8,24 +8,23 @@ filename='img/assets/logo.jpeg') }} {% endblock %} {% block twitter_title %}{{
 event.name }}{% endblock %} {% block twitter_description %}{{
 event.description[:150] }}{% endblock %} {% block event_content %}
 
-<!-- Event Header with Image and Content in a Grid Layout -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="grid grid-cols-1 md:grid-cols-3 md:gap-6">
   <!-- Left Column: Image (spans 1 column) -->
-  <div class="flex justify-center aspect-square col-span-1">
+  <div class="flex justify-center aspect-square">
     <img
       src="{{ url_for('static', filename=event.image_url if event.image_url else 'img/assets/logo.jpeg') }}"
       alt="{{ event.name }}"
-      class="w-full h-auto aspect-square rounded-lg object-cover shadow-lg bg-white"
+      class="w-full h-auto rounded-lg object-cover shadow-lg bg-white border"
     />
   </div>
 
-  <!-- Event Details  -->
-  <div class="col-span-2">
+  <!-- Event Details -->
+  <div class="col-span-2 py-10 md:py-0">
     <h1 class="text-3xl font-semibold text-gray-800">{{ event.name }}</h1>
     <p class="text-gray-700 mt-2 text-lg">{{ event.description }}</p>
 
     <p class="text-gray-500 mt-2 text-base">{{ event.date }}</p>
-    <hr class="my-6 border-t-2 border-gray-500" />
+    <hr class="my-6 border-t-2 border-gray-300" />
 
     <!-- Topics Covered Section -->
     <div class="mt-6">
@@ -37,51 +36,91 @@ event.description[:150] }}{% endblock %} {% block event_content %}
       </ul>
     </div>
 
-    <!-- Social Media Links Section -->
-    <div class="mt-6 flex space-x-6">
-      {% if event.facebook_link %}
-      <a
-        href="{{ event.facebook_link }}"
-        target="_blank"
-        class="text-blue-600 hover:text-blue-800"
+    <div class="my-6">
+      <button
+        id="sharebutton"
+        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
       >
-        <i class="fab fa-facebook-square fa-2x"></i>
-      </a>
-      {% else %}
-      <a
-        href="https://facebook.com/ioitacm"
-        target="_blank"
-        class="text-blue-600 hover:text-blue-800"
-      >
-        <i class="fab fa-facebook-square fa-2x"></i>
-      </a>
-      {% endif %} {% if event.instagram_link %}
-      <a
-        href="{{ event.instagram_link }}"
-        target="_blank"
-        class="text-pink-600 hover:text-pink-800"
-      >
-        <i class="fab fa-instagram fa-2x"></i>
-      </a>
-      {% else %}
-      <a
-        href="https://instagram.com/ioit__acm"
-        target="_blank"
-        class="text-pink-600 hover:text-pink-800"
-      >
-        <i class="fab fa-instagram fa-2x"></i>
-      </a>
-      {% endif %}
+        Share Event
+      </button>
+    </div>
 
-      <a
-        href="https://linkedin.com/company/ioit-acm"
-        target="_blank"
-        class="text-blue-700 hover:text-blue-900"
-      >
-        <i class="fab fa-linkedin fa-2x"></i>
-      </a>
+    <hr class="my-4 border-t-2 border-gray-300" />
+
+    <!-- Social Media Links Section -->
+    <div class="mt-6">
+      <h4 class="text-lg font-semibold text-gray-800">
+        Follow Us on Social Media
+      </h4>
+      <div class="flex space-x-6 mt-4">
+        {% if event.facebook_link %}
+        <a
+          href="{{ event.facebook_link }}"
+          target="_blank"
+          class="text-blue-600 hover:text-blue-800"
+        >
+          <i class="fab fa-facebook-square fa-2x"></i>
+        </a>
+        {% else %}
+        <a
+          href="https://facebook.com/ioitacm"
+          target="_blank"
+          class="text-blue-600 hover:text-blue-800"
+        >
+          <i class="fab fa-facebook-square fa-2x"></i>
+        </a>
+        {% endif %} {% if event.instagram_link %}
+        <a
+          href="{{ event.instagram_link }}"
+          target="_blank"
+          class="text-pink-600 hover:text-pink-800"
+        >
+          <i class="fab fa-instagram fa-2x"></i>
+        </a>
+        {% else %}
+        <a
+          href="https://instagram.com/ioit__acm"
+          target="_blank"
+          class="text-pink-600 hover:text-pink-800"
+        >
+          <i class="fab fa-instagram fa-2x"></i>
+        </a>
+        {% endif %}
+
+        <a
+          href="https://linkedin.com/company/ioit-acm"
+          target="_blank"
+          class="text-blue-700 hover:text-blue-900"
+        >
+          <i class="fab fa-linkedin fa-2x"></i>
+        </a>
+      </div>
     </div>
   </div>
 </div>
+
+<script>
+  // Ensure the Share API is available (e.g., in supported browsers)
+  const shareButton = document.getElementById("sharebutton");
+
+  if (navigator.share) {
+    shareButton.addEventListener("click", function () {
+      const eventUrl = window.location.href;
+      const eventName = "{{ event.name }}";
+
+      navigator
+        .share({
+          title: eventName,
+          text: `\n${eventName} by IOIT ACM Student Chapter, Pune. Follow the above link to view more details about this event. \n\n To know more about events at IOIT ACM Student Chapter, visit: https://ioit.acm.org`,
+          url: eventUrl,
+        })
+        .then(() => console.log("Event shared successfully!"))
+        .catch((error) => console.log("Error sharing event:", error));
+    });
+  } else {
+    shareButton.disabled = true; // Disable the button if share API is not available
+    console.log("Share API not supported in this browser.");
+  }
+</script>
 
 {% endblock %}
