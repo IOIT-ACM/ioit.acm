@@ -3,7 +3,7 @@ events = [
         "name": "National Level FDP on Cyber Security",
         "description": "A faculty development program focused on cyber security topics.",
         "date": "October 21, 2024 - October 25, 2024",
-        "image_url": "",
+        "image_url": "/img/gallery/events/11.jpeg",
         "instagram_link": "",
         "facebook_link": "",
         "topics": [
@@ -102,14 +102,16 @@ events = [
         "name": "Mock Model United Nations",
         "description": "An event to simulate United Nations discussions.",
         "date": "September 19, 2024",
-        "image_url": "",
+        "image_url": "img/gallery/mun/1.jpeg",
         "instagram_link": "",
         "facebook_link": "",
         "topics": [
-            "We simulated United Nations debates and discussions on global issues such as international peace, security, and human rights.",
-            "We learned about diplomatic negotiation techniques and how nations collaborate to address global challenges.",
-            "We explored the role of the UN in conflict resolution and promoting sustainable development around the world.",
-            "We discussed the complexities of international diplomacy and the importance of multilateral cooperation.",
+            "The Mock Model United Nations focused on the RG Kar Hospital rape-murder case, with political figures like Supriya Sule, Mamata Banerjee, Akhilesh Yadav, Rahul Gandhi, Derek O'Brien, Narendra Modi, Nitish Kumar, and Asaduddin Owaisi addressing the critical issues surrounding the tragedy.",
+            "Supriya Sule (NCP) voiced support for Mamata Banerjee, emphasizing the government's duty to safeguard citizens, while Mamata Banerjee (TMC) condemned the crime and resigned as Chief Minister, blaming political interference.",
+            "Akhilesh Yadav (SP) urged empathy and warned against politicizing the issue, while Rahul Gandhi (INC) questioned the Bengal government's handling and criticized the BJP's governance.",
+            "Derek O'Brien (TMC) expressed condolences and called for systemic reforms in medical institutions, while Prime Minister Narendra Modi (BJP) condemned the crime and emphasized strict punishment for offenders.",
+            "Nitish Kumar (JDU) criticized Mamata Banerjee's governance, and Asaduddin Owaisi (AIMIM) highlighted societal attitudes, advocating for swift justice and legal reforms.",
+            "The event concluded with a press conference where political representatives reiterated their positions, calling for urgent reforms and justice for the victims.",
         ],
     },
     {
@@ -156,7 +158,7 @@ events = [
         "name": "SIG Technology Meetup",
         "description": "A special interest group meetup focusing on technology.",
         "date": "September 3, 2024",
-        "image_url": "",
+        "image_url": "img/events/sig-tech.jpeg",
         "instagram_link": "",
         "facebook_link": "",
         "topics": [
@@ -169,7 +171,7 @@ events = [
         "name": "Decoding Smart India Hackathon",
         "description": "An event to understand and analyze the Smart India Hackathon.",
         "date": "August 28, 2024",
-        "image_url": "",
+        "image_url": "img/gallery/events/sih.jpeg",
         "instagram_link": "",
         "facebook_link": "",
         "topics": [
@@ -195,7 +197,7 @@ events = [
         "name": "Startup Expo and Entrepreneurs Panel Discussion",
         "description": "An expo and panel discussion with entrepreneurs.",
         "date": "August 26, 2024",
-        "image_url": "",
+        "image_url": "img/events/sig-ent.jpeg",
         "instagram_link": "",
         "facebook_link": "",
         "topics": [
@@ -208,7 +210,7 @@ events = [
         "name": "Workshop on Intellectual Property Rights and IP Management",
         "description": "A workshop focused on intellectual property rights and their management.",
         "date": "August 21, 2024",
-        "image_url": "",
+        "image_url": "img/stories/ipr.jpeg",
         "instagram_link": "",
         "facebook_link": "",
         "topics": [
@@ -247,7 +249,7 @@ events = [
         "name": "Android Odyssey",
         "description": "An event exploring Android development technologies.",
         "date": "August 20, 2024",
-        "image_url": "",
+        "image_url": "img/gallery/events/android.jpeg",
         "instagram_link": "",
         "facebook_link": "",
         "topics": [
@@ -273,7 +275,7 @@ events = [
         "name": "ACM Awareness Drive",
         "description": "A drive to raise awareness about ACM.",
         "date": "August 20, 2024",
-        "image_url": "",
+        "image_url": "img/gallery/drive/2024.jpeg",
         "instagram_link": "",
         "facebook_link": "",
         "topics": [
@@ -285,7 +287,7 @@ events = [
         "name": "Inauguration of ACM Student Chapter 2024-25",
         "description": "The inauguration ceremony of the ACM Student Chapter for the year 2024-25.",
         "date": "August 20, 2024",
-        "image_url": "",
+        "image_url": "/img/gallery/inauguration/1.jpeg",
         "instagram_link": "",
         "facebook_link": "",
         "topics": [

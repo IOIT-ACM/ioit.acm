@@ -13,6 +13,44 @@ cache = {"data": None, "timestamp": 0}
 CACHE_EXPIRY = 30000
 DATA_JSON_FILE = "snapshot.json"
 
+school_participants = [
+    {
+        "name": "Chaitali Khachane",
+        "imageurl": "chaitali.jpeg",
+        "school": "ACM India Winter School 2023",
+    },
+    {
+        "name": "Sadgi Pandey",
+        "imageurl": "sadgi.jpeg",
+        "school": "ACM India Winter School 2023",
+    },
+    {
+        "name": "Anjali Shukla",
+        "imageurl": "anjali-shukla.jpeg",
+        "school": "ACM India Summer School 2023",
+    },
+    {
+        "name": "Sana Naqvi",
+        "imageurl": "sana-naqvi.jpeg",
+        "school": "ACM India Summer School on Compilers for AI/ML Programs",
+    },
+    {
+        "name": "Shravani Shewale",
+        "imageurl": "shravani-shewale.jpeg",
+        "school": "ACM India Summer School 2022",
+    },
+    {
+        "name": "Yash Vyavhare",
+        "imageurl": "yash-v.jpeg",
+        "school": "ACM India Summer School 2022",
+    },
+    {
+        "name": "Tanmayee Mali",
+        "imageurl": "tanmayee-mali.jpeg",
+        "school": "ACM India Winter School 2022",
+    },
+]
+
 
 def fetch_membership_data():
     """Fetch membership data from API, cache it, or load from fallback JSON file."""
@@ -44,7 +82,7 @@ def fetch_membership_data():
 @membership_bp.route("/membership")
 def team():
     """Renders the membership team page."""
-    return render_template("membership.html")
+    return render_template("membership.html", school_participants=school_participants)
 
 
 @membership_bp.route("/membership/status")

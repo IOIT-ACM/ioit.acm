@@ -19,7 +19,7 @@ event.description[:150] }}{% endblock %} {% block event_content %}
   </div>
 
   <!-- Event Details -->
-  <div class="col-span-2 py-10 md:py-0">
+  <div class="col-span-2 py-10 md:py-0 overflow-y-auto no-scroll-bar">
     <h1 class="text-3xl font-semibold text-gray-800">{{ event.name }}</h1>
     <p class="text-gray-700 mt-2 text-lg">{{ event.description }}</p>
 
@@ -111,7 +111,7 @@ event.description[:150] }}{% endblock %} {% block event_content %}
       navigator
         .share({
           title: eventName,
-          text: `\n${eventName} by IOIT ACM Student Chapter, Pune. Follow the above link to view more details about this event. \n\n To know more about events at IOIT ACM Student Chapter, visit: https://ioit.acm.org`,
+          text: `\n${eventName} by IOIT ACM Student Chapter, Pune. Follow the above link to view more details about this event.\n\n`,
           url: eventUrl,
         })
         .then(() => console.log("Event shared successfully!"))

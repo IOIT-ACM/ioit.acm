@@ -55,7 +55,7 @@ block content %}
 
 <!-- Membership Benefits Section -->
 <div class="py-12 px-5 md:px-0">
-  <div class="max-w-7xl mx-auto text-center">
+  <div class="max-w-7xl mx-auto text-center p-0">
     <h2 class="text-3xl font-extrabold text-blue-600 mb-8">Why Join ACM?</h2>
     <p class="text-lg text-gray-700 mb-12">
       ACM offers exclusive access to resources, a global network, and
@@ -184,6 +184,46 @@ block content %}
         </p>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="mx-auto px-5 py-8 max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-8">
+  <div class="h-full">
+    <div class="sticky top-32">
+      <h1 class="text-3xl md:text-4xl font-semibold mb-6">
+        Winter and Summer School Participants
+      </h1>
+      <p class="text-lg text-gray-700 mb-4">
+        Winter and Summer Schools are unique educational programs designed to
+        provide students with intensive learning experiences in various
+        subjects. These programs are typically held during the school breaks and
+        offer a mix of workshops, lectures, and hands-on activities.
+        Participants get a chance to expand their knowledge in a focused,
+        engaging environment.
+      </p>
+      <p class="text-lg text-gray-700">
+        The participants featured here are students from AISSMS IOIT selected
+        for the Winter and Summer Schools by the ACM Chapter.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid gap-6">
+    {% for student in school_participants %}
+    <div class="bg-white shadow-lg rounded-lg p-6 max-w-md mx-auto">
+      <div
+        class="w-full h-auto aspect-square bg-gray-200 rounded-lg overflow-hidden relative"
+      >
+        <img
+          src="{{ url_for('static', filename='img/stories/acm-schools/' + student.imageurl) }}"
+          alt="{{ student.name }}"
+          class="w-full h-auto aspect-square object-cover"
+        />
+      </div>
+      <h2 class="text-xl font-medium text-center mt-4">{{ student.name }}</h2>
+      <p class="text-center text-gray-500">{{ student.school }}</p>
+    </div>
+    {% endfor %}
   </div>
 </div>
 
