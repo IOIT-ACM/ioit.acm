@@ -729,5 +729,17 @@
   });
 </script>
 <link rel="stylesheet" href="/static/css/home-gallery.css" defer />
+  <!-- Add service worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register("/static/sw.js")
+        .then((registration) => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch((error) => {
+          console.error('Service Worker registration failed:', error);
+        });
+    }
+  </script>
 
 {% endblock %}
