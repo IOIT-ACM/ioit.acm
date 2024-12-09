@@ -27,7 +27,9 @@ content %}
           <h3 class="text-lg font-semibold text-blue-600 hover:underline">
             {{ event.name }}
           </h3>
-          <p class="text-sm text-gray-700">{{ event.description }}</p>
+          <p class="text-sm text-gray-700 line-clamp-2">
+            {{ event.description }}
+          </p>
           <p class="text-sm text-gray-500 mt-1">{{ event.date }}</p>
         </a>
       </li>
@@ -82,7 +84,9 @@ content %}
           <h3 class="text-lg font-semibold text-blue-600 hover:underline">
             {{ event.name }}
           </h3>
-          <p class="text-sm text-gray-700">{{ event.description }}</p>
+          <p class="text-sm text-gray-700 line-clamp-3">
+            {{ event.description }}
+          </p>
           <p class="text-sm text-gray-500 mt-1">{{ event.date }}</p>
         </a>
       </li>

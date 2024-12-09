@@ -12,7 +12,7 @@ event.description[:150] }}{% endblock %} {% block event_content %}
   <!-- Left Column: Image (spans 1 column) -->
   <div class="flex justify-center aspect-square">
     <img
-      src="{{ url_for('static', filename=event.image_url if event.image_url else 'img/assets/logo.jpeg') }}"
+      src="{{ event.image_url if event.image_url else '/static/img/assets/logo.jpeg' }}"
       alt="{{ event.name }}"
       class="w-full h-auto rounded-lg object-cover shadow-lg bg-white border"
     />
