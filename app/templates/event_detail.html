@@ -36,13 +36,22 @@ event.description[:150] }}{% endblock %} {% block event_content %}
       </ul>
     </div>
 
-    <div class="my-6">
+    <div class="my-5 flex justify-start items-center gap-4">
       <button
         id="sharebutton"
-        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+        class="px-4 py-2 bg-green-600 text-white rounded-lg shadow transition-colors hover:bg-green-700"
       >
         Share Event
       </button>
+      {% if event.moredetails %}
+      <a
+        href="{{ event.moredetails }}"
+        target="_blank"
+        class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow transition-colors hover:bg-blue-700"
+      >
+        More Details
+      </a>
+      {% endif %}
     </div>
 
     <hr class="my-4 border-t-2 border-gray-300" />
