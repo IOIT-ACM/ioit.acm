@@ -79,17 +79,18 @@ and contests that help you grow professionally and academically.{% endblock %}
           <div class="text-center">
             <a
               href="https://ioittenet.com/"
-              class="text-2xl font-semibold text-blue-800 inline-block hover:no-underline"
+              class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline"
               >IOIT TENET 2024</a
             >
-            <p class="text-gray-600 mt-2">
-              The annual technical festival showcasing innovative projects,
-              technical competitions, and workshops to inspire the next
-              generation of engineers and innovators.
+            <p class="text-gray-800 mt-2">
+              IOIT ACM student chapter hosted the first edition of TENET in year
+              2024. TENET 2024 is a multi-faceted event hosted by the IOIT ACM
+              Student Chapter, featuring thrilling experiences in technology,
+              entrepreneurship, global diplomacy, and e-sports.
             </p>
             <a
               href="https://ioittenet.com/"
-              class="text-blue-600 mt-4 inline-block px-3 py-2 border border-blue-800 hover:bg-gray-200 rounded-lg transition-all hover:no-underline"
+              class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline"
               >Learn More &rarr;</a
             >
           </div>
@@ -122,17 +123,18 @@ and contests that help you grow professionally and academically.{% endblock %}
           <div class="text-center">
             <a
               href="https://www.ioitmun.com/"
-              class="text-2xl font-semibold text-green-800 inline-block hover:no-underline"
+              class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline"
               >IOIT MUN 2023</a
             >
-            <p class="text-gray-600 mt-2">
-              An engaging Model United Nations event that brought together
-              students to discuss global issues, foster diplomacy, and promote
-              leadership.
+            <p class="text-gray-800 mt-2">
+              Model United Nations (MUN) is a simulation of the United Nations
+              where students role-play as diplomats representing countries or
+              organizations. IOIT MUN 2023 was the first edition hosted by ACM
+              student chapter with 5 commitees and more than 75+ delegates.
             </p>
             <a
               href="https://www.ioitmun.com/"
-              class="text-green-600 mt-4 inline-block px-3 py-2 border border-green-800 hover:bg-gray-200 rounded-lg transition-all hover:no-underline"
+              class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline"
               >Learn More &rarr;</a
             >
           </div>
@@ -165,17 +167,18 @@ and contests that help you grow professionally and academically.{% endblock %}
           <div class="text-center">
             <a
               href="https://www.ioitmun.com/"
-              class="text-2xl font-semibold text-yellow-800 inline-block hover:no-underline"
+              class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline"
               >IOIT MUN 2024</a
             >
-            <p class="text-gray-600 mt-2">
-              The upcoming MUN conference promising dynamic debates,
-              collaborative resolutions, and a platform for young minds to make
-              their voices heard on international platforms.
+            <p class="text-gray-800 mt-2">
+              Second edition of IOIT MUN was hosted in October 2024 by IOIT ACM
+              student chapter. MUN conferences feature committees addressing
+              diverse global issues, from the General Assembly to specialized
+              bodies like the Security Council.
             </p>
             <a
               href="https://www.ioitmun.com/"
-              class="text-yellow-600 mt-4 inline-block px-3 py-2 border border-yellow-800 hover:bg-gray-200 rounded-lg transition-all hover:no-underline"
+              class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline"
               >Learn More &rarr;</a
             >
           </div>
@@ -305,23 +308,67 @@ and contests that help you grow professionally and academically.{% endblock %}
     </div>
   </div>
 
-  <div class="">
-    <h1 class="text-3xl font-bold text-center mb-6">All Events</h1>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="min-h-screen">
+    <div
+      class="bg-gray-100 items-center flex md:flex-row flex-col w-full justify-between sticky top-0 pt-20 mb-5 border-b-2 border-gray-500"
+    >
+      <h1 class="md:text-3xl text-2xl pb-2 md:pb-2 font-bold text-center">
+        All Events
+      </h1>
+
+      <p
+        id="no-results-message"
+        class="text-center py-5 md:py-0 text-gray-500 hidden"
+      >
+        No results for the query "<span id="user-query"></span>"
+      </p>
+
+      <div class="mb-2 text-center">
+        <input
+          type="text"
+          id="search-bar"
+          placeholder="Search by keywords..."
+          maxlength="10"
+          class="p-2 border border-gray-300 rounded-md"
+        />
+        <p
+          id="search-stats"
+          class="text-center text-xs text-sm text-gray-500 md:mt-3 mt-2"
+        >
+          Showing <span id="matching-count"></span> of
+          <span id="total-count"></span> results
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-2 mt-16"
+      id="events-container"
+    >
       {% for event in events %}
       <div
-        class="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200"
+        id="event-{{ loop.index }}"
+        class="event-card bg-white shadow-md rounded-lg overflow-hidden border border-gray-200"
       >
         <div class="p-4">
           <a
+            id="event-link-{{ loop.index }}"
             href="{{ url_for('events.event_detail', event_slug=event.name) }}"
             class="hover:underline text-blue-600"
           >
             {{ event.name }}
           </a>
 
-          <p class="text-gray-600 mt-2 line-clamp-3">{{ event.description }}</p>
-          <p class="text-gray-500 mt-4 text-sm font-medium">
+          <p
+            id="event-description-{{ loop.index }}"
+            class="text-gray-600 mt-2 line-clamp-3"
+          >
+            {{ event.description }}
+          </p>
+          <p
+            id="event-date-{{ loop.index }}"
+            class="text-gray-500 mt-4 text-sm font-medium"
+          >
             📅 {{ event.date }}
           </p>
         </div>
@@ -363,4 +410,67 @@ and contests that help you grow professionally and academically.{% endblock %}
 </div>
 
 <script src="/static/js/utils.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchBar = document.getElementById("search-bar");
+    const eventsContainer = document.getElementById("events-container");
+    const searchStats = document.getElementById("search-stats");
+    const matchingCount = document.getElementById("matching-count");
+    const totalCount = document.getElementById("total-count");
+    const noResultsMessage = document.getElementById("no-results-message");
+    const userQuery = document.getElementById("user-query");
+
+    const totalEvents = eventsContainer.querySelectorAll(".event-card").length;
+    totalCount.textContent = totalEvents;
+
+    searchBar.addEventListener("input", function () {
+      const query = searchBar.value.toLowerCase();
+      let matches = 0;
+
+      const eventCards = Array.from(
+        eventsContainer.querySelectorAll(".event-card"),
+      );
+
+      eventCards.forEach((event) => {
+        const aId = event.id.split("-")[1];
+        const aName = document
+          .getElementById(`event-link-${aId}`)
+          .textContent.toLowerCase();
+        const aDescription = document
+          .getElementById(`event-description-${aId}`)
+          .textContent.toLowerCase();
+
+        const matchesQuery =
+          aName.includes(query) || aDescription.includes(query);
+
+        if (matchesQuery) {
+          event.style.display = "";
+          matches++;
+        } else {
+          event.style.display = "none";
+        }
+      });
+
+      matchingCount.textContent = matches;
+      searchStats.classList.remove("hidden");
+
+      if (matches === 0) {
+        noResultsMessage.classList.remove("hidden");
+        userQuery.textContent = query;
+      } else {
+        noResultsMessage.classList.add("hidden");
+      }
+
+      // Scroll 500px down from the events container
+      const containerPosition =
+        eventsContainer.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: containerPosition - 200,
+        behavior: "smooth", // Smooth scroll
+      });
+    });
+  });
+</script>
+
 {% endblock %}

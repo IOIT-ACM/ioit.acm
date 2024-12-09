@@ -8,7 +8,7 @@ stories = [
     },
     {
         "title": "Drone Workshop",
-        "description": "Learn and explore the fundamentals of drone technology.",
+        "description": "IOIT TENET hosted the drone workshop on Oct 4 2024. We provided Overview of drone assembly components, Hands-on practice with drone programming. Flight training sessions for attendees. Insights into the future of aerial innovation.",
         "date": "Oct 4, 2024",
         "imageURL": "drone.jpeg",
         "link": "https://ioittenet.com/events/drone-workshop",
@@ -22,7 +22,7 @@ stories = [
     },
     {
         "title": "ACM India Winter School 2024",
-        "description": "A specialized program for students to enhance their technical skills.",
+        "description": "ACM winter school is live and it will be conducted this december 2024.",
         "date": "Dec 2024",
         "imageURL": "india-winter-schools.jpg",
         "link": "https://india.acm.org/education/acm-india-winter-schools-2023-24",
