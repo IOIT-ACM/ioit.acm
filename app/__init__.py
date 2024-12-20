@@ -9,6 +9,7 @@ def create_app():
     from app.blueprints.team import team_bp
     from app.blueprints.membership import membership_bp
     from app.blueprints.join import join_bp
+    from app.blueprints.feedback import feedback_bp
     from app.blueprints.gallery import gallery_bp
     from app.blueprints.events import events_bp
     from app.blueprints.about import about_bp
@@ -17,6 +18,7 @@ def create_app():
     app.register_blueprint(team_bp)
     app.register_blueprint(membership_bp)
     app.register_blueprint(join_bp)
+    app.register_blueprint(feedback_bp)
     app.register_blueprint(gallery_bp)
     app.register_blueprint(events_bp)
     app.register_blueprint(about_bp)

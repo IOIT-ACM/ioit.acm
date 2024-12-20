@@ -232,7 +232,7 @@ team_data = {
         },
         {
             "name": "Suha",
-            "title": "Documentation Member",
+            "title": "Documentation Head",
             "image": "static/img/team/2024/doc-suha.jpeg",
             "linktree": "https://linktr.ee/suha.k",
             "github": "",

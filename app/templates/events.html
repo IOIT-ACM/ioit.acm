@@ -29,6 +29,22 @@ and contests that help you grow professionally and academically.{% endblock %}
         unparalleled expertise under the guidance of the IOIT ACM Student
         Chapter.
       </p>
+      <div class="space-x-4 flex items-center w-full justify-center gap-4">
+        <button
+          onclick="scrollToEvents()"
+          class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md hover:no-underline backdrop-blur-sm flex gap-2 items-center"
+        >
+          Explore Events
+          <i class="ml-2 fas fa-arrow-down"></i>
+        </button>
+        <a
+          href="/feedback"
+          class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md hover:no-underline backdrop-blur-sm flex gap-2 items-center"
+        >
+          Feedback Form
+          <i class="fas fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -308,7 +324,7 @@ and contests that help you grow professionally and academically.{% endblock %}
     </div>
   </div>
 
-  <div class="min-h-screen">
+  <div class="min-h-screen" id="events">
     <div
       class="bg-gray-100 items-center flex md:flex-row flex-col w-full justify-between sticky top-0 pt-20 mb-5 border-b-2 border-gray-500"
     >
@@ -412,6 +428,13 @@ and contests that help you grow professionally and academically.{% endblock %}
 <script src="/static/js/utils.js"></script>
 
 <script>
+  function scrollToEvents() {
+    const target = document.getElementById("events");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     const searchBar = document.getElementById("search-bar");
     const eventsContainer = document.getElementById("events-container");
