@@ -20,11 +20,11 @@ endblock %} {% block content %}
           class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl"
         ></div>
         <div
-          class="aspect-square overflow-hidden bg-blue-500 w-full h-auto transform -rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400"
+          class="aspect-square overflow-hidden bg-blue-500 w-full h-auto transform rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400"
         >
           <video
             id="about-video"
-            src="{{ url_for('static', filename='img/about/clip.mp4') }}"
+            src="{{ url_for('static', filename='vid/feedback.mp4') }}"
             alt="About Us Image"
             class="object-cover h-full w-full cursor-pointer"
             muted
@@ -42,9 +42,10 @@ endblock %} {% block content %}
     <div>
       <form
         id="feedbackForm"
-        method="POST"
-        action="/feedback"
-        class="grid gap-4"
+        hx-post="{{ url_for('feedback.handle_feedback') }}"
+        hx-target="#thankYouModal"
+        hx-swap="outerHTML"
+        class="grid gap-4 mt-5 md:mt-0"
       >
         <div>
           <label for="name" class="block text-sm font-medium text-gray-700"
@@ -74,7 +75,7 @@ endblock %} {% block content %}
             </option>
             <option value="CS">Computer Science</option>
             <option value="IT">Information Technology</option>
-            <option value="INSTRUMENTATION">Instrumentation</option>
+            <option value="INSTRU">Instrumentation</option>
             <option value="ELECTRICAL">Electrical</option>
             <option value="EnTC">Electronics and Telecommunication</option>
           </select>
@@ -90,10 +91,10 @@ endblock %} {% block content %}
             class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
           >
             <option value="">Select your year</option>
-            <option value="first">First Year</option>
-            <option value="second">Second Year</option>
-            <option value="third">Third Year</option>
-            <option value="fourth">Fourth Year</option>
+            <option value="FY">First Year</option>
+            <option value="SY">Second Year</option>
+            <option value="TY">Third Year</option>
+            <option value="BE">Fourth Year</option>
           </select>
         </div>
         <div class="flex items-center gap-3">
@@ -106,9 +107,9 @@ endblock %} {% block content %}
             />
             <label for="is_acm_member"></label>
           </div>
-          <label class="block text-sm font-medium text-gray-700">
-            Are you an ACM member?
-          </label>
+          <label class="block text-sm font-medium text-gray-700"
+            >Are you an ACM member?</label
+          >
         </div>
         <div class="flex items-center gap-3">
           <div class="flex items-center space-x-2 mt-1">
@@ -120,15 +121,15 @@ endblock %} {% block content %}
             />
             <label for="is_ioit"></label>
           </div>
-          <label class="block text-sm font-medium text-gray-700">
-            Are you from AISSMS IOIT Pune?
-          </label>
+          <label class="block text-sm font-medium text-gray-700"
+            >Are you from AISSMS IOIT Pune?</label
+          >
         </div>
 
         <div>
-          <label for="events" class="block text-sm font-medium text-gray-700">
-            What events would you like to see conducted by ACM?
-          </label>
+          <label for="events" class="block text-sm font-medium text-gray-700"
+            >What events would you like to see conducted by ACM?</label
+          >
           <textarea
             id="events"
             name="events"
@@ -143,9 +144,9 @@ endblock %} {% block content %}
           </div>
         </div>
         <div>
-          <label for="feedback" class="block text-sm font-medium text-gray-700">
-            Any additional feedback or suggestions
-          </label>
+          <label for="feedback" class="block text-sm font-medium text-gray-700"
+            >Any additional feedback or suggestions</label
+          >
           <textarea
             id="feedback"
             name="feedback"
@@ -170,20 +171,19 @@ endblock %} {% block content %}
   </div>
 </div>
 
-<script>
-  document
-    .getElementById("feedbackForm")
-    .addEventListener("submit", function (e) {
-      const name = document.getElementById("name").value.trim();
-      const branch = document.getElementById("branch").value;
-      const year = document.getElementById("year").value;
-
-      if (!name || !branch || !year) {
-        e.preventDefault();
-        alert("Please fill out all required fields.");
-      }
-    });
-</script>
+<!-- Popup Modal -->
+<div
+  id="thankYouModal"
+  class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 hidden"
+>
+  <div class="bg-white p-6 rounded-lg text-center">
+    <h2 class="text-xl font-semibold mb-4">Thank you for your feedback!</h2>
+    <p class="mb-4">
+      We appreciate your time and input. Click below to return to the homepage.
+    </p>
+    <a href="/" class="text-blue-500">Go to Homepage</a>
+  </div>
+</div>
 
 <script>
   function updateCharacterCount(textareaId, counterId) {
@@ -191,27 +191,6 @@ endblock %} {% block content %}
     const counter = document.getElementById(counterId);
     counter.textContent = textarea.value.length;
   }
-</script>
-
-<script>
-  const video = document.getElementById("about-video");
-
-  video.addEventListener("click", () => {
-    if (video.muted) {
-      video.muted = false;
-    } else {
-      video.muted = true;
-    }
-  });
-
-  const rotatingDiv = document.getElementById("rotate");
-
-  window.addEventListener("scroll", function () {
-    const scrollPosition = window.scrollY * 0.5;
-    const rotationDegree = scrollPosition % 360;
-
-    rotatingDiv.style.transform = `rotate(${rotationDegree}deg)`;
-  });
 </script>
 
 {% endblock %}

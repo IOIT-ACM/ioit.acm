@@ -34,4 +34,4 @@ def handle_feedback():
 
     print("API Response:", response.status_code, response.json())
 
-    return render_template("feedback.html")
+    return render_template("feedback_popup.html")

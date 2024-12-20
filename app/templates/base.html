@@ -272,6 +272,13 @@
               Membership
             </a>
             <a
+              href="/feedback"
+              class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == '/feedback' else '' }}"
+              onclick="closeNav()"
+            >
+              Feedback Form
+            </a>
+            <a
               href="/membership/status"
               class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == '/membership/status' else '' }}"
               onclick="closeNav()"
