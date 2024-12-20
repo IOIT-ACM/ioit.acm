@@ -1,0 +1,3 @@
+[submodule "minifier"]
+	path = minifier
+	url = https://github.com/adimail/web-minifier.git

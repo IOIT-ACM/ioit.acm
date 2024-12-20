@@ -63,12 +63,12 @@ rsync -a --delete "${EXCLUDE_PARAMS[@]}" ./ "$DEST_DIR/" || error_exit "File cop
 
 echo "Successfully copied contents to $DEST_DIR"
 
-if [ -f "$DEST_DIR/minify.pl" ]; then
+if [ -f "$DEST_DIR/minifier/minify.pl" ]; then
 	echo "Running Perl script in $DEST_DIR..."
 	CURRENT_DIR=$(pwd)
 	cd "$DEST_DIR" || error_exit "Failed to change directory to $DEST_DIR"
 
-	perl minify.pl || {
+	perl ./minifier/minify.pl || {
 		cd "$CURRENT_DIR" || exit 1
 		error_exit "Perl script execution failed"
 	}
@@ -83,6 +83,7 @@ if [ -f "$DEST_DIR/minify.pl" ]; then
 
 	echo "Deleting app directory..."
 	rm -rf "app" || error_exit "Failed to delete app directory"
+	rm -rf "minifier" || error_exit "Failed to delete minifier directory"
 
 	echo "App directory compressed and deleted successfully."
 
