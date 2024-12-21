@@ -36,20 +36,33 @@ event.description[:150] }}{% endblock %} {% block event_content %}
       </ul>
     </div>
 
-    <div class="my-5 flex justify-start items-center gap-4">
+    <div
+      class="md:text-base text-xs my-5 flex justify-start items-center gap-4"
+    >
       <button
         id="sharebutton"
-        class="px-4 py-2 bg-green-600 text-white rounded-lg shadow transition-colors hover:bg-green-700"
+        class="px-3 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md flex items-center gap-2 transition-all duration-200 ease-in-out hover:bg-blue-600"
       >
         Share Event
+        <i class="fas fa-share-square"></i>
       </button>
+
+      <a
+        href="/feedback"
+        class="px-3 py-3 bg-green-400 hover:bg-green-500 text-gray-900 font-semibold rounded-lg shadow-md flex items-center gap-2 transition-all duration-200 ease-in-out"
+      >
+        Feedback Form
+        <i class="fas fa-arrow-up-right-from-square"></i>
+      </a>
+
       {% if event.moredetails %}
       <a
         href="{{ event.moredetails }}"
         target="_blank"
-        class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow transition-colors hover:bg-blue-700"
+        class="px-3 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md flex items-center gap-2 transition-all duration-200 ease-in-out hover:bg-blue-700"
       >
         More Details
+        <i class="fas fa-info-circle"></i>
       </a>
       {% endif %}
     </div>

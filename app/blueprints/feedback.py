@@ -1,12 +1,16 @@
 from datetime import datetime, timedelta
 from flask import Blueprint, render_template, request
-import requests
+import requests, os
+from dotenv import load_dotenv
 
 feedback_bp = Blueprint("feedback", __name__, template_folder="../templates")
 
-API_URL = "https://sheetdb.io/api/v1/tlw2smd5ckqs9"
-BEARER_TOKEN = "ywztmb62pbcb3in37utjwr5un190k4e6u750y62q"
+# Load environment variables from .env file
+load_dotenv()
 
+# Access environment variables
+API_URL = os.getenv('FEEDBACK_FORM_API_URL')
+BEARER_TOKEN =os.getenv('FEEDBACK_FORM_BEARER_TOKEN') 
 
 @feedback_bp.route("/feedback", methods=["GET"])
 def feedback_form():

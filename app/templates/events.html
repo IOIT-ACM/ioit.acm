@@ -11,7 +11,7 @@ and contests that help you grow professionally and academically.{% endblock %}
 {% block content %}
 <div
   class="relative bg-cover bg-center h-[80vh]"
-  style="background-image: url('{{ url_for('static', filename='img/assets/keyboard-header.jpg') }}');)"
+  style="background-image: url('{{ url_for('static', filename='img/assets/keyboard-header.jpg') }}')"
 >
   <div
     class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black bg-opacity-60 grid place-items-center text-white px-4"
@@ -454,7 +454,7 @@ and contests that help you grow professionally and academically.{% endblock %}
       let matches = 0;
 
       const eventCards = Array.from(
-        eventsContainer.querySelectorAll(".event-card"),
+        eventsContainer.querySelectorAll(".event-card")
       );
 
       eventCards.forEach((event) => {

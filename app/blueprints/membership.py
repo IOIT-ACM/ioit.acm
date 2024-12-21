@@ -1,12 +1,17 @@
-import requests
+import requests, os
 import time
 import json
 from flask import Blueprint, render_template
+from dotenv import load_dotenv
 
 membership_bp = Blueprint("membership", __name__, template_folder="../templates")
 
-API_URL = "https://sheetdb.io/api/v1/vn9yo1yzudzoh"
-BEARER_TOKEN = "3zwed407ppm56msmwv87jng9ir30dcfd9qyvjack"
+# Load environment variables from .env file
+load_dotenv()
+
+# Access environment variables
+API_URL = os.getenv('MEMBERSHIP_FORM_API_URL')
+BEARER_TOKEN =os.getenv('MEMBERSHIP_FORM_BEARER_TOKEN') 
 
 # In-memory cache
 cache = {"data": None, "timestamp": 0}
