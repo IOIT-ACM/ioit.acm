@@ -191,6 +191,16 @@ team_data = {
             "domain": "media",
         },
         {
+            "name": "Suha",
+            "title": "Documentation Head",
+            "image": "static/img/team/2024/doc-suha.jpeg",
+            "linktree": "https://linktr.ee/suha.k",
+            "github": "",
+            "linkedin": "https://www.linkedin.com/in/suha-karjatkar-886666233",
+            "instagram": "https://www.instagram.com/suhakarjatkar",
+            "domain": "documentation",
+        },
+        {
             "name": "Mansi",
             "title": "Documentation Member",
             "image": "static/img/team/2024/doc-mansi.jpeg",
@@ -228,16 +238,6 @@ team_data = {
             "github": "",
             "linkedin": "",
             "instagram": "",
-            "domain": "documentation",
-        },
-        {
-            "name": "Suha",
-            "title": "Documentation Head",
-            "image": "static/img/team/2024/doc-suha.jpeg",
-            "linktree": "https://linktr.ee/suha.k",
-            "github": "",
-            "linkedin": "https://www.linkedin.com/in/suha-karjatkar-886666233",
-            "instagram": "https://www.instagram.com/suhakarjatkar",
             "domain": "documentation",
         },
         {
@@ -300,6 +300,7 @@ team_data = {
             "github": "",
             "linkedin": "https://www.linkedin.com/in/anshika-singh-374612212/",
             "instagram": "",
+            "domain": "core",
         },
         {
             "name": "Avinash Patil",
@@ -309,6 +310,7 @@ team_data = {
             "github": "",
             "linkedin": "https://www.linkedin.com/in/avinashpatil30/",
             "instagram": "",
+            "domain": "core",
         },
     ],
     "2022": [
@@ -320,6 +322,7 @@ team_data = {
             "github": "",
             "linkedin": "https://www.linkedin.com/in/omkardanave/",
             "instagram": "",
+            "domain": "core",
         },
         {
             "name": "Anshika Singh",
@@ -329,6 +332,7 @@ team_data = {
             "github": "",
             "linkedin": "https://www.linkedin.com/in/anshika-singh-374612212/",
             "instagram": "",
+            "domain": "core",
         },
     ],
 }

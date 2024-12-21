@@ -9,8 +9,9 @@ feedback_bp = Blueprint("feedback", __name__, template_folder="../templates")
 load_dotenv()
 
 # Access environment variables
-API_URL = os.getenv('FEEDBACK_FORM_API_URL')
-BEARER_TOKEN =os.getenv('FEEDBACK_FORM_BEARER_TOKEN') 
+API_URL = os.getenv("FEEDBACK_FORM_API_URL")
+BEARER_TOKEN = os.getenv("FEEDBACK_FORM_BEARER_TOKEN")
+
 
 @feedback_bp.route("/feedback", methods=["GET"])
 def feedback_form():
@@ -34,7 +35,10 @@ def handle_feedback():
         "Content-Type": "application/json",
     }
 
-    response = requests.post(API_URL, json={"data": [data]}, headers=headers)
+    if API_URL:
+        response = requests.post(API_URL, json={"data": [data]}, headers=headers)
+    else:
+        raise ValueError("API_URL cannot be None")
 
     print("API Response:", response.status_code, response.json())
 

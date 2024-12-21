@@ -10,8 +10,8 @@ membership_bp = Blueprint("membership", __name__, template_folder="../templates"
 load_dotenv()
 
 # Access environment variables
-API_URL = os.getenv('MEMBERSHIP_FORM_API_URL')
-BEARER_TOKEN =os.getenv('MEMBERSHIP_FORM_BEARER_TOKEN') 
+API_URL = os.getenv("MEMBERSHIP_FORM_API_URL")
+BEARER_TOKEN = os.getenv("MEMBERSHIP_FORM_BEARER_TOKEN")
 
 # In-memory cache
 cache = {"data": None, "timestamp": 0}
@@ -59,7 +59,14 @@ school_participants = [
 
 def fetch_membership_data():
     """Fetch membership data from API, cache it, or load from fallback JSON file."""
+    if not API_URL or not isinstance(API_URL, str):
+        raise ValueError("API_URL is not defined or is not a valid string.")
+
+    if not BEARER_TOKEN or not isinstance(BEARER_TOKEN, str):
+        raise ValueError("BEARER_TOKEN is not defined or is not a valid string.")
+
     headers = {"Authorization": "Bearer " + BEARER_TOKEN}
+
     try:
         response = requests.get(API_URL, headers=headers)
         response.raise_for_status()
@@ -71,7 +78,8 @@ def fetch_membership_data():
     except requests.exceptions.RequestException as e:
         print("Error fetching data from API: {}".format(e))
 
-        if cache["data"]:
+        if cache.get("data"):
+            print("Returning cached data...")
             return cache["data"]
 
         try:

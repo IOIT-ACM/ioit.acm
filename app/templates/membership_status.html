@@ -92,17 +92,26 @@ with us.{% endblock %} {% block content %}
   </div>
 
   <div
-    class="bg-gradient-to-r from-blue-800 to-blue-600 py-4 px-3 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg"
+    class="bg-gradient-to-r from-blue-800 to-blue-600 py-8 px-6 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg gap-6"
   >
-    <h2 class="text-2xl font-bold mb-4 md:mb-0">
-      Become a part of such awesomeness
+    <h2 class="text-2xl md:text-4xl font-bold mb-6 md:mb-0">
+      Join our community and grow with us
     </h2>
-    <a
-      href="/join"
-      class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
-    >
-      Join IOIT ACM
-    </a>
+    <div class="max-md:text-sm flex flex-row gap-4">
+      <a
+        href="/join"
+        class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+      >
+        Join IOIT ACM
+      </a>
+      <a
+        href="/feedback"
+        class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md hover:no-underline flex items-center gap-2 transition-transform transform hover:scale-105"
+      >
+        Feedback Form
+        <i class="fas fa-arrow-up-right-from-square"></i>
+      </a>
+    </div>
   </div>
 </div>
 

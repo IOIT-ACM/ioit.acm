@@ -302,7 +302,7 @@ endblock %} {% block content %}
         const domain = domains.find((d) => d.id === btn.dataset.domain);
         btn.className = `domain-btn px-6 py-2 rounded-full text-gray-600 bg-gray-100 hover:bg-${domain.color}-50 hover:text-${domain.color}-600 transition-all duration-300`;
       });
-      domainHeader.textContent = "";
+      domainHeader.textContent = "Meet Our Team";
 
       // Update team display
       teamCardsContainer.innerHTML = "<p>Loading...</p>";

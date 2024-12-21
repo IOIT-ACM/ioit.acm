@@ -39,6 +39,9 @@ EXCLUDE_LIST=(
 	"build.sh"
 	"package.json"
 	"requirements.txt"
+	".env"
+	".env.example"
+	"Dockerfile"
 )
 
 error_exit() {
