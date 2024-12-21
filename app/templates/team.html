@@ -34,7 +34,9 @@ endblock %} {% block content %}
 </div>
 
 <div id="team-section" class="text-center my-16 px-4">
-  <h2 class="text-4xl font-bold text-blue-600 mb-6">Meet Our Team</h2>
+  <h2 id="domain-header" class="text-4xl font-bold text-blue-600 mb-6">
+    Meet Our Team
+  </h2>
 
   <!-- Dropdown for Year Selection -->
   <div class="mb-6">
@@ -63,7 +65,12 @@ endblock %} {% block content %}
         >
           Dr. Meenakshi Thalor
         </h3>
-        <p class="text-gray-500 text-sm mt-1">Faculty Sponsor</p>
+        <p class="text-gray-500 text-base mt-1">Faculty Sponsor</p>
+        <p class="text-gray-500 text-sm mt-1">
+          Head of Department-IT, Dean-International Partnership Cell, Faculty
+          Sponsor-ACM Student Chapter at AISSMS Institute Of Information
+          Technology
+        </p>
         <div class="mt-3">
           <a
             href="https://www.linkedin.com/in/dr-meenakshi-thalor-03937840/"
@@ -76,6 +83,14 @@ endblock %} {% block content %}
           </a>
         </div>
       </div>
+    </div>
+  </div>
+
+  <hr class="border-t-2 border-gray-500 my-8 max-w-3xl mx-auto" />
+
+  <div id="team-selection" class="mb-10">
+    <div class="flex flex-wrap justify-center gap-4" id="domain-buttons">
+      <!-- Buttons will be added here by JavaScript -->
     </div>
   </div>
 
@@ -115,13 +130,76 @@ endblock %} {% block content %}
   const teamMemberTemplate = document.getElementById(
     "team-member-template",
   ).content;
+  const domainButtonsContainer = document.getElementById("domain-buttons");
+  const domainHeader = document.getElementById("domain-header");
 
   let currentYear = "{{ latest_year }}";
+  let selectedDomain = null;
+
+  // Define domains with their properties
+  const domains = [
+    { id: "core", text: "Core Team", color: "green" },
+    { id: "web", text: "Web Development Team", color: "green" },
+    {
+      id: "documentation",
+      text: "Documentation Team",
+      color: "green",
+    },
+    { id: "media", text: "Media Team", color: "green" },
+    { id: "tech", text: "Technical Team", color: "green" },
+  ];
+
+  // Create domain buttons
+  domains.forEach((domain) => {
+    const button = document.createElement("button");
+    button.dataset.domain = domain.id;
+    button.textContent = domain.id.charAt(0).toUpperCase() + domain.id.slice(1);
+    button.className = `domain-btn px-6 py-2 rounded-full text-gray-600 bg-gray-100 hover:bg-${domain.color}-50 hover:text-${domain.color}-600 transition-all duration-300`;
+
+    button.addEventListener("click", () => toggleDomain(domain));
+    domainButtonsContainer.appendChild(button);
+  });
+
+  function toggleDomain(domain) {
+    const buttons = document.querySelectorAll(".domain-btn");
+
+    if (selectedDomain === domain.id) {
+      // Deselect current domain
+      selectedDomain = null;
+      buttons.forEach((btn) => {
+        const btnDomain = domains.find((d) => d.id === btn.dataset.domain);
+        btn.className = `domain-btn px-6 py-2 rounded-full text-gray-600 bg-gray-100 hover:bg-${btnDomain.color}-50 hover:text-${btnDomain.color}-600 transition-all duration-300`;
+      });
+      domainHeader.textContent = "";
+    } else {
+      // Select new domain
+      selectedDomain = domain.id;
+      buttons.forEach((btn) => {
+        const btnDomain = domains.find((d) => d.id === btn.dataset.domain);
+        if (btn.dataset.domain === domain.id) {
+          btn.className = `domain-btn px-6 py-2 rounded-full text-white bg-${domain.color}-600 shadow-lg shadow-${domain.color}-200 transition-all duration-300`;
+        } else {
+          btn.className = `domain-btn px-6 py-2 rounded-full text-gray-600 bg-gray-100 hover:bg-${btnDomain.color}-50 hover:text-${btnDomain.color}-600 transition-all duration-300`;
+        }
+      });
+      domainHeader.textContent = domain.text;
+    }
+
+    // Update displayed team members
+    fetchTeamData(currentYear).then((teamData) => {
+      updateTeamCards(teamData);
+    });
+  }
 
   function updateTeamCards(teamData) {
     teamCardsContainer.innerHTML = "";
 
-    teamData.forEach((member) => {
+    // Filter team members based on selected domain
+    const filteredTeamData = selectedDomain
+      ? teamData.filter((member) => member.domain === selectedDomain)
+      : teamData;
+
+    filteredTeamData.forEach((member) => {
       const clone = document.importNode(teamMemberTemplate, true);
 
       // Populate template with member details
@@ -130,7 +208,7 @@ endblock %} {% block content %}
       clone.querySelector("h3").textContent = member.name;
       clone.querySelector("p").textContent = member.title;
 
-      // social links
+      // Social links
       const socialLinksContainer = clone.querySelector("div.flex.flex-row");
       if (member.github)
         addSocialLink(
@@ -161,12 +239,10 @@ endblock %} {% block content %}
           "text-green-600",
         );
 
-      // Append the card to the container
       teamCardsContainer.appendChild(clone);
     });
   }
 
-  // Function to add a social link to the card
   function addSocialLink(container, url, iconClass, colorClass) {
     const link = document.createElement("a");
     link.href = url;
@@ -176,7 +252,6 @@ endblock %} {% block content %}
     container.appendChild(link);
   }
 
-  // Function to fetch team data based on the year
   function fetchTeamData(year) {
     return fetch(`/fetch-team?year=${year}`)
       .then((response) => response.json())
@@ -187,21 +262,43 @@ endblock %} {% block content %}
       });
   }
 
-  // Initially fetch and render the team data for the latest year
+  // Initially fetch and render the team data
   fetchTeamData(currentYear).then((teamData) => {
     updateTeamCards(teamData);
   });
 
-  // Fetch team data and update the cards when the user changes the year
+  // Year selection handler
   document
     .getElementById("year-select")
     .addEventListener("change", function (e) {
       const selectedYear = e.target.value;
       currentYear = selectedYear;
+
+      // Reset domain selection
+      selectedDomain = null;
+      const buttons = document.querySelectorAll(".domain-btn");
+      buttons.forEach((btn) => {
+        const domain = domains.find((d) => d.id === btn.dataset.domain);
+        btn.className = `domain-btn px-6 py-2 rounded-full text-gray-600 bg-gray-100 hover:bg-${domain.color}-50 hover:text-${domain.color}-600 transition-all duration-300`;
+      });
+      domainHeader.textContent = "";
+
+      // Update team display
       teamCardsContainer.innerHTML = "<p>Loading...</p>";
       fetchTeamData(currentYear).then((teamData) => {
         updateTeamCards(teamData);
       });
     });
 </script>
+
+<script>
+  document.addEventListener("scroll", function () {
+    const parallaxElements = document.querySelectorAll(".parallax-scroll");
+    parallaxElements.forEach((element) => {
+      let offset = window.scrollY * 0.2;
+      element.style.transform = `translateY(-${offset}px)`;
+    });
+  });
+</script>
+
 {% endblock %}
