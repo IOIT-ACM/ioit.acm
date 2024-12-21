@@ -83,108 +83,131 @@ endblock %} {% block content %}
   <div
     id="team-cards"
     class="grid grid-cols-2 md:grid-cols-3 gap-6 p-6 mx-auto max-w-7xl"
-  >
-    {% for member in selected_team_data %}
-    <div
-      class="flex flex-col items-center text-blue-600 rounded-lg overflow-hidden gsap-reveal"
-    >
-      <!-- Image Section -->
-      <div
-        class="w-44 h-44 md:w-52 md:h-52 bg-gray-100 border border-gray-300 overflow-hidden rounded-full mb-4 shadow-lg"
-      >
-        <img
-          src="{{ member.image }}"
-          alt="{{ member.name }}"
-          class="w-full h-full object-cover object-top transition-transform duration-300 hover:scale-110"
-        />
-      </div>
-      <!-- Text Section -->
-      <div class="p-4 text-center">
-        <h3 class="text-lg font-semibold text-blue-800">{{ member.name }}</h3>
-        <p class="text-sm text-gray-500">{{ member.title }}</p>
-        <div class="flex justify-center gap-4 mt-3">
-          {% if member.linktree %}
-          <a
-            href="{{ member.linktree }}"
-            target="_blank"
-            class="text-green-600 hover:text-green-400 transition duration-200"
-          >
-            <i class="fas fa-link text-lg"></i>
-          </a>
-          {% endif %} {% if member.instagram %}
-          <a
-            href="{{ member.instagram }}"
-            target="_blank"
-            class="text-pink-600 hover:text-pink-400 transition duration-200"
-          >
-            <i class="fab fa-instagram text-lg"></i>
-          </a>
-          {% endif %} {% if member.github %}
-          <a
-            href="{{ member.github }}"
-            target="_blank"
-            class="text-gray-600 hover:text-gray-400 transition duration-200"
-          >
-            <i class="fab fa-github text-lg"></i>
-          </a>
-          {% endif %} {% if member.linkedin %}
-          <a
-            href="{{ member.linkedin }}"
-            target="_blank"
-            class="text-blue-600 hover:text-blue-400 transition duration-200"
-          >
-            <i class="fab fa-linkedin text-lg"></i>
-          </a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
+  ></div>
 </div>
 
+<!-- Team Member Template -->
+<template id="team-member-template">
+  <div
+    class="flex flex-col items-center text-blue-600 rounded-lg overflow-hidden gsap-reveal"
+  >
+    <!-- Image Section -->
+    <div
+      class="w-44 h-44 md:w-52 md:h-52 bg-gray-100 border border-gray-300 overflow-hidden rounded-full mb-4 shadow-lg"
+    >
+      <img
+        src=""
+        alt=""
+        class="w-full h-full object-cover object-top transition-transform duration-300 hover:scale-110"
+      />
+    </div>
+    <!-- Text Section -->
+    <div class="p-4 text-center">
+      <h3 class="text-lg font-semibold text-blue-800"></h3>
+      <p class="text-sm text-gray-500"></p>
+      <div class="flex justify-center gap-4 mt-3"></div>
+    </div>
+  </div>
+</template>
+
 <script>
-  // Handle the year selection and load team members
+  const teamCardsContainer = document.getElementById("team-cards");
+  const teamMemberTemplate = document.getElementById(
+    "team-member-template",
+  ).content;
+
+  let currentYear = "{{ latest_year }}";
+
+  function updateTeamCards(teamData) {
+    teamCardsContainer.innerHTML = "";
+
+    teamData.forEach((member) => {
+      const clone = document.importNode(teamMemberTemplate, true);
+
+      // Populate template with member details
+      clone.querySelector("img").src = member.image;
+      clone.querySelector("img").alt = member.name;
+      clone.querySelector("h3").textContent = member.name;
+      clone.querySelector("p").textContent = member.title;
+
+      // social links
+      const socialLinksContainer = clone.querySelector("div.flex");
+      if (member.github)
+        addSocialLink(
+          socialLinksContainer,
+          member.github,
+          "fab fa-github",
+          "text-gray-600",
+        );
+      if (member.linkedin)
+        addSocialLink(
+          socialLinksContainer,
+          member.linkedin,
+          "fab fa-linkedin",
+          "text-blue-600",
+        );
+      if (member.instagram)
+        addSocialLink(
+          socialLinksContainer,
+          member.instagram,
+          "fab fa-instagram",
+          "text-pink-600",
+        );
+      if (member.linktree)
+        addSocialLink(
+          socialLinksContainer,
+          member.linktree,
+          "fas fa-link",
+          "text-green-600",
+        );
+
+      // Append the card to the container
+      teamCardsContainer.appendChild(clone);
+    });
+  }
+
+  // Function to add a social link to the card
+  function addSocialLink(container, url, iconClass, colorClass) {
+    const link = document.createElement("a");
+    link.href = url;
+    link.target = "_blank";
+    link.className = `${colorClass} hover:${colorClass}-400 transition duration-200`;
+    link.innerHTML = `<i class="${iconClass} text-lg"></i>`;
+    container.appendChild(link);
+  }
+
+  // Function to fetch team data based on the year
+  function fetchTeamData(year) {
+    return fetch(`/fetch-team?year=${year}`)
+      .then((response) => response.json())
+      .catch((error) => {
+        console.error(error);
+        teamCardsContainer.innerHTML =
+          '<p class="text-red-500">Failed to load team data. Please try again later.</p>';
+      });
+  }
+
+  // Initially fetch and render the team data for the latest year
+  fetchTeamData(currentYear).then((teamData) => {
+    updateTeamCards(teamData); // Call the function to update the team cards
+  });
+
+  // Fetch team data and update the cards when the user changes the year
   document
     .getElementById("year-select")
     .addEventListener("change", function (e) {
-      var year = e.target.value;
+      const selectedYear = e.target.value;
 
-      // Show the loading skeleton while data is being fetched
-      document.getElementById("team-cards").innerHTML = `
-    <div class="animate-pulse">
-      <div class="p-4 bg-gray-200 rounded-lg w-48 h-64"></div>
-      <div class="mt-4 bg-gray-200 h-6 w-32 mx-auto rounded"></div>
-      <div class="mt-2 bg-gray-200 h-4 w-24 mx-auto rounded"></div>
-    </div>
-  `;
+      // Update currentYear with the selected value
+      currentYear = selectedYear;
 
-      // Fetch team data for the selected year
-      fetch(`/fetch-team?year=${year}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to fetch team data.");
-          }
-          return response.text();
-        })
-        .then((html) => {
-          document.getElementById("team-cards").innerHTML = html;
-        })
-        .catch((error) => {
-          console.error(error);
-          document.getElementById("team-cards").innerHTML = `
-        <p class="text-red-500">Failed to load team data. Please try again later.</p>
-      `;
-        });
+      // Show loading skeleton
+      teamCardsContainer.innerHTML = "<p>Loading...</p>";
+
+      fetchTeamData(currentYear).then((teamData) => {
+        updateTeamCards(teamData); // Call the function to update the team cards
+      });
     });
-
-  document.addEventListener("scroll", function () {
-    const parallaxElements = document.querySelectorAll(".parallax-scroll");
-    parallaxElements.forEach((element) => {
-      let offset = window.scrollY * 0.2;
-      element.style.transform = `translateY(-${offset}px)`;
-    });
-  });
 </script>
 
 {% endblock %}
