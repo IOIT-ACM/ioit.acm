@@ -31,13 +31,7 @@ endblock %} {% block content %}
     </div>
 
     <div>
-      <form
-        id="feedbackForm"
-        hx-post="{{ url_for('feedback.handle_feedback') }}"
-        hx-target="#thankYouModal"
-        hx-swap="outerHTML"
-        class="grid gap-4 mt-5 md:mt-0"
-      >
+      <form id="feedbackForm" class="grid gap-4 mt-5 md:mt-0">
         <div class="mb-3 text-center grid gap-4">
           <label for="feedbackType" class="font-medium text-gray-700"
             >Select Feedback Type:</label
@@ -317,8 +311,9 @@ endblock %} {% block content %}
     eventSection.style.display = "none";
     suggestionsSection.style.display = "none";
 
+    // Show the appropriate section based on the selected type
     const selectedType = document.querySelector(
-      'input[name="feedbackType"]:checked',
+      'input[name="feedbackType"]:checked'
     ).value;
 
     if (selectedType === "general") {
@@ -341,6 +336,7 @@ endblock %} {% block content %}
     const type = urlParams.get("type");
     const eventParam = urlParams.get("event");
 
+    // Set the correct feedback type based on URL parameters
     if (type === "eventfeedback") {
       document.getElementById("eventFeedback").checked = true;
     } else if (type === "general") {
@@ -349,12 +345,56 @@ endblock %} {% block content %}
       document.getElementById("suggestions").checked = true;
     }
 
+    // Preselect the event if it exists in the URL and matches available options
     if (eventParam && {{ event_names | tojson }}.includes(eventParam)) {
       document.getElementById("event").value = eventParam;
     }
 
+    // Adjust the visible fields based on the initial feedback type
     toggleFeedbackFields();
   });
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    const selectedType = document.querySelector(
+      'input[name="feedbackType"]:checked'
+    ).value;
+    const eventField = document.getElementById("event");
+
+    // Validate event selection if the feedback type is 'event'
+    if (selectedType === "event" && !eventField.value) {
+      alert("Please select an event before submitting event feedback.");
+      return;
+    }
+
+    // Collect form data
+    const form = document.getElementById("feedbackForm");
+    const formData = new FormData(form);
+    const formObject = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("/feedback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formObject),
+      });
+
+      if (response.ok) {
+        // Show success modal or redirect
+        document.getElementById("thankYouModal").classList.remove("hidden");
+      } else {
+        alert("Failed to submit feedback. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+      alert("An error occurred. Please try again.");
+    }
+  }
+
+  document.getElementById("feedbackForm").addEventListener("submit", handleSubmit);
 </script>
 
 {% endblock %}

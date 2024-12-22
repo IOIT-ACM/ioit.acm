@@ -22,19 +22,20 @@ def feedback_form():
 
 @feedback_bp.route("/feedback", methods=["POST"])
 def handle_feedback():
-    data = request.form.to_dict()
+    data = request.json
+
+    if not data:
+        return {"error": "No data received"}, 400
 
     utc_now = datetime.utcnow()
     ist_now = utc_now + timedelta(hours=5, minutes=30)
     ist_formatted = ist_now.strftime("%d %b %Y %H:%M")
 
     data["date"] = ist_formatted
-
     print("Received Form Data:", data)
 
     # Clear fields based on feedbackType
     feedback_type = data.get("feedbackType")
-
     if feedback_type == "general":
         data["event"] = ""
         data["eventFeedback"] = ""
@@ -55,10 +56,14 @@ def handle_feedback():
     }
 
     if API_URL:
-        response = requests.post(API_URL, json={"data": [data]}, headers=headers)
+        try:
+            response = requests.post(API_URL, json={"data": [data]}, headers=headers)
+            print("API Response:", response.status_code, response.json())
+        except requests.RequestException as e:
+            print("Error sending data to API:", e)
+            return {"error": "Failed to send data to API"}, 500
     else:
-        raise ValueError("API_URL cannot be None")
-
-    print("API Response:", response.status_code, response.json())
+        print("API_URL is None")
+        return {"error": "API_URL is not configured"}, 500
 
     return render_template("feedback_popup.html")
