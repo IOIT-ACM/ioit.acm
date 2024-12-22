@@ -16,7 +16,7 @@ BEARER_TOKEN = os.getenv("FEEDBACK_FORM_BEARER_TOKEN")
 
 @feedback_bp.route("/feedback", methods=["GET"])
 def feedback_form():
-    event_names = [event["name"] for event in events]
+    event_names = sorted([event["name"] for event in events])
     return render_template("feedback.html", event_names=event_names)
 
 

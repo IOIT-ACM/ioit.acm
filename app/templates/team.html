@@ -156,60 +156,52 @@ endblock %} {% block content %}
 
   let currentYear = "{{ latest_year }}";
   let selectedDomain = null;
+  let teamDataCache = [];
 
   // Define domains with their properties
   const domains = [
-    { id: "core", text: "Core Team", color: "green" },
-    { id: "web", text: "Web Development Team", color: "green" },
-    {
-      id: "documentation",
-      text: "Documentation Team",
-      color: "green",
-    },
-    { id: "media", text: "Media Team", color: "green" },
-    { id: "tech", text: "Technical Team", color: "green" },
+    { id: "core", text: "Core Team" },
+    { id: "web", text: "Web Development Team" },
+    { id: "documentation", text: "Documentation Team" },
+    { id: "media", text: "Media Team" },
+    { id: "tech", text: "Technical Team" },
   ];
 
-  // Create domain buttons
+  const activeButtonClass =
+    "px-6 py-2 rounded-full text-white bg-blue-500 border border-blue-600";
+  const inactiveButtonClass =
+    "px-6 py-2 rounded-full text-gray-600 border border-gray-300";
+
   domains.forEach((domain) => {
     const button = document.createElement("button");
     button.dataset.domain = domain.id;
-    button.textContent = domain.id.charAt(0).toUpperCase() + domain.id.slice(1);
-    button.className = `domain-btn px-6 py-2 rounded-full text-gray-600 bg-gray-100 border border-gray-300 hover:bg-${domain.color}-50 hover:text-${domain.color}-600 transition-all duration-300`;
+    button.textContent = domain.id; // Changed to show the full text instead of just id
+    button.className = `domain-btn ${inactiveButtonClass}`; // Added domain-btn class
 
     button.addEventListener("click", () => toggleDomain(domain));
     domainButtonsContainer.appendChild(button);
   });
 
   function toggleDomain(domain) {
-    const buttons = document.querySelectorAll(".domain-btn");
+    const buttons = domainButtonsContainer.querySelectorAll(".domain-btn"); // Changed selector to be more specific
 
     if (selectedDomain === domain.id) {
-      // Deselect current domain
+      // Deselecting current domain
       selectedDomain = null;
-      buttons.forEach((btn) => {
-        const btnDomain = domains.find((d) => d.id === btn.dataset.domain);
-        btn.className = `domain-btn px-6 py-2 rounded-full text-gray-600 bg-gray-100 border border-gray-300 hover:bg-${btnDomain.color}-50 hover:text-${btnDomain.color}-600 transition-all duration-300`;
-      });
+      buttons.forEach(
+        (btn) => (btn.className = `domain-btn ${inactiveButtonClass}`),
+      );
       domainHeader.textContent = "Meet Our Team";
     } else {
-      // Select new domain
+      // Selecting new domain
       selectedDomain = domain.id;
       buttons.forEach((btn) => {
-        const btnDomain = domains.find((d) => d.id === btn.dataset.domain);
-        if (btn.dataset.domain === domain.id) {
-          btn.className = `domain-btn px-6 py-2 rounded-full text-white bg-${domain.color}-600 border border-gray-300 shadow-lg shadow-${domain.color}-200 transition-all duration-300`;
-        } else {
-          btn.className = `domain-btn px-6 py-2 rounded-full text-gray-600 bg-gray-100 border border-gray-300 hover:bg-${btnDomain.color}-50 hover:text-${btnDomain.color}-600 transition-all duration-300`;
-        }
+        btn.className = `domain-btn ${btn.dataset.domain === domain.id ? activeButtonClass : inactiveButtonClass}`;
       });
       domainHeader.textContent = domain.text;
     }
 
-    // Update displayed team members
-    fetchTeamData(currentYear).then((teamData) => {
-      updateTeamCards(teamData);
-    });
+    updateTeamCards(teamDataCache);
   }
 
   function updateTeamCards(teamData) {
@@ -268,25 +260,22 @@ endblock %} {% block content %}
     const link = document.createElement("a");
     link.href = url;
     link.target = "_blank";
-    link.className = `${colorClass} hover:${colorClass}-400 transition duration-200`;
+    link.className = `${colorClass} transition duration-200`;
     link.innerHTML = `<i class="${iconClass} text-lg"></i>`;
     container.appendChild(link);
   }
 
-  function fetchTeamData(year) {
-    return fetch(`/fetch-team?year=${year}`)
-      .then((response) => response.json())
-      .catch((error) => {
-        console.error(error);
-        teamCardsContainer.innerHTML =
-          '<p class="text-red-500">Failed to load team data. Please try again later.</p>';
-      });
-  }
-
-  // Initially fetch and render the team data
-  fetchTeamData(currentYear).then((teamData) => {
-    updateTeamCards(teamData);
-  });
+  fetch(`/fetch-team?year=${currentYear}`)
+    .then((response) => response.json())
+    .then((teamData) => {
+      teamDataCache = teamData;
+      updateTeamCards(teamData);
+    })
+    .catch((error) => {
+      console.error(error);
+      teamCardsContainer.innerHTML =
+        '<p class="text-red-500">Failed to load team data. Please try again later.</p>';
+    });
 
   // Year selection handler
   document
@@ -298,17 +287,17 @@ endblock %} {% block content %}
       // Reset domain selection
       selectedDomain = null;
       const buttons = document.querySelectorAll(".domain-btn");
-      buttons.forEach((btn) => {
-        const domain = domains.find((d) => d.id === btn.dataset.domain);
-        btn.className = `domain-btn px-6 py-2 rounded-full text-gray-600 bg-gray-100 hover:bg-${domain.color}-50 hover:text-${domain.color}-600 transition-all duration-300`;
-      });
+      buttons.forEach(
+        (btn) => (btn.className = `domain-btn ${inactiveButtonClass}`),
+      );
       domainHeader.textContent = "Meet Our Team";
 
-      // Update team display
-      teamCardsContainer.innerHTML = "<p>Loading...</p>";
-      fetchTeamData(currentYear).then((teamData) => {
-        updateTeamCards(teamData);
-      });
+      fetch(`/fetch-team?year=${currentYear}`)
+        .then((response) => response.json())
+        .then((teamData) => {
+          teamDataCache = teamData;
+          updateTeamCards(teamData);
+        });
     });
 </script>
 

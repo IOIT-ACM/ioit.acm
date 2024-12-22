@@ -10,7 +10,7 @@ twitter_description %} Your feedback matters to us! Share your thoughts and
 ideas to help us create a better and more inclusive IOIT ACM community. {%
 endblock %} {% block content %}
 
-<div class="max-w-6xl mx-auto p-6 pt-24 pb-10">
+<div class="max-w-6xl mx-auto p-6 pt-24 pb-20">
   <h1 class="text-3xl font-bold text-center mb-6">Feedback Form</h1>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
     <div class="w-full flex justify-center mt-10 md:mt-0">
@@ -184,7 +184,10 @@ endblock %} {% block content %}
           </div>
 
           <div class="flex flex-col">
-            <label for="eventRating" class="text-sm font-medium text-gray-700">
+            <label
+              for="eventRating"
+              class="text-sm font-medium text-gray-700 z-50"
+            >
               Rate the event
             </label>
             <input
@@ -194,8 +197,20 @@ endblock %} {% block content %}
               min="0"
               max="100"
               value="80"
-              class="w-full mt-1"
+              class="w-full mt-1 z-50"
             />
+            <div
+              id="emojiOverlay"
+              class="hidden fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center z-40"
+            >
+              <div class="text-center">
+                <p id="emojiDisplay" class="text-6xl z-50"></p>
+                <p
+                  id="sliderValueDisplay"
+                  class="text-xl mt-5 text-gray-700"
+                ></p>
+              </div>
+            </div>
           </div>
 
           <div class="flex flex-col">
@@ -403,6 +418,47 @@ endblock %} {% block content %}
   }
 
   document.getElementById("feedbackForm").addEventListener("submit", handleSubmit);
+</script>
+
+<script>
+  const emojiRanges = [
+    { range: [90, 100], emoji: "🤩" }, // Super excited
+    { range: [80, 89], emoji: "😁" }, // Very happy
+    { range: [70, 79], emoji: "😊" }, // Happy
+    { range: [60, 69], emoji: "🙂" }, // Content
+    { range: [50, 59], emoji: "😐" }, // Neutral
+    { range: [40, 49], emoji: "😕" }, // Slightly disappointed
+    { range: [30, 39], emoji: "☹️" }, // Disappointed
+    { range: [20, 29], emoji: "😟" }, // Worried
+    { range: [10, 19], emoji: "😢" }, // Sad
+    { range: [0, 9], emoji: "😡" }, // Angry
+  ];
+
+  const slider = document.getElementById("eventRating");
+  const overlay = document.getElementById("emojiOverlay");
+  const emojiDisplay = document.getElementById("emojiDisplay");
+  const sliderValueDisplay = document.getElementById("sliderValueDisplay");
+
+  slider.addEventListener("input", () => {
+    const value = parseInt(slider.value, 10);
+
+    const matchedEmoji = emojiRanges.find(
+      (item) => value >= item.range[0] && value <= item.range[1],
+    )?.emoji;
+
+    if (matchedEmoji) {
+      emojiDisplay.textContent = matchedEmoji;
+
+      const scaledFontSize = 50 + (value / 100) * 70;
+      emojiDisplay.style.fontSize = `${scaledFontSize}px`;
+      sliderValueDisplay.textContent = `${value}/100`;
+      overlay.classList.remove("hidden");
+    }
+  });
+
+  slider.addEventListener("change", () => {
+    overlay.classList.add("hidden");
+  });
 </script>
 
 {% endblock %}
