@@ -48,7 +48,7 @@ event.description[:150] }}{% endblock %} {% block event_content %}
       </button>
 
       <a
-        href="/feedback"
+        href="/feedback?type=eventfeedback&event={{ event.name }}"
         class="px-3 py-2 text-sm bg-green-400 hover:bg-green-500 text-gray-900 font-semibold rounded-lg shadow-md flex items-center gap-2 transition-all duration-200 ease-in-out"
       >
         Feedback Form

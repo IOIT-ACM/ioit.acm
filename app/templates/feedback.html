@@ -337,6 +337,22 @@ endblock %} {% block content %}
   }
 
   document.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get("type");
+    const eventParam = urlParams.get("event");
+
+    if (type === "eventfeedback") {
+      document.getElementById("eventFeedback").checked = true;
+    } else if (type === "general") {
+      document.getElementById("generalFeedback").checked = true;
+    } else if (type === "suggestions") {
+      document.getElementById("suggestions").checked = true;
+    }
+
+    if (eventParam && {{ event_names | tojson }}.includes(eventParam)) {
+      document.getElementById("event").value = eventParam;
+    }
+
     toggleFeedbackFields();
   });
 </script>
