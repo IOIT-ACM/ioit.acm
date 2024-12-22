@@ -10,11 +10,11 @@ twitter_description %} Your feedback matters to us! Share your thoughts and
 ideas to help us create a better and more inclusive IOIT ACM community. {%
 endblock %} {% block content %}
 
-<div class="max-w-6xl mx-auto p-6 mt-20">
+<div class="max-w-6xl mx-auto p-6 pt-24 pb-10">
   <h1 class="text-3xl font-bold text-center mb-6">Feedback Form</h1>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
     <div class="w-full flex justify-center mt-10 md:mt-0">
-      <div class="w-2/3 md:mt-20 relative h-fit sticky top-32">
+      <div class="w-1/2 md:mt-20 relative h-fit sticky top-32">
         <div
           class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl animate-rotate"
         ></div>
@@ -38,6 +38,54 @@ endblock %} {% block content %}
         hx-swap="outerHTML"
         class="grid gap-4 mt-5 md:mt-0"
       >
+        <div class="mb-3 text-center grid gap-4">
+          <label for="feedbackType" class="font-medium text-gray-700"
+            >Select Feedback Type:</label
+          >
+          <div class="flex flex-col md:flex-row justify-center gap-1 md:gap-4">
+            <div class="flex items-center">
+              <input
+                type="radio"
+                id="generalFeedback"
+                name="feedbackType"
+                value="general"
+                checked
+                onclick="toggleFeedbackFields()"
+                class="mr-2"
+              />
+              <label for="generalFeedback" class="text-gray-700"
+                >General Feedback</label
+              >
+            </div>
+
+            <div class="flex items-center">
+              <input
+                type="radio"
+                id="eventFeedback"
+                name="feedbackType"
+                value="event"
+                onclick="toggleFeedbackFields()"
+                class="mr-2"
+              />
+              <label for="eventFeedback" class="text-gray-700"
+                >Event Feedback</label
+              >
+            </div>
+
+            <div class="flex items-center">
+              <input
+                type="radio"
+                id="suggestions"
+                name="feedbackType"
+                value="suggestions"
+                onclick="toggleFeedbackFields()"
+                class="mr-2"
+              />
+              <label for="suggestions" class="text-gray-700">Suggestions</label>
+            </div>
+          </div>
+        </div>
+
         <div>
           <label for="name" class="block text-sm font-medium text-gray-700"
             >Name</label
@@ -71,6 +119,7 @@ endblock %} {% block content %}
             <option value="EnTC">Electronics and Telecommunication</option>
           </select>
         </div>
+
         <div>
           <label for="year" class="block text-sm font-medium text-gray-700"
             >Year</label
@@ -88,6 +137,7 @@ endblock %} {% block content %}
             <option value="BE">Fourth Year</option>
           </select>
         </div>
+
         <div class="flex items-center gap-3">
           <div class="flex items-center space-x-2 mt-1">
             <input
@@ -122,37 +172,97 @@ endblock %} {% block content %}
           </div>
         </div>
 
-        <div>
-          <label for="events" class="block text-sm font-medium text-gray-700"
-            >What events would you like to see conducted by ACM?</label
-          >
-          <textarea
-            id="events"
-            name="events"
-            rows="4"
-            maxlength="500"
-            required
-            class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            oninput="updateCharacterCount('events', 'events-counter')"
-          ></textarea>
-          <div class="text-right text-sm text-gray-500">
-            <span id="events-counter">0</span>/500
+        <div id="eventFeedbackSection" class="hidden space-y-4 grid gap-4">
+          <div class="flex flex-col">
+            <label for="event" class="text-sm font-medium text-gray-700">
+              Which event did you attend or hear about?
+            </label>
+            <select
+              id="event"
+              name="event"
+              class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            >
+              <option value="">Select an event</option>
+              {% for event in event_names %}
+              <option value="{{ event }}">{{ event }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="eventRating" class="text-sm font-medium text-gray-700">
+              Rate the event
+            </label>
+            <input
+              type="range"
+              id="eventRating"
+              name="eventRating"
+              min="0"
+              max="100"
+              value="80"
+              class="w-full mt-1"
+            />
+          </div>
+
+          <div class="flex flex-col">
+            <label
+              for="eventFeedback"
+              class="text-sm font-medium text-gray-700"
+            >
+              Event Feedback
+            </label>
+            <textarea
+              id="eventFeedback"
+              name="eventFeedback"
+              rows="4"
+              maxlength="500"
+              class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              oninput="updateCharacterCount('eventFeedback', 'eventFeedback-counter')"
+            ></textarea>
+            <div class="text-right text-sm text-gray-500">
+              <span id="eventFeedback-counter">0</span>/500
+            </div>
           </div>
         </div>
-        <div>
-          <label for="feedback" class="block text-sm font-medium text-gray-700"
-            >Any additional feedback or suggestions</label
-          >
-          <textarea
-            id="feedback"
-            name="feedback"
-            rows="4"
-            maxlength="500"
-            class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            oninput="updateCharacterCount('feedback', 'feedback-counter')"
-          ></textarea>
-          <div class="text-right text-sm text-gray-500">
-            <span id="feedback-counter">0</span>/500
+
+        <div id="suggestionsSection" class="hidden grid gap-4">
+          <div class="flex flex-col">
+            <label for="events" class="block text-sm font-medium text-gray-700">
+              What events would you like to see conducted by ACM?
+            </label>
+            <textarea
+              id="events"
+              name="events"
+              rows="4"
+              maxlength="500"
+              class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              oninput="updateCharacterCount('events', 'events-counter')"
+            ></textarea>
+            <div class="text-right text-sm text-gray-500">
+              <span id="events-counter">0</span>/500
+            </div>
+          </div>
+        </div>
+
+        <div id="generalFeedbackSection" class="grid gap-4">
+          <div class="flex flex-col">
+            <label
+              for="feedback"
+              class="block text-sm font-medium text-gray-700"
+            >
+              We appreciate your feedback. Please tell us what you think.
+            </label>
+            <textarea
+              id="feedback"
+              name="feedback"
+              rows="4"
+              maxlength="500"
+              class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              oninput="updateCharacterCount('feedback', 'feedback-counter')"
+            ></textarea>
+            <div class="text-right text-sm text-gray-500">
+              <span id="feedback-counter">0</span>/500
+            </div>
           </div>
         </div>
 
@@ -197,11 +307,38 @@ endblock %} {% block content %}
 </div>
 
 <script>
+  function toggleFeedbackFields() {
+    const generalSection = document.getElementById("generalFeedbackSection");
+    const eventSection = document.getElementById("eventFeedbackSection");
+    const suggestionsSection = document.getElementById("suggestionsSection");
+
+    // Hide all sections initially
+    generalSection.style.display = "none";
+    eventSection.style.display = "none";
+    suggestionsSection.style.display = "none";
+
+    const selectedType = document.querySelector(
+      'input[name="feedbackType"]:checked',
+    ).value;
+
+    if (selectedType === "general") {
+      generalSection.style.display = "block";
+    } else if (selectedType === "event") {
+      eventSection.style.display = "block";
+    } else if (selectedType === "suggestions") {
+      suggestionsSection.style.display = "block";
+    }
+  }
+
   function updateCharacterCount(textareaId, counterId) {
     const textarea = document.getElementById(textareaId);
     const counter = document.getElementById(counterId);
     counter.textContent = textarea.value.length;
   }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    toggleFeedbackFields();
+  });
 </script>
 
 {% endblock %}

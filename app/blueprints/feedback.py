@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from flask import Blueprint, render_template, request
+from app.data.events import events
 import requests, os
 from dotenv import load_dotenv
 
@@ -15,7 +16,8 @@ BEARER_TOKEN = os.getenv("FEEDBACK_FORM_BEARER_TOKEN")
 
 @feedback_bp.route("/feedback", methods=["GET"])
 def feedback_form():
-    return render_template("feedback.html")
+    event_names = [event["name"] for event in events]
+    return render_template("feedback.html", event_names=event_names)
 
 
 @feedback_bp.route("/feedback", methods=["POST"])
@@ -29,6 +31,23 @@ def handle_feedback():
     data["date"] = ist_formatted
 
     print("Received Form Data:", data)
+
+    # Clear fields based on feedbackType
+    feedback_type = data.get("feedbackType")
+
+    if feedback_type == "general":
+        data["event"] = ""
+        data["eventFeedback"] = ""
+        data["eventRating"] = ""
+        data["events"] = ""
+    elif feedback_type == "event":
+        data["feedback"] = ""
+        data["events"] = ""
+    elif feedback_type == "suggestions":
+        data["feedback"] = ""
+        data["event"] = ""
+        data["eventFeedback"] = ""
+        data["eventRating"] = ""
 
     headers = {
         "Authorization": "Bearer {}".format(BEARER_TOKEN),
