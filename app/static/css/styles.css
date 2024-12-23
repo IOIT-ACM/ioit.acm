@@ -113,3 +113,7 @@ a:hover {
 .animate-rotate {
   animation: rotate 10s linear infinite;
 }
+
+#interactive-cubes {
+  touch-action: auto;
+}

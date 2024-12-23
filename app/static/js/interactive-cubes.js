@@ -15,9 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const oPos = new THREE.Vector3();
   const vec = new THREE.Vector3();
   const dir = new THREE.Vector3();
-  const gap = 0.2;
+  const gap = 0.3;
   let stride = 5;
-  const displacement = 3;
+  const displacement = 3.5;
   const intensity = 1;
 
   const scene = new THREE.Scene();
@@ -122,6 +122,26 @@ document.addEventListener("DOMContentLoaded", () => {
   controls.enableDamping = true;
   controls.enableZoom = false;
 
+  const isMobile = window.innerWidth <= 768;
+  if (isMobile) {
+    controls.enableRotate = false;
+    controls.enableZoom = false;
+    controls.enablePan = false;
+
+    renderer.domElement.style.touchAction = "auto";
+  } else {
+    controls.enableRotate = true;
+    controls.enablePan = true;
+  }
+
+  function resizeCanvas() {
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+  }
+
+  window.addEventListener("resize", resizeCanvas);
+
   const animate = () => {
     requestAnimationFrame(animate);
     controls.update();
@@ -150,5 +170,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderer.render(scene, camera);
   };
 
+  resizeCanvas();
   animate();
 });
