@@ -13,6 +13,7 @@ def create_app():
     from app.blueprints.gallery import gallery_bp
     from app.blueprints.events import events_bp
     from app.blueprints.about import about_bp
+    from app.blueprints.opensource import opensource_bp
 
     app.register_blueprint(home_bp)
     app.register_blueprint(team_bp)
@@ -22,6 +23,7 @@ def create_app():
     app.register_blueprint(gallery_bp)
     app.register_blueprint(events_bp)
     app.register_blueprint(about_bp)
+    app.register_blueprint(opensource_bp)
 
     # Error Handlers
     @app.errorhandler(404)

@@ -204,6 +204,14 @@
           </li>
           <li>
             <a
+              href="/opensource"
+              class="text-gray-700 hover:text-blue-600 transition relative {{ 'text-blue-500 underline' if request.path == '/opensource' else '' }}"
+            >
+              Open Source
+            </a>
+          </li>
+          <li>
+            <a
               href="/gallery"
               class="text-gray-700 hover:text-blue-600 transition relative {{ 'text-blue-500 underline' if request.path == '/gallery' else '' }}"
             >
@@ -277,6 +285,13 @@
               onclick="closeNav()"
             >
               Feedback Form
+            </a>
+            <a
+              href="/opensource"
+              class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == '/opensource' else '' }}"
+              onclick="closeNav()"
+            >
+              Open Source
             </a>
             <a
               href="/membership/status"
