@@ -72,6 +72,34 @@ The following routes are available in the project:
 - [x] **`/events`**: A page displaying upcoming events.
 - [x] **`/events/{event.name}`**: Event details page.
 
+## ACM Membership Data Management
+
+This project manages ACM membership data by integrating with the SheetsDB API and providing a fallback mechanism using a `snapshot.json` file. When the monthly API quota is exceeded, the data is retrieved from the snapshot file.
+
+---
+
+## Overview
+
+### API Integration
+
+The membership data is fetched from SheetsDB using the provided API endpoint and Bearer token. The data is cached for performance, and a fallback JSON file (`snapshot.json`) is used when:
+
+- The API quota is exceeded.
+- The API is unavailable due to network or other issues.
+
+### Snapshot File
+
+The `snapshot.json` file is a local backup of the membership data. It should be updated regularly to ensure it reflects the latest data.
+
+To update the snapshot file:
+
+```shell
+curl -X GET https://sheetdb.io/api/v1/vn9yo1yzudzoh \
+-H "Authorization: Bearer BEARER_TOKEN" > snapshot.json
+```
+
+> NOTE: Get the bearer token from the sheetdb console.
+
 ## Update data
 
 Python files for data are located in `app/static/data`.
