@@ -7,9 +7,15 @@ team_bp = Blueprint("team", __name__, template_folder="../templates")
 
 @team_bp.route("/team")
 def team():
-    years = sorted(team_data.keys(), reverse=True)  # Sort years in descending order
-    latest_year = years[0]  # Get the most recent year
-    selected_team_data = team_data.get(latest_year, [])
+    years = sorted(team_data.keys(), reverse=True)
+    latest_year = years[0]
+
+    year = request.args.get("year", latest_year)
+
+    if year not in team_data:
+        year = latest_year
+
+    selected_team_data = team_data.get(year, [])
 
     return render_template(
         "team.html",
@@ -23,7 +29,7 @@ def team():
 def fetch_team():
     year = request.args.get("year")
     if year not in team_data:
-        return jsonify({"error": "Team data not found"}), 404
+        return jsonify({"error": "Team data for year {} not found".format(year)}), 404
 
     return jsonify(team_data[year])
 

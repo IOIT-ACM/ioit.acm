@@ -154,11 +154,8 @@ endblock %} {% block content %}
   const domainButtonsContainer = document.getElementById("domain-buttons");
   const domainHeader = document.getElementById("domain-header");
 
-  let currentYear = "{{ latest_year }}";
   let selectedDomain = null;
   let teamDataCache = [];
-
-  // Define domains with their properties
   const domains = [
     { id: "core", text: "Core Team" },
     { id: "web", text: "Web Development Team" },
@@ -175,25 +172,23 @@ endblock %} {% block content %}
   domains.forEach((domain) => {
     const button = document.createElement("button");
     button.dataset.domain = domain.id;
-    button.textContent = domain.id; // Changed to show the full text instead of just id
-    button.className = `domain-btn ${inactiveButtonClass}`; // Added domain-btn class
+    button.textContent = domain.id.charAt(0).toUpperCase() + domain.id.slice(1);
+    button.className = `domain-btn ${inactiveButtonClass}`;
 
     button.addEventListener("click", () => toggleDomain(domain));
     domainButtonsContainer.appendChild(button);
   });
 
   function toggleDomain(domain) {
-    const buttons = domainButtonsContainer.querySelectorAll(".domain-btn"); // Changed selector to be more specific
+    const buttons = domainButtonsContainer.querySelectorAll(".domain-btn");
 
     if (selectedDomain === domain.id) {
-      // Deselecting current domain
       selectedDomain = null;
       buttons.forEach(
         (btn) => (btn.className = `domain-btn ${inactiveButtonClass}`),
       );
       domainHeader.textContent = "Meet Our Team";
     } else {
-      // Selecting new domain
       selectedDomain = domain.id;
       buttons.forEach((btn) => {
         btn.className = `domain-btn ${btn.dataset.domain === domain.id ? activeButtonClass : inactiveButtonClass}`;
@@ -201,13 +196,42 @@ endblock %} {% block content %}
       domainHeader.textContent = domain.text;
     }
 
+    updateURLParams({ domain: selectedDomain });
     updateTeamCards(teamDataCache);
+  }
+
+  function updateURLParams(params) {
+    const url = new URL(window.location);
+
+    Object.keys(params).forEach((key) => {
+      if (params[key]) {
+        url.searchParams.set(key, params[key]);
+      } else {
+        url.searchParams.delete(key);
+      }
+    });
+
+    window.history.pushState({}, "", url);
+  }
+
+  function getParamFromURL(paramName, fallback = null) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(paramName) || fallback;
+  }
+
+  function initializeDomainFromURL() {
+    const domainFromURL = getParamFromURL("domain");
+    if (domainFromURL) {
+      const domain = domains.find((d) => d.id === domainFromURL);
+      if (domain) {
+        toggleDomain(domain);
+      }
+    }
   }
 
   function updateTeamCards(teamData) {
     teamCardsContainer.innerHTML = "";
 
-    // Filter team members based on selected domain
     const filteredTeamData = selectedDomain
       ? teamData.filter((member) => member.domain === selectedDomain)
       : teamData;
@@ -215,13 +239,11 @@ endblock %} {% block content %}
     filteredTeamData.forEach((member) => {
       const clone = document.importNode(teamMemberTemplate, true);
 
-      // Populate template with member details
       clone.querySelector("img").src = member.image;
       clone.querySelector("img").alt = member.name;
       clone.querySelector("h3").textContent = member.name;
       clone.querySelector("p").textContent = member.title;
 
-      // Social links
       const socialLinksContainer = clone.querySelector("div.flex.flex-row");
       if (member.github)
         addSocialLink(
@@ -265,40 +287,45 @@ endblock %} {% block content %}
     container.appendChild(link);
   }
 
-  fetch(`/fetch-team?year=${currentYear}`)
-    .then((response) => response.json())
-    .then((teamData) => {
-      teamDataCache = teamData;
-      updateTeamCards(teamData);
-    })
-    .catch((error) => {
-      console.error(error);
-      teamCardsContainer.innerHTML =
-        '<p class="text-red-500">Failed to load team data. Please try again later.</p>';
-    });
+  function fetchTeamData(year) {
+    fetch(`/fetch-team?year=${year}`)
+      .then((response) => {
+        if (!response.ok) throw new Error("Year data not found");
+        return response.json();
+      })
+      .then((teamData) => {
+        teamDataCache = teamData;
+        updateTeamCards(teamData);
+      })
+      .catch((error) => {
+        console.error(error);
+        teamCardsContainer.innerHTML =
+          '<p class="text-red-500 md:col-span-3 text-center max-w-2xl mx-auto">Unable to load team data at the moment. Please try again later and ensure you have selected a valid year from the dropdown menu.</p>';
+      });
+  }
 
-  // Year selection handler
+  function getYearFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const year = urlParams.get("year");
+    return year && !isNaN(year) ? year : "{{ latest_year }}";
+  }
+
   document
     .getElementById("year-select")
     .addEventListener("change", function (e) {
       const selectedYear = e.target.value;
-      currentYear = selectedYear;
 
-      // Reset domain selection
-      selectedDomain = null;
-      const buttons = document.querySelectorAll(".domain-btn");
-      buttons.forEach(
-        (btn) => (btn.className = `domain-btn ${inactiveButtonClass}`),
-      );
-      domainHeader.textContent = "Meet Our Team";
+      const url = new URL(window.location);
+      url.searchParams.set("year", selectedYear);
+      window.history.pushState({}, "", url);
 
-      fetch(`/fetch-team?year=${currentYear}`)
-        .then((response) => response.json())
-        .then((teamData) => {
-          teamDataCache = teamData;
-          updateTeamCards(teamData);
-        });
+      fetchTeamData(selectedYear);
     });
+
+  const initialYear = getYearFromURL();
+  document.getElementById("year-select").value = initialYear;
+  fetchTeamData(initialYear);
+  initializeDomainFromURL();
 </script>
 
 <script>
