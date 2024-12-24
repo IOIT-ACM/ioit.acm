@@ -2,7 +2,7 @@ projects_data = [
     {
         "name": "TENET 2024",
         "maintainer": "IOIT ACM Student Chapter",
-        "description": "TENET 2024 is a multi-faceted event featuring technology, entrepreneurship, global diplomacy, and e-sports. It includes tech conferences, workshops, MUN simulations, and LAN tournaments, offering a platform for learning, networking, and showcasing skills.",
+        "description": "The TENET 2024 website attracted 15,000 visitors within just three weeks leading up to the event. Designed and developed by Aditya Godse and Swaroop Patil, the site utilized a modern tech stack including TypeScript, GSAP, Three.js, WebGL, and Tailwind CSS. Featuring various interactive elements, the website successfully engaged users and enhanced their browsing experience.",
         "techstack": "NextJS WebGL ThreeJS GSAP TailwindCSS",
         "image_url": "/static/img/projects/tenet_2024.jpeg",
         "repository_link": "",
@@ -23,7 +23,7 @@ projects_data = [
         "description": "Anath Kalyan Kendra focuses on managing waste for blind people and provides resources like food, clothing, footwear, and educational materials. The project encourages donations and contributions to improve the lives of blind individuals.",
         "techstack": "React TailwindCSS TypeScript",
         "image_url": "/static/img/projects/mamata_andh_anath_kalyan_kendra.jpeg",
-        "repository_link": "",
+        "repository_link": "https://github.com/ioit-acm/Mamatha_Andh",
         "deployment_link": "https://mamatha-andh.vercel.app",
     },
     {
@@ -32,7 +32,7 @@ projects_data = [
         "description": "Sarvasparshi Foundation is dedicated to making a positive impact in the lives of those in need. The foundation focuses on services like healthcare, education, social welfare, disaster relief, and environmental conservation.",
         "techstack": "HTML CSS JavaScript",
         "image_url": "/static/img/projects/sarvasparshi_foundation.jpeg",
-        "repository_link": "",
+        "repository_link": "https://github.com/ioit-acm/sarvasparshi-foundation",
         "deployment_link": "https://ioit-acm.github.io/sarvasparshi-foundation/",
     },
     {
