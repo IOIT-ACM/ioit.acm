@@ -1,0 +1,204 @@
+{% extends "base.html" %} {% block title %}Projects{% endblock %} {% block
+content %}
+
+<di class="flex flex-col items-center min-h-screen p-6 mb-20">
+  <div class="max-w-7xl w-full">
+    <div class="flex flex-col justify-between items-center mt-12">
+      <h1 class="text-4xl font-extrabold text-blue-600 py-8">Projects</h1>
+      <p class="text-gray-700 text-lg text-center mb-4 max-w-3xl mx-auto">
+        Explore our collection of projects showcasing various skills and
+        technologies. Use the search box below to filter projects by name or
+        tech stack.
+      </p>
+
+      <!-- Search Box -->
+      <div class="relative w-full md:w-1/3 my-8">
+        <input
+          type="text"
+          id="searchBox"
+          placeholder="Search Projects..."
+          class="w-full p-4 pl-12 border border-gray-300 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+        />
+        <p
+          id="resultsCount"
+          class="text-gray-600 w-full text-right text-sm mt-2"
+        >
+          Showing {{ projects|length }} results
+        </p>
+      </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div
+      id="projectsGrid"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10"
+    >
+      {% for project in projects %}
+      <div
+        class="project-card border border-gray-300 rounded-lg p-5 shadow-md hover:shadow-lg cursor-pointer relative group transition-all duration-300 transform"
+        onclick="openModal('{{ project.name }}', '{{ project.repository_link }}', '{{ project.deployment_link }}', '{{ project.description }}', '{{ project.techstack }}', '{{ project.image_url }}')"
+      >
+		<div class="w-full aspect-[16/9] overflow-hidden rounded-lg mb-4 relative shadow-lg">
+		  <img
+			src="{{ project.image_url }}"
+			alt="{{ project.name }} image"
+			class="w-full h-full object-cover rounded-lg transition-transform duration-300 ease-in-out  hover:scale-105"
+		  />
+		</div>
+        <h2
+          class="text-lg font-semibold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors duration-200"
+        >
+          <i class="fas fa-folder mr-2 text-blue-500"></i>
+          {{ project.name }}
+        </h2>
+        <p class="text-gray-600 text-sm md:text-base mb-2 line-clamp-3">
+          {{ project.description }}
+        </p>
+        <p class="text-gray-700 text-sm md:text-base">
+          <span class="font-medium">Tech Stack:</span>
+          {{ project.techstack }}
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div
+  id="projectModal"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden transition-all duration-300"
+>
+  <div
+    class="bg-white rounded-xl p-8 md:w-1/3 w-4/5 shadow-2xl relative max-h-full overflow-y-auto transform scale-0 transition-transform duration-300"
+  >
+    <button
+      onclick="closeModal()"
+      class="absolute top-4 right-4 rounded-full p-2"
+      aria-label="Close Modal"
+    >
+      <i class="fas fa-times text-gray-700 text-lg"></i>
+    </button>
+    <h2 id="modalTitle" class="text-3xl font-semibold text-gray-800 mb-4"></h2>
+    <img
+      class="w-full h-60 object-cover rounded-lg mb-4 shadow-md"
+      id="modalImageUrl"
+      src="#"
+      loading="lazy"
+      alt="project_image"
+    />
+    <p id="modalTechStack" class="text-gray-600 text-sm md:text-base mt-2">
+      <span class="font-medium text-gray-800">Tech Stack:</span>
+      <span id="modalTechStackValue" class="text-gray-600"></span>
+    </p>
+    <p
+      id="modalDescription"
+      class="text-gray-700 my-4 text-sm md:text-base"
+    ></p>
+    <div class="flex flex-row gap-4 mt-4">
+      <a
+        id="modalRepoLink"
+        href="#"
+        target="_blank"
+        class="text-blue-600 hover:underline text-sm md:text-base flex items-center transition-colors duration-200"
+        rel="noopener noreferrer"
+      >
+        <i class="fab fa-github mr-2"></i>GitHub Repository
+      </a>
+      <a
+        id="modalDeploymentLink"
+        href="#"
+        target="_blank"
+        class="text-green-600 hover:underline text-sm md:text-base flex items-center transition-colors duration-200"
+        rel="noopener noreferrer"
+      >
+        <i class="fas fa-globe mr-2"></i>View Project
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal(
+    name,
+    repoLink,
+    deploymentLink,
+    description,
+    techStack,
+    image,
+  ) {
+    document.getElementById("modalTitle").textContent = name;
+    document.getElementById("modalRepoLink").href = repoLink;
+    document.getElementById("modalRepoLink").style.display =
+      repoLink.trim() !== "" ? "block" : "none";
+    document.getElementById("modalDeploymentLink").href = deploymentLink;
+    document.getElementById("modalDescription").textContent = description;
+    document.getElementById("modalTechStackValue").textContent = techStack;
+    document.getElementById("modalImageUrl").src = image;
+    document.getElementById("modalImageUrl").alt = name + "_image";
+
+    document.getElementById("projectModal").classList.remove("hidden");
+    document
+      .getElementById("projectModal")
+      .querySelector("div")
+      .classList.remove("scale-0");
+    document
+      .getElementById("projectModal")
+      .querySelector("div")
+      .classList.add("scale-100");
+  }
+
+  // Function to close the modal
+  function closeModal() {
+    document.getElementById("projectModal").classList.add("hidden");
+    document
+      .getElementById("projectModal")
+      .querySelector("div")
+      .classList.remove("scale-100");
+    document
+      .getElementById("projectModal")
+      .querySelector("div")
+      .classList.add("scale-0");
+  }
+
+// Search
+document.getElementById("searchBox").addEventListener("input", function (e) {
+  const query = e.target.value.toLowerCase();
+  const cards = document.querySelectorAll(".project-card");
+  let visibleCount = 0;
+
+  cards.forEach((card) => {
+    const name = card.querySelector("h2").textContent.toLowerCase();
+    const techstack = card
+      .querySelector("p:nth-child(3)")
+      .textContent.toLowerCase();
+
+    if (name.includes(query) || techstack.includes(query)) {
+      card.style.display = "";
+      visibleCount++;
+    } else {
+      card.style.display = "none";
+    }
+  });
+
+  document.getElementById("resultsCount").textContent =
+    `Showing ${visibleCount} of {{ projects|length }} results`;
+
+  const gridContainer = document.getElementById("projectsGrid").parentNode;
+  let noResultsMessage = document.getElementById("noResultsMessage");
+
+  if (visibleCount === 0) {
+    if (!noResultsMessage) {
+      noResultsMessage = document.createElement("h3");
+      noResultsMessage.id = "noResultsMessage";
+      noResultsMessage.className = "text-gray-500 text-lg text-center mt-6";
+      gridContainer.appendChild(noResultsMessage);
+    }
+    noResultsMessage.textContent = `No search results for the query '${query}'`;
+  } else if (noResultsMessage) {
+    noResultsMessage.remove();
+  }
+});
+
+</script>
+
+{% endblock %}
