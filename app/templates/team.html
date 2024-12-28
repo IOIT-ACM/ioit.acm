@@ -40,7 +40,7 @@ endblock %} {% block content %}
   </div>
 </div>
 
-<div id="team-section" class="text-center my-16 px-4">
+<div id="team-section" class="text-center py-16 px-4">
   <h2 id="domain-header" class="text-4xl font-bold text-blue-600 mb-6">
     Meet Our Team
   </h2>
@@ -162,12 +162,13 @@ endblock %} {% block content %}
     { id: "documentation", text: "Documentation Team" },
     { id: "media", text: "Media Team" },
     { id: "tech", text: "Technical Team" },
+    { id: "event-management", text: "Event Management Team" },
   ];
 
   const activeButtonClass =
     "px-6 py-2 rounded-full text-white bg-blue-500 border border-blue-600";
   const inactiveButtonClass =
-    "px-6 py-2 rounded-full text-gray-600 border border-gray-300";
+    "px-6 py-2 rounded-full text-gray-600 bg-blue-50 border border-gray-300";
 
   domains.forEach((domain) => {
     const button = document.createElement("button");
