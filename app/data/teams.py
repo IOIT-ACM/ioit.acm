@@ -232,7 +232,7 @@ team_data = {
         },
         {
             "name": "Devika Mule",
-            "title": "Documentation Member",
+            "title": "Event Management Team",
             "image": "static/img/team/2024/doc-devika.jpeg",
             "linktree": "",
             "github": "",
@@ -262,7 +262,7 @@ team_data = {
         },
         {
             "name": "Shriya Kulkarni",
-            "title": "event management team",
+            "title": "Event Management Team",
             "image": "static/img/team/2024/doc-shriya.jpeg",
             "linktree": "",
             "github": "",
@@ -272,7 +272,7 @@ team_data = {
         },
         {
             "name": "Vivan Kukreja",
-            "title": "event management team",
+            "title": "Event Management Team",
             "image": "static/img/team/2024/doc-vivan.jpeg",
             "linktree": "",
             "github": "",
@@ -282,7 +282,7 @@ team_data = {
         },
         {
             "name": "Nilay Bhandari",
-            "title": "event management team",
+            "title": "Event Management Team",
             "image": "static/img/team/2024/doc-nilay.jpeg",
             "linktree": "",
             "github": "",
