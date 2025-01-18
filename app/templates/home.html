@@ -39,7 +39,7 @@
       IOIT ACM STUDENT CHAPTER
     </h1>
     <p
-      class="text-sm md:text-xl text-gray-300 max-w-3xl mx-auto md:mb-12 mb-4 parallax-scroll-3"
+      class="text-sm md:text-xl text-gray-300 max-w-3xl mx-auto parallax-scroll-3"
     >
       IOIT ACM Student Chapter is an auxiliary organization of ACM. We are one
       of the most reputed and distinguished technical chapters working with
@@ -66,18 +66,18 @@
         </div>
       </a>
 
-      <a href="https://www.ioittenet.com/" class="w-40 h-40 relative group">
+      <a href="/competitions" class="w-40 h-40 relative group">
         <div
           class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm rotate-on-scroll"
         ></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center">
           <img
-            src="{{ url_for('static', filename='img/assets/tenet-logo.svg') }}"
-            alt="Tenet Icon"
+            src="{{ url_for('static', filename='img/assets/contests.svg') }}"
+            alt="Contests"
             class="w-12 h-12 mb-2 text-blue-400"
           />
-          <h2 class="text-blue-400 font-semibold text-base">Flagship Events</h2>
-          <p class="text-gray-300 text-sm">TENET & <br />IOIT MUN</p>
+          <h2 class="text-blue-400 font-semibold text-base">Competitions</h2>
+          <p class="text-gray-300 text-sm">DSA, ML, DBMS <br />and more</p>
         </div>
       </a>
 
@@ -112,7 +112,7 @@
       </a>
     </div>
 
-    <div class="text-sm align-center flex flex-col gap-3 px-4 md:hidden">
+    <div class="text-sm align-center flex flex-col gap-3 px-4 md:hidden mt-5">
       <a
         href="/join"
         class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:no-underline backdrop-blur-sm"
@@ -127,9 +127,23 @@
       </a>
     </div>
 
-    <div class="block md:hidden px-4 py-2 text-left text-white">
+    <div class="block md:hidden px-4 py-2 text-left text-white mt-5">
       <div class="space-y-2">
         <!-- Mobile Menu -->
+        <a
+          href="/competitions"
+          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline"
+        >
+          <img
+            src="{{ url_for('static', filename='img/assets/contests.svg') }}"
+            alt="Events Icon"
+            class="w-8 h-8 mr-4"
+          />
+          <div>
+            <h2 class="text-blue-400 font-semibold text-sm">Competitions</h2>
+            <p class="text-gray-300 text-xs">DSA, ML, DBMS and more</p>
+          </div>
+        </a>
         <a
           href="/events"
           class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline"
@@ -196,7 +210,7 @@
 
   <!-- Button -->
   <div
-    class="absolute text-base bottom-4 right-4 bottom-3 align-center md:flex flex-col gap-3 hidden gsap-reveal"
+    class="absolute text-base bottom-4 right-4 align-center md:flex flex-col gap-3 hidden gsap-reveal"
   >
     <a
       href="/join"

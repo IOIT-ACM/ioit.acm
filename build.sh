@@ -42,6 +42,7 @@ EXCLUDE_LIST=(
 	".env"
 	".env.example"
 	"Dockerfile"
+	"tests"
 )
 
 error_exit() {

@@ -1,0 +1,128 @@
+{% extends "competitions/base.html" %} {% block title %}ML Frontiers{% endblock
+%} {% block content %}
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div
+    class="rounded-lg mx-auto md:w-2/3 w-full md:sticky md:top-32 top-20 -z-10 h-fit"
+    >
+    <img
+        src="{{ url_for('static', filename='img/competitions/banner/ml.jpeg') }}"
+        alt="Bit by Bit"
+        class="aspect-square w-full rounded-lg"
+      />
+      <h2 class="mt-5 text-xl font-semibold text-gray-800">Tags</h2>
+      <div class="flex flex-wrap mt-5 gap-2">
+        <span class="bg-green-200 text-black px-4 py-2 rounded-full text-sm"
+          >Machine Learning</span
+        >
+        <span class="bg-green-200 text-black px-4 py-2 rounded-full text-sm"
+          >Deep Learning</span
+        >
+        <span class="bg-green-200 text-black px-4 py-2 rounded-full text-sm"
+          >Tensorflow</span
+        >
+        <span class="bg-green-200 text-black px-4 py-2 rounded-full text-sm"
+          >Data Science</span
+        >
+      </div>
+      <hr class="border-t-2 border-gray-500 my-6 md:hidden" />
+    </div>
+
+    <div>
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Objectives</h2>
+        <p class="text-gray-700 mb-4">
+          The <strong>ML Frontiers</strong> competition is designed for machine
+          learning enthusiasts to showcase their skills in building, testing,
+          and deploying cutting-edge models. Compete against others in solving
+          complex challenges and demonstrate your expertise in predictive
+          analytics.
+        </p>
+        <p class="text-gray-700 mb-4">
+          Participants will be required to build machine learning models for
+          specific use cases. Instead of submitting a CSV file, users will
+          submit the actual model itself in a supported format such as
+          <code>.pkl</code>. A sample Colab notebook with instructions on
+          building and exporting the model will be provided.
+        </p>
+      </section>
+
+      <!-- Rules Section -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Rules</h2>
+        <ul class="list-disc list-inside text-gray-700">
+          <li>Participants must register before the competition starts.</li>
+          <li>
+            Each participant will be given a machine learning problem to solve
+            within a specified time frame.
+          </li>
+          <li>
+            Participants must use the provided Colab notebook to build and
+            export their models.
+          </li>
+          <li>
+            Models must be submitted in a supported format such as
+            <code>.pkl</code>.
+          </li>
+          <li>
+            Instructions about how the model should work, the type of input it
+            expects, and the type of output it gives will be provided in the
+            competition description.
+          </li>
+        </ul>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Calendar</h2>
+        <div class="py-5">
+          <h3 class="text-xl font-bold mb-2">Upcoming Events</h3>
+          {% if upcoming_events %}
+          <ul class="list-disc list-inside text-gray-700 mb-4">
+            {% for event in upcoming_events %}
+            <li>{{ event.name }} - {{ event.date }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p>Will be anounced soon!</p>
+          {% endif %}
+
+          <hr class="border-t-2 border-gray-500 my-6 w-20" />
+
+          <h3 class="text-xl font-bold mb-2">Past Events</h3>
+          {% if past_events %}
+          <ul class="list-disc list-inside text-gray-700">
+            {% for event in past_events %}
+            <li>{{ event.name }} - {{ event.date }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p>No past events.</p>
+          {% endif %}
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold mb-4">Join the Virtual Contest</h2>
+        <div class="flex gap-5 flex-wrap">
+          <a
+            href="/competitions/virtualcontest"
+            class="bg-blue-400 hover:bg-blue-500 w-fit text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md flex gap-2 items-center"
+          >
+            Virtual Contest
+          </a>
+          <a
+            href="/feedback"
+            class="bg-green-400 hover:bg-green-500 w-fit text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md flex gap-2 items-center"
+          >
+            Feedback Form
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <hr class="border-t-2 border-gray-500 md:my-32 my-20" />
+
+  {% include "competitions/avaliable-contests.html" %}
+</div>
+{% endblock %}

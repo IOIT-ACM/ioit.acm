@@ -1,0 +1,124 @@
+<section class="grid md:gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-20">
+  <a href="/competitions/bit-by-bit" class="md:p-6 p-0 py-6 group overflow-hidden hover:no-underline">
+    <div>
+      <div class="flex justify-between items-center mb-4">
+        <h3
+          class="text-2xl font-semibold text-blue-600 group-hover:text-blue-900 transition-all"
+        >
+          Bit by Bit
+        </h3>
+        <i
+          class="fas fa-arrow-right text-blue-600 group-hover:-rotate-45 group-hover:scale-110 transition-all"
+        ></i>
+      </div>
+      <div class="overflow-hidden rounded-xl mb-6 border">
+        <img
+          src="{{ url_for('static', filename='img/competitions/banner/bbb.jpeg') }}"
+          alt="Bit by Bit"
+          class="w-full md:h-64 h-40 object-cover transition-transform duration-300 group-hover:scale-110"
+        />
+      </div>
+      <p class="text-gray-600 md:text-lg text-sm">
+        <strong>Bit by Bit</strong> is the traditional ACM IOIT competition conducted every month. It features challenging algorithmic problems with exciting prizes for the top performers. This is your chance to compete with the best minds in competitive programming.
+      </p>
+    </div>
+  </a>
+
+  <a
+    href="/competitions/bit-by-query"
+    class="md:p-6 p-0 py-6 group overflow-hidden hover:no-underline"
+  >
+    <div>
+      <div class="flex justify-between items-center mb-4">
+        <h3
+          class="text-2xl font-semibold text-blue-600 group-hover:text-blue-900 transition-all"
+        >
+          Bit by Query
+        </h3>
+        <i
+          class="fas fa-arrow-right text-blue-600 group-hover:-rotate-45 group-hover:scale-110 transition-all"
+        ></i>
+      </div>
+      <div class="overflow-hidden rounded-xl mb-6 border">
+        <img
+          src="{{ url_for('static', filename='img/competitions/banner/sql.jpeg') }}"
+          alt="Awareness Drive"
+          class="w-full md:h-64 h-40 object-cover transition-transform duration-300 group-hover:scale-110"
+        />
+      </div>
+      <p class="text-gray-600 md:text-lg text-sm">
+        <strong>Bit by Query</strong> is a DBMS-themed contest focusing on SQL challenges. Test your skills in crafting queries, optimizing database operations, and solving real-world problems through SQL.
+      </p>
+    </div>
+  </a>
+
+  <a href="/competitions/ml-frontiers" class="md:p-6 p-0 py-6 group overflow-hidden hover:no-underline">
+    <div>
+      <div class="flex justify-between items-center mb-4">
+        <h3
+          class="text-2xl font-semibold text-blue-600 group-hover:text-blue-900 transition-all"
+        >
+          ML Frontiers
+        </h3>
+        <i
+          class="fas fa-arrow-right text-blue-600 group-hover:-rotate-45 group-hover:scale-110 transition-all"
+        ></i>
+      </div>
+      <div class="overflow-hidden rounded-xl mb-6 border">
+        <img
+          src="{{ url_for('static', filename='img/competitions/banner/ml.jpeg') }}"
+          alt="Speaker Sessions"
+          class="w-full md:h-64 h-40 object-cover transition-transform duration-300 group-hover:scale-110"
+        />
+      </div>
+      <p class="text-gray-600 md:text-lg text-sm"><strong>ML Frontiers</strong> is an exciting competition for machine learning enthusiasts. Build, test, and deploy cutting-edge models to compete against others. Solve complex challenges and showcase your skills in predictive analytics.</p>
+    </div>
+  </a>
+</section>
+
+
+<section class="mb-12">
+  <h2 class="text-2xl font-semibold mb-6 text-gray-800 sm:text-3xl">Leaderboards</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="bg-blue-50 border-2 border-blue-200 p-6 rounded-xl shadow-md hover:shadow-xl transition-transform transform">
+      <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Global Leaderboard</h3>
+      <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-4">
+        Check out the global leaderboard for all the competitions. See where you stand among the top performers from around the world.
+      </p>
+      <a
+        href="/leaderboard"
+        class="inline-block text-white bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+      >
+        View
+      </a>
+    </div>
+    
+    <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-transform transform">
+      <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Virtual Contest | Bit by Query</h3>
+      <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-4">
+        Leaderboard for the virtual contest Bit by Query. The contest will be live from 23rd Jan 2025.
+      </p>
+      <button
+        disabled
+        class="inline-block text-white bg-blue-300 px-4 py-2 rounded-lg transition cursor-not-allowed opacity-60"
+      >
+        Coming Soon..
+      </button>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="my-20">
+  <h2 class="text-2xl font-semibold mb-6 text-gray-800 sm:text-3xl">Coming Soon</h2>
+  <div>
+    <h3 class="text-lg sm:text-xl font-semibold mb-2">
+      Future Events & Competitions
+    </h3>
+    <p class="text-sm sm:text-base leading-relaxed">
+      Stay tuned for more exciting events and competitions. We have a lot in store!
+    </p>
+  </div>
+</section>
+

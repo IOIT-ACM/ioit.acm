@@ -9,6 +9,15 @@ projects_data = [
         "deployment_link": "https://www.ioittenet.com/",
     },
     {
+        "name": "Heads up (Mobile game)",
+        "maintainer": "Aditya Godse",
+        "description": "Heads Up ACM is a mobile word-guessing game inspired by Ellen DeGeneres popular show. Players hold their phone to their forehead, displaying a word on the screen. Friends then provide clues (hints, acting, sounds) to help them guess the word before time runs out.",
+        "techstack": "Flutter",
+        "image_url": "/static/img/projects/headsup.jpeg",
+        "repository_link": "https://github.com/adimail/headsup",
+        "deployment_link": "",
+    },
+    {
         "name": "IOIT MUN",
         "maintainer": "IOIT MUN Team",
         "description": "IOIT MUN is an academic simulation of the United Nations, providing participants with a platform to engage in diplomacy, discuss global issues, and develop public speaking and negotiation skills.",

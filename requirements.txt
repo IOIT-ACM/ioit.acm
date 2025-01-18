@@ -2,3 +2,5 @@ Flask
 Gunicorn
 requests
 python-dotenv
+Flask-SQLAlchemy
+flask-login

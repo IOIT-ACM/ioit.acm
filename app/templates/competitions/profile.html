@@ -1,0 +1,357 @@
+{% extends "competitions/base.html" %} {% block title %}Profile{% endblock %} {%
+block content %}
+<div class="flex justify-center items-center">
+  <div class="w-full p-8 text-center max-w-lg mx-auto">
+    <div id="profile-view" class="mb-10">
+      <img src="https://robohash.org/{{ user.username }}?size=200x200" alt="Profile Picture"
+        class="mx-auto rounded-full h-40 w-40 border border-black bg-gray-500" />
+      <h3 class="text-4xl font-bold text-center mt-6 text-gray-800">
+        {{ user.name }}
+      </h3>
+      <p>{{ user.username }}</p>
+      <div class="text-lg space-y-4 text-left mt-6">
+        <p><strong>Branch:</strong> {{ user.branch }}</p>
+        <p>
+          <strong>ACM ID:</strong> {{ user.acm_id if user.acm_id else 'Not
+          Available' }}
+        </p>
+        <p><strong>Mobile No:</strong> {{ user.mobile_no }}</p>
+        <p>
+          <strong>Competitions Completed:</strong> {{
+          user.completed_competitions }}
+        </p>
+
+        <br>
+        {% if user.acm_id %}{% else %}
+        <p class="text-sm italic">ACM ID Not Available. Check your <a href="/membership/status">ACM ID status</a> or <a
+            href="/join">join here</a>.</p>
+        {% endif %}
+
+      </div>
+      <hr class="border-t-2 border-gray-500 my-6" />
+      <div class="text-center mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <button
+          class="py-3 bg-green-600 text-white font-medium rounded hover:bg-green-700 transition hover:no-underline">
+          <a href="{{ url_for('competitions.competitions') }}" class="block">Competitions</a>
+        </button>
+
+        <button class="py-3 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition hover:no-underline"
+          onclick="confirmLogout(event)">
+          <a href="{{ url_for('auth.signout') }}" class="block">Logout</a>
+        </button>
+
+        <button id="edit-profile-btn"
+          class="py-3 bg-gray-500 text-white font-medium rounded hover:bg-gray-600 transition hover:no-underline">
+          Edit Profile
+        </button>
+      </div>
+
+      <h2 class="mt-20 mb-10">Your progress</h2>
+
+      <div class="relative">
+        <canvas id="ScoreProgressChart" class="w-full h-full p-0 m-0"></canvas>
+        <div
+          class="absolute inset-0 bg-white bg-opacity-50 flex justify-center items-center text-gray-500 text-xl font-semibold">
+          No data available
+        </div>
+      </div>
+
+      <div class="relative mt-10">
+        <canvas id="participationChart" class="w-full h-full p-0 m-0"></canvas>
+        <div
+          class="absolute inset-0 bg-white bg-opacity-50 flex justify-center items-center text-gray-500 text-xl font-semibold">
+          No data available
+        </div>
+      </div>
+
+    </div>
+
+    <form id="edit-profile-form" class="hidden text-left" method="POST" action="{{ url_for('auth.update_profile') }}">
+      <h3 class="text-2xl font-bold mb-6">Edit Profile</h3>
+      <input type="hidden" name="username" value="{{ user.username }}" />
+
+      <div class="mb-4">
+        <label for="name" class="block font-medium text-gray-700">Full Name</label>
+        <input type="text" id="name" name="name" value="{{ user.name }}"
+          class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
+          required />
+      </div>
+
+      <div class="mb-4">
+        <label for="branch" class="block font-medium text-gray-700">Branch</label>
+        <select id="branch" name="branch"
+          class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
+          required>
+          <option value="CS" {% if user.branch=="CS" %}selected{% endif %}>CS</option>
+          <option value="IT" {% if user.branch=="IT" %}selected{% endif %}>IT</option>
+          <option value="AI&DS" {% if user.branch=="AI&DS" %}selected{% endif %}>AI&DS</option>
+          <option value="Instru" {% if user.branch=="Instru" %}selected{% endif %}>Instru</option>
+          <option value="Electrical" {% if user.branch=="Electrical" %}selected{% endif %}>Electrical</option>
+          <option value="Instrumentation" {% if user.branch=="Instrumentation" %}selected{% endif %}>Instrumentation
+          </option>
+        </select>
+      </div>
+
+
+      <div class="mb-4">
+        <label for="acm_id" class="block font-medium text-gray-700">ACM ID</label>
+        <input type="text" id="acm_id" name="acm_id" value="{{ user.acm_id }}"
+          class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" />
+      </div>
+
+      <div class="mb-4">
+        <label for="mobile_no" class="block font-medium text-gray-700">Mobile No</label>
+        <input type="text" id="mobile_no" name="mobile_no" value="{{ user.mobile_no }}"
+          class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
+          required />
+      </div>
+
+      <div class="text-right space-x-4">
+        <button type="button" id="cancel-edit-btn"
+          class="px-6 py-2 bg-gray-500 text-white font-medium rounded hover:bg-gray-600 transition">
+          Cancel
+        </button>
+        <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition">
+          Save Changes
+        </button>
+      </div>
+    </form>
+
+    <form id="change-password-form" class="hidden text-left mt-10" method="POST"
+      action="{{ url_for('auth.change_password') }}">
+      <h3 class="text-2xl font-bold mb-6">Change Password</h3>
+      <div class="mb-4">
+        <label for="current_password" class="block font-medium text-gray-700">Current Password</label>
+        <div class="relative">
+          <input type="password" id="current_password" name="current_password"
+            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
+            required />
+          <button type="button" class="absolute inset-y-0 right-0 px-3 py-2 text-gray-600"
+            onclick="togglePasswordVisibility('current_password')">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label for="new_password" class="block font-medium text-gray-700">New Password</label>
+        <div class="relative">
+          <input type="password" id="new_password" name="new_password"
+            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
+            required />
+          <button type="button" class="absolute inset-y-0 right-0 px-3 py-2 text-gray-600"
+            onclick="togglePasswordVisibility('new_password')">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label for="confirm_new_password" class="block font-medium text-gray-700">Confirm New Password</label>
+        <div class="relative">
+          <input type="password" id="confirm_new_password" name="confirm_new_password"
+            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
+            required />
+          <button type="button" class="absolute inset-y-0 right-0 px-3 py-2 text-gray-600"
+            onclick="togglePasswordVisibility('confirm_new_password')">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+      </div>
+      <div class="text-right">
+        <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition">
+          Update Password
+        </button>
+      </div>
+    </form>
+
+    <form id="delete-profile-form" class="hidden text-left mt-10" method="POST"
+      action="{{ url_for('auth.delete_profile') }}">
+      <h3 class="text-2xl font-bold mb-6">Delete Profile</h3>
+      <div class="mb-4">
+        <label for="delete_password" class="block font-medium text-gray-700">Password</label>
+        <div class="relative">
+          <input type="password" id="delete_password" name="delete_password"
+            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
+            required />
+          <button type="button" class="absolute inset-y-0 right-0 px-3 py-2 text-gray-600"
+            onclick="togglePasswordVisibility('delete_password')">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label for="delete_confirmation" class="block font-medium text-gray-700">Type
+          `<code>rm -rf {{ user.username }}</code>` to confirm</label>
+        <input type="text" id="delete_confirmation" name="delete_confirmation"
+          class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
+          required />
+      </div>
+      <div class="text-right">
+        <button type="submit" class="px-6 py-2 bg-red-500 text-white font-medium rounded hover:bg-red-700 transition">
+          Delete Profile
+        </button>
+      </div>
+    </form>
+
+    <div id="delete-profile-btn-container" class="hidden text-center mt-8">
+      <hr class="border-t-2 border-gray-500 my-6" />
+      <button id="delete-profile-btn"
+        class="px-6 py-2 bg-red-500 text-white font-medium rounded hover:bg-red-700 transition">
+        Delete Profile
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const scoreChart = document.getElementById('ScoreProgressChart');
+    const participationChart = document.getElementById('participationChart');
+
+    const createScoreChart = () => {
+      const ctx = scoreChart.getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+          datasets: [{
+            label: 'Score Progress',
+            data: [300, 250, 950, 700, 2000],
+            borderColor: 'orange',
+            tension: 0.1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    };
+
+    const createParticipationChart = () => {
+      const ctx = participationChart.getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Jan-Mar', 'Apr-Jun', 'Jul-Sep', 'Oct-Dec'],
+          datasets: [
+            {
+              label: 'Events',
+              data: [4, 6, 5, 3],
+              backgroundColor: 'rgba(255, 165, 0, 0.7)',
+              borderColor: 'rgb(255, 165, 0)',
+              borderWidth: 1
+            },
+            {
+              label: 'Competitions',
+              data: [2, 3, 4, 2],
+              backgroundColor: 'rgba(53, 162, 235, 0.7)',
+              borderColor: 'rgb(53, 162, 235)',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              stacked: true,
+              title: {
+                display: true,
+                text: 'Quarter'
+              }
+            },
+            y: {
+              stacked: true,
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Number of Participations'
+              },
+              ticks: {
+                stepSize: 1
+              }
+            }
+          },
+          plugins: {
+            title: {
+              display: true,
+              text: 'Participation in Events & Competitions'
+            }
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (entry.target.id === 'ScoreProgressChart') {
+            createScoreChart();
+          } else if (entry.target.id === 'participationChart') {
+            createParticipationChart();
+          }
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(scoreChart);
+    observer.observe(participationChart);
+  });
+</script>
+
+<script>
+  document
+    .getElementById("edit-profile-btn")
+    .addEventListener("click", function () {
+      document.getElementById("profile-view").classList.add("hidden");
+      document.getElementById("edit-profile-form").classList.remove("hidden");
+      document
+        .getElementById("change-password-form")
+        .classList.remove("hidden");
+      document
+        .getElementById("delete-profile-btn-container")
+        .classList.remove("hidden");
+    });
+
+  document
+    .getElementById("cancel-edit-btn")
+    .addEventListener("click", function () {
+      document.getElementById("profile-view").classList.remove("hidden");
+      document.getElementById("edit-profile-form").classList.add("hidden");
+      document.getElementById("change-password-form").classList.add("hidden");
+      document
+        .getElementById("delete-profile-btn-container")
+        .classList.add("hidden");
+      document.getElementById("delete-profile-form").classList.add("hidden");
+    });
+
+  document
+    .getElementById("delete-profile-btn")
+    .addEventListener("click", function () {
+      document.getElementById("delete-profile-form").classList.remove("hidden");
+    });
+
+  function togglePasswordVisibility(fieldId) {
+    const field = document.getElementById(fieldId);
+    const type =
+      field.getAttribute("type") === "password" ? "text" : "password";
+    field.setAttribute("type", type);
+  }
+
+  function confirmLogout(event) {
+    event.preventDefault();
+    const confirmation = confirm("Are you sure you want to log out?");
+    if (confirmation) {
+      window.location.href = '/signout';
+    }
+  }
+</script>
+{% endblock %}

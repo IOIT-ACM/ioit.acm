@@ -1,8 +1,40 @@
 from flask import Flask, render_template
+from flask_login import LoginManager, current_user
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from app.db import DatabaseConfig, db
+from app.models import User
+
+database_config = DatabaseConfig()
+login_manager = LoginManager()
+
+limiter = Limiter(
+    key_func=get_remote_address,
+    default_limits=["200 per hour"],
+    storage_uri="memory://",
+)
 
 
 def create_app():
     app = Flask(__name__)
+    app.config["SECRET_KEY"] = "nqMt+o1BxO2Wkaj4ogmFtg=="
+    app.config["SQLALCHEMY_BINDS"] = database_config.get_binds()
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    db.init_app(app)
+    login_manager.init_app(app)
+    limiter.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+
+    @app.context_processor
+    def inject_user():
+        return {"current_user": current_user}
+
+    with app.app_context():
+        db.create_all(bind=None)
 
     # Register blueprints
     from app.blueprints.home import home_bp
@@ -15,7 +47,23 @@ def create_app():
     from app.blueprints.about import about_bp
     from app.blueprints.projects import projects_bp
     from app.blueprints.opensource import opensource_bp
+    from app.blueprints.competitions.competition import competitions_bp
+    from app.blueprints.competitions.auth import auth_bp
 
+    limiter.limit("200 per hour")(home_bp)
+    limiter.limit("200 per hour")(team_bp)
+    limiter.limit("200 per hour")(membership_bp)
+    limiter.limit("200 per hour")(join_bp)
+    limiter.limit("200 per hour")(feedback_bp)
+    limiter.limit("200 per hour")(gallery_bp)
+    limiter.limit("200 per hour")(events_bp)
+    limiter.limit("200 per hour")(about_bp)
+    limiter.limit("200 per hour")(projects_bp)
+    limiter.limit("200 per hour")(opensource_bp)
+    limiter.limit("200 per hour")(competitions_bp)
+    limiter.limit("100 per hour")(auth_bp)
+
+    # Register blueprints
     app.register_blueprint(home_bp)
     app.register_blueprint(team_bp)
     app.register_blueprint(membership_bp)
@@ -26,6 +74,8 @@ def create_app():
     app.register_blueprint(about_bp)
     app.register_blueprint(projects_bp)
     app.register_blueprint(opensource_bp)
+    app.register_blueprint(competitions_bp)
+    app.register_blueprint(auth_bp)
 
     # Error Handlers
     @app.errorhandler(404)
@@ -43,5 +93,9 @@ def create_app():
     @app.errorhandler(400)
     def bad_request(_):
         return render_template("400.html"), 400
+
+    @app.errorhandler(429)
+    def rate_limit_exceeded(e):
+        return render_template("429.html", error=e.description), 429
 
     return app

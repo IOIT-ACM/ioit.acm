@@ -1,0 +1,188 @@
+{% extends "competitions/base.html" %} {% block title %}Signup{% endblock %} {%
+block content %}
+<div class="flex justify-center items-center bg-gray-100">
+  <div class="w-full">
+    <h3 class="text-2xl font-bold text-center mb-20">Welcome to IOIT ACM</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="w-full flex justify-center mt-10 md:mt-0">
+        <div class="w-1/2 md:mt-20 h-fit sticky top-32">
+          <div
+            class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl animate-rotate"
+          ></div>
+          <div
+            class="aspect-square overflow-hidden bg-white w-full h-auto transform rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400"
+          >
+            <img
+              class="-rotate-45 z-50"
+              src="{{ url_for('static', filename='og-image.png') }}"
+              alt="about-image"
+            />
+          </div>
+        </div>
+      </div>
+
+      <form
+        class="p-5 md:p-0"
+        method="POST"
+        action="{{ url_for('auth.signup') }}"
+      >
+        <p class="mb-5">Create an account in IOIT ACM</p>
+        <hr class="border-t-2 border-gray-500 my-6 w-20" />
+        <div class="mb-4">
+          <label for="firstName" class="block text-gray-700 font-semibold mb-2"
+            >First Name</label
+          >
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your first name"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="lastName" class="block text-gray-700 font-semibold mb-2"
+            >Last Name</label
+          >
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your last name"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="username" class="block text-gray-700 font-semibold mb-2"
+            >Username</label
+          >
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Create a username"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="branch" class="block text-gray-700 font-semibold mb-2"
+            >Branch</label
+          >
+          <select
+            id="branch"
+            name="branch"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          >
+            <option value="CS">CS</option>
+            <option value="IT">IT</option>
+            <option value="AI&DS">AI&DS</option>
+            <option value="Instru">Instru</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Instrumentation">Instrumentation</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label for="acmId" class="block text-gray-700 font-semibold mb-2"
+            >ACM ID (Optional)</label
+          >
+          <input
+            type="text"
+            id="acmId"
+            name="acmId"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your ACM ID (if available)"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="mobileNo" class="block text-gray-700 font-semibold mb-2"
+            >Mobile No</label
+          >
+          <input
+            type="tel"
+            id="mobileNo"
+            name="mobileNo"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your mobile number"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="password1" class="block text-gray-700 font-semibold mb-2"
+            >Password</label
+          >
+          <div class="relative">
+            <input
+              type="password"
+              id="password1"
+              name="password1"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter password"
+              required
+            />
+            <button
+              type="button"
+              class="absolute inset-y-0 right-0 px-3 py-2 text-gray-600"
+              onclick="togglePasswordVisibility('password1')"
+            >
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div class="mb-6">
+          <label
+            for="confirmPassword"
+            class="block text-gray-700 font-semibold mb-2"
+            >Confirm Password</label
+          >
+          <div class="relative">
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Confirm password"
+              required
+            />
+            <button
+              type="button"
+              class="absolute inset-y-0 right-0 px-3 py-2 text-gray-600"
+              onclick="togglePasswordVisibility('confirmPassword')"
+            >
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300"
+        >
+          Sign up
+        </button>
+        <hr class="my-6" />
+        <p class="text-center text-gray-600">
+          Existing user?
+          <a
+            href="{{ url_for('auth.signin') }}"
+            class="text-blue-500 hover:underline"
+            >Sign in</a
+          >
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function togglePasswordVisibility(fieldId) {
+    const field = document.getElementById(fieldId);
+    const type =
+      field.getAttribute("type") === "password" ? "text" : "password";
+    field.setAttribute("type", type);
+  }
+</script>
+{% endblock %}

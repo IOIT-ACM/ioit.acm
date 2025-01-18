@@ -1,0 +1,35 @@
+{% extends "competitions/base.html" %} {% block title %}Global Leaderboard{%
+endblock %} {% block content %}
+<div class="mx-auto">
+  <div class="overflow-x-auto">
+    <ul class="space-y-4 px-4 py-8">
+      {% for user in leaderboard %}
+      <li
+        class="flex md:flex-row gap-5 md:gap-0 flex-col md:items-center md:justify-between p-4 border rounded-lg shadow-md bg-white hover:bg-gray-50 transition duration-300"
+      >
+        <div class="flex items-center gap-5">
+          <div class="text-xl font-bold text-gray-800">{{ loop.index }}</div>
+          <img
+            src="https://robohash.org/{{ user.username }}.png"
+            alt="{{ user.username }} profile picture"
+            class="w-12 h-12 rounded-full border border-gray-300"
+          />
+          <div>
+            <span class="text-lg font-semibold text-gray-800"
+              >{{ user.name }} ({{user.branch}})</span
+            >
+            <div class="text-sm text-gray-500">{{ user.username }}</div>
+          </div>
+        </div>
+
+        <div class="space-y-2 md:text-right">
+          <div class="text-xl md:text-2xl font-bold text-green-600">
+            {{ user.score }}
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

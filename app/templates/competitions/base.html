@@ -1,18 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}IOIT ACM{% endblock %}</title>
+    <title>{% block title %}Competitions{% endblock %}</title>
 
     <!-- SEO Metadata -->
     <meta
       name="description"
-      content="{% block description %}IOIT ACM Student Chapter - Innovating technology education and research. Join us to explore events, workshops, and networking opportunities in the world of computing.{% endblock %}"
+      content="Participate in various competitions and challenges organized by the IOIT ACM Student Chapter. Test your skills and win exciting prizes."
     />
     <meta
       name="keywords"
-      content="ACM, computing, technology, research, student chapter, events, workshops, education, networking"
+      content="IOIT ACM, ACM, competitions, challenges, hackathons, coding, programming, contests, prizes"
     />
     <meta name="author" content="IOIT ACM Student Chapter" />
     <meta name="robots" content="index, follow" />
@@ -93,9 +93,9 @@
       function gtag() {
         dataLayer.push(arguments);
       }
-      gtag('js', new Date());
+      gtag("js", new Date());
 
-      gtag('config', 'G-Y6Z6G51Z27');
+      gtag("config", "G-Y6Z6G51Z27");
     </script>
 
     <!-- Stylesheets -->
@@ -132,172 +132,201 @@
     <!-- Additional head content can be injected here -->
     {% endblock %}
   </head>
+
   <body class="bg-gray-100 text-gray-800">
-    <!-- Navbar -->
-    <nav class="fixed top-0 left-0 w-full bg-white shadow-lg z-[9999]">
-      <div class="flex items-center justify-between md:px-6 md:py-3 px-4 py-2">
-        <div class="flex items-center w-auto">
-          <img
-            src="{{ url_for('static', filename='img/assets/acm.png') }}"
-            alt="IOIT ACM Logo"
-            class="w-auto h-10 mr-3"
-          />
-          <a
-            href="/"
-            class="md:text-2xl text-xl font-bold text-blue-600 font-sans whitespace-nowrap"
-            >IOIT ACM</a
-          >
-        </div>
-        <button
-          class="block sm:hidden text-blue-600 focus:outline-none"
-          onclick="toggleNav()"
-          aria-label="Toggle navigation"
-        >
-          <span class="sr-only">Toggle navigation</span>
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            ></path>
-          </svg>
-        </button>
-        <ul
-          class="hidden sm:flex space-x-8 font-medium overflow-x-auto no-scroll-bar"
-        >
-          {% set menu_items = [ {'link': '/', 'text': 'Home'}, {'link': '/team',
-          'text': 'Team'}, {'link': '/membership', 'text': 'Membership'},
-          {'link': '/events', 'text': 'Events'}, {'link': '/opensource', 'text':
-          'Open Source'}, {'link': '/projects', 'text': 'Projects'}, {'link':
-          '/gallery', 'text': 'Gallery'}, {'link': '/about', 'text': 'About'} ]
-          %} {% for item in menu_items %}
-          <li>
-            <a
-              href="{{ item.link }}"
-              class="truncate text-gray-700 hover:text-blue-600 transition relative {{ 'text-blue-500 underline' if request.path == item.link else '' }}"
-            >
-              {{ item.text }}
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-      <!-- Mobile Menu -->
-      <div
-        id="mobile-nav"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center md:hidden hidden"
-        onclick="closeNav(event)"
+    <nav
+      class="fixed top-4 left-1/2 -translate-x-1/2 w-11/12 max-w-7xl bg-gradient-to-r from-blue-800 to-blue-600 border border-white rounded-lg shadow-lg px-4 md:py-3 py-2 flex items-center justify-between z-10"
+    >
+      <button
+        onclick="toggleNav()"
+        class="text-white hover:bg-blue-500 p-2 rounded-lg transition-colors"
       >
-        <div
-          class="relative bg-white w-4/5 max-w-md rounded-lg shadow-lg"
-          onclick="event.stopPropagation()"
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <span
+        class="text-white font-medium text-lg md:text-3xl"
+        id="pageTitle"
+      ></span>
+
+      {% if current_user.is_authenticated %}
+      <a
+        href="/profile"
+        class="relative w-8 h-8 bg-pink-200 rounded-full flex items-center justify-center overflow-hidden hover:no-underline group"
+      >
+        <img
+          src="https://robohash.org/{{ current_user.username }}?size=120x120"
+          alt="Profile Image"
+          class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 z-50 opacity-0 group-hover:opacity-100"
+        />
+        <span class="text-gray-700 font-bold z-10 text-lg">
+          {{ current_user.name[0].capitalize() }}
+        </span>
+      </a>
+      {% else %}
+      <a href="{{ url_for('auth.signin') }}" class="text-white hover:underline">
+        Login
+      </a>
+      {% endif %}
+    </nav>
+
+    <!-- Side Menu -->
+    <div
+      id="sideMenuOverlay"
+      class="fixed inset-0 bg-black bg-opacity-50 transition-opacity opacity-0 pointer-events-none z-50"
+    >
+      <div
+        id="sideMenu"
+        class="fixed inset-y-0 left-0 w-72 max-w-3xl bg-white transform transition-transform -translate-x-full"
+      >
+        <div class="p-4 flex justify-between items-center border-b">
+          <h2 class="text-xl font-semibold">Menu</h2>
           <button
-            class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 focus:outline-none"
             onclick="toggleNav()"
+            class="text-gray-500 hover:text-gray-700"
           >
             <svg
-              class="w-6 h-6"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
-          <nav class="flex flex-col items-center text-center space-y-6 p-8">
-            {% set mobile_menu_items = [ {'link': '/', 'text': 'Home'}, {'link':
-            '/team', 'text': 'Team'}, {'link': '/membership', 'text':
-            'Membership'}, {'link': '/feedback', 'text': 'Feedback Form'},
-            {'link': '/opensource', 'text': 'Open Source'}, {'link':
-            '/projects', 'text': 'Projects'}, {'link': '/membership/status',
-            'text': 'Membership Status'}, {'link': '/events', 'text': 'Events'},
-            {'link': '/gallery', 'text': 'Gallery'}, {'link': '/about', 'text':
-            'About'} ] %} {% for item in mobile_menu_items %}
+        </div>
+
+        <nav class="p-4 space-y-4">
+          <div>
+            {% for item in [{'link': '/', 'text': 'IOIT ACM Home'}, {'link':
+            '/competitions', 'text': 'Competitions'}, {'link': '/leaderboard',
+            'text': 'Leaderboard'}] %}
             <a
               href="{{ item.link }}"
-              class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == item.link else '' }}"
-              onclick="closeNav()"
+              class="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors"
+              onclick="toggleNav()"
             >
               {{ item.text }}
             </a>
             {% endfor %}
-          </nav>
-        </div>
-      </div>
-    </nav>
+          </div>
 
-    <!-- mobile menu -->
-    <div
-      id="mobile-nav"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center md:hidden hidden"
-      onclick="closenav(event)"
-    >
-      <div
-        class="relative bg-white w-4/5 max-w-md rounded-lg shadow-lg"
-        onclick="event.stoppropagation()"
-      >
-        <button
-          class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 focus:outline-none"
-          onclick="togglenav()"
-        >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentcolor"
-            viewbox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="m6 18l18 6m6 6l12 12"
-            ></path>
-          </svg>
-        </button>
-        <nav class="flex flex-col items-center text-center space-y-6 p-8">
-          {% set mobile_menu_items = [ {'link': '/', 'text': 'home'}, {'link':
-          '/team', 'text': 'team'}, {'link': '/membership', 'text':
-          'membership'}, {'link': '/feedback', 'text': 'feedback form'},
-          {'link': '/opensource', 'text': 'open source'}, {'link': '/projects',
-          'text': 'projects'}, {'link': '/membership/status', 'text':
-          'membership status'}, {'link': '/events', 'text': 'events'}, {'link':
-          '/gallery', 'text': 'gallery'}, {'link': '/about', 'text': 'about'} ]
-          %} {% for item in mobile_menu_items %}
-          <a
-            href="{{ item.link }}"
-            class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == item.link else '' }}"
-            onclick="closenav()"
-          >
-            {{ item.text }}
-          </a>
-          {% endfor %}
+          <hr class="border-gray-300 my-4" />
+
+          <div>
+            {% for item in [{'link': '/competitions/bit-by-bit', 'text': 'Bit by
+            Bit'}, {'link': '/competitions/bit-by-query', 'text': 'Bit by
+            Query'}, {'link': '/competitions/ml-frontiers', 'text': 'ML
+            Frontiers'}] %}
+            <a
+              href="{{ item.link }}"
+              class="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors"
+              onclick="toggleNav()"
+            >
+              {{ item.text }}
+            </a>
+            {% endfor %}
+          </div>
+
+          <hr class="border-gray-300 my-4" />
+
+          <div>
+            {% if current_user.is_authenticated %}
+            {% if current_user.is_authenticated %}
+              <img src="https://robohash.org/{{ current_user.username }}" alt="Profile Picture"
+                  class="mx-auto rounded-full w-1/2 border border-black bg-gray-500" />
+            {% endif %}
+            <p class="text-center mt-5">{{current_user.name}}</p>
+            <a
+              href="/profile"
+              class="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors"
+              onclick="toggleNav()"
+            >
+              Profile
+            </a>
+            <a
+              href="{{ url_for('auth.signout') }}"
+              class="block px-4 py-2 text-red-500 hover:bg-blue-50 rounded-lg transition-colors"
+              onclick="toggleNav()"
+            >
+              Logout
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('auth.signin') }}"
+              class="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors"
+              onclick="toggleNav()"
+            >
+              Sign In
+            </a>
+            <a
+              href="{{ url_for('auth.signup') }}"
+              class="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors"
+              onclick="toggleNav()"
+            >
+              Sign Up
+            </a>
+            {% endif %}
+          </div>
         </nav>
       </div>
     </div>
 
     <!-- Content -->
-    <main class="m-0 min-h-screen">
-      {% block content %}
+    <main class="m-0 min-h-screen pt-20 md:pt-32 max-w-7xl mx-auto">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="flex justify-center items-center mb-4">
+        <ul class="w-full max-w-md">
+          {% for category, message in messages %}
+          <li
+            class="mb-2 flash-message p-4 text-black text-center font-semibold rounded-lg {% if category == 'success' %} bg-green-500 {% elif category == 'error' %} bg-red-400 {% else %} bg-gray-500 {% endif %}"
+          >
+            {{ message }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %} {% endwith %} {% block content %}
+
       <!-- Default content will be replaced here -->
       {% endblock %}
     </main>
 
     <!-- Footer -->
+    <div
+      class="bg-gradient-to-r from-blue-800 to-blue-600 py-8 px-6 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg mt-16"
+    >
+      <h2 class="text-2xl md:text-4xl font-bold mb-6 md:mb-0">
+        Become a part of such awesomeness
+      </h2>
+      <a
+        href="/join"
+        class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
+      >
+        Join IOIT ACM
+      </a>
+    </div>
     <footer class="bg-gray-900 text-gray-300">
       <!-- Main Content -->
       <div
@@ -436,21 +465,55 @@
     </footer>
 
     <script>
+      function setPageTitle() {
+        const path = window.location.pathname;
+
+        const titles =
+          {
+            "/": "Home",
+            "/competitions": "Competitions",
+            "/competitions/virtualcontest": "Virtual Contests",
+            "/competitions/bit-by-bit": "Bit by Bit",
+            "/competitions/bit-by-query": "Bit by Query",
+            "/competitions/ml-frontiers": "ML Frontiers",
+            "/leaderboard": "Global Leaderboard",
+            "/practice": "Practice",
+            "/challenges": "Challenges",
+            "/tutorials": "Tutorials",
+            "/profile": "Profile",
+            "/signup": "Create ACM Account",
+            "/signin": "Sign In",
+          }[path] || "Home";
+
+        document.getElementById("pageTitle").textContent = titles;
+      }
+
       function toggleNav() {
-        const nav = document.getElementById('mobile-nav');
-        if (nav.classList.contains('hidden')) {
-          nav.classList.remove('hidden');
+        const overlay = document.getElementById("sideMenuOverlay");
+        const menu = document.getElementById("sideMenu");
+
+        if (overlay.classList.contains("opacity-0")) {
+          overlay.classList.remove("opacity-0", "pointer-events-none");
+          menu.classList.remove("-translate-x-full");
         } else {
-          nav.classList.add('hidden');
+          overlay.classList.add("opacity-0", "pointer-events-none");
+          menu.classList.add("-translate-x-full");
         }
       }
 
-      function closeNav(event) {
-        const nav = document.getElementById('mobile-nav');
-        if (!event.target.closest('.relative')) {
-          nav.classList.add('hidden');
-        }
-      }
+      setPageTitle();
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const messages = document.querySelectorAll(".flash-message");
+        messages.forEach((message) => {
+          setTimeout(() => {
+            message.style.opacity = "0";
+            setTimeout(() => message.remove(), 700);
+          }, 5000);
+        });
+      });
     </script>
   </body>
 </html>
