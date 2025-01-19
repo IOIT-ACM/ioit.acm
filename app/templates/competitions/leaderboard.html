@@ -1,35 +1,197 @@
-{% extends "competitions/base.html" %} {% block title %}Global Leaderboard{%
-endblock %} {% block content %}
-<div class="mx-auto">
-  <div class="overflow-x-auto">
-    <ul class="space-y-4 px-4 py-8">
-      {% for user in leaderboard %}
-      <li
-        class="flex md:flex-row gap-5 md:gap-0 flex-col md:items-center md:justify-between p-4 border rounded-lg shadow-md bg-white hover:bg-gray-50 transition duration-300"
-      >
-        <div class="flex items-center gap-5">
-          <div class="text-xl font-bold text-gray-800">{{ loop.index }}</div>
-          <img
-            src="https://robohash.org/{{ user.username }}.png"
-            alt="{{ user.username }} profile picture"
-            class="w-12 h-12 rounded-full border border-gray-300"
-          />
-          <div>
-            <span class="text-lg font-semibold text-gray-800"
-              >{{ user.name }} ({{user.branch}})</span
-            >
-            <div class="text-sm text-gray-500">{{ user.username }}</div>
-          </div>
-        </div>
+{% extends "competitions/base.html" %}
+{% block title %}Global Leaderboard{% endblock %}
 
-        <div class="space-y-2 md:text-right">
-          <div class="text-xl md:text-2xl font-bold text-green-600">
-            {{ user.score }}
-          </div>
-        </div>
-      </li>
-      {% endfor %}
-    </ul>
+{% block content %}
+<div class="container mx-auto px-4 md:px-8 mt-10 mb-20">
+  <div class="flex flex-col md:flex-row justify-between md:items-center items-start mb-8 text-xs md:text-sm">
+    <div class="flex gap-4 items-center">
+      <label for="branchFilter" class="font-semibold text-gray-800">Filter by Branch:</label>
+      <select id="branchFilter" class="px-3 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+        <option value="">All Branches</option>
+        {% for user in leaderboard %}
+          <option value="{{ user.branch }}">{{ user.branch }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="flex gap-4 items-center mt-4 md:mt-0">
+      <label for="searchInput" class="font-semibold text-gray-800">Search:</label>
+      <input
+        id="searchInput"
+        type="text"
+        class="px-3 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        placeholder="Search"
+      />
+    </div>
   </div>
+
+  {% if leaderboard|length == 0 %}
+    <div class="text-center text-xs md:text-sm font-semibold text-gray-500 py-8">
+      The leaderboard is empty at the moment.
+    </div>
+  {% else %}
+    <div class="flex justify-end mb-4">
+      {% if leaderboard|length > 1 %}
+        <button id="toggleChartButton" class="flex items-center text-xs md:text-sm gap-2 px-4 py-2 bg-green-500 text-white rounded-md shadow-sm hover:bg-indigo-600">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h2a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V11a1 1 0 011-1zm8-6h2a1 1 0 011 1v16a1 1 0 01-1 1h-2a1 1 0 01-1-1V5a1 1 0 011-1zm8 10h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6a1 1 0 011-1z" />
+          </svg>
+          Toggle Chart
+        </button>
+      {% endif %}
+    </div>
+
+    <div id="chartContainer" class="hidden md:my-20 my-5 max-w-3xl mx-auto">
+      <canvas id="branchChart"></canvas>
+    </div>
+
+    <div id="leaderboardTableContainer">
+      <div class="overflow-x-auto w-full">
+        <table class="w-full table-auto border-collapse rounded-lg overflow-hidden shadow-md">
+          <thead class="mb-10">
+            <tr class="bg-gray-200 text-sm font-semibold text-gray-900 text-left">
+              <th class="px-6 py-3">Rank</th>
+              <th class="px-6 py-3">Name</th>
+              <th class="px-6 py-3">Branch</th>
+              <th class="px-6 py-3">Username</th>
+              <th class="px-6 py-3">Score</th>
+              <th class="px-6 py-3">Competitions</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardList">
+            {% for user in leaderboard %}
+              <tr 
+                class="transition-colors ease-in-out duration-150 
+                      {% if loop.index is even %}bg-gray-50 hover:bg-gray-100{% else %}bg-white hover:bg-gray-50{% endif %} 
+                      rounded-md"
+                data-branch="{{ user.branch }}" 
+                data-name="{{ user.name|lower }}" 
+                data-username="{{ user.username|lower }}"
+              >
+                <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ loop.index }}</td>
+                <td class="px-6 py-4 text-sm text-gray-900">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src="https://robohash.org/{{ user.username }}.png"
+                      alt="{{ user.username }} profile picture"
+                      class="w-10 h-10 rounded-full border border-gray-300 aspect-square"
+                    />
+                    <span class="truncate font-medium">{{ user.name }}</span>
+                  </div>
+                </td>
+                <td class="truncate px-6 py-4 text-sm text-gray-600">{{ user.branch }}</td>
+                <td class="truncate px-6 py-4 text-sm text-gray-600">{{ user.username }}</td>
+                <td class="truncate px-6 py-4 text-lg text-green-500 font-bold">{{ user.score }}</td>
+                <td class="truncate px-6 py-4 text-sm text-gray-600">{{ user.completed_competitions }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        
+      </div>
+
+      <div class="my-10 text-gray-800">
+        Total Users: {{ leaderboard|length }}
+      </div>
+    </div>
+  {% endif %}
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.getElementById('branchFilter').addEventListener('change', filterData);
+  document.getElementById('searchInput').addEventListener('input', filterData);
+
+  function filterData() {
+    var branchFilter = document.getElementById('branchFilter').value.toLowerCase();
+    var searchInput = document.getElementById('searchInput').value.toLowerCase();
+    var leaderboardList = document.getElementById('leaderboardList');
+    var items = leaderboardList.getElementsByTagName('tr');
+
+    Array.from(items).forEach(function (item) {
+      var branch = item.getAttribute('data-branch').toLowerCase();
+      var name = item.getAttribute('data-name');
+      var username = item.getAttribute('data-username');
+
+      var matchesBranch = branchFilter === '' || branch.includes(branchFilter);
+      var matchesSearch = name.includes(searchInput) || username.includes(searchInput);
+
+      if (matchesBranch && matchesSearch) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  const toggleChartButton = document.getElementById('toggleChartButton');
+  const chartContainer = document.getElementById('chartContainer');
+  let chartInstance = null;
+
+  if (toggleChartButton) {
+    toggleChartButton.addEventListener('click', function () {
+      chartContainer.classList.toggle('hidden');
+      if (!chartContainer.classList.contains('hidden')) {
+        renderChart();
+      } else {
+        if (chartInstance) {
+          chartInstance.destroy();
+          chartInstance = null;
+        }
+      }
+    });
+  }
+
+  function renderChart() {
+    const branches = [
+      {% for user in leaderboard %}
+        "{{ user.branch|safe }}"{% if not loop.last %}, {% endif %}
+      {% endfor %}
+    ];
+
+    const branchData = branches.reduce((acc, branchName) => {
+      acc[branchName] = (acc[branchName] || 0) + 1;
+      return acc;
+    }, {});
+
+    const labels = Object.keys(branchData);
+    const data = Object.values(branchData);
+
+    const colors = labels.map((_, index) => `hsla(${index * 360 / labels.length}, 70%, 50%, 0.6)`);
+
+    const ctx = document.getElementById('branchChart').getContext('2d');
+    chartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Number of Students',
+          data: data,
+          backgroundColor: colors,
+          borderColor: colors.map(color => color.replace('0.6', '1')),
+          borderWidth: 1,
+        }],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1,
+              callback: function(value) {
+                return Number.isInteger(value) ? value : '';
+              }
+            },
+          },
+        },
+      },
+    });
+  }
+</script>
 {% endblock %}

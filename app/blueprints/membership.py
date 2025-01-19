@@ -2,12 +2,8 @@ import requests, os
 import time
 import json
 from flask import Blueprint, render_template
-from dotenv import load_dotenv
 
 membership_bp = Blueprint("membership", __name__, template_folder="../templates")
-
-# Load environment variables from .env file
-load_dotenv()
 
 # Access environment variables
 API_URL = os.getenv("MEMBERSHIP_FORM_API_URL")

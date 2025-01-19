@@ -15,7 +15,6 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(256), nullable=False)
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     completed_competitions = db.Column(db.Integer, default=0)
-    prizes_won = db.Column(db.Integer, default=0)
 
 
 class GlobalLeaderboard(db.Model):

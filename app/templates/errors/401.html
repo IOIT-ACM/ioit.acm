@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block title %}404 Not Found{% endblock %} {% block
+content %}
+<div class="flex mx-auto p-5 items-center justify-center min-h-screen max-w-5xl bg-gray-100">
+  <div class="text-center">
+    <h1 class="text-4xl font-bold text-red-600 mb-4">401 - Unauthorised</h1>
+    <p class="mb-6">The server could not verify that you are authorized to access the URL requested. You either supplied
+      the wrong credentials (e.g. a bad password), or your browser doesn't understand how to supply the credentials
+      required.</p>
+    <a href="/" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+      Go Back Home
+    </a>
+  </div>
+</div>
+{% endblock %}

@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 db = SQLAlchemy()
 
@@ -6,17 +7,20 @@ db = SQLAlchemy()
 class DatabaseConfig:
     def __init__(self):
         self.binds = {
-            "users": "sqlite:///instance/users.db",
-            "global_leaderboard": "sqlite:///instance/admin/leaderboard.db",
-            "questions": "sqlite:///instance/competitions/demo/questions.db",
+            "users": self.get_mysql_uri("users"),
+            "global_leaderboard": self.get_mysql_uri("global_leaderboard"),
         }
+
+    def get_mysql_uri(self, db_name):
+        """Construct the MySQL URI."""
+        db_host = os.getenv("DB_HOST", "localhost")
+        db_user = os.getenv("DB_USER", "root")
+        db_password = os.getenv("DB_PASSWORD", "")
+        db_name = os.getenv("DB_NAME", db_name)
+        return "mysql+pymysql://{}:{}@{}/{}".format(
+            db_user, db_password, db_host, db_name
+        )
 
     def get_binds(self):
         """Return the database binds dictionary."""
         return self.binds
-
-    def set_questions_db(self, competition_name):
-        """Dynamically set the questions database for a specific competition."""
-        self.binds["questions"] = (
-            "sqlite:///instance/competitions/{}/questions.db".format(competition_name)
-        )

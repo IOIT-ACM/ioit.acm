@@ -4,6 +4,10 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from app.db import DatabaseConfig, db
 from app.models import User
+from sqlalchemy.exc import ProgrammingError, SQLAlchemyError, OperationalError
+from dotenv import load_dotenv
+
+load_dotenv()
 
 database_config = DatabaseConfig()
 login_manager = LoginManager()
@@ -20,9 +24,16 @@ def create_app():
     app.config["SECRET_KEY"] = "nqMt+o1BxO2Wkaj4ogmFtg=="
     app.config["SQLALCHEMY_BINDS"] = database_config.get_binds()
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config['SESSION_COOKIE_HTTPONLY'] = True
+    app.config['SESSION_COOKIE_SECURE'] = True
+    app.config['SESSION_PERMANENT'] = False
+    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
     db.init_app(app)
+
     login_manager.init_app(app)
+    login_manager.login_view = "auth.signin"
+
     limiter.init_app(app)
 
     @login_manager.user_loader
@@ -78,21 +89,63 @@ def create_app():
     app.register_blueprint(auth_bp)
 
     # Error Handlers
+    @app.errorhandler(ProgrammingError)
+    def handle_programming_error(error):
+        return render_template(
+            "errors/sql_error.html", message="There was an issue with the database operation.",
+            details=str(error)
+        ), 500
+        
+    @app.errorhandler(ProgrammingError)
+    def handle_pending_rollback_error(error):
+        return render_template(
+            "errors/sql_error.html", 
+            message="A database error occurred, possibly due to a pending rollback.", 
+            details=str(error)
+        ), 500
+
+    @app.errorhandler(SQLAlchemyError)
+    def handle_sqlalchemy_error(error):
+        return render_template(
+            "errors/sql_error.html", message="A database error occurred.", details=str(error)
+        ), 500
+        
+    @app.errorhandler(OperationalError)
+    def handle_operational_error(error):
+        return render_template(
+            "errors/sql_error.html", message="A database error occurred.", details=str(error)
+        ), 500
+
     @app.errorhandler(404)
     def page_not_found(_):
-        return render_template("404.html"), 404
+        return render_template("errors/404.html"), 404
 
     @app.errorhandler(500)
-    def internal_server_error(_):
-        return render_template("500.html"), 500
+    def internal_server_error(error):
+        return render_template("errors/500.html", message=str(error)), 500
+    
+    @app.errorhandler(401)
+    def unauthorized(error):
+        return render_template("errors/401.html"), 401
+
 
     @app.errorhandler(403)
     def forbidden(_):
-        return render_template("403.html"), 403
+        return render_template("errors/403.html"), 403
 
     @app.errorhandler(400)
     def bad_request(_):
-        return render_template("400.html"), 400
+        return render_template("errors/400.html"), 400
+
+    @app.errorhandler(429)
+    def rate_limit_exceeded(e):
+        return render_template("errors/429.html", error=e.description), 400   
+
+    @app.errorhandler(Exception)
+    def handle_generic_exception(error):
+        return render_template(
+            "errors/general_error.html", message="An unexpected error occurred.", details=str(error)
+        ), 500
 
     @app.errorhandler(429)
     def rate_limit_exceeded(e):

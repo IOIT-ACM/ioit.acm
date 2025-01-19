@@ -151,6 +151,16 @@ team_data = {
             "domain": "special interest group",
         },
         {
+            "name": "Tejas Shende",
+            "title": "Media Head",
+            "image": "static/img/team/2024/tejasshende.jpeg",
+            "linktree": "https://linktr.ee/Shendetejas",
+            "github": "",
+            "linkedin": "https://www.linkedin.com/in/tejas-shende-3b118429b",
+            "instagram": "https://www.instagram.com/tejas_shende_07",
+            "domain": "media",
+        },
+        {
             "name": "Sejal Karad",
             "title": "Media Executive",
             "image": "static/img/team/2024/media-sejal.jpeg",

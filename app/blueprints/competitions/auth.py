@@ -1,3 +1,4 @@
+import re
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, current_user, login_required
@@ -6,6 +7,9 @@ from app.db import db
 
 auth_bp = Blueprint("auth", __name__)
 
+def validate_name(name):
+    """Helper function to validate names containing only alphabets"""
+    return re.match(r"^[A-Za-z]+$", name)
 
 @auth_bp.route("/signin", methods=["GET", "POST"])
 def signin():
@@ -16,20 +20,20 @@ def signin():
         username = request.form.get("username")
         password = request.form.get("password")
 
+        if not username or not password:
+            flash("Username and password are required.", category="error")
+            return render_template("competitions/login.html")
+
         user = User.query.filter_by(username=username).first()
 
-        if user:
-            if check_password_hash(user.password, password):
-                flash("Logged in successfully!", category="success")
-                login_user(user, remember=True)
-                return redirect(url_for("auth.profile"))
-            else:
-                flash("Incorrect password, try again.", category="error")
+        if user and check_password_hash(user.password, password):
+            flash("Logged in successfully!", category="success")
+            login_user(user, remember=True)
+            return redirect(url_for("auth.profile"))
+        elif user:
+            flash("Incorrect password, try again.", category="error")
         else:
-            flash(
-                "Username does not exist. Sign up to create a new account.",
-                category="error",
-            )
+            flash("Username does not exist. Sign up to create a new account.", category="error")
 
     return render_template("competitions/login.html")
 
@@ -40,14 +44,21 @@ def signup():
         return redirect(url_for("auth.profile"))
 
     if request.method == "POST":
-        first_name = request.form.get("firstName")
-        last_name = request.form.get("lastName")
-        username = request.form.get("username")
-        branch = request.form.get("branch")
-        acm_id = request.form.get("acmId")
-        mobile_no = request.form.get("mobileNo")
-        password1 = request.form.get("password1")
-        confirm_password = request.form.get("confirmPassword")
+        first_name = request.form.get("firstName").strip()
+        last_name = request.form.get("lastName").strip()
+        username = request.form.get("username").strip()
+        branch = request.form.get("branch").strip()
+        acm_id = request.form.get("acmId").strip()
+        mobile_no = request.form.get("mobileNo").strip()
+        password1 = request.form.get("password1").strip()
+        confirm_password = request.form.get("confirmPassword").strip()
+
+        if not validate_name(first_name) or not validate_name(last_name):
+            flash("Name can only contain alphabetic characters.", category="error")
+            return render_template("competitions/signup.html")
+
+        first_name = first_name.capitalize()
+        last_name = last_name.capitalize()
 
         if User.query.filter_by(username=username).first():
             flash("Username already exists.", category="error")
@@ -74,9 +85,7 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
 
-        flash(
-            "Account created successfully for {}!".format(full_name), category="success"
-        )
+        flash("Account created successfully for {}!".format(full_name), category="success")
         return redirect(url_for("auth.signin"))
 
     return render_template("competitions/signup.html")

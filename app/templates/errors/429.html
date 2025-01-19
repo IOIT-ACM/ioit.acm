@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}429 Too Many Requests{% endblock %}
+{% block content %}
+<div
+  class="flex mx-auto p-5 items-center justify-center min-h-screen max-w-5xl bg-gray-100"
+>
+  <div class="text-center">
+    <h1 class="text-4xl font-bold text-red-500 mb-4">
+      429 - Too Many Requests
+    </h1>
+    <p class="mb-6">
+      We have detected an unusual amount of traffic from your IP address. You've
+      made too many requests in a short period, and the rate limit has been
+      exceeded.
+    </p>
+    <p>
+      This page will be available again in the next hour. Please try again
+      later.
+    </p>
+    <hr class="border-t-2 border-gray-500 my-6" />
+    <p class="text-center text-gray-600 mb-6">
+      If you this this is a mistake, please contact the
+      <a
+        href="mailto:adimail2404@gmail.com"
+        class="text-blue-500 hover:underline"
+        >webmaster</a
+      >, Aditya Godse.
+    </p>
+    <a
+      href="/"
+      class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+    >
+      Go Back Home
+    </a>
+  </div>
+</div>
+{% endblock %}
