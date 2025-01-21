@@ -4,12 +4,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, current_user, login_required
 from app.models import User
 from app.db import db
+from ...models import User as Users
 
 auth_bp = Blueprint("auth", __name__)
+
 
 def validate_name(name):
     """Helper function to validate names containing only alphabets"""
     return re.match(r"^[A-Za-z]+$", name)
+
 
 @auth_bp.route("/signin", methods=["GET", "POST"])
 def signin():
@@ -33,7 +36,10 @@ def signin():
         elif user:
             flash("Incorrect password, try again.", category="error")
         else:
-            flash("Username does not exist. Sign up to create a new account.", category="error")
+            flash(
+                "Username does not exist. Sign up to create a new account.",
+                category="error",
+            )
 
     return render_template("competitions/login.html")
 
@@ -85,7 +91,9 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
 
-        flash("Account created successfully for {}!".format(full_name), category="success")
+        flash(
+            "Account created successfully for {}!".format(full_name), category="success"
+        )
         return redirect(url_for("auth.signin"))
 
     return render_template("competitions/signup.html")
@@ -189,3 +197,15 @@ def delete_profile():
         db.session.rollback()
         flash("An error occurred while deleting your profile.", category="error")
         return redirect(url_for("auth.profile"))
+
+
+@auth_bp.route("/members")
+def acm_users():
+    members = Users.query.order_by(Users.name.desc()).all()
+    user_branches = sorted(set(member.branch for member in members))
+    return render_template(
+        "members.html",
+        members=members,
+        user=current_user,
+        user_branches=user_branches,
+    )

@@ -220,7 +220,8 @@
           <div>
             {% for item in [{'link': '/', 'text': 'IOIT ACM Home'}, {'link':
             '/competitions', 'text': 'Competitions'}, {'link': '/leaderboard',
-            'text': 'Leaderboard'}] %}
+            'text': 'Leaderboard'}, {'link': '/feedback', 'text': 'Feedback'}]
+            %}
             <a
               href="{{ item.link }}"
               class="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors"
@@ -251,10 +252,13 @@
           <hr class="border-gray-300 my-4" />
 
           <div>
-            {% if current_user.is_authenticated %}
-            {% if current_user.is_authenticated %}
-              <img src="https://robohash.org/{{ current_user.username }}" alt="Profile Picture"
-                  class="mx-auto rounded-full w-1/2 border border-black bg-gray-500" />
+            {% if current_user.is_authenticated %} {% if
+            current_user.is_authenticated %}
+            <img
+              src="https://robohash.org/{{ current_user.username }}"
+              alt="Profile Picture"
+              class="mx-auto rounded-full w-1/2 border border-black bg-gray-500"
+            />
             {% endif %}
             <p class="text-center mt-5">{{current_user.name}}</p>
             <a
@@ -483,6 +487,8 @@
             "/profile": "Profile",
             "/signup": "Create ACM Account",
             "/signin": "Sign In",
+            "/feedback": "Feedback Form",
+            "/members": "Members",
           }[path] || "Home";
 
         document.getElementById("pageTitle").textContent = titles;

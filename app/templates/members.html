@@ -1,4 +1,4 @@
-{% extends "competitions/base.html" %} {% block title %}Global Leaderboard{%
+{% extends "competitions/base.html" %} {% block title %}Members | IOIT ACM{%
 endblock %} {% block content %}
 <div class="container mx-auto px-4 md:px-8 mt-10 mb-20">
   <div
@@ -32,13 +32,13 @@ endblock %} {% block content %}
     </div>
   </div>
 
-  {% if leaderboard|length == 0 %}
+  {% if members|length == 0 %}
   <div class="text-center text-xs md:text-sm font-semibold text-gray-500 py-8">
-    The leaderboard is empty at the moment.
+    The members is empty at the moment.
   </div>
   {% else %}
   <div class="flex mb-4">
-    {% if leaderboard|length > 1 %}
+    {% if members|length > 0 %}
     <button
       id="toggleChartButton"
       class="flex items-center text-xs md:text-sm gap-2 px-4 py-2 bg-green-500 text-white rounded-md shadow-sm hover:bg-indigo-600"
@@ -68,28 +68,6 @@ endblock %} {% block content %}
 
   <hr class="border-t-1 border-gray-500 my-10 mx-auto" />
 
-  <p class="mb-2 text-xs md:text-sm italic">
-    Note: The event competition leaderboard is not yet updated. It will go live
-    one week after the
-    <a href="/competitions/bit-by-query" class="text-blue-500 hover:underline">
-      Bit by Query
-    </a>
-    competition is completed in 24 Jan 2025.
-  </p>
-  <p class="mb-5 text-xs md:text-sm italic">
-    This leaderboard will represent a global ranking where students are
-    evaluated based on their performance across various competitions, including
-    <a href="/competitions/bit-by-bit" class="text-blue-500 hover:underline"
-      >Bit by Bit</a
-    >,
-    <a href="/competitions/bit-by-query" class="text-blue-500 hover:underline"
-      >Bit by Query</a
-    >,
-    <a href="/competitions/ml-frontiers" class="text-blue-500 hover:underline"
-      >ML Frontiers</a
-    >, and more.
-  </p>
-
   <div id="leaderboardTableContainer">
     <div class="overflow-x-auto w-full">
       <table
@@ -97,25 +75,20 @@ endblock %} {% block content %}
       >
         <thead class="mb-10">
           <tr class="bg-gray-200 text-sm font-semibold text-gray-900 text-left">
-            <th class="px-6 py-3">Rank</th>
             <th class="px-6 py-3">Name</th>
             <th class="px-6 py-3">Branch</th>
             <th class="px-6 py-3">Username</th>
-            <th class="px-6 py-3">Score</th>
             <th class="px-6 py-3">Competitions</th>
           </tr>
         </thead>
         <tbody id="leaderboardList">
-          {% for user in leaderboard %}
+          {% for user in members %}
           <tr
             class="transition-colors ease-in-out duration-150 {% if loop.index is even %}bg-gray-50 hover:bg-gray-100{% else %}bg-white hover:bg-gray-50{% endif %} rounded-md"
             data-branch="{{ user.branch }}"
             data-name="{{ user.name|lower }}"
             data-username="{{ user.username|lower }}"
           >
-            <td class="px-6 py-4 text-sm font-medium text-gray-900">
-              {{ loop.index }}
-            </td>
             <td class="px-6 py-4 text-sm text-gray-900">
               <div class="flex items-center gap-3">
                 <img
@@ -132,9 +105,6 @@ endblock %} {% block content %}
             <td class="truncate px-6 py-4 text-sm text-gray-600">
               {{ user.username }}
             </td>
-            <td class="truncate px-6 py-4 text-lg text-green-500 font-bold">
-              {{ user.score }}
-            </td>
             <td class="truncate px-6 py-4 text-sm text-gray-600">
               {{ user.completed_competitions }}
             </td>
@@ -144,7 +114,7 @@ endblock %} {% block content %}
       </table>
     </div>
 
-    <div class="my-10 text-gray-800">Total Users: {{ leaderboard|length }}</div>
+    <div class="my-10 text-gray-800">Total Users: {{ members|length }}</div>
   </div>
   {% endif %}
 </div>
@@ -196,7 +166,7 @@ endblock %} {% block content %}
 
   function renderChart() {
     const branches = [
-      {% for user in leaderboard %}
+      {% for user in members %}
         "{{ user.branch|safe }}"{% if not loop.last %}, {% endif %}
       {% endfor %}
     ];

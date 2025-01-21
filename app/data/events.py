@@ -1,5 +1,20 @@
 events = [
     {
+        "name": "Bit By Bit - Vol 1",
+        "description": "The first edition of Bit By Bit 2025 was successfully held with 35 participants. The 2-hour competition had 10 algorithmic problems testing skills in arrays, strings, hashmaps, and tree traversals.",
+        "date": "January 21, 2025",
+        "moredetails": "",
+        "image_url": "/static/img/gallery/bit-by-bit/15.jpeg",
+        "instagram_link": "",
+        "facebook_link": "",
+        "topics": [
+            "35 participants joined the competition.",
+            "Included 10 algorithmic questions across Easy, Medium, and Hard levels.",
+            "Covered topics like arrays, strings, hashmaps, and tree traversals.",
+            "Highlights of the competition:\n- 5 Easy Problems: Arrays, patterns, and strings.\n- 3 Medium Problems: Hashmaps and arrays.\n- 2 Hard Problems: Tree traversals.\n\nKey Stats:\n- Participants: 35\n- Duration: 2 hours\n- Total Questions: 10",
+        ],
+    },
+    {
         "name": "National Level FDP on Cyber Security",
         "description": "A faculty development program focused on cyber security topics.",
         "date": "October 21, 2024 - October 25, 2024",

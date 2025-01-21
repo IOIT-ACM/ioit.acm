@@ -1,8 +1,8 @@
-{% extends "base.html" %} {% block title %}Feedback Form - IOIT ACM{% endblock
-%} {% block og_title %}Give Your Feedback{% endblock %} {% block og_description
-%} Help us improve by sharing your valuable feedback. We’d love to hear your
-suggestions, event ideas, and overall experience with the IOIT ACM Student
-Chapter. {% endblock %} {% block og_image %}{{ url_for('static',
+{% extends "competitions/base.html" %} {% block title %}Feedback Form - IOIT
+ACM{% endblock %} {% block og_title %}Give Your Feedback{% endblock %} {% block
+og_description %} Help us improve by sharing your valuable feedback. We’d love
+to hear your suggestions, event ideas, and overall experience with the IOIT ACM
+Student Chapter. {% endblock %} {% block og_image %}{{ url_for('static',
 filename='img/assets/feedback.jpeg') }}{% endblock %} {% block twitter_image
 %}{{ url_for('static', filename='img/assets/feedback.jpeg') }}{% endblock %} {%
 block twitter_title %}Feedback - IOIT ACM{% endblock %} {% block
@@ -10,11 +10,10 @@ twitter_description %} Your feedback matters to us! Share your thoughts and
 ideas to help us create a better and more inclusive IOIT ACM community. {%
 endblock %} {% block content %}
 
-<div class="max-w-6xl mx-auto p-6 pt-24 pb-20">
-  <h1 class="text-3xl font-bold text-center mb-6">Feedback Form</h1>
+<div class="max-w-6xl mx-auto p-6">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
     <div class="w-full flex justify-center mt-10 md:mt-0">
-      <div class="w-1/2 md:mt-20 relative h-fit sticky top-32">
+      <div class="w-1/2 md:mt-20 h-fit sticky top-32">
         <div
           class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl animate-rotate"
         ></div>
@@ -89,6 +88,8 @@ endblock %} {% block content %}
             id="name"
             name="name"
             required
+            value="{{ current_user.name }}"
+            placeholder="Enter your name"
             class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
         </div>
@@ -224,6 +225,7 @@ endblock %} {% block content %}
               id="eventFeedback"
               name="eventFeedback"
               rows="4"
+              placeholder="Share your experience of the event and suggest what can we do better to give an ideal experience"
               maxlength="500"
               class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
               oninput="updateCharacterCount('eventFeedback', 'eventFeedback-counter')"
@@ -237,13 +239,14 @@ endblock %} {% block content %}
         <div id="suggestionsSection" class="hidden grid gap-4">
           <div class="flex flex-col">
             <label for="events" class="block text-sm font-medium text-gray-700">
-              What events would you like to see conducted by ACM?
+              Suggestions
             </label>
             <textarea
               id="events"
               name="events"
               rows="4"
               maxlength="500"
+              placeholder="What events would you like to see conducted by ACM?"
               class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
               oninput="updateCharacterCount('events', 'events-counter')"
             ></textarea>

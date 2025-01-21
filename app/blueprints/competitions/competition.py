@@ -32,8 +32,12 @@ def competitions():
 @competitions_bp.route("/leaderboard")
 def global_leaderboard():
     leaderboard = GlobalLeaderboard.query.order_by(GlobalLeaderboard.score.desc()).all()
+    user_branches = sorted(set(entry.branch for entry in leaderboard))
     return render_template(
-        "competitions/leaderboard.html", leaderboard=leaderboard, user=current_user
+        "competitions/leaderboard.html",
+        leaderboard=leaderboard,
+        user=current_user,
+        user_branches=user_branches,
     )
 
 
@@ -56,11 +60,12 @@ def virtualcontest():
 @competitions_bp.route("/competitions/bit-by-bit")
 def bitbybit():
     events = [
-        {"name": "Bit by Bit Round 1", "date": "2024-03-15"},
-        {"name": "Bit by Bit Round 2", "date": "2024-04-20"},
-        {"name": "Bit by Bit Finals", "date": "2024-05-25"},
-        {"name": "Bit by Bit Kickoff", "date": "2024-01-10"},
-        {"name": "Bit by Bit Practice Round", "date": "2024-02-14"},
+        {"name": "Bit by Bit - Vol 1", "date": "2025-01-21"},
+        {"name": "Bit by Bit", "date": "2024-03-15"},
+        {"name": "Bit by Bit", "date": "2024-04-20"},
+        {"name": "Bit by Bit", "date": "2024-05-25"},
+        {"name": "Bit by Bit", "date": "2024-01-10"},
+        {"name": "Bit by Bit", "date": "2024-02-14"},
     ]
 
     upcoming_events = [
@@ -80,7 +85,9 @@ def bitbybit():
 
 @competitions_bp.route("/competitions/bit-by-query")
 def bitbyquery():
-    events = []
+    events = [
+        {"name": "Bit by Query - Vol 1", "date": "2025-01-24"},
+    ]
 
     upcoming_events = [
         event for event in events if datetime.strptime(event["date"], "%Y-%m-%d") > now
