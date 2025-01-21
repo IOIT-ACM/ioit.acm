@@ -80,7 +80,7 @@ endblock %} {% block content %}
         </div>
 
         <div>
-          <label for="name" class="block text-sm font-medium text-gray-700"
+          <label for="name" class="block text-sm font-medium text-gray-700 mt-3"
             >Name</label
           >
           <input
@@ -94,7 +94,9 @@ endblock %} {% block content %}
           />
         </div>
         <div>
-          <label for="branch" class="block text-sm font-medium text-gray-700"
+          <label
+            for="branch"
+            class="block text-sm font-medium text-gray-700 mt-3"
             >Branch</label
           >
           <select
@@ -116,7 +118,7 @@ endblock %} {% block content %}
         </div>
 
         <div>
-          <label for="year" class="block text-sm font-medium text-gray-700"
+          <label for="year" class="block text-sm font-medium text-gray-700 mt-3"
             >Year</label
           >
           <select
@@ -169,7 +171,7 @@ endblock %} {% block content %}
 
         <div id="eventFeedbackSection" class="hidden space-y-4 grid gap-4">
           <div class="flex flex-col">
-            <label for="event" class="text-sm font-medium text-gray-700">
+            <label for="event" class="text-sm font-medium text-gray-700 mt-3">
               Which event did you attend or hear about?
             </label>
             <select
@@ -187,7 +189,7 @@ endblock %} {% block content %}
           <div class="flex flex-col">
             <label
               for="eventRating"
-              class="text-sm font-medium text-gray-700 z-50"
+              class="text-sm font-medium text-gray-700 mt-3 z-40"
             >
               Rate the event
             </label>
@@ -198,7 +200,7 @@ endblock %} {% block content %}
               min="0"
               max="100"
               value="80"
-              class="w-full mt-1 z-50"
+              class="w-full mt-1 z-40"
             />
             <div
               id="emojiOverlay"
@@ -217,7 +219,7 @@ endblock %} {% block content %}
           <div class="flex flex-col">
             <label
               for="eventFeedback"
-              class="text-sm font-medium text-gray-700"
+              class="text-sm font-medium text-gray-700 mt-3"
             >
               Event Feedback
             </label>
@@ -238,7 +240,10 @@ endblock %} {% block content %}
 
         <div id="suggestionsSection" class="hidden grid gap-4">
           <div class="flex flex-col">
-            <label for="events" class="block text-sm font-medium text-gray-700">
+            <label
+              for="events"
+              class="block text-sm font-medium text-gray-700 mt-3"
+            >
               Suggestions
             </label>
             <textarea
@@ -260,7 +265,7 @@ endblock %} {% block content %}
           <div class="flex flex-col">
             <label
               for="feedback"
-              class="block text-sm font-medium text-gray-700"
+              class="block text-sm font-medium text-gray-700 mt-3"
             >
               We appreciate your feedback. Please tell us what you think.
             </label>
