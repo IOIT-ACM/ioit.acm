@@ -191,7 +191,7 @@
     >
       <div
         id="sideMenu"
-        class="fixed inset-y-0 left-0 w-72 max-w-3xl bg-white transform transition-transform -translate-x-full"
+        class="fixed inset-y-0 left-0 w-72 max-w-3xl bg-white transform transition-transform -translate-x-full overflow-y-auto no-scroll-bar"
       >
         <div class="p-4 flex justify-between items-center border-b">
           <h2 class="text-xl font-semibold">Menu</h2>
@@ -216,7 +216,7 @@
           </button>
         </div>
 
-        <nav class="p-4 space-y-4">
+        <nav class="p-4 space-y-4 overflow-y-auto overflow-hidden h-full">
           <div>
             {% for item in [{'link': '/', 'text': 'IOIT ACM Home'}, {'link':
             '/competitions', 'text': 'Competitions'}, {'link': '/leaderboard',
@@ -464,6 +464,25 @@
           <div class="text-center">
             <p>© IOIT ACM Student Chapter, 2024</p>
           </div>
+		            <div class="text-center">
+            <p>
+              Website built by
+              <a
+                target="_blank"
+                class="text-blue-500 hover:underline"
+                href="https://adimail.github.io"
+                >Aditya Godse</a
+              >
+              &
+              <a
+                target="_blank"
+                class="text-blue-500 hover:underline"
+                href="https://swarooppatilx.github.io/"
+                >Swaroop Patil</a
+              >
+            </p>
+          </div>
+        </div>
         </div>
       </div>
     </footer>
@@ -472,8 +491,7 @@
       function setPageTitle() {
         const path = window.location.pathname;
 
-        const titles =
-          {
+        const titles = {
             "/": "Home",
             "/competitions": "Competitions",
             "/competitions/virtualcontest": "Virtual Contests",
@@ -481,6 +499,7 @@
             "/competitions/bit-by-query": "Bit by Query",
             "/competitions/ml-frontiers": "ML Frontiers",
             "/leaderboard": "Global Leaderboard",
+            "/leaderboard/:{id}": "Leaderboard",
             "/practice": "Practice",
             "/challenges": "Challenges",
             "/tutorials": "Tutorials",
@@ -489,10 +508,25 @@
             "/signin": "Sign In",
             "/feedback": "Feedback Form",
             "/members": "Members",
-          }[path] || "Home";
+        };
 
-        document.getElementById("pageTitle").textContent = titles;
-      }
+        let pageTitle = "Home";
+
+        for (const [key, title] of Object.entries(titles)) {
+            if (key.includes(":{id}")) {
+                const basePath = key.split(":{id}")[0];
+                if (path.startsWith(basePath)) {
+                    pageTitle = title;
+                    break;
+                }
+            } else if (key === path) {
+                pageTitle = title;
+                break;
+            }
+        }
+
+        document.getElementById("pageTitle").textContent = pageTitle;
+    }
 
       function toggleNav() {
         const overlay = document.getElementById("sideMenuOverlay");

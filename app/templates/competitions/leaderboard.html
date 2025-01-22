@@ -13,8 +13,8 @@ endblock %} {% block content %}
         class="px-3 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
       >
         <option value="">All Branches</option>
-        {% for branch in user_branches %}
-        <option value="{{ branch }}">{{ branch }}</option>
+        {% for user in leaderboard %}
+        <option value="{{ user.branch }}">{{ user.branch }}</option>
         {% endfor %}
       </select>
     </div>
@@ -37,7 +37,7 @@ endblock %} {% block content %}
     The leaderboard is empty at the moment.
   </div>
   {% else %}
-  <div class="flex mb-4">
+  <div class="flex justify-end mb-4">
     {% if leaderboard|length > 1 %}
     <button
       id="toggleChartButton"
@@ -66,31 +66,33 @@ endblock %} {% block content %}
     <canvas id="branchChart"></canvas>
   </div>
 
-  <hr class="border-t-1 border-gray-500 my-10 mx-auto" />
-
-  <p class="mb-2 text-xs md:text-sm italic">
-    Note: The event competition leaderboard is not yet updated. It will go live
-    one week after the
-    <a href="/competitions/bit-by-query" class="text-blue-500 hover:underline">
-      Bit by Query
-    </a>
-    competition is completed in 24 Jan 2025.
-  </p>
-  <p class="mb-5 text-xs md:text-sm italic">
-    This leaderboard will represent a global ranking where students are
-    evaluated based on their performance across various competitions, including
-    <a href="/competitions/bit-by-bit" class="text-blue-500 hover:underline"
-      >Bit by Bit</a
-    >,
-    <a href="/competitions/bit-by-query" class="text-blue-500 hover:underline"
-      >Bit by Query</a
-    >,
-    <a href="/competitions/ml-frontiers" class="text-blue-500 hover:underline"
-      >ML Frontiers</a
-    >, and more.
-  </p>
-
   <div id="leaderboardTableContainer">
+    <p class="mb-2 text-xs md:text-sm italic">
+      Note: The event competition leaderboard is not yet updated. It will go
+      live once the
+      <a
+        href="/competitions/bit-by-query"
+        class="text-blue-500 hover:underline"
+      >
+        Bit by Query
+      </a>
+      competition concludes.
+    </p>
+    <p class="mb-5 text-xs md:text-sm italic">
+      This leaderboard will represent a global ranking where students are
+      evaluated based on their performance across various competitions,
+      including
+      <a href="/competitions/bit-by-bit" class="text-blue-500 hover:underline"
+        >Bit by Bit</a
+      >,
+      <a href="/competitions/bit-by-query" class="text-blue-500 hover:underline"
+        >Bit by Query</a
+      >,
+      <a href="/competitions/ml-frontiers" class="text-blue-500 hover:underline"
+        >ML Frontiers</a
+      >, and more.
+    </p>
+
     <div class="overflow-x-auto w-full">
       <table
         class="w-full table-auto border-collapse rounded-lg overflow-hidden shadow-md"
@@ -147,6 +149,10 @@ endblock %} {% block content %}
     <div class="my-10 text-gray-800">Total Users: {{ leaderboard|length }}</div>
   </div>
   {% endif %}
+
+  <hr class="border-t-2 border-gray-500 my-6" />
+
+  {% include "competitions/avaliable-leaderboards.html" %}
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -197,53 +203,53 @@ endblock %} {% block content %}
   function renderChart() {
     const branches = [
       {% for user in leaderboard %}
-        "{{ user.branch|safe }}"{% if not loop.last %}, {% endif %}
-      {% endfor %}
+  "{{ user.branch|safe }}"{% if not loop.last %}, {% endif %}
+  {% endfor %}
     ];
 
-    const branchData = branches.reduce((acc, branchName) => {
-      acc[branchName] = (acc[branchName] || 0) + 1;
-      return acc;
-    }, {});
+  const branchData = branches.reduce((acc, branchName) => {
+    acc[branchName] = (acc[branchName] || 0) + 1;
+    return acc;
+  }, {});
 
-    const labels = Object.keys(branchData);
-    const data = Object.values(branchData);
+  const labels = Object.keys(branchData);
+  const data = Object.values(branchData);
 
-    const colors = labels.map((_, index) => `hsla(${index * 360 / labels.length}, 70%, 50%, 0.6)`);
+  const colors = labels.map((_, index) => `hsla(${index * 360 / labels.length}, 70%, 50%, 0.6)`);
 
-    const ctx = document.getElementById('branchChart').getContext('2d');
-    chartInstance = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'Number of Students',
-          data: data,
-          backgroundColor: colors,
-          borderColor: colors.map(color => color.replace('0.6', '1')),
-          borderWidth: 1,
-        }],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              stepSize: 1,
-              callback: function(value) {
-                return Number.isInteger(value) ? value : '';
-              }
-            },
-          },
+  const ctx = document.getElementById('branchChart').getContext('2d');
+  chartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Number of Students',
+        data: data,
+        backgroundColor: colors,
+        borderColor: colors.map(color => color.replace('0.6', '1')),
+        borderWidth: 1,
+      }],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
         },
       },
-    });
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1,
+            callback: function (value) {
+              return Number.isInteger(value) ? value : '';
+            }
+          },
+        },
+      },
+    },
+  });
   }
 </script>
 {% endblock %}

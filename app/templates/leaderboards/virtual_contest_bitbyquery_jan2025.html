@@ -1,0 +1,85 @@
+{% extends "competitions/base.html" %} {% block title %}Bit By Query Virtual
+Contest JAN 2025 | Leaderboard{% endblock %} {% block content %}
+
+<div class="container mx-auto px-4 md:px-8 mt-10 mb-20">
+  <h1 class="text-4xl font-bold text-center text-blue-600 mt-8">
+    Bit By Query Virtual Contest JAN 2025
+  </h1>
+
+  <hr class="border-t-1 border-gray-500 my-10 mx-auto" />
+
+  <div id="leaderboardTableContainer">
+    <div class="overflow-x-auto w-full">
+      <table
+        class="w-full table-auto border-collapse rounded-lg overflow-hidden shadow-md"
+      >
+        <thead class="mb-10">
+          <tr class="bg-gray-200 text-sm font-semibold text-gray-900 text-left">
+            <th class="px-6 py-3">Rank</th>
+            <th class="px-6 py-3">Name</th>
+            <th class="px-6 py-3">Username</th>
+            <th class="px-6 py-3">Problems Solved</th>
+            <th class="px-6 py-3">Total Time (ms)</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardList">
+          {% for user in leaderboard %}
+          <tr
+            class="transition-colors ease-in-out duration-150 {% if loop.index is even %}bg-gray-50 hover:bg-gray-100{% else %}bg-white hover:bg-gray-50{% endif %} rounded-md"
+            data-name="{{ user.name|lower }}"
+            data-username="{{ user.username|lower }}"
+          >
+            <td class="px-6 py-4 text-sm font-medium text-gray-900">
+              {{ loop.index }}
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-900">
+              <div class="flex items-center gap-3">
+                <img
+                  src="https://robohash.org/{{ user.username }}.png"
+                  alt="{{ user.username }} profile picture"
+                  class="w-10 h-10 rounded-full border border-gray-300 aspect-square"
+                />
+                <span class="truncate font-medium">{{ user.name }}</span>
+              </div>
+            </td>
+            <td class="truncate px-6 py-4 text-sm text-gray-600">
+              {{ user.username }}
+            </td>
+            <td class="truncate px-6 py-4 text-sm text-gray-600">
+              {{ user.problems_solved }}
+            </td>
+            <td
+              class="truncate px-6 py-4 text-sm text-gray-600"
+              data-total-time="{{ user.total_time }}"
+            ></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="my-10 text-gray-800">
+      Total Participants: {{ leaderboard|length }}
+    </div>
+  </div>
+  <hr class="border-t-2 border-gray-500 my-6" />
+
+  {% include "competitions/avaliable-leaderboards.html" %}
+</div>
+
+<script>
+  function formatTime(milliseconds) {
+    const minutes = Math.floor(milliseconds / 60000);
+    const seconds = Math.floor((milliseconds % 60000) / 1000);
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  }
+
+  document.querySelectorAll("td[data-total-time]").forEach((cell) => {
+    const totalTimeMs = parseInt(cell.getAttribute("data-total-time"), 10);
+    if (!isNaN(totalTimeMs)) {
+      cell.textContent = formatTime(totalTimeMs);
+    }
+  });
+</script>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, render_template
 from app import db
-from ...models import GlobalLeaderboard, Question
+from ...models import *
 from flask_login import current_user
 from datetime import datetime
 
@@ -17,15 +17,6 @@ def competitions():
     return render_template("competitions/home.html", user=current_user, now=now)
 
 
-# @competitions_bp.route('/competitions/jan2025')
-# def competition_jan2025():
-#     app = db.get_app()
-#     app.config['SQLALCHEMY_BINDS']['questions'] = 'sqlite:///instance/competitions/jan2025/questions.db'
-
-#     questions = Question.query.all()
-#     return jsonify([{"id": q.id, "text": q.question_text} for q in questions])
-
-
 ###
 ### leaderboard
 ###
@@ -38,6 +29,19 @@ def global_leaderboard():
         leaderboard=leaderboard,
         user=current_user,
         user_branches=user_branches,
+    )
+
+
+@competitions_bp.route("/leaderboard/virtual_contest_bitbyquery_jan2025")
+def VirtualContest_leaderboard():
+    leaderboard = VirtualContestBitByQueryJan2025.query.order_by(
+        VirtualContestBitByQueryJan2025.problems_solved.desc(),
+        VirtualContestBitByQueryJan2025.total_time.asc(),
+    ).all()
+    return render_template(
+        "leaderboards/virtual_contest_bitbyquery_jan2025.html",
+        leaderboard=leaderboard,
+        user=current_user,
     )
 
 

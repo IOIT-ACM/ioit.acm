@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -93,9 +93,9 @@
       function gtag() {
         dataLayer.push(arguments);
       }
-      gtag('js', new Date());
+      gtag("js", new Date());
 
-      gtag('config', 'G-Y6Z6G51Z27');
+      gtag("config", "G-Y6Z6G51Z27");
     </script>
 
     <!-- Stylesheets -->
@@ -135,7 +135,7 @@
   <body class="bg-gray-100 text-gray-800">
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 w-full bg-white shadow-lg z-[9999]">
-      <div class="flex items-center justify-between md:px-6 md:py-3 px-4 py-2">
+      <div class="flex items-center justify-between md:px-6 md:py-2 px-4 py-1">
         <div class="flex items-center w-auto">
           <img
             src="{{ url_for('static', filename='img/assets/acm.png') }}"
@@ -144,7 +144,7 @@
           />
           <a
             href="/"
-            class="md:text-2xl text-xl font-bold text-blue-600 font-sans whitespace-nowrap"
+            class="md:text-xl text-lg font-bold text-blue-600 font-sans whitespace-nowrap"
             >IOIT ACM</a
           >
         </div>
@@ -431,24 +431,42 @@
           <div class="text-center">
             <p>© IOIT ACM Student Chapter, 2024</p>
           </div>
+          <div class="text-center">
+            <p>
+              Website built by
+              <a
+                target="_blank"
+                class="text-blue-500 hover:underline"
+                href="https://adimail.github.io"
+                >Aditya Godse</a
+              >
+              &
+              <a
+                target="_blank"
+                class="text-blue-500 hover:underline"
+                href="https://swarooppatilx.github.io/"
+                >Swaroop Patil</a
+              >
+            </p>
+          </div>
         </div>
       </div>
     </footer>
 
     <script>
       function toggleNav() {
-        const nav = document.getElementById('mobile-nav');
-        if (nav.classList.contains('hidden')) {
-          nav.classList.remove('hidden');
+        const nav = document.getElementById("mobile-nav");
+        if (nav.classList.contains("hidden")) {
+          nav.classList.remove("hidden");
         } else {
-          nav.classList.add('hidden');
+          nav.classList.add("hidden");
         }
       }
 
       function closeNav(event) {
-        const nav = document.getElementById('mobile-nav');
-        if (!event.target.closest('.relative')) {
-          nav.classList.add('hidden');
+        const nav = document.getElementById("mobile-nav");
+        if (!event.target.closest(".relative")) {
+          nav.classList.add("hidden");
         }
       }
     </script>

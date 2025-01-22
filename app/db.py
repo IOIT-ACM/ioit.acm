@@ -9,6 +9,9 @@ class DatabaseConfig:
         self.binds = {
             "users": self.get_mysql_uri("users"),
             "global_leaderboard": self.get_mysql_uri("global_leaderboard"),
+            "virtual_contest_bitbyquery_jan2025": self.get_mysql_uri(
+                "virtual_contest_bitbyquery_jan2025"
+            ),
         }
 
     def get_mysql_uri(self, db_name):
