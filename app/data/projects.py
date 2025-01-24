@@ -1,5 +1,14 @@
 projects_data = [
     {
+        "name": "Bit By Query",
+        "maintainer": "Swaroop Patil",
+        "description": "Bit By Query is a platform designed to host SQL competitions and challenges. The platform allows users to create, participate in, and judge SQL challenges. The project was developed using ExpressJS, React, Vite, Tailwind CSS, and SQL.",
+        "techstack": "ExpressJS, React, Vite, TaileindCSS, SQL",
+        "image_url": "/static/img/projects/bbq.jpeg",
+        "repository_link": "",
+        "deployment_link": "https://www.ioittenet.com/",
+    },
+    {
         "name": "TENET 2024",
         "maintainer": "IOIT ACM Student Chapter",
         "description": "The TENET 2024 website attracted 15,000 visitors within just three weeks leading up to the event. Designed and developed by Aditya Godse and Swaroop Patil, the site utilized a modern tech stack including TypeScript, GSAP, Three.js, WebGL, and Tailwind CSS. Featuring various interactive elements, the website successfully engaged users and enhanced their browsing experience.",
