@@ -1,16 +1,16 @@
 events = [
     {
         "name": "Bit By Query - Vol 1",
-        "description": "The first edition of Bit By Query 2025 was successfully held with 25 participants. The 2-hour competition had 10 algorithmic problems testing skills in arrays, strings, hashmaps, and tree traversals.",
-        "date": "January 21, 2025",
-        "moredetails": "",
+        "description": "The first edition of Bit By Query 2025 was a thrilling two-hour competition where 25 participants demonstrated their SQL expertise. The event challenged competitors with 100 carefully crafted problems, covering a range of difficulty levels and testing their skills in database management and query optimization.",
+        "date": "January 24, 2025",
+        "moredetails": "/leaderboard/bitbyquery_jan2025",
         "image_url": "/static/img/gallery/bit-by-query/1.jpeg",
         "instagram_link": "",
         "facebook_link": "",
         "topics": [
             "The first edition of Bit by Query was held on January 21, 2025.",
             "25 participants competed over 2 hours of intense problem-solving.",
-            "10 SQL problems were designed across Easy, Medium, and Hard levels.",
+            "100 SQL problems were designed across Easy, Medium, and Hard levels.",
             "Topics included JOINS, INSERT, UPDATE, WHERE, COUNT, and GROUP BY.",
             "Easy problems focused on arrays, patterns, and strings.",
             "Medium problems tested hashmaps and advanced SQL operations.",
