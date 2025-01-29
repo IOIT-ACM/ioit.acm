@@ -3,10 +3,10 @@ projects_data = [
         "name": "Bit By Query",
         "maintainer": "Swaroop Patil",
         "description": "Bit By Query is a platform designed to host SQL competitions and challenges. The platform allows users to create, participate in, and judge SQL challenges. The project was developed using ExpressJS, React, Vite, Tailwind CSS, and SQL.",
-        "techstack": "ExpressJS, React, Vite, TaileindCSS, SQL",
+        "techstack": "ExpressJS, React, Vite, TailwindCSS, SQL",
         "image_url": "/static/img/projects/bbq.jpeg",
-        "repository_link": "",
-        "deployment_link": "https://www.ioittenet.com/",
+        "repository_link": "https://github.com/swarooppatilx/bit-by-query/",
+        "deployment_link": "https://bit-by-query.onrender.com/",
     },
     {
         "name": "TENET 2024",
