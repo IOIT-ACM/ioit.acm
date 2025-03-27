@@ -1,0 +1,152 @@
+[
+  {
+    "name": "Anshika Singh",
+    "title": "Chair",
+    "image": "static/img/team/2023/anshika.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "https://www.linkedin.com/in/anshika-singh-374612212/",
+    "instagram": "",
+    "domain": "core"
+  },
+  {
+    "name": "Avinash Patil",
+    "title": "Vice Chair",
+    "image": "static/img/team/2023/avinash.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "https://www.linkedin.com/in/avinashpatil30/",
+    "instagram": "",
+    "domain": "core"
+  },
+  {
+    "name": "Anushka Mane",
+    "title": "Core Team Member",
+    "image": "static/img/team/2023/anushka-mane.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "",
+    "instagram": "",
+    "domain": "core"
+  },
+  {
+    "name": "Chaitali Khachane",
+    "title": "Core Team Member",
+    "image": "static/img/team/2023/chaitali.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "",
+    "instagram": "",
+    "domain": "core"
+  },
+  {
+    "name": "Devang Gandhi",
+    "title": "Core Team Member",
+    "image": "static/img/team/2023/devang.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "",
+    "instagram": "",
+    "domain": "core"
+  },
+  {
+    "name": "Yash Chavan",
+    "title": "Core Team Member",
+    "image": "static/img/team/2023/yash.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "",
+    "instagram": "",
+    "domain": "core"
+  },
+  {
+    "name": "Kartik Yeole",
+    "title": "Web Team Member",
+    "image": "static/img/team/2023/kartik.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "",
+    "instagram": "",
+    "domain": "web"
+  },
+  {
+    "name": "Mayank Deshmukh",
+    "title": "Web Team Member",
+    "image": "static/img/team/2023/mayank.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "",
+    "instagram": "",
+    "domain": "web"
+  },
+  {
+    "name": "Samarth Dhol",
+    "title": "Web Team Member",
+    "image": "static/img/team/2023/samarth.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "",
+    "instagram": "",
+    "domain": "web"
+  },
+  {
+    "name": "Swapnil Pokale",
+    "title": "Web Team Member",
+    "image": "static/img/team/2023/swapnil.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "",
+    "instagram": "",
+    "domain": "web"
+  },
+  {
+    "name": "Prajwal Wazade",
+    "title": "Tech Team Member",
+    "image": "static/img/team/2023/prajwal.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "",
+    "instagram": "",
+    "domain": "tech"
+  },
+  {
+    "name": "Aditya Godse",
+    "title": "Tech Team Member",
+    "image": "static/img/team/2023/godse.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "",
+    "instagram": "",
+    "domain": "tech"
+  },
+  {
+    "name": "Tushar Rathod",
+    "title": "Tech Team Member",
+    "image": "static/img/team/2023/tusharrathod.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "",
+    "instagram": "",
+    "domain": "tech"
+  },
+  {
+    "name": "Hariom Malode",
+    "title": "Documentation Team Member",
+    "image": "static/img/team/2023/hariom.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "",
+    "instagram": "",
+    "domain": "documentation"
+  },
+  {
+    "name": "Mehul Pawar",
+    "title": "Documentation Team Member",
+    "image": "static/img/team/2023/mehul.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "",
+    "instagram": "",
+    "domain": "documentation"
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Chaitali Khachane",
+    "title": "Chair",
+    "image": "static/img/team/2024/chaitali.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "https://www.linkedin.com/in/chaitali-khachane-322685236/",
+    "instagram": "",
+    "domain": "core"
+  },
+  {
+    "name": "Atharva Nawale",
+    "title": "Vice Chair",
+    "image": "static/img/team/2024/navle.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "https://www.linkedin.com/in/atharva-nawale/",
+    "instagram": "",
+    "domain": "core"
+  },
+  {
+    "name": "Sakshi Mane",
+    "title": "Administrator",
+    "image": "static/img/team/2024/sakshi-mane.jpeg",
+    "linktree": "",
+    "github": "https://github.com/thesakshimane",
+    "linkedin": "https://www.linkedin.com/in/sakshi-mane-9b88aa289/",
+    "instagram": "https://www.instagram.com/the_sakshimane",
+    "domain": "core"
+  },
+  {
+    "name": "Devang Gandhi",
+    "title": "Secretary",
+    "image": "static/img/team/2024/devang.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "https://www.linkedin.com/in/devang-gandhi-917304213/",
+    "instagram": "",
+    "domain": "core"
+  },
+  {
+    "name": "Aditya Sarade",
+    "title": "Jt. Secretary",
+    "image": "static/img/team/2024/sarde.jpeg",
+    "linktree": "",
+    "github": "https://github.com/adityasarade",
+    "linkedin": "https://www.linkedin.com/in/adityasarade",
+    "instagram": "https://www.instagram.com/aditya__14",
+    "domain": "core"
+  },
+  {
+    "name": "Aayush Sangole",
+    "title": "Executive Manager",
+    "image": "static/img/team/2024/sangole.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "http://linkedin.com/in/ayush-sangole-336804220",
+    "instagram": "",
+    "domain": "core"
+  },
+  {
+    "name": "Pranav Vetkar",
+    "title": "Treasurer",
+    "image": "static/img/team/2024/vedant-vetkar.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "https://www.linkedin.com/in/pranav-vetkar-4b773a254/",
+    "instagram": "",
+    "domain": "core"
+  },
+  {
+    "name": "Aditya Godse",
+    "title": "Web Master",
+    "image": "static/img/team/2024/adimail.jpeg",
+    "linktree": "",
+    "github": "https://github.com/adimail",
+    "linkedin": "",
+    "instagram": "",
+    "domain": "web"
+  },
+  {
+    "name": "Swaroop Patil",
+    "title": "Web Team Member",
+    "image": "static/img/team/2024/web-swaroop.jpeg",
+    "linktree": "https://linktr.ee/swarooppatilx",
+    "github": "https://github.com/swarooppatilx",
+    "linkedin": "https://www.linkedin.com/in/swarooppatilx",
+    "instagram": "https://www.instagram.com/swarooppatilx",
+    "domain": "web"
+  },
+  {
+    "name": "Ayush Musale",
+    "title": "Web Team Member",
+    "image": "static/img/team/2024/web-ayush.jpeg",
+    "linktree": "",
+    "github": "",
+    "linkedin": "https://www.linkedin.com/in/aayush-musale-517a7326a/",
+    "instagram": "",
+    "domain": "web"
+  },
+  {
+    "name": "Pranita Bobade",
+    "title": "Technical Head",
+    "image": "static/img/team/2024/tech-pranita.jpeg",
+    "linktree": "https://linktr.ee/pranita2405",
+    "github": "https://github.com/pranitab07",
+    "linkedin": "https://www.linkedin.com/in/pranita-bobade-21b02625b/",
+    "instagram": "https://www.instagram.com/pranita24_b",
+    "domain": "tech"
+  },
+  {
+    "name": "Atharva Satpute",
+    "title": "Technical Member",
+    "image": "static/img/team/2024/tech-atharva.jpeg",
+    "linktree": "https://linktr.ee/atharv_s16",
+    "github": "https://github.com/Atharvs16",
+    "linkedin": "https://www.linkedin.com/in/atharv-s16",
+    "instagram": "https://www.instagram.com/atharv_s16",
+    "domain": "tech"
+  }
+]
