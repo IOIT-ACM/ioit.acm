@@ -27,6 +27,7 @@ EXCLUDE_LIST=(
 	"node_modules"
 	"package-lock.json"
 	".venv"
+	"venv"
 	".gitignore"
 	"*.DS_Store"
 	"README.md"

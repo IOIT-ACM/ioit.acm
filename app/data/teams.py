@@ -261,7 +261,7 @@ team_data = {
             "domain": "event-management",
         },
         {
-            "name": "Prathamesh Vaydan",
+            "name": "Prathamesh Vayadande",
             "title": "Event Management Team",
             "image": "static/img/team/2024/mg-prathamesh.jpeg",
             "linktree": "",
