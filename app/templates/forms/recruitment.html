@@ -1,0 +1,242 @@
+{% extends "competitions/base.html" %}
+{% block title %}ACM Recruitment Form{% endblock %}
+{% block content %}
+
+<div class="flex justify-center items-center bg-gray-100 min-h-screen">
+    <div class="w-full max-w-5xl">
+        <h3 class="text-3xl font-extrabold text-center md:my-20 my-10 text-gray-800">
+            ACM Recruitment Form
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 px-6">
+            <!-- Left Image -->
+            <div class="w-full flex justify-center mt-10 md:mt-0">
+                <div class="w-2/3 h-fit sticky top-32">
+                    <div class="aspect-square bg-blue-500 w-1/2 absolute border border-white rounded-xl animate-rotate">
+                    </div>
+                    <div
+                        class="aspect-square overflow-hidden bg-white w-full rotate-45 rounded-3xl border-4 border-white shadow-xl shadow-blue-300 relative">
+                        <img src="{{ url_for('static', filename='og-image.png') }}" alt="about-image"
+                            class="-rotate-45 z-10" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Multi-Step Form -->
+            <form id="acmForm" class="p-5 md:p-0 space-y-6">
+                <!-- Step 1: General Info -->
+                <div id="step-1" class="form-step">
+                    <p class="text-xl font-semibold text-gray-700 mb-6">Step 1: General Information</p>
+
+                    <div class="mb-4">
+                        <label class="block mb-2 font-medium">Full Name</label>
+                        <input type="text" name="fullName" required placeholder="Enter full name"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block mb-2 font-medium">Branch</label>
+                        <select name="branch" required
+                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option disabled selected>Select branch</option>
+                            <option>CS</option>
+                            <option>IT</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block mb-2 font-medium">Year</label>
+                        <select name="year" required
+                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option disabled selected>Select year</option>
+                            <option>FY</option>
+                            <option>SY</option>
+                            <option>TY</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block mb-2 font-medium">Mobile Number</label>
+                        <input type="tel" name="mobile" required placeholder="Enter mobile number"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <button type="button" onclick="nextStep()"
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
+                        Next
+                    </button>
+                </div>
+
+                <!-- Step 2: Role Selection -->
+                <div id="step-2" class="form-step hidden">
+                    <p class="text-xl font-semibold text-gray-700 mb-6">Step 2: What role are you applying for?</p>
+
+                    <select name="roleType" id="roleType" onchange="renderStage3()" required
+                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 mb-6">
+                        <option disabled selected>Select Role Type</option>
+                        <option value="chief">Chief Officer</option>
+                        <option value="domain">Domain Head</option>
+                        <option value="mun">MUN</option>
+                        <option value="volunteer">Member</option>
+                    </select>
+
+                    <div class="flex justify-between">
+                        <button type="button" onclick="prevStep()"
+                            class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition">
+                            Back
+                        </button>
+                        <button type="button" onclick="nextStep()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
+                            Next
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Specific Role Info -->
+                <div id="step-3" class="form-step hidden space-y-6">
+                    <!-- Chief Officer -->
+                    <div id="chief-fields" class="role-section hidden">
+                        <label class="block mb-2 font-medium">Chief Role</label>
+                        <select name="chiefRole"
+                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 mb-4">
+                            <option disabled selected>Select Chief Officer Role</option>
+                            {% for c in
+                            ['CEO','COO','CEMO','CSO','CMO','CTO','CFCO','CHO','CCO','CDO','CVLO','CAPO','CPRO','CFO','CMDO','CPO']
+                            %}
+                            <option>Chief {{ c }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Domain Head -->
+                    <div id="domain-fields" class="role-section hidden">
+                        <label class="block mb-2 font-medium">Domain</label>
+                        <select name="domainRole"
+                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 mb-4">
+                            <option disabled selected>Select Domain</option>
+                            {% for d in ['Techfiesta','Esummit','MUN','Esports'] %}
+                            <option>{{ d }} Domain Head</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- MUN -->
+                    <div id="mun-fields" class="role-section hidden">
+                        <label class="block mb-2 font-medium">MUN Role</label>
+                        <select name="munRole"
+                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 mb-4">
+                            {% for m in ['Secretary General','Deputy Secretary General','USG Management','USG Delegate
+                            Affairs','USG Fin','USG Tech','USG Glob. Comm'] %}
+                            <option>{{ m }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Member -->
+                    <div id="volunteer-fields" class="role-section hidden">
+                        <label class="block mb-2 font-medium">Interested Area</label>
+                        <input name="volunteerArea" type="text" placeholder="e.g. Tech, Design, Events"
+                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <!-- Common Questions -->
+                    <div class="space-y-4">
+                        <label class="block mb-2 font-medium">Why do you want to apply for this role?</label>
+                        <textarea name="whyApply" rows="3"
+                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+
+                        <label class="block mb-2 font-medium">Previous Experience (if any)</label>
+                        <textarea name="experience" rows="3"
+                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+
+                    <div class="flex justify-between pt-4">
+                        <button type="button" onclick="prevStep()"
+                            class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition">
+                            Back
+                        </button>
+                        <button type="submit"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
+                            Submit Application
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Styling -->
+<style>
+    .form-step {
+        background: white;
+        padding: 1rem;
+        border-radius: 0.5rem;
+    }
+
+    .role-section {
+        background: #f9fafb;
+        padding: 1rem;
+        border-radius: 0.5rem;
+    }
+</style>
+
+<!-- Logic -->
+<script>
+    let currentStep = 1;
+    function goToStep(step) {
+        document.querySelectorAll('.form-step').forEach(div => div.classList.add('hidden'));
+        document.getElementById(`step-${step}`).classList.remove('hidden');
+        currentStep = step;
+    }
+    function nextStep() {
+        if (currentStep < 3) goToStep(currentStep + 1);
+    }
+    function prevStep() {
+        if (currentStep > 1) goToStep(currentStep - 1);
+    }
+    function renderStage3() {
+        const val = document.getElementById('roleType').value;
+        document.querySelectorAll('.role-section').forEach(el => el.classList.add('hidden'));
+        if (val) {
+            document.getElementById(`${val}-fields`).classList.remove('hidden');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', () => goToStep(1));
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById('acmForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const formData = new FormData(form);
+            const data = {};
+
+            formData.forEach((value, key) => {
+                if (value !== "") data[key] = value;
+            });
+
+            console.log("Sending JSON:", data);
+
+            try {
+                const response = await fetch("{{ url_for('recruitment.acm_recruitment_form') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                alert(result.message || "Submitted successfully!");
+            } catch (err) {
+                console.error("Error:", err);
+                alert("Failed to submit. Try again.");
+            }
+        });
+    });
+</script>
+
+{% endblock %}
