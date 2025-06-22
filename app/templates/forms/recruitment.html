@@ -1,4 +1,4 @@
-{% extends "competitions/base.html" %}
+{% extends "base.html" %}
 {% block title %}ACM Recruitment Form{% endblock %}
 {% block content %}
 
@@ -22,9 +22,9 @@
                 </div>
             </div>
 
-            <!-- Multi-Step Form -->
+            <!-- Form -->
             <form id="acmForm" class="p-5 md:p-0 space-y-6">
-                <!-- Step 1: General Info -->
+                <!-- Step 1 -->
                 <div id="step-1" class="form-step">
                     <p class="text-xl font-semibold text-gray-700 mb-6">Step 1: General Information</p>
 
@@ -62,12 +62,10 @@
                     </div>
 
                     <button type="button" onclick="nextStep()"
-                        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
-                        Next
-                    </button>
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">Next</button>
                 </div>
 
-                <!-- Step 2: Role Selection -->
+                <!-- Step 2 -->
                 <div id="step-2" class="form-step hidden">
                     <p class="text-xl font-semibold text-gray-700 mb-6">Step 2: What role are you applying for?</p>
 
@@ -82,17 +80,13 @@
 
                     <div class="flex justify-between">
                         <button type="button" onclick="prevStep()"
-                            class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition">
-                            Back
-                        </button>
+                            class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition">Back</button>
                         <button type="button" onclick="nextStep()"
-                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
-                            Next
-                        </button>
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">Next</button>
                     </div>
                 </div>
 
-                <!-- Step 3: Specific Role Info -->
+                <!-- Step 3 -->
                 <div id="step-3" class="form-step hidden space-y-6">
                     <!-- Chief Officer -->
                     <div id="chief-fields" class="role-section hidden">
@@ -132,7 +126,7 @@
                         </select>
                     </div>
 
-                    <!-- Member -->
+                    <!-- Volunteer -->
                     <div id="volunteer-fields" class="role-section hidden">
                         <label class="block mb-2 font-medium">Interested Area</label>
                         <input name="volunteerArea" type="text" placeholder="e.g. Tech, Design, Events"
@@ -152,13 +146,10 @@
 
                     <div class="flex justify-between pt-4">
                         <button type="button" onclick="prevStep()"
-                            class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition">
-                            Back
-                        </button>
+                            class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition">Back</button>
                         <button type="submit"
-                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
-                            Submit Application
-                        </button>
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">Submit
+                            Application</button>
                     </div>
                 </div>
             </form>
@@ -166,7 +157,7 @@
     </div>
 </div>
 
-<!-- Styling -->
+<!-- Styles -->
 <style>
     .form-step {
         background: white;
@@ -181,32 +172,36 @@
     }
 </style>
 
-<!-- Logic -->
+<!-- Scripts -->
 <script>
     let currentStep = 1;
+
     function goToStep(step) {
         document.querySelectorAll('.form-step').forEach(div => div.classList.add('hidden'));
         document.getElementById(`step-${step}`).classList.remove('hidden');
         currentStep = step;
     }
+
     function nextStep() {
         if (currentStep < 3) goToStep(currentStep + 1);
     }
+
     function prevStep() {
         if (currentStep > 1) goToStep(currentStep - 1);
     }
+
     function renderStage3() {
         const val = document.getElementById('roleType').value;
         document.querySelectorAll('.role-section').forEach(el => el.classList.add('hidden'));
         if (val) {
-            document.getElementById(`${val}-fields`).classList.remove('hidden');
+            const target = document.getElementById(val + "-fields");
+            if (target) target.classList.remove('hidden');
         }
     }
-    document.addEventListener('DOMContentLoaded', () => goToStep(1));
-</script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", function () {
+        goToStep(1);
+
         document.getElementById('acmForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
@@ -214,26 +209,37 @@
             const formData = new FormData(form);
             const data = {};
 
+            const roleType = formData.get("roleType");
+
+            const alwaysInclude = ["fullName", "branch", "year", "mobile", "roleType", "whyApply", "experience"];
+
+            const roleFields = {
+                "chief": ["chiefRole"],
+                "domain": ["domainRole"],
+                "mun": ["munRole"],
+                "volunteer": ["volunteerArea"]
+            };
+
             formData.forEach((value, key) => {
-                if (value !== "") data[key] = value;
+                if (alwaysInclude.indexOf(key) > -1) {
+                    data[key] = value;
+                } else if (roleType in roleFields && roleFields[roleType].indexOf(key) > -1) {
+                    data[key] = value;
+                }
             });
 
-            console.log("Sending JSON:", data);
-
             try {
-                const response = await fetch("{{ url_for('recruitment.acm_recruitment_form') }}", {
+                const res = await fetch("{{ url_for('recruitment.acm_recruitment_form') }}", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)
                 });
 
-                const result = await response.json();
-                alert(result.message || "Submitted successfully!");
+                const result = await res.json();
+                alert(result.message || "Form submitted successfully.");
             } catch (err) {
-                console.error("Error:", err);
-                alert("Failed to submit. Try again.");
+                console.error(err);
+                alert("Submission failed.");
             }
         });
     });
