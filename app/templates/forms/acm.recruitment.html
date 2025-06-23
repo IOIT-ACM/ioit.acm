@@ -1,0 +1,487 @@
+{% extends "forms/base.html" %} {% block title %}ACM Recruitment Form{% endblock
+%} {% block content %}
+<div class="max-w-6xl mx-auto md:p-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="w-full flex justify-center mt-10 md:mt-0">
+      <div class="w-1/2 md:mt-20 h-fit sticky top-32">
+        <div
+          class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl animate-rotate"
+        ></div>
+        <div
+          class="aspect-square overflow-hidden bg-white w-full h-auto transform rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400"
+        >
+          <img
+            class="-rotate-45 z-50"
+            src="{{ url_for('static', filename='og-image.png') }}"
+            alt="about-image"
+          />
+        </div>
+      </div>
+    </div>
+    
+    <form id="acmForm" class="p-5 md:p-0 space-y-6">
+      <div id="step-1" class="form-step">
+        <p class="text-lg font-semibold text-gray-700 mb-6">
+          Step 1: General Info
+        </p>
+        <hr class="border-t-2 border-gray-500 my-6" />
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2 mt-10"
+            >Full Name</label
+          >
+          <input
+            type="text"
+            name="fullName"
+            placeholder="Enter full name"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2 mt-10"
+            >Branch</label
+          >
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% for b in ['CS','IT','AI&DS','ENTC','ELEC','INSTRU'] %}
+            <label
+              class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
+            >
+              <input
+                type="radio"
+                name="branch"
+                value="{{ b }}"
+                class="accent-blue-500 focus:outline-none mr-3"
+              />
+              <span class="text-gray-800 font-medium">{{ b }}</span>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="mb-6">
+          <label class="block text-gray-700 font-semibold mb-2 mt-10"
+            >Year</label
+          >
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% for y in ['FY','SY','TY','BE'] %}
+            <label
+              class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
+            >
+              <input
+                type="radio"
+                name="year"
+                value="{{ y }}"
+                class="accent-blue-500 focus:outline-none mr-3"
+              />
+              <span class="text-gray-800 font-medium">{{ y }}</span>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="mb-6">
+          <label class="block text-gray-700 font-semibold mb-2 mt-10"
+            >Mobile Number</label
+          >
+          <input
+            type="tel"
+            name="mobile"
+            placeholder="Enter mobile number"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <button
+          type="button"
+          onclick="if(validateStep(1)) nextStep()"
+          class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition"
+        >
+          Next
+        </button>
+      </div>
+      
+      <div id="step-2" class="form-step hidden">
+        <p class="text-lg font-semibold text-gray-700 mb-6">
+          Step 2: Choose Your Role
+        </p>
+        <hr class="border-t-2 border-gray-500 my-6" />
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          {% for role in ['chief','domainhead','mun','volunteer'] %}
+          <label
+            class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
+          >
+            <input
+              type="radio"
+              name="roleType"
+              value="{{ role }}"
+              onchange="renderStage3()"
+              class="accent-blue-500 focus:outline-none mr-3"
+            />
+            <span class="capitalize text-gray-800 font-medium"
+              >{{ role.replace('head',' Head') }}</span
+            >
+          </label>
+          {% endfor %}
+        </div>
+        <div class="flex justify-between">
+          <button
+            type="button"
+            onclick="prevStep()"
+            class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition"
+          >
+            Back
+          </button>
+          <button
+            type="button"
+            onclick="if(validateStep(2)) nextStep()"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <div id="step-3" class="form-step hidden space-y-6">
+        <div id="chief-fields" class="role-section hidden">
+          <label class="block text-gray-700 font-semibold mb-2 mt-10"
+            >Chief Role</label
+          >
+          <select
+            name="chiefRole"
+            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 mb-4"
+          >
+            <option value="" disabled selected>
+              Select Chief Officer Role
+            </option>
+            {% for c in
+            ['CEO','COO','CEMO','CSO','CMO','CTO','CFCO','CHO','CCO','CDO','CVLO','CAPO','CPRO','CFO','CMDO','CPO']
+            %}
+            <option value="{{ c }}">{{ c }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div id="domainhead-fields" class="role-section hidden">
+          <label class="block text-gray-700 font-semibold mb-2 mt-10"
+            >Domain</label
+          >
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% for domain in ['Techfiesta','Esummit','MUN','Esports'] %}
+            <label
+              class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
+            >
+              <input
+                type="radio"
+                name="domainRole"
+                value="{{ domain }} Domain Head"
+                class="accent-blue-500 focus:outline-none mr-3"
+              />
+              <span class="text-gray-800 font-medium"
+                >{{ domain }} Domain Head</span
+              >
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+        <div id="mun-fields" class="role-section hidden">
+          <label class="block text-gray-700 font-semibold mb-2 mt-10"
+            >MUN Role</label
+          >
+          <select
+            name="munRole"
+            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 mb-4"
+          >
+            <option value="" disabled selected>Select MUN Role</option>
+            {% for m in ['Secretary General','Deputy Secretary General','USG
+            Management','USG Delegate Affairs','USG Fin','USG Tech','USG Glob.
+            Comm'] %}
+            <option value="{{ m }}">{{ m }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div id="volunteer-fields" class="role-section hidden">
+          <label class="block text-gray-700 font-semibold mb-2 mt-10"
+            >Interested Area</label
+          >
+          <input
+            name="volunteerArea"
+            type="text"
+            placeholder="e.g. Tech, Design, Events"
+            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div class="space-y-4">
+          <label class="block text-gray-700 font-semibold mb-2 mt-10"
+            >Previous Experience (if any)</label
+          >
+          <textarea
+            name="experience"
+            rows="3"
+            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          ></textarea>
+          <label class="block text-gray-700 font-semibold mb-2 mt-10"
+            >Why this role?</label
+          >
+          <textarea
+            name="whyApply"
+            rows="3"
+            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          ></textarea>
+        </div>
+        <div class="flex justify-between pt-4">
+          <button
+            type="button"
+            onclick="prevStep()"
+            class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition"
+          >
+            Back
+          </button>
+          <div class="relative">
+            <button
+              type="submit"
+              id="submitBtn"
+              class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition"
+            >
+              Submit
+            </button>
+            <div
+              id="spinner"
+              class="hidden absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 rounded-lg"
+            >
+              <svg
+                class="animate-spin h-6 w-6 text-blue-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                />
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <p id="formMsg" class="text-center text-lg font-semibold mt-4"></p>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+  let currentStep = 1,
+    formMemory = {};
+  function saveFormData() {
+    const f = document.getElementById('acmForm'),
+      fd = new FormData(f);
+    formMemory = {};
+    f.querySelectorAll(
+      'input[type="text"],input[type="tel"],textarea,select'
+    ).forEach((e) => e.value.trim() && (formMemory[e.name] = e.value));
+    f.querySelectorAll('input[type="radio"]:checked').forEach(
+      (e) => (formMemory[e.name] = e.value)
+    );
+    formMemory.currentStep = currentStep;
+  }
+  function loadFormData() {
+    if (!Object.keys(formMemory).length) return;
+    const f = document.getElementById('acmForm');
+    Object.keys(formMemory).forEach((n) => {
+      if (n === 'currentStep') return;
+      const e = f.querySelector(`[name="${n}"]`);
+      if (e) {
+        if (e.type === 'radio') {
+          const r = f.querySelector(`[name="${n}"][value="${formMemory[n]}"]`);
+          r && ((r.checked = true), updateRadioStyling(r));
+        } else e.value = formMemory[n];
+      }
+    });
+    if (formMemory.currentStep) goToStep(formMemory.currentStep);
+    formMemory.roleType && renderStage3();
+  }
+  function updateRadioStyling(r) {
+    document.querySelectorAll(`input[name="${r.name}"]`).forEach((e) => {
+      const l = e.closest('.radio-option');
+      l &&
+        (l.classList.remove('bg-blue-100', 'border-blue-500'),
+        l.classList.add('border-gray-300'));
+    });
+    const s = r.closest('.radio-option');
+    s &&
+      (s.classList.remove('border-gray-300'),
+      s.classList.add('bg-blue-100', 'border-blue-500'));
+  }
+  function goToStep(s) {
+    saveFormData();
+    document
+      .querySelectorAll('.form-step')
+      .forEach((d) => d.classList.add('hidden'));
+    document.getElementById(`step-${s}`).classList.remove('hidden');
+    currentStep = s;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function nextStep() {
+    currentStep < 3 && goToStep(currentStep + 1);
+  }
+  function prevStep() {
+    currentStep > 1 && goToStep(currentStep - 1);
+  }
+  function renderStage3() {
+    const sel = document.querySelector('input[name="roleType"]:checked');
+    document.querySelectorAll('.role-section').forEach((sec) => {
+      sec.classList.add('hidden');
+      sec
+        .querySelectorAll('input,select')
+        .forEach((el) => (el.disabled = true));
+    });
+    if (sel) {
+      const b = document.getElementById(`${sel.value}-fields`);
+      b &&
+        (b.classList.remove('hidden'),
+        b
+          .querySelectorAll('input,select')
+          .forEach((el) => (el.disabled = false)));
+    }
+  }
+  function validateStep(n) {
+    const step = document.getElementById(`step-${n}`),
+      f = document.getElementById('acmForm'),
+      fd = new FormData(f),
+      rt = fd.get('roleType'),
+      always = ['fullName', 'branch', 'year', 'mobile', 'roleType', 'whyApply'],
+      cond = {
+        chief: ['chiefRole'],
+        domainhead: ['domainRole'],
+        mun: ['munRole'],
+        volunteer: ['volunteerArea'],
+      };
+    let fields = [];
+    if (n === 1) fields = always.slice(0, 4);
+    else if (n === 2) fields = [always[4]];
+    else if (n === 3) {
+      fields = [always[5]];
+      cond[rt] && (fields = fields.concat(cond[rt]));
+    }
+    let valid = true,
+      first;
+    step
+      .querySelectorAll('.border-red-500')
+      .forEach((i) => i.classList.remove('border-red-500'));
+    step.querySelectorAll('.error-msg').forEach((e) => e.remove());
+    for (const name of fields) {
+      const els = step.querySelectorAll(`[name="${name}"]:not([disabled])`);
+      if (!els.length) continue;
+      let ok =
+        els[0].type === 'radio'
+          ? [...els].some((e) => e.checked)
+          : els[0].value.trim() !== '';
+      if (!ok) {
+        valid = false;
+        els.forEach((el) => {
+          el.classList.add('border-red-500');
+          const wrap = el.closest('div') || el.parentElement;
+          if (!wrap.querySelector('.error-msg')) {
+            const msg = document.createElement('p');
+            msg.className = 'text-sm text-red-500 mt-1 error-msg';
+            msg.innerText = 'This field is required';
+            wrap.appendChild(msg);
+          }
+        });
+        if (!first) first = els[0];
+      }
+    }
+    if (!valid && first) first.scrollIntoView({ behavior: 'smooth' });
+    return valid;
+  }
+  function handleRadioSelection() {
+    document.querySelectorAll('input[type="radio"]').forEach((r) =>
+      r.addEventListener('change', function () {
+        updateRadioStyling(this);
+        saveFormData();
+      })
+    );
+  }
+  function clearFormMemory() {
+    formMemory = {};
+  }
+  function setupAutoSave() {
+    setInterval(saveFormData, 30000);
+    document.querySelectorAll('input,select,textarea').forEach((e) => {
+      e.addEventListener('input', saveFormData);
+      e.addEventListener('change', saveFormData);
+    });
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    goToStep(1);
+    renderStage3();
+    handleRadioSelection();
+    setupAutoSave();
+    loadFormData();
+    document.querySelectorAll('input,select,textarea').forEach((e) =>
+      e.addEventListener('input', () => {
+        e.classList.remove('border-red-500');
+        const er = e.closest('div')?.querySelector('.error-msg');
+        er && er.remove();
+      })
+    );
+    document.getElementById('acmForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validateStep(3)) return;
+      const data = {},
+        fd = new FormData(e.target),
+        rt = fd.get('roleType'),
+        alwaysInclude = [
+          'fullName',
+          'branch',
+          'year',
+          'mobile',
+          'roleType',
+          'whyApply',
+          'experience',
+        ],
+        roleFields = {
+          chief: ['chiefRole'],
+          domainhead: ['domainRole'],
+          mun: ['munRole'],
+          volunteer: ['volunteerArea'],
+        };
+      fd.forEach((v, k) => {
+        if (alwaysInclude.includes(k) || (roleFields[rt] || []).includes(k))
+          data[k] = v;
+      });
+      const btn = document.getElementById('submitBtn'),
+        spin = document.getElementById('spinner'),
+        msg = document.getElementById('formMsg');
+      btn.disabled = true;
+      spin.classList.remove('hidden');
+      msg.innerText = '';
+      try {
+        const res = await fetch(
+          "{{ url_for('recruitment.acm_recruitment_form') }}",
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          }
+        );
+        const result = await res.json();
+        msg.className =
+          'text-center text-lg font-semibold mt-4 ' +
+          (res.ok ? 'text-green-600' : 'text-red-600');
+        msg.innerText = res.ok ? result.message : result.error;
+        if (res.ok) clearFormMemory();
+      } catch {
+        msg.className = 'text-center text-lg font-semibold mt-4 text-red-600';
+        msg.innerText = 'Submission failed';
+      } finally {
+        btn.disabled = false;
+        spin.classList.add('hidden');
+      }
+    });
+    window.addEventListener('beforeunload', saveFormData);
+  });
+</script>
+{% endblock %}
