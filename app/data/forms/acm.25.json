@@ -1,0 +1,174 @@
+{
+  "technical_secretary": [
+    {
+      "id": "ts_q1",
+      "label": "Describe your organizational skills and experience with documentation.",
+      "type": "textarea"
+    },
+    {
+      "id": "ts_q2",
+      "label": "How would you ensure effective communication within the committee?",
+      "type": "textarea"
+    },
+    {
+      "id": "ts_q3",
+      "label": "What tools or methods would you use for managing meeting minutes and records?",
+      "type": "textarea"
+    }
+  ],
+  "media_head": [
+    {
+      "id": "mh_q1",
+      "label": "What's your experience with social media management and content creation?",
+      "type": "textarea"
+    },
+    {
+      "id": "mh_q2",
+      "label": "How would you strategize to increase ACM's online presence and engagement?",
+      "type": "textarea"
+    },
+    {
+      "id": "mh_q3",
+      "label": "Can you share a link to a portfolio or examples of your media work?",
+      "type": "text",
+      "placeholder": "https://example.com/portfolio"
+    }
+  ],
+  "web_team": [
+    {
+      "id": "wt_q1",
+      "label": "Describe your experience with web development technologies (HTML, CSS, JS, frameworks).",
+      "type": "textarea"
+    },
+    {
+      "id": "wt_q2",
+      "label": "Have you worked with version control systems like Git? Briefly explain.",
+      "type": "textarea"
+    },
+    {
+      "id": "wt_q3",
+      "label": "Provide a link to your GitHub profile or a web project you've worked on (if any).",
+      "type": "text",
+      "placeholder": "https://github.com/yourusername"
+    }
+  ],
+  "doc_team": [
+    {
+      "id": "dt_q1",
+      "label": "What is your experience with technical writing or creating documentation?",
+      "type": "textarea"
+    },
+    {
+      "id": "dt_q2",
+      "label": "How do you ensure clarity and accuracy in documentation?",
+      "type": "textarea"
+    },
+    {
+      "id": "dt_q3",
+      "label": "Are you familiar with any documentation tools or platforms (e.g., Markdown, Confluence, ReadtheDocs)?",
+      "type": "textarea"
+    }
+  ],
+  "tech_team": [
+    {
+      "id": "tt_q1",
+      "label": "What are your primary technical skills or areas of interest (e.g., programming languages, AI/ML, cybersecurity)?",
+      "type": "textarea"
+    },
+    {
+      "id": "tt_q2",
+      "label": "Describe a technical project you've worked on or a problem you've solved.",
+      "type": "textarea"
+    },
+    {
+      "id": "tt_q3",
+      "label": "How do you stay updated with the latest technological advancements?",
+      "type": "textarea"
+    }
+  ],
+  "event_management_team": [
+    {
+      "id": "em_q1",
+      "label": "Describe any experience you have in planning or organizing events (academic or non-academic).",
+      "type": "textarea"
+    },
+    {
+      "id": "em_q2",
+      "label": "How would you handle unexpected challenges or logistical issues during an event?",
+      "type": "textarea"
+    },
+    {
+      "id": "em_q3",
+      "label": "What qualities do you believe are essential for successful event management and teamwork?",
+      "type": "textarea"
+    }
+  ],
+  "sig_web_technologies": [
+    {
+      "id": "sig_web_technologies_q1",
+      "label": "What is your proficiency in Web Technologies?",
+      "type": "textarea"
+    },
+    {
+      "id": "sig_web_technologies_q2",
+      "label": "What are your plans for this SIG?",
+      "type": "textarea"
+    },
+    {
+      "id": "sig_web_technologies_q3",
+      "label": "What is your opinion of Special Interest Groups and how will you contribute?",
+      "type": "textarea"
+    }
+  ],
+  "sig_ai_ml": [
+    {
+      "id": "sig_ai_ml_q1",
+      "label": "What is your proficiency in AI & ML?",
+      "type": "textarea"
+    },
+    {
+      "id": "sig_ai_ml_q2",
+      "label": "What are your plans for this SIG?",
+      "type": "textarea"
+    },
+    {
+      "id": "sig_ai_ml_q3",
+      "label": "What is your opinion of Special Interest Groups and how will you contribute?",
+      "type": "textarea"
+    }
+  ],
+  "sig_mobile_dev": [
+    {
+      "id": "sig_mobile_dev_q1",
+      "label": "What is your proficiency in Mobile Development?",
+      "type": "textarea"
+    },
+    {
+      "id": "sig_mobile_dev_q2",
+      "label": "What are your plans for this SIG?",
+      "type": "textarea"
+    },
+    {
+      "id": "sig_mobile_dev_q3",
+      "label": "What is your opinion of Special Interest Groups and how will you contribute?",
+      "type": "textarea"
+    }
+  ],
+  "sig_cloud_devops": [
+    {
+      "id": "sig_cloud_devops_q1",
+      "label": "What is your proficiency in Cloud and DevOps?",
+      "type": "textarea"
+    },
+    {
+      "id": "sig_cloud_devops_q2",
+      "label": "What are your plans for this SIG?",
+      "type": "textarea"
+    },
+    {
+      "id": "sig_cloud_devops_q3",
+      "label": "What is your opinion of Special Interest Groups and how will you contribute?",
+      "type": "textarea"
+    }
+  ]
+}

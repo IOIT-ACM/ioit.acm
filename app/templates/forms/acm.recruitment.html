@@ -95,7 +95,7 @@ Form{% endblock %} {% block content %}
             >Year</label
           >
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {% for y in ['FY','SY','TY','BE'] %}
+            {% for y in ['First Year','Second year','Third Year','Final Year'] %}
             <label
               class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
             >
@@ -160,11 +160,11 @@ Form{% endblock %} {% block content %}
         <hr class="border-t border-gray-500 my-4 max-w-10" />
         <h3 class="mb-3">Special Interest Groups ACM</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          {% set committee_roles = [ {'value': 'sig_web_technologies', 'text':
-          'SIG Web Technologies'}, {'value': 'sig_ai_ml', 'text': 'SIG AI&ML'},
+          {% set sig_roles = [ {'value': 'sig_web_technologies', 'text': 'SIG
+          Web Technologies'}, {'value': 'sig_ai_ml', 'text': 'SIG AI&ML'},
           {'value': 'sig_mobile_dev', 'text': 'SIG Mobile Dev'}, {'value':
           'sig_cloud_devops', 'text': 'SIG Cloud and Devops'} ] %} {% for role
-          in committee_roles %}
+          in sig_roles %}
           <label
             class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
           >
@@ -199,299 +199,65 @@ Form{% endblock %} {% block content %}
 
       <div id="step-3" class="form-step hidden space-y-6">
         <p class="text-lg font-semibold text-gray-700 mb-2">
-          Step 3: Experience
+          Step 3: Experience & Role-Specific Questions
         </p>
         <hr class="border-t-2 border-gray-500 my-4" />
 
-        <div
-          id="technical_secretary-fields"
-          class="role-section hidden space-y-4"
-        >
+        {% for role_value, questions in questions_config.items() %}
+        <div id="{{role_value}}-fields" class="role-section hidden space-y-4">
           <p class="text-md font-semibold text-gray-600 mb-2">
-            For Technical Secretary:
+            For {{ (committee_roles + sig_roles) | selectattr('value',
+            'equalto', role_value) | map(attribute='text') | first |
+            default(role_value.replace('_', ' ')|title) }}:
           </p>
+          {% for question in questions %}
           <div>
             <label class="block text-gray-700 font-semibold mb-2"
-              >Describe your organizational skills and experience with
-              documentation.</label
+              >{{ question.label }}</label
             >
+            {% if question.type == 'textarea' %}
             <textarea
-              name="ts_q1"
+              name="{{ question.id }}"
               rows="3"
               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              {%
+              if
+              question.placeholder
+              %}placeholder="{{ question.placeholder }}"
+              {%
+              endif
+              %}
             ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >How would you ensure effective communication within the
-              committee?</label
-            >
-            <textarea
-              name="ts_q2"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What tools or methods would you use for managing meeting minutes
-              and records?</label
-            >
-            <textarea
-              name="ts_q3"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-        </div>
-
-        <div id="media_head-fields" class="role-section hidden space-y-4">
-          <p class="text-md font-semibold text-gray-600 mb-2">
-            For Media Head:
-          </p>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What's your experience with social media management and content
-              creation?</label
-            >
-            <textarea
-              name="mh_q1"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >How would you strategize to increase ACM's online presence and
-              engagement?</label
-            >
-            <textarea
-              name="mh_q2"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >Can you share a link to a portfolio or examples of your media
-              work?</label
-            >
+            {% elif question.type == 'text' %}
             <input
               type="text"
-              name="mh_q3"
-              placeholder="https://example.com/portfolio"
+              name="{{ question.id }}"
               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              {%
+              if
+              question.placeholder
+              %}placeholder="{{ question.placeholder }}"
+              {%
+              endif
+              %}
             />
+            {% endif %}
           </div>
+          {% endfor %}
         </div>
-
-        <div id="web_team-fields" class="role-section hidden space-y-4">
-          <p class="text-md font-semibold text-gray-600 mb-2">For Web Team:</p>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >Describe your experience with web development technologies (HTML,
-              CSS, JS, frameworks).</label
-            >
-            <textarea
-              name="wt_q1"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >Have you worked with version control systems like Git? Briefly
-              explain.</label
-            >
-            <textarea
-              name="wt_q2"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >Provide a link to your GitHub profile or a web project you've
-              worked on (if any).</label
-            >
-            <input
-              type="text"
-              name="wt_q3"
-              placeholder="https://github.com/yourusername"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        </div>
-
-        <div id="doc_team-fields" class="role-section hidden space-y-4">
-          <p class="text-md font-semibold text-gray-600 mb-2">For Doc Team:</p>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What is your experience with technical writing or creating
-              documentation?</label
-            >
-            <textarea
-              name="dt_q1"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >How do you ensure clarity and accuracy in documentation?</label
-            >
-            <textarea
-              name="dt_q2"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >Are you familiar with any documentation tools or platforms (e.g.,
-              Markdown, Confluence, ReadtheDocs)?</label
-            >
-            <textarea
-              name="dt_q3"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-        </div>
-
-        <div id="tech_team-fields" class="role-section hidden space-y-4">
-          <p class="text-md font-semibold text-gray-600 mb-2">For Tech Team:</p>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What are your primary technical skills or areas of interest
-              (e.g., programming languages, AI/ML, cybersecurity)?</label
-            >
-            <textarea
-              name="tt_q1"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >Describe a technical project you've worked on or a problem you've
-              solved.</label
-            >
-            <textarea
-              name="tt_q2"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >How do you stay updated with the latest technological
-              advancements?</label
-            >
-            <textarea
-              name="tt_q3"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-        </div>
+        {% endfor %}
 
         <div
-          id="event_management_team-fields"
+          id="sig_common_profiles-fields"
           class="role-section hidden space-y-4"
         >
-          <p class="text-md font-semibold text-gray-600 mb-2">
-            For Event Management Team:
-          </p>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >Describe any experience you have in planning or organizing events
-              (academic or non-academic).</label
-            >
-            <textarea
-              name="em_q1"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >How would you handle unexpected challenges or logistical issues
-              during an event?</label
-            >
-            <textarea
-              name="em_q2"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What qualities do you believe are essential for successful event
-              management and teamwork?</label
-            >
-            <textarea
-              name="em_q3"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-        </div>
-
-        <div
-          id="sig_web_technologies-fields"
-          class="role-section hidden space-y-4"
-        >
-          <p class="text-md font-semibold text-gray-600 mb-2">
-            For SIG Web Technologies:
-          </p>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What is your proficiency in Web Technologies?</label
-            >
-            <textarea
-              name="sig_web_technologies_q1"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What are your plans for this SIG?</label
-            >
-            <textarea
-              name="sig_web_technologies_q2"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What is your opinion of Special Interest Groups?</label
-            >
-            <textarea
-              name="sig_web_technologies_q3"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >How will you contribute to the SIG community?</label
-            >
-            <textarea
-              name="sig_web_technologies_q4"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
           <div>
             <label class="block text-gray-700 font-semibold mb-2"
               >GitHub Profile</label
             >
             <input
               type="text"
-              name="sig_web_technologies_github"
+              name="sig_github_profile"
               placeholder="https://github.com/username"
               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             />
@@ -502,211 +268,7 @@ Form{% endblock %} {% block content %}
             >
             <input
               type="text"
-              name="sig_web_technologies_linkedin"
-              placeholder="https://linkedin.com/in/username"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        </div>
-
-        <div id="sig_ai_ml-fields" class="role-section hidden space-y-4">
-          <p class="text-md font-semibold text-gray-600 mb-2">
-            For SIG AI&amp;ML:
-          </p>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What is your proficiency in AI&amp;ML?</label
-            >
-            <textarea
-              name="sig_ai_ml_q1"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What are your plans for this SIG?</label
-            >
-            <textarea
-              name="sig_ai_ml_q2"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What is your opinion of Special Interest Groups?</label
-            >
-            <textarea
-              name="sig_ai_ml_q3"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >How will you contribute to the SIG community?</label
-            >
-            <textarea
-              name="sig_ai_ml_q4"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >GitHub Profile</label
-            >
-            <input
-              type="text"
-              name="sig_ai_ml_github"
-              placeholder="https://github.com/username"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >LinkedIn Profile</label
-            >
-            <input
-              type="text"
-              name="sig_ai_ml_linkedin"
-              placeholder="https://linkedin.com/in/username"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        </div>
-
-        <div id="sig_mobile_dev-fields" class="role-section hidden space-y-4">
-          <p class="text-md font-semibold text-gray-600 mb-2">
-            For SIG Mobile Dev:
-          </p>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What is your proficiency in Mobile Development?</label
-            >
-            <textarea
-              name="sig_mobile_dev_q1"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What are your plans for this SIG?</label
-            >
-            <textarea
-              name="sig_mobile_dev_q2"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What is your opinion of Special Interest Groups?</label
-            >
-            <textarea
-              name="sig_mobile_dev_q3"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >How will you contribute to the SIG community?</label
-            >
-            <textarea
-              name="sig_mobile_dev_q4"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >GitHub Profile</label
-            >
-            <input
-              type="text"
-              name="sig_mobile_dev_github"
-              placeholder="https://github.com/username"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >LinkedIn Profile</label
-            >
-            <input
-              type="text"
-              name="sig_mobile_dev_linkedin"
-              placeholder="https://linkedin.com/in/username"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        </div>
-
-        <div id="sig_cloud_devops-fields" class="role-section hidden space-y-4">
-          <p class="text-md font-semibold text-gray-600 mb-2">
-            For SIG Cloud and Devops:
-          </p>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What is your proficiency in Cloud and Devops?</label
-            >
-            <textarea
-              name="sig_cloud_devops_q1"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What are your plans for this SIG?</label
-            >
-            <textarea
-              name="sig_cloud_devops_q2"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >What is your opinion of Special Interest Groups?</label
-            >
-            <textarea
-              name="sig_cloud_devops_q3"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >How will you contribute to the SIG community?</label
-            >
-            <textarea
-              name="sig_cloud_devops_q4"
-              rows="3"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >GitHub Profile</label
-            >
-            <input
-              type="text"
-              name="sig_cloud_devops_github"
-              placeholder="https://github.com/username"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >LinkedIn Profile</label
-            >
-            <input
-              type="text"
-              name="sig_cloud_devops_linkedin"
+              name="sig_linkedin_profile"
               placeholder="https://linkedin.com/in/username"
               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             />
@@ -833,34 +395,30 @@ Form{% endblock %} {% block content %}
       'sig_web_technologies_q1',
       'sig_web_technologies_q2',
       'sig_web_technologies_q3',
-      'sig_web_technologies_q4',
-      'sig_web_technologies_github',
-      'sig_web_technologies_linkedin',
+      'sig_github_profile',
+      'sig_linkedin_profile',
     ],
     sig_ai_ml: [
       'sig_ai_ml_q1',
       'sig_ai_ml_q2',
       'sig_ai_ml_q3',
-      'sig_ai_ml_q4',
-      'sig_ai_ml_github',
-      'sig_ai_ml_linkedin',
+      'sig_github_profile',
+      'sig_linkedin_profile',
     ],
     sig_mobile_dev: [
       'sig_mobile_dev_q1',
       'sig_mobile_dev_q2',
       'sig_mobile_dev_q3',
-      'sig_mobile_dev_q4',
-      'sig_mobile_dev_github',
-      'sig_mobile_dev_linkedin',
+      'sig_github_profile',
+      'sig_linkedin_profile',
     ],
     sig_cloud_devops: [
       'sig_cloud_devops_q1',
       'sig_cloud_devops_q2',
       'sig_cloud_devops_q3',
-      'sig_cloud_devops_q4',
-      'sig_cloud_devops_github',
-      'sig_cloud_devops_linkedin',
-    ]
+      'sig_github_profile',
+      'sig_linkedin_profile',
+    ],
   };
 
   function saveFormData() {
@@ -955,6 +513,16 @@ Form{% endblock %} {% block content %}
         .forEach((el) => (el.disabled = true));
     });
 
+    const sigCommonProfilesSection = document.getElementById(
+      'sig_common_profiles-fields'
+    );
+    if (sigCommonProfilesSection) {
+      sigCommonProfilesSection.classList.add('hidden');
+      sigCommonProfilesSection
+        .querySelectorAll('textarea, input, select')
+        .forEach((el) => (el.disabled = true));
+    }
+
     if (selectedRoleRadio) {
       const roleValue = selectedRoleRadio.value;
       const container = document.getElementById(`${roleValue}-fields`);
@@ -963,6 +531,15 @@ Form{% endblock %} {% block content %}
         container
           .querySelectorAll('textarea, input, select')
           .forEach((el) => (el.disabled = false));
+      }
+
+      if (roleValue.startsWith('sig_')) {
+        if (sigCommonProfilesSection) {
+          sigCommonProfilesSection.classList.remove('hidden');
+          sigCommonProfilesSection
+            .querySelectorAll('textarea, input, select')
+            .forEach((el) => (el.disabled = false));
+        }
       }
     }
   }
@@ -996,7 +573,7 @@ Form{% endblock %} {% block content %}
     stepElement.querySelectorAll('.error-msg').forEach((el) => el.remove());
 
     for (const fieldName of fieldsToValidate) {
-      const elements = stepElement.querySelectorAll(
+      const elements = formElement.querySelectorAll(
         `[name="${fieldName}"]:not([disabled])`
       );
       if (!elements.length) continue;
@@ -1096,7 +673,7 @@ Form{% endblock %} {% block content %}
         <a href="/" class="w-full bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg text-center">
           Home
         </a>
-        <button type="button" onclick="goToStep(1)" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
+        <button type="button" onclick="localStorage.removeItem('acmFormSubmitted'); localStorage.removeItem('acmCommitteeFormData'); formMemory={}; goToStep(1);" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
           Submit Again
         </button>`;
     } else {
@@ -1132,20 +709,33 @@ Form{% endblock %} {% block content %}
       let dataToSubmit = { ...formMemory };
 
       const selectedRole = dataToSubmit.roleType;
+      const allPossibleQuestionKeys = new Set();
+      Object.values(roleSpecificQuestionKeys).forEach((keys) =>
+        keys.forEach((key) => allPossibleQuestionKeys.add(key))
+      );
+
+      const baseFields = new Set([
+        'fullName',
+        'branch',
+        'year',
+        'mobile',
+        'roleType',
+        'experience',
+        'whyApply',
+      ]);
+
+      let allowedKeys = new Set([...baseFields]);
       if (selectedRole && roleSpecificQuestionKeys[selectedRole]) {
-        const allowedKeys = new Set([
-          'fullName',
-          'branch',
-          'year',
-          'mobile',
-          'roleType',
-          'experience',
-          'whyApply',
-          ...roleSpecificQuestionKeys[selectedRole],
-        ]);
-        Object.keys(dataToSubmit).forEach((k) => {
-          if (!allowedKeys.has(k)) delete dataToSubmit[k];
-        });
+        roleSpecificQuestionKeys[selectedRole].forEach((key) =>
+          allowedKeys.add(key)
+        );
+      }
+
+      const finalDataToSubmit = {};
+      for (const key in dataToSubmit) {
+        if (allowedKeys.has(key)) {
+          finalDataToSubmit[key] = dataToSubmit[key];
+        }
       }
 
       const submitBtn = document.getElementById('submitBtn');
@@ -1162,9 +752,16 @@ Form{% endblock %} {% block content %}
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dataToSubmit),
+            body: JSON.stringify(finalDataToSubmit),
           }
         );
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(
+            errorData.error || `HTTP error! status: ${res.status}`
+          );
+        }
 
         localStorage.setItem('acmFormSubmitted', 'true');
         goToStep(9);

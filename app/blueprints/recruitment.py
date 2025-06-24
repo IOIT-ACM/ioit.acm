@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify
 import requests
 import os
+import json
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 
@@ -13,16 +14,30 @@ recruitment_bp = Blueprint(
 API_URL = os.getenv("ACM_RECRUITMENT_FORM_API_URL")
 BEARER_TOKEN = os.getenv("ACM_RECRUITMENT_FORM_BEARER_TOKEN")
 
+def load_questions_config():
+    """Load questions configuration from JSON file"""
+    try:
+        config_path = os.path.join(os.path.dirname(__file__), "../data/forms/acm.25.json")
+        with open(config_path, 'r') as f:
+            return json.load(f)
+    except IOError:
+        print("Error: acm.25.json file not found")
+        return {}
+    except ValueError as e:
+        print("Error parsing JSON file: %s" % str(e))
+        return {}
+    except Exception as e:
+        print("Error loading questions config: %s" % str(e))
+        return {}
 
 @recruitment_bp.route("/recruitment", methods=["GET"])
 def acm_recruitment_form():
-    return render_template("acm.recruitment.html")
-
+    questions_config = load_questions_config()
+    return render_template("acm.recruitment.html", questions_config=questions_config)
 
 
 # Table format:
-
-# fullName,branch,year,mobile,roleType,experience,whyApply,date,ts_q1,ts_q2,ts_q3,mh_q1,mh_q2,mh_q3,wt_q1,wt_q2,wt_q3,dt_q1,dt_q2,dt_q3,tt_q1,tt_q2,tt_q3,em_q1,em_q2,em_q3,sig_web_technologies_q1,sig_web_technologies_q2,sig_web_technologies_q3,sig_web_technologies_github,sig_web_technologies_linkedin,sig_ai_ml_q1,sig_ai_ml_q2,sig_ai_ml_q3,sig_ai_ml_github,sig_ai_ml_linkedin,sig_mobile_dev_q1,sig_mobile_dev_q2,sig_mobile_dev_q3,sig_mobile_dev_github,sig_mobile_dev_linkedin,sig_cloud_devops_q1,sig_cloud_devops_q2,sig_cloud_devops_q3,sig_cloud_devops_github,sig_cloud_devops_linkedin
+# fullName,branch,year,mobile,roleType,experience,whyApply,date,ts_q1,ts_q2,ts_q3,mh_q1,mh_q2,mh_q3,wt_q1,wt_q2,wt_q3,dt_q1,dt_q2,dt_q3,tt_q1,tt_q2,tt_q3,em_q1,em_q2,em_q3,sig_web_technologies_q1,sig_web_technologies_q2,sig_web_technologies_q3,sig_ai_ml_q1,sig_ai_ml_q2,sig_ai_ml_q3,sig_mobile_dev_q1,sig_mobile_dev_q2,sig_mobile_dev_q3,sig_cloud_devops_q1,sig_cloud_devops_q2,sig_cloud_devops_q3,sig_github_profile,sig_linkedin_profile
 
 
 @recruitment_bp.route("/recruitment", methods=["POST"])
@@ -42,42 +57,19 @@ def handle_acm_recruitment():
             "whyApply",
         ]
 
-        role_specific_questions_map = {
-            "technical_secretary": ["ts_q1", "ts_q2", "ts_q3"],
-            "media_head": ["mh_q1", "mh_q2", "mh_q3"],
-            "web_team": ["wt_q1", "wt_q2", "wt_q3"],
-            "doc_team": ["dt_q1", "dt_q2", "dt_q3"],
-            "tech_team": ["tt_q1", "tt_q2", "tt_q3"],
-            "event_management_team": ["em_q1", "em_q2", "em_q3"],
-            "sig_web_technologies": [
-                "sig_web_technologies_q1",
-                "sig_web_technologies_q2",
-                "sig_web_technologies_q3",
-                "sig_web_technologies_github",
-                "sig_web_technologies_linkedin",
-            ],
-            "sig_ai_ml": [
-                "sig_ai_ml_q1",
-                "sig_ai_ml_q2",
-                "sig_ai_ml_q3",
-                "sig_ai_ml_github",
-                "sig_ai_ml_linkedin",
-            ],
-            "sig_mobile_dev": [
-                "sig_mobile_dev_q1",
-                "sig_mobile_dev_q2",
-                "sig_mobile_dev_q3",
-                "sig_mobile_dev_github",
-                "sig_mobile_dev_linkedin",
-            ],
-            "sig_cloud_devops": [
-                "sig_cloud_devops_q1",
-                "sig_cloud_devops_q2",
-                "sig_cloud_devops_q3",
-                "sig_cloud_devops_github",
-                "sig_cloud_devops_linkedin",
-            ],
-        }
+        # Load questions config to get role-specific questions
+        questions_config = load_questions_config()
+        
+        # Build role_specific_questions_map from the loaded config
+        role_specific_questions_map = {}
+        for role, questions in questions_config.items():
+            question_ids = [q["id"] for q in questions]
+            
+            # Add profile fields for SIG roles
+            if role.startswith("sig_"):
+                question_ids.extend(["sig_github_profile", "sig_linkedin_profile"])
+            
+            role_specific_questions_map[role] = question_ids
 
         missing = [f for f in required_fields if not data.get(f)]
 
