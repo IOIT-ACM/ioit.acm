@@ -756,13 +756,6 @@ Form{% endblock %} {% block content %}
           }
         );
 
-        if (!res.ok) {
-          const errorData = await res.json();
-          throw new Error(
-            errorData.error || `HTTP error! status: ${res.status}`
-          );
-        }
-
         localStorage.setItem('acmFormSubmitted', 'true');
         goToStep(9);
       } catch (err) {

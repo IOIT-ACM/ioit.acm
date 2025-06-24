@@ -88,7 +88,7 @@ def handle_acm_recruitment():
             )
 
         ist_now = datetime.utcnow() + timedelta(hours=5, minutes=30)
-        data["date"] = ist_now.strftime("%d %b %Y %H:%M")
+        data["date"] = ist_now.isoformat()
 
         headers = {
             "Authorization": "Bearer %s" % BEARER_TOKEN,
@@ -121,8 +121,14 @@ def handle_acm_recruitment():
                 )
         else:
             print("API_URL not configured")
-
-        return render_template("acm.form-submission.html"), 200
+        return (
+            jsonify(
+                {
+                    "Success": "Form submitted successfully",
+                }
+            ),
+            200,
+        )
 
     except Exception as e:
         return (
