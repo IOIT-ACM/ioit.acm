@@ -1,5 +1,5 @@
-{% extends "forms/base.html" %} {% block title %}ACM Recruitment Form{% endblock
-%} {% block content %}
+{% extends "forms/base.html" %} {% block title %}ACM Committee Recruitment
+Form{% endblock %} {% block content %}
 <div class="max-w-6xl mx-auto md:p-6">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
     <div class="w-full flex justify-center mt-10 md:mt-0">
@@ -18,11 +18,44 @@
         </div>
       </div>
     </div>
-    
+
     <form id="acmForm" class="p-5 md:p-0 space-y-6">
-      <div id="step-1" class="form-step">
+      <div id="step-0" class="form-step p-4 md:p-6">
+        <div class="text-gray-700">
+          <h1
+            class="text-2xl md:text-3xl font-bold text-blue-600 mb-4 text-center"
+          >
+            Hey!
+          </h1>
+          <p class="text-lg mb-4">
+            Thank you for taking interest in applying for the IOIT ACM Student
+            Chapter Committee! We are delighted to see your enthusiasm.
+          </p>
+          <p class="text-lg mb-4">
+            Joining our committee is a fantastic opportunity to contribute,
+            lead, and shape the activities of the ACM Student Chapter. We value
+            dedication, teamwork, and a passion for technology and community
+            building.
+          </p>
+          <p class="text-lg mb-6">
+            We're excited to learn more about you through this application.
+            Please proceed by clicking the button below.
+          </p>
+          <div class="flex justify-center">
+            <button
+              type="button"
+              onclick="nextStep()"
+              class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition"
+            >
+              Begin Application
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="step-1" class="form-step hidden">
         <p class="text-lg font-semibold text-gray-700 mb-6">
-          Step 1: General Info
+          Step 1: General Information
         </p>
         <hr class="border-t-2 border-gray-500 my-6" />
         <div class="mb-4">
@@ -89,33 +122,36 @@
         </div>
         <button
           type="button"
-          onclick="if(validateStep(1)) nextStep()"
+          onclick="nextStep()"
           class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition"
         >
           Next
         </button>
       </div>
-      
+
       <div id="step-2" class="form-step hidden">
         <p class="text-lg font-semibold text-gray-700 mb-6">
-          Step 2: Choose Your Role
+          Step 2: Choose Your Desired Position
         </p>
         <hr class="border-t-2 border-gray-500 my-6" />
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          {% for role in ['chief','domainhead','mun','volunteer'] %}
+          {% set committee_roles = [ {'value': 'technical_secretary', 'text':
+          'Technical Secretary'}, {'value': 'media_head', 'text': 'Media Head'},
+          {'value': 'web_team', 'text': 'Web Team'}, {'value': 'doc_team',
+          'text': 'Doc Team'}, {'value': 'tech_team', 'text': 'Tech Team'},
+          {'value': 'event_management_team', 'text': 'Event Management Team'} ]
+          %} {% for role in committee_roles %}
           <label
             class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
           >
             <input
               type="radio"
               name="roleType"
-              value="{{ role }}"
-              onchange="renderStage3()"
+              value="{{ role.value }}"
+              onchange="renderRoleSpecificFields()"
               class="accent-blue-500 focus:outline-none mr-3"
             />
-            <span class="capitalize text-gray-800 font-medium"
-              >{{ role.replace('head',' Head') }}</span
-            >
+            <span class="text-gray-800 font-medium">{{ role.text }}</span>
           </label>
           {% endfor %}
         </div>
@@ -129,7 +165,7 @@
           </button>
           <button
             type="button"
-            onclick="if(validateStep(2)) nextStep()"
+            onclick="nextStep()"
             class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition"
           >
             Next
@@ -138,88 +174,264 @@
       </div>
 
       <div id="step-3" class="form-step hidden space-y-6">
-        <div id="chief-fields" class="role-section hidden">
-          <label class="block text-gray-700 font-semibold mb-2 mt-10"
-            >Chief Role</label
-          >
-          <select
-            name="chiefRole"
-            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 mb-4"
-          >
-            <option value="" disabled selected>
-              Select Chief Officer Role
-            </option>
-            {% for c in
-            ['CEO','COO','CEMO','CSO','CMO','CTO','CFCO','CHO','CCO','CDO','CVLO','CAPO','CPRO','CFO','CMDO','CPO']
-            %}
-            <option value="{{ c }}">{{ c }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div id="domainhead-fields" class="role-section hidden">
-          <label class="block text-gray-700 font-semibold mb-2 mt-10"
-            >Domain</label
-          >
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {% for domain in ['Techfiesta','Esummit','MUN','Esports'] %}
-            <label
-              class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
+        <p class="text-lg font-semibold text-gray-700 mb-2">
+          Step 3: Experience
+        </p>
+        <hr class="border-t-2 border-gray-500 my-4" />
+
+        <div
+          id="technical_secretary-fields"
+          class="role-section hidden space-y-4"
+        >
+          <p class="text-md font-semibold text-gray-600 mb-2">
+            For Technical Secretary:
+          </p>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >Describe your organizational skills and experience with
+              documentation.</label
             >
-              <input
-                type="radio"
-                name="domainRole"
-                value="{{ domain }} Domain Head"
-                class="accent-blue-500 focus:outline-none mr-3"
-              />
-              <span class="text-gray-800 font-medium"
-                >{{ domain }} Domain Head</span
-              >
-            </label>
-            {% endfor %}
+            <textarea
+              name="ts_q1"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >How would you ensure effective communication within the
+              committee?</label
+            >
+            <textarea
+              name="ts_q2"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >What tools or methods would you use for managing meeting minutes
+              and records?</label
+            >
+            <textarea
+              name="ts_q3"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
           </div>
         </div>
-        <div id="mun-fields" class="role-section hidden">
-          <label class="block text-gray-700 font-semibold mb-2 mt-10"
-            >MUN Role</label
-          >
-          <select
-            name="munRole"
-            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 mb-4"
-          >
-            <option value="" disabled selected>Select MUN Role</option>
-            {% for m in ['Secretary General','Deputy Secretary General','USG
-            Management','USG Delegate Affairs','USG Fin','USG Tech','USG Glob.
-            Comm'] %}
-            <option value="{{ m }}">{{ m }}</option>
-            {% endfor %}
-          </select>
+
+        <div id="media_head-fields" class="role-section hidden space-y-4">
+          <p class="text-md font-semibold text-gray-600 mb-2">
+            For Media Head:
+          </p>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >What's your experience with social media management and content
+              creation?</label
+            >
+            <textarea
+              name="mh_q1"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >How would you strategize to increase ACM's online presence and
+              engagement?</label
+            >
+            <textarea
+              name="mh_q2"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >Can you share a link to a portfolio or examples of your media
+              work (if any)?</label
+            >
+            <input
+              type="text"
+              name="mh_q3"
+              placeholder="https://example.com/portfolio"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
         </div>
-        <div id="volunteer-fields" class="role-section hidden">
-          <label class="block text-gray-700 font-semibold mb-2 mt-10"
-            >Interested Area</label
-          >
-          <input
-            name="volunteerArea"
-            type="text"
-            placeholder="e.g. Tech, Design, Events"
-            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          />
+
+        <div id="web_team-fields" class="role-section hidden space-y-4">
+          <p class="text-md font-semibold text-gray-600 mb-2">For Web Team:</p>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >Describe your experience with web development technologies (HTML,
+              CSS, JS, frameworks).</label
+            >
+            <textarea
+              name="wt_q1"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >Have you worked with version control systems like Git? Briefly
+              explain.</label
+            >
+            <textarea
+              name="wt_q2"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >Provide a link to your GitHub profile or a web project you've
+              worked on (if any).</label
+            >
+            <input
+              type="text"
+              name="wt_q3"
+              placeholder="https://github.com/yourusername"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
         </div>
-        <div class="space-y-4">
-          <label class="block text-gray-700 font-semibold mb-2 mt-10"
-            >Previous Experience (if any)</label
+
+        <div id="doc_team-fields" class="role-section hidden space-y-4">
+          <p class="text-md font-semibold text-gray-600 mb-2">For Doc Team:</p>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >What is your experience with technical writing or creating
+              documentation?</label
+            >
+            <textarea
+              name="dt_q1"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >How do you ensure clarity and accuracy in documentation?</label
+            >
+            <textarea
+              name="dt_q2"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >Are you familiar with any documentation tools or platforms (e.g.,
+              Markdown, Confluence, ReadtheDocs)?</label
+            >
+            <textarea
+              name="dt_q3"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+        </div>
+
+        <div id="tech_team-fields" class="role-section hidden space-y-4">
+          <p class="text-md font-semibold text-gray-600 mb-2">For Tech Team:</p>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >What are your primary technical skills or areas of interest
+              (e.g., programming languages, AI/ML, cybersecurity)?</label
+            >
+            <textarea
+              name="tt_q1"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >Describe a technical project you've worked on or a problem you've
+              solved.</label
+            >
+            <textarea
+              name="tt_q2"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >How do you stay updated with the latest technological
+              advancements?</label
+            >
+            <textarea
+              name="tt_q3"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+        </div>
+
+        <div
+          id="event_management_team-fields"
+          class="role-section hidden space-y-4"
+        >
+          <p class="text-md font-semibold text-gray-600 mb-2">
+            For Event Management Team:
+          </p>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >Describe any experience you have in planning or organizing events
+              (academic or non-academic).</label
+            >
+            <textarea
+              name="em_q1"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >How would you handle unexpected challenges or logistical issues
+              during an event?</label
+            >
+            <textarea
+              name="em_q2"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2"
+              >What qualities do you believe are essential for successful event
+              management and teamwork?</label
+            >
+            <textarea
+              name="em_q3"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="space-y-4 mt-6 pt-4 border-t border-gray-300">
+          <label class="block text-gray-700 font-semibold mb-2 mt-6"
+            >Previous Experience (in any relevant field, if any)</label
           >
           <textarea
             name="experience"
             rows="3"
+            placeholder="Briefly describe any previous roles, projects, or activities."
             class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           ></textarea>
-          <label class="block text-gray-700 font-semibold mb-2 mt-10"
-            >Why this role?</label
+          <label class="block text-gray-700 font-semibold mb-2 mt-6"
+            >Why are you interested in joining the ACM Committee and this
+            specific position?</label
           >
           <textarea
             name="whyApply"
             rows="3"
+            placeholder="Explain your motivation and what you hope to contribute."
             class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           ></textarea>
         </div>
@@ -237,7 +449,7 @@
               id="submitBtn"
               class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition"
             >
-              Submit
+              Submit Application
             </button>
             <div
               id="spinner"
@@ -271,21 +483,38 @@
     </form>
   </div>
 </div>
+
+<!-- JS -->
 <script>
-  let currentStep = 1,
+  let currentStep = 0,
     formMemory = {};
+
+  const roleSpecificQuestionKeys = {
+    technical_secretary: ['ts_q1', 'ts_q2', 'ts_q3'],
+    media_head: ['mh_q1', 'mh_q2', 'mh_q3'],
+    web_team: ['wt_q1', 'wt_q2', 'wt_q3'],
+    doc_team: ['dt_q1', 'dt_q2', 'dt_q3'],
+    tech_team: ['tt_q1', 'tt_q2', 'tt_q3'],
+    event_management_team: ['em_q1', 'em_q2', 'em_q3'],
+  };
+
   function saveFormData() {
     const f = document.getElementById('acmForm'),
       fd = new FormData(f);
     formMemory = {};
     f.querySelectorAll(
       'input[type="text"],input[type="tel"],textarea,select'
-    ).forEach((e) => e.value.trim() && (formMemory[e.name] = e.value));
+    ).forEach((e) => {
+      if (!e.disabled && e.value.trim()) {
+        formMemory[e.name] = e.value;
+      }
+    });
     f.querySelectorAll('input[type="radio"]:checked').forEach(
       (e) => (formMemory[e.name] = e.value)
     );
     formMemory.currentStep = currentStep;
   }
+
   function loadFormData() {
     if (!Object.keys(formMemory).length) return;
     const f = document.getElementById('acmForm');
@@ -295,193 +524,299 @@
       if (e) {
         if (e.type === 'radio') {
           const r = f.querySelector(`[name="${n}"][value="${formMemory[n]}"]`);
-          r && ((r.checked = true), updateRadioStyling(r));
-        } else e.value = formMemory[n];
+          if (r) {
+            r.checked = true;
+            updateRadioStyling(r);
+          }
+        } else {
+          e.value = formMemory[n];
+        }
       }
     });
-    if (formMemory.currentStep) goToStep(formMemory.currentStep);
-    formMemory.roleType && renderStage3();
+    if (formMemory.roleType) {
+      renderRoleSpecificFields();
+    }
   }
+
   function updateRadioStyling(r) {
     document.querySelectorAll(`input[name="${r.name}"]`).forEach((e) => {
       const l = e.closest('.radio-option');
-      l &&
-        (l.classList.remove('bg-blue-100', 'border-blue-500'),
-        l.classList.add('border-gray-300'));
+      if (l) {
+        l.classList.remove('bg-blue-100', 'border-blue-500');
+        l.classList.add('border-gray-300');
+      }
     });
     const s = r.closest('.radio-option');
-    s &&
-      (s.classList.remove('border-gray-300'),
-      s.classList.add('bg-blue-100', 'border-blue-500'));
+    if (s) {
+      s.classList.remove('border-gray-300');
+      s.classList.add('bg-blue-100', 'border-blue-500');
+    }
   }
-  function goToStep(s) {
-    saveFormData();
+
+  function goToStep(s, isLoading = false) {
     document
       .querySelectorAll('.form-step')
       .forEach((d) => d.classList.add('hidden'));
-    document.getElementById(`step-${s}`).classList.remove('hidden');
+    const targetStepElement = document.getElementById(`step-${s}`);
+    if (targetStepElement) {
+      targetStepElement.classList.remove('hidden');
+    }
     currentStep = s;
+    if (!isLoading) {
+      saveFormData();
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
   function nextStep() {
-    currentStep < 3 && goToStep(currentStep + 1);
-  }
-  function prevStep() {
-    currentStep > 1 && goToStep(currentStep - 1);
-  }
-  function renderStage3() {
-    const sel = document.querySelector('input[name="roleType"]:checked');
-    document.querySelectorAll('.role-section').forEach((sec) => {
-      sec.classList.add('hidden');
-      sec
-        .querySelectorAll('input,select')
-        .forEach((el) => (el.disabled = true));
-    });
-    if (sel) {
-      const b = document.getElementById(`${sel.value}-fields`);
-      b &&
-        (b.classList.remove('hidden'),
-        b
-          .querySelectorAll('input,select')
-          .forEach((el) => (el.disabled = false)));
-    }
-  }
-  function validateStep(n) {
-    const step = document.getElementById(`step-${n}`),
-      f = document.getElementById('acmForm'),
-      fd = new FormData(f),
-      rt = fd.get('roleType'),
-      always = ['fullName', 'branch', 'year', 'mobile', 'roleType', 'whyApply'],
-      cond = {
-        chief: ['chiefRole'],
-        domainhead: ['domainRole'],
-        mun: ['munRole'],
-        volunteer: ['volunteerArea'],
-      };
-    let fields = [];
-    if (n === 1) fields = always.slice(0, 4);
-    else if (n === 2) fields = [always[4]];
-    else if (n === 3) {
-      fields = [always[5]];
-      cond[rt] && (fields = fields.concat(cond[rt]));
-    }
-    let valid = true,
-      first;
-    step
-      .querySelectorAll('.border-red-500')
-      .forEach((i) => i.classList.remove('border-red-500'));
-    step.querySelectorAll('.error-msg').forEach((e) => e.remove());
-    for (const name of fields) {
-      const els = step.querySelectorAll(`[name="${name}"]:not([disabled])`);
-      if (!els.length) continue;
-      let ok =
-        els[0].type === 'radio'
-          ? [...els].some((e) => e.checked)
-          : els[0].value.trim() !== '';
-      if (!ok) {
-        valid = false;
-        els.forEach((el) => {
-          el.classList.add('border-red-500');
-          const wrap = el.closest('div') || el.parentElement;
-          if (!wrap.querySelector('.error-msg')) {
-            const msg = document.createElement('p');
-            msg.className = 'text-sm text-red-500 mt-1 error-msg';
-            msg.innerText = 'This field is required';
-            wrap.appendChild(msg);
-          }
-        });
-        if (!first) first = els[0];
+    if (currentStep === 0) {
+      goToStep(1);
+    } else if (currentStep < 3) {
+      if (validateStep(currentStep)) {
+        goToStep(currentStep + 1);
+        if (currentStep === 2) {
+          renderRoleSpecificFields();
+        }
       }
     }
-    if (!valid && first) first.scrollIntoView({ behavior: 'smooth' });
-    return valid;
   }
+
+  function prevStep() {
+    if (currentStep > 0) {
+      goToStep(currentStep - 1);
+      if (currentStep === 2) {
+        renderRoleSpecificFields();
+      }
+    }
+  }
+
+  function renderRoleSpecificFields() {
+    const selectedRoleRadio = document.querySelector(
+      'input[name="roleType"]:checked'
+    );
+    document.querySelectorAll('.role-section').forEach((section) => {
+      section.classList.add('hidden');
+      section
+        .querySelectorAll('textarea, input, select')
+        .forEach((el) => (el.disabled = true));
+    });
+
+    if (selectedRoleRadio) {
+      const roleValue = selectedRoleRadio.value;
+      const fieldsContainerId = `${roleValue}-fields`;
+      const fieldsContainer = document.getElementById(fieldsContainerId);
+      if (fieldsContainer) {
+        fieldsContainer.classList.remove('hidden');
+        fieldsContainer
+          .querySelectorAll('textarea, input, select')
+          .forEach((el) => (el.disabled = false));
+      }
+    }
+  }
+
+  function validateStep(n) {
+    const stepElement = document.getElementById(`step-${n}`);
+    const formElement = document.getElementById('acmForm');
+    const formData = new FormData(formElement);
+
+    let fieldsToValidate = [];
+    if (n === 1) {
+      fieldsToValidate = ['fullName', 'branch', 'year', 'mobile'];
+    } else if (n === 2) {
+      fieldsToValidate = ['roleType'];
+    } else if (n === 3) {
+      fieldsToValidate = ['experience', 'whyApply'];
+      const selectedRoleType = formData.get('roleType');
+      if (selectedRoleType && roleSpecificQuestionKeys[selectedRoleType]) {
+        fieldsToValidate = fieldsToValidate.concat(
+          roleSpecificQuestionKeys[selectedRoleType]
+        );
+      }
+    }
+
+    let isValid = true;
+    let firstInvalidField = null;
+
+    stepElement
+      .querySelectorAll('.border-red-500')
+      .forEach((el) => el.classList.remove('border-red-500'));
+    stepElement.querySelectorAll('.error-msg').forEach((el) => el.remove());
+
+    for (const fieldName of fieldsToValidate) {
+      const fieldElements = stepElement.querySelectorAll(
+        `[name="${fieldName}"]:not([disabled])`
+      );
+      if (!fieldElements.length) continue;
+
+      let fieldHasValue = false;
+      if (fieldElements[0].type === 'radio') {
+        fieldHasValue = [...fieldElements].some((radio) => radio.checked);
+      } else {
+        fieldHasValue = fieldElements[0].value.trim() !== '';
+      }
+
+      if (!fieldHasValue) {
+        isValid = false;
+        fieldElements.forEach((el) => {
+          const parentDiv = el.closest('.radio-option') || el.closest('div');
+          el.classList.add('border-red-500');
+          if (parentDiv && !parentDiv.querySelector('.error-msg')) {
+            const errorMsgElement = document.createElement('p');
+            errorMsgElement.className = 'text-sm text-red-500 mt-1 error-msg';
+            errorMsgElement.innerText = 'This field is required.';
+            if (el.type === 'radio') {
+              const radioGroupContainer =
+                el.closest('div.gap-4') || el.closest('div.mb-6');
+              if (
+                radioGroupContainer &&
+                !radioGroupContainer.querySelector('.error-msg')
+              ) {
+                radioGroupContainer.appendChild(errorMsgElement);
+              }
+            } else {
+              parentDiv.appendChild(errorMsgElement);
+            }
+          }
+        });
+        if (!firstInvalidField) firstInvalidField = fieldElements[0];
+      }
+    }
+
+    if (!isValid && firstInvalidField) {
+      firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return isValid;
+  }
+
   function handleRadioSelection() {
     document.querySelectorAll('input[type="radio"]').forEach((r) =>
       r.addEventListener('change', function () {
         updateRadioStyling(this);
+        if (this.name === 'roleType') {
+          renderRoleSpecificFields();
+        }
         saveFormData();
       })
     );
   }
+
   function clearFormMemory() {
     formMemory = {};
+    localStorage.removeItem('acmCommitteeFormData');
   }
+
   function setupAutoSave() {
-    setInterval(saveFormData, 30000);
+    const storedFormData = localStorage.getItem('acmCommitteeFormData');
+    if (storedFormData) {
+      formMemory = JSON.parse(storedFormData);
+    }
+
+    setInterval(() => {
+      saveFormData();
+      localStorage.setItem('acmCommitteeFormData', JSON.stringify(formMemory));
+    }, 5000);
+
     document.querySelectorAll('input,select,textarea').forEach((e) => {
-      e.addEventListener('input', saveFormData);
-      e.addEventListener('change', saveFormData);
+      e.addEventListener('input', () => {
+        saveFormData();
+        localStorage.setItem(
+          'acmCommitteeFormData',
+          JSON.stringify(formMemory)
+        );
+      });
+      e.addEventListener('change', () => {
+        saveFormData();
+        localStorage.setItem(
+          'acmCommitteeFormData',
+          JSON.stringify(formMemory)
+        );
+      });
     });
   }
+
   document.addEventListener('DOMContentLoaded', () => {
-    goToStep(1);
-    renderStage3();
-    handleRadioSelection();
     setupAutoSave();
     loadFormData();
+
+    if (!formMemory.currentStep && formMemory.currentStep !== 0) {
+      goToStep(0, true);
+    }
+
+    renderRoleSpecificFields();
+    handleRadioSelection();
+
     document.querySelectorAll('input,select,textarea').forEach((e) =>
       e.addEventListener('input', () => {
         e.classList.remove('border-red-500');
-        const er = e.closest('div')?.querySelector('.error-msg');
-        er && er.remove();
+        const parentDiv = e.closest('.radio-option') || e.closest('div');
+        const errorMsg = parentDiv
+          ? parentDiv.querySelector('.error-msg')
+          : null;
+        if (errorMsg) errorMsg.remove();
+
+        if (e.type === 'radio') {
+          const radioGroupContainer =
+            e.closest('div.gap-4') || e.closest('div.mb-6');
+          const groupErrorMsg = radioGroupContainer
+            ? radioGroupContainer.querySelector('.error-msg')
+            : null;
+          if (groupErrorMsg) groupErrorMsg.remove();
+        }
       })
     );
+
     document.getElementById('acmForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!validateStep(3)) return;
-      const data = {},
-        fd = new FormData(e.target),
-        rt = fd.get('roleType'),
-        alwaysInclude = [
-          'fullName',
-          'branch',
-          'year',
-          'mobile',
-          'roleType',
-          'whyApply',
-          'experience',
-        ],
-        roleFields = {
-          chief: ['chiefRole'],
-          domainhead: ['domainRole'],
-          mun: ['munRole'],
-          volunteer: ['volunteerArea'],
-        };
-      fd.forEach((v, k) => {
-        if (alwaysInclude.includes(k) || (roleFields[rt] || []).includes(k))
-          data[k] = v;
-      });
-      const btn = document.getElementById('submitBtn'),
-        spin = document.getElementById('spinner'),
-        msg = document.getElementById('formMsg');
-      btn.disabled = true;
-      spin.classList.remove('hidden');
-      msg.innerText = '';
+
+      saveFormData();
+      const dataToSubmit = { ...formMemory };
+      delete dataToSubmit.currentStep;
+
+      const submitButton = document.getElementById('submitBtn');
+      const spinnerElement = document.getElementById('spinner');
+      const formMessageElement = document.getElementById('formMsg');
+
+      submitButton.disabled = true;
+      spinnerElement.classList.remove('hidden');
+      formMessageElement.innerText = '';
+
       try {
-        const res = await fetch(
+        const response = await fetch(
           "{{ url_for('recruitment.acm_recruitment_form') }}",
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
+            body: JSON.stringify(dataToSubmit),
           }
         );
-        const result = await res.json();
-        msg.className =
+        const result = await response.json();
+        formMessageElement.className =
           'text-center text-lg font-semibold mt-4 ' +
-          (res.ok ? 'text-green-600' : 'text-red-600');
-        msg.innerText = res.ok ? result.message : result.error;
-        if (res.ok) clearFormMemory();
-      } catch {
-        msg.className = 'text-center text-lg font-semibold mt-4 text-red-600';
-        msg.innerText = 'Submission failed';
+          (response.ok ? 'text-green-600' : 'text-red-600');
+        formMessageElement.innerText = response.ok
+          ? result.message
+          : result.error || 'An unknown error occurred.';
+        if (response.ok) {
+          clearFormMemory();
+          document.getElementById('acmForm').reset();
+          goToStep(0);
+        }
+      } catch (error) {
+        formMessageElement.className =
+          'text-center text-lg font-semibold mt-4 text-red-600';
+        formMessageElement.innerText =
+          'Submission failed due to a network or server error.';
       } finally {
-        btn.disabled = false;
-        spin.classList.add('hidden');
+        submitButton.disabled = false;
+        spinnerElement.classList.add('hidden');
       }
     });
-    window.addEventListener('beforeunload', saveFormData);
+
+    window.addEventListener('beforeunload', () => {
+      saveFormData();
+      localStorage.setItem('acmCommitteeFormData', JSON.stringify(formMemory));
+    });
   });
 </script>
 {% endblock %}
