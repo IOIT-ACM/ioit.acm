@@ -161,17 +161,17 @@
   "sig_web_technologies": [
     {
       "id": "sig_web_technologies_q1",
-      "label": "What is your proficiency in Web Technologies?",
+      "label": "Explain a few projects which you have built and deployed. Also mention thier link",
       "type": "textarea"
     },
     {
       "id": "sig_web_technologies_q2",
-      "label": "What are your plans for this SIG?",
+      "label": "How would you help someone who's new to your domain feel included and motivated?",
       "type": "textarea"
     },
     {
       "id": "sig_web_technologies_q3",
-      "label": "What is your opinion of Special Interest Groups and how will you contribute?",
+      "label": "If you were to cold-email a speaker or company for collaboration, what would your pitch be?",
       "type": "textarea"
     },
     {
@@ -180,20 +180,42 @@
       "type": "textarea"
     }
   ],
+  "sig_entrepreneurship": [
+    {
+      "id": "sig_entrepreneurship_q1",
+      "label": "Choose a failed college event. Redesign it into a hit with an entrepreneurial mindset",
+      "type": "textarea"
+    },
+    {
+      "id": "sig_entrepreneurship_q2",
+      "label": "How would you help someone who's new to your domain feel included and motivated?",
+      "type": "textarea"
+    },
+    {
+      "id": "sig_entrepreneurship_q3",
+      "label": "If you were to cold-email a speaker or company for collaboration, what would your pitch be?",
+      "type": "textarea"
+    },
+    {
+      "id": "sig_entrepreneurship_q4",
+      "label": "What knowledge do you have about the IOIT ACM Student Chapter and what attracted you to the post for which you are applying?",
+      "type": "textarea"
+    }
+  ],
   "sig_ai_ml": [
     {
       "id": "sig_ai_ml_q1",
-      "label": "What is your proficiency in AI & ML?",
+      "label": "You're building a model that can predict how well a SIG session will go. What features would you feed it?",
       "type": "textarea"
     },
     {
       "id": "sig_ai_ml_q2",
-      "label": "What are your plans for this SIG?",
+      "label": "How would you help someone who's new to your domain feel included and motivated?",
       "type": "textarea"
     },
     {
       "id": "sig_ai_ml_q3",
-      "label": "What is your opinion of Special Interest Groups and how will you contribute?",
+      "label": "If you were to cold-email a speaker or company for collaboration, what would your pitch be?",
       "type": "textarea"
     },
     {
@@ -205,17 +227,17 @@
   "sig_mobile_dev": [
     {
       "id": "sig_mobile_dev_q1",
-      "label": "What is your proficiency in Mobile Development?",
+      "label": "Explain a few projects which you have built and what problems do they solve",
       "type": "textarea"
     },
     {
       "id": "sig_mobile_dev_q2",
-      "label": "What are your plans for this SIG?",
+      "label": "How would you help someone who's new to your domain feel included and motivated?",
       "type": "textarea"
     },
     {
       "id": "sig_mobile_dev_q3",
-      "label": "What is your opinion of Special Interest Groups and how will you contribute?",
+      "label": "If you were to cold-email a speaker or company for collaboration, what would your pitch be?",
       "type": "textarea"
     },
     {
@@ -227,17 +249,17 @@
   "sig_cloud_devops": [
     {
       "id": "sig_cloud_devops_q1",
-      "label": "What is your proficiency in Cloud and DevOps?",
+      "label": "What's one manual you'd love to automate in a team project? (code testing, deployment)",
       "type": "textarea"
     },
     {
       "id": "sig_cloud_devops_q2",
-      "label": "What are your plans for this SIG?",
+      "label": "How would you help someone who's new to your domain feel included and motivated?",
       "type": "textarea"
     },
     {
       "id": "sig_cloud_devops_q3",
-      "label": "What is your opinion of Special Interest Groups and how will you contribute?",
+      "label": "If you were to cold-email a speaker or company for collaboration, what would your pitch be?",
       "type": "textarea"
     },
     {

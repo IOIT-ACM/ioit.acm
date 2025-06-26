@@ -2,7 +2,7 @@
 Form{% endblock %} {% block content %}
 <div class="max-w-6xl mx-auto md:p-6">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    <div class="w-full flex justify-center mt-10 md:mt-0">
+    <div class="w-full flex justify-center mt-10 md:mt-10 p-2">
       <div class="w-1/2 md:mt-20 h-fit sticky top-32">
         <div
           class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl animate-rotate"
@@ -166,6 +166,7 @@ Form{% endblock %} {% block content %}
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           {% set sig_roles = [
             {'value': 'sig_web_technologies', 'text': 'SIG Web Technologies'},
+            {'value': 'sig_entrepreneurship', 'text': 'SIG Entrepreneurship'},
             {'value': 'sig_ai_ml', 'text': 'SIG AI&ML'},
             {'value': 'sig_mobile_dev', 'text': 'SIG Mobile Dev'},
             {'value': 'sig_cloud_devops', 'text': 'SIG Cloud and Devops'}
@@ -427,6 +428,14 @@ Form{% endblock %} {% block content %}
       'sig_cloud_devops_q2',
       'sig_cloud_devops_q3',
       'sig_cloud_devops_q4',
+      'sig_github_profile',
+      'sig_linkedin_profile',
+    ],
+    sig_entrepreneurship: [
+      'sig_entrepreneurship_q1',
+      'sig_entrepreneurship_q2',
+      'sig_entrepreneurship_q3',
+      'sig_entrepreneurship_q4',
       'sig_github_profile',
       'sig_linkedin_profile',
     ],
