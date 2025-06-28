@@ -95,7 +95,8 @@ Form{% endblock %} {% block content %}
             >Year</label
           >
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {% for y in ['First Year','Second year','Third Year','Final Year'] %}
+            {% for y in ['First Year','Second year','Third Year','Final Year']
+            %}
             <label
               class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
             >
@@ -136,16 +137,12 @@ Form{% endblock %} {% block content %}
         </p>
         <hr class="border-t-2 border-gray-500 my-6" />
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          {% set committee_roles = [
-            {'value': 'technical_secretary', 'text': 'Technical Secretary'},
-            {'value': 'media_head', 'text': 'Media Head'},
-            {'value': 'media_team', 'text': 'Media Team'},
-            {'value': 'web_team', 'text': 'Web Team'},
-            {'value': 'doc_team', 'text': 'Doc Team'},
-            {'value': 'tech_team', 'text': 'Tech Team'},
-            {'value': 'event_management_team', 'text': 'Event Management Team'}
-          ] %}
-          {% for role in committee_roles %}
+          {% set committee_roles = [ {'value': 'media_head', 'text': 'Media Head'},
+          {'value': 'media_team', 'text': 'Media Team'}, {'value': 'web_team',
+          'text': 'Web Team'}, {'value': 'doc_team', 'text': 'Doc Team'},
+          {'value': 'tech_team', 'text': 'Tech Team'}, {'value':
+          'event_management_team', 'text': 'Event Management Team'} ] %} {% for
+          role in committee_roles %}
           <label
             class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
           >
@@ -164,14 +161,12 @@ Form{% endblock %} {% block content %}
         <hr class="border-t border-gray-500 my-4 max-w-10" />
         <h3 class="mb-3">Special Interest Groups ACM</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          {% set sig_roles = [
-            {'value': 'sig_web_technologies', 'text': 'SIG Web Technologies'},
-            {'value': 'sig_entrepreneurship', 'text': 'SIG Entrepreneurship'},
-            {'value': 'sig_ai_ml', 'text': 'SIG AI&ML'},
-            {'value': 'sig_mobile_dev', 'text': 'SIG Mobile Dev'},
-            {'value': 'sig_cloud_devops', 'text': 'SIG Cloud and Devops'}
-          ] %}
-          {% for role in sig_roles %}
+          {% set sig_roles = [ {'value': 'sig_web_technologies', 'text': 'SIG
+          Web Technologies'}, {'value': 'sig_entrepreneurship', 'text': 'SIG
+          Entrepreneurship'}, {'value': 'sig_ai_ml', 'text': 'SIG AI&ML'},
+          {'value': 'sig_mobile_dev', 'text': 'SIG Mobile Dev'}, {'value':
+          'sig_cloud_devops', 'text': 'SIG Cloud and Devops'} ] %} {% for role
+          in sig_roles %}
           <label
             class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
           >
@@ -248,6 +243,22 @@ Form{% endblock %} {% block content %}
               endif
               %}
             />
+            {% elif question.type == 'multichoice' %}
+            <div class="grid grid-cols-1 gap-4">
+              {% for option in question.options %}
+              <label
+                class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
+              >
+                <input
+                  type="checkbox"
+                  name="{{ question.id }}"
+                  value="{{ option }}"
+                  class="accent-blue-500 focus:outline-none mr-3"
+                />
+                <span class="text-gray-800 font-medium">{{ option }}</span>
+              </label>
+              {% endfor %}
+            </div>
             {% endif %}
           </div>
           {% endfor %}
@@ -284,7 +295,7 @@ Form{% endblock %} {% block content %}
 
         <div class="space-y-4 mt-6 pt-4 border-t border-gray-300">
           <label class="block text-gray-700 font-semibold mb-2 mt-6"
-            >Previous Experience (in any relevant field, if any)</label
+            >Anything else you want us to know about you?</label
           >
           <textarea
             name="experience"
@@ -293,8 +304,8 @@ Form{% endblock %} {% block content %}
             class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           ></textarea>
           <label class="block text-gray-700 font-semibold mb-2 mt-6"
-            >Why are you interested in joining the ACM Committee and this
-            specific position?</label
+            >What knowledge do you have about the IOIT ACM Student Chapter and
+            what attracted you to the post for which you are applying?</label
           >
           <textarea
             name="whyApply"
@@ -392,13 +403,13 @@ Form{% endblock %} {% block content %}
     formMemory = {};
 
   const roleSpecificQuestionKeys = {
-    technical_secretary: ['ts_q1', 'ts_q2', 'ts_q3', 'ts_q4'],
+    technical_secretary: ['ts_q1', 'ts_q2', 'ts_q3'],
     media_head: ['mh_q1', 'mh_q2', 'mh_q3', 'mh_q4'],
-    media_team: ['mt_q1', 'mt_q2', 'mt_q3', 'mt_q4'],
-    web_team: ['wt_q1', 'wt_q2', 'wt_q3', 'wt_q4'],
-    doc_team: ['dt_q1', 'dt_q2', 'dt_q3', 'dt_q4'],
-    tech_team: ['tt_q1', 'tt_q2', 'tt_q3', 'tt_q4'],
-    event_management_team: ['em_q1', 'em_q2', 'em_q3', 'em_q4'],
+    media_team: ['mt_q1', 'mt_q2', 'mt_q3'],
+    web_team: ['wt_q1', 'wt_q2', 'wt_q3'],
+    doc_team: ['dt_q1', 'dt_q2', 'dt_q3'],
+    tech_team: ['tt_q1', 'tt_q2', 'tt_q3'],
+    event_management_team: ['em_q1', 'em_q2'],
     sig_web_technologies: [
       'sig_web_technologies_q1',
       'sig_web_technologies_q2',
@@ -454,6 +465,17 @@ Form{% endblock %} {% block content %}
     f.querySelectorAll('input[type="radio"]:checked').forEach((e) => {
       formMemory[e.name] = e.value;
     });
+
+    const multichoiceFields = new Set();
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => multichoiceFields.add(cb.name));
+
+    multichoiceFields.forEach(name => {
+        const checkedValues = Array.from(f.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
+        if (checkedValues.length > 0) {
+            formMemory[name] = checkedValues.join(', ');
+        }
+    });
+
     formMemory.currentStep = currentStep;
   }
 
@@ -462,16 +484,29 @@ Form{% endblock %} {% block content %}
     const f = document.getElementById('acmForm');
     Object.keys(formMemory).forEach((n) => {
       if (n === 'currentStep') return;
-      const e = f.querySelector(`[name="${n}"]`);
-      if (e) {
-        if (e.type === 'radio') {
+      const elements = f.querySelectorAll(`[name="${n}"]`);
+      if (elements.length > 0) {
+        const elType = elements[0].type;
+        if (elType === 'radio') {
           const r = f.querySelector(`[name="${n}"][value="${formMemory[n]}"]`);
           if (r) {
             r.checked = true;
             updateRadioStyling(r);
           }
+        } else if (elType === 'checkbox') {
+            const values = formMemory[n].split(', ');
+            elements.forEach(cb => {
+                if (values.includes(cb.value)) {
+                    cb.checked = true;
+                    const label = cb.closest('label');
+                    if (label) {
+                        label.classList.add('bg-blue-100', 'border-blue-500');
+                        label.classList.remove('border-gray-300');
+                    }
+                }
+            });
         } else {
-          e.value = formMemory[n];
+          elements[0].value = formMemory[n];
         }
       }
     });
@@ -599,7 +634,7 @@ Form{% endblock %} {% block content %}
       if (!elements.length) continue;
 
       let hasValue = false;
-      if (elements[0].type === 'radio') {
+      if (elements[0].type === 'radio' || elements[0].type === 'checkbox') {
         hasValue = [...elements].some((r) => r.checked);
       } else {
         hasValue = elements[0].value.trim() !== '';
@@ -614,7 +649,7 @@ Form{% endblock %} {% block content %}
             const msg = document.createElement('p');
             msg.className = 'text-sm text-red-500 mt-1 error-msg';
             msg.innerText = 'This field is required.';
-            if (el.type === 'radio') {
+            if (el.type === 'radio' || el.type === 'checkbox') {
               const group = el.closest('div.gap-4') || el.closest('div.mb-6');
               if (group && !group.querySelector('.error-msg')) {
                 group.appendChild(msg);
@@ -643,6 +678,19 @@ Form{% endblock %} {% block content %}
         }
         saveFormData();
       });
+    });
+    document.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
+        cb.addEventListener('change', function() {
+            const label = this.closest('label');
+            if (this.checked) {
+                label.classList.add('bg-blue-100', 'border-blue-500');
+                label.classList.remove('border-gray-300');
+            } else {
+                label.classList.remove('bg-blue-100', 'border-blue-500');
+                label.classList.add('border-gray-300');
+            }
+            saveFormData();
+        });
     });
   }
 
@@ -713,7 +761,7 @@ Form{% endblock %} {% block content %}
         const errorMsg = parent?.querySelector('.error-msg');
         if (errorMsg) errorMsg.remove();
 
-        if (e.type === 'radio') {
+        if (e.type === 'radio' || e.type === 'checkbox') {
           const group = e.closest('div.gap-4') || e.closest('div.mb-6');
           const groupMsg = group?.querySelector('.error-msg');
           if (groupMsg) groupMsg.remove();

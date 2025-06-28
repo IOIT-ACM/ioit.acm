@@ -74,6 +74,7 @@ def create_app():
     limiter.limit("200 per hour")(opensource_bp)
     limiter.limit("200 per hour")(competitions_bp)
     limiter.limit("100 per hour")(auth_bp)
+    limiter.limit("200 per hour")(recruitment_bp)
 
     # Register blueprints
     app.register_blueprint(home_bp)

@@ -33,7 +33,7 @@ def acm_recruitment_form():
     return render_template("acm.recruitment.html", questions_config=questions_config)
 
 # Table format:
-# fullName,branch,year,mobile,roleType,experience,whyApply,date,ts_q1,ts_q2,ts_q3,mh_q1,mh_q2,mh_q3,wt_q1,wt_q2,wt_q3,dt_q1,dt_q2,dt_q3,tt_q1,tt_q2,tt_q3,em_q1,em_q2,em_q3,sig_web_technologies_q1,sig_web_technologies_q2,sig_web_technologies_q3,sig_ai_ml_q1,sig_ai_ml_q2,sig_ai_ml_q3,sig_mobile_dev_q1,sig_mobile_dev_q2,sig_mobile_dev_q3,sig_cloud_devops_q1,sig_cloud_devops_q2,sig_cloud_devops_q3,sig_github_profile,sig_linkedin_profile
+# fullName,branch,year,mobile,roleType,experience,whyApply,date,ts_q1,ts_q2,ts_q3,mh_q1,mh_q2,mh_q3,mh_q4,wt_q1,wt_q2,wt_q3,dt_q1,dt_q2,dt_q3,tt_q1,tt_q2,tt_q3,em_q1,em_q2,sig_web_technologies_q1,sig_web_technologies_q2,sig_web_technologies_q3,sig_ai_ml_q1,sig_ai_ml_q2,sig_ai_ml_q3,sig_mobile_dev_q1,sig_mobile_dev_q2,sig_mobile_dev_q3,sig_cloud_devops_q1,sig_cloud_devops_q2,sig_cloud_devops_q3,sig_github_profile,sig_linkedin_profile
 
 @recruitment_bp.route("/recruitment", methods=["POST"])
 def handle_acm_recruitment():

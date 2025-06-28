@@ -1,26 +1,4 @@
 {
-  "technical_secretary": [
-    {
-      "id": "ts_q1",
-      "label": "Describe your organizational skills and experience with documentation.",
-      "type": "textarea"
-    },
-    {
-      "id": "ts_q2",
-      "label": "How would you ensure effective communication within the committee?",
-      "type": "textarea"
-    },
-    {
-      "id": "ts_q3",
-      "label": "What tools or methods would you use for managing meeting minutes and records?",
-      "type": "textarea"
-    },
-    {
-      "id": "ts_q4",
-      "label": "What knowledge do you have about the IOIT ACM Student Chapter and what attracted you to the post for which you are applying?",
-      "type": "textarea"
-    }
-  ],
   "media_head": [
     {
       "id": "mh_q1",
@@ -34,17 +12,16 @@
     },
     {
       "id": "mh_q3",
-      "label": "Can you share a link to a portfolio or examples of your media work?",
-      "type": "text",
-      "placeholder": "https://example.com/portfolio"
+      "label": "In your opinion, what makes you stand out for this position?",
+      "type": "textarea"
     },
     {
       "id": "mh_q4",
-      "label": "What knowledge do you have about the IOIT ACM Student Chapter and what attracted you to the post for which you are applying?",
-      "type": "textarea"
+      "label": "Can you share a link to a portfolio or examples of your media work?",
+      "type": "text",
+      "placeholder": "https://instagram.com/username or https://youtube.com/channel/yourchannel"
     }
   ],
-
   "media_team": [
     {
       "id": "mt_q1",
@@ -60,15 +37,8 @@
       "id": "mt_q3",
       "label": "How would you design a post to promote a tech event?",
       "type": "textarea"
-    },
-    {
-      "id": "mt_q4",
-      "label": "What knowledge do you have about the IOIT ACM Student Chapter and what attracted you to the post for which you are applying?",
-      "type": "textarea"
     }
   ],
-
-  
   "web_team": [
     {
       "id": "wt_q1",
@@ -85,76 +55,61 @@
       "label": "Provide a link to your GitHub profile or a web project you've worked on (if any).",
       "type": "text",
       "placeholder": "https://github.com/yourusername"
-    },
-    {
-      "id": "wt_q4",
-      "label": "What knowledge do you have about the IOIT ACM Student Chapter and what attracted you to the post for which you are applying?",
-      "type": "textarea"
     }
   ],
   "doc_team": [
     {
       "id": "dt_q1",
-      "label": "What interests you about being in the Documentation team?",
-      "type": "textarea"
+      "label": "Please select all the tools/platforms that you've worked with/ you're familiar with:",
+      "type": "multichoice",
+      "options": [
+        "Google Suite (Sheets, Docs, Slides, etc.)",
+        "Microsoft Office (Word, Excel, PowerPoint, etc.)",
+        "AI Tools (ChatGPT, etc.)"
+      ]
     },
     {
       "id": "dt_q2",
-      "label": "Do you have experience using tools like MS Word, Google Docs, or LaTeX?",
+      "label": "How will you rate your proficiency in English?",
       "type": "textarea"
     },
     {
       "id": "dt_q3",
-      "label": "How would you summarize a 2-hour tech talk in 300 words?",
-      "type": "textarea"
-    },
-    {
-      "id": "dt_q4",
-      "label": "What knowledge do you have about the IOIT ACM Student Chapter and what attracted you to the post for which you are applying?",
+      "label": "What is your profiency in using llm and ai tools to writing documents and letters? (rank from 1 to 10)",
       "type": "textarea"
     }
   ],
-"tech_team": [
-  {
-    "id": "tt_q1",
-    "label": "What relevant experience or skills do you have for the position you are applying for?",
-    "type": "textarea"
-  },
-  {
-    "id": "tt_q2",
-    "label": "Have you previously used any of the resources available at our institute (e.g., PA system, projectors, microphones, speakers)?",
-    "type": "textarea"
-  },
-  {
-    "id": "tt_q3",
-    "label": "What tools have you used/are familiar with (e.g., OBS Studio, Google Forms, HackerRank, etc.)?",
-    "type": "textarea"
-  },
-  {
-    "id": "tt_q4",
-    "label": "What knowledge do you have about the IOIT ACM Student Chapter and what attracted you to the post for which you are applying?",
-    "type": "textarea"
-  }
-],
+  "tech_team": [
+    {
+      "id": "tt_q1",
+      "label": "Please select all the tools/platforms that you've worked with/ you're familiar with:",
+      "type": "multichoice",
+      "options": [
+        "Google Suite (Sheets, Forms, Docs, etc.)",
+        "Online Coding Platforms (e.g., HackerRank, LeetCode)",
+        "OBS Studio"
+      ]
+    },
+    {
+      "id": "tt_q2",
+      "label": "Have you previously used any of the resources available at our institute (e.g., PA system, projectors, microphones, speakers)?",
+      "type": "textarea"
+    },
+    {
+      "id": "tt_q3",
+      "label": "What is your profiency in using llm and ai tools to generate content and code? (rank from 1 to 10)",
+      "type": "textarea"
+    }
+  ],
   "event_management_team": [
     {
       "id": "em_q1",
-      "label": "Why do you want to join the Event Management team?",
+      "label": "Do you have any experience with managing events and working with large groups? Please describe your role and responsibilities",
       "type": "textarea"
     },
     {
       "id": "em_q2",
       "label": "Do you have any prior experience organizing school/college events?",
-      "type": "textarea"
-    },
-    {
-      "id": "em_q3",
-      "label": "What do you think is the most important part of an event's success?",
-      "type": "textarea"
-    },
-    {
-      "id": "em_q4",
-      "label": "What knowledge do you have about the IOIT ACM Student Chapter and what attracted you to the post for which you are applying?",
       "type": "textarea"
     }
   ],
@@ -173,11 +128,6 @@
       "id": "sig_web_technologies_q3",
       "label": "If you were to cold-email a speaker or company for collaboration, what would your pitch be?",
       "type": "textarea"
-    },
-    {
-      "id": "sig_web_technologies_q4",
-      "label": "What knowledge do you have about the IOIT ACM Student Chapter and what attracted you to the post for which you are applying?",
-      "type": "textarea"
     }
   ],
   "sig_entrepreneurship": [
@@ -194,11 +144,6 @@
     {
       "id": "sig_entrepreneurship_q3",
       "label": "If you were to cold-email a speaker or company for collaboration, what would your pitch be?",
-      "type": "textarea"
-    },
-    {
-      "id": "sig_entrepreneurship_q4",
-      "label": "What knowledge do you have about the IOIT ACM Student Chapter and what attracted you to the post for which you are applying?",
       "type": "textarea"
     }
   ],
@@ -217,11 +162,6 @@
       "id": "sig_ai_ml_q3",
       "label": "If you were to cold-email a speaker or company for collaboration, what would your pitch be?",
       "type": "textarea"
-    },
-    {
-      "id": "sig_ai_ml_q4",
-      "label": "What knowledge do you have about the IOIT ACM Student Chapter and what attracted you to the post for which you are applying?",
-      "type": "textarea"
     }
   ],
   "sig_mobile_dev": [
@@ -239,11 +179,6 @@
       "id": "sig_mobile_dev_q3",
       "label": "If you were to cold-email a speaker or company for collaboration, what would your pitch be?",
       "type": "textarea"
-    },
-    {
-      "id": "sig_mobile_dev_q4",
-      "label": "What knowledge do you have about the IOIT ACM Student Chapter and what attracted you to the post for which you are applying?",
-      "type": "textarea"
     }
   ],
   "sig_cloud_devops": [
@@ -260,11 +195,6 @@
     {
       "id": "sig_cloud_devops_q3",
       "label": "If you were to cold-email a speaker or company for collaboration, what would your pitch be?",
-      "type": "textarea"
-    },
-    {
-      "id": "sig_cloud_devops_q4",
-      "label": "What knowledge do you have about the IOIT ACM Student Chapter and what attracted you to the post for which you are applying?",
       "type": "textarea"
     }
   ]
