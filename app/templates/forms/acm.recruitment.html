@@ -1,5 +1,5 @@
-{% extends "forms/base.html" %} {% block title %}ACM Committee Recruitment
-Form{% endblock %} {% block content %}
+{% extends "forms/base.html" %} {% block title %} ACM Committee Recruitment Form
+{% endblock %} {% block content %}
 <div class="max-w-6xl mx-auto md:p-6">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
     <div class="w-full flex justify-center mt-10 md:mt-10 p-2">
@@ -18,7 +18,6 @@ Form{% endblock %} {% block content %}
         </div>
       </div>
     </div>
-
     <form id="acmForm" class="p-5 md:p-0 space-y-6">
       <div id="step-0" class="form-step p-4 md:p-6">
         <div class="text-gray-700">
@@ -47,13 +46,11 @@ Form{% endblock %} {% block content %}
           >
             You have already submitted the application form.
           </p>
-
           <div id="step-0-buttons" class="flex items-center gap-4 mt-4">
             <!-- Will be dynamically updated by JS -->
           </div>
         </div>
       </div>
-
       <div id="step-1" class="form-step hidden">
         <p class="text-lg font-semibold text-gray-700 mb-6">
           Step 1: General Information
@@ -120,6 +117,8 @@ Form{% endblock %} {% block content %}
             name="mobile"
             placeholder="Enter mobile number"
             class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            pattern="[0-9]{10}"
+            title="Please enter a 10-digit mobile number"
           />
         </div>
         <button
@@ -130,43 +129,17 @@ Form{% endblock %} {% block content %}
           Next
         </button>
       </div>
-
       <div id="step-2" class="form-step hidden">
         <p class="text-lg font-semibold text-gray-700 mb-6">
           Step 2: Choose Your Desired Position
         </p>
         <hr class="border-t-2 border-gray-500 my-6" />
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          {% set committee_roles = [ {'value': 'media_head', 'text': 'Media Head'},
-          {'value': 'media_team', 'text': 'Media Team'}, {'value': 'web_team',
-          'text': 'Web Team'}, {'value': 'doc_team', 'text': 'Doc Team'},
-          {'value': 'tech_team', 'text': 'Tech Team'}, {'value':
-          'event_management_team', 'text': 'Event Management Team'} ] %} {% for
-          role in committee_roles %}
-          <label
-            class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
-          >
-            <input
-              type="radio"
-              name="roleType"
-              value="{{ role.value }}"
-              onchange="renderRoleSpecificFields()"
-              class="accent-blue-500 focus:outline-none mr-3"
-            />
-            <span class="text-gray-800 font-medium">{{ role.text }}</span>
-          </label>
-          {% endfor %}
-        </div>
-
-        <hr class="border-t border-gray-500 my-4 max-w-10" />
-        <h3 class="mb-3">Special Interest Groups ACM</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          {% set sig_roles = [ {'value': 'sig_web_technologies', 'text': 'SIG
-          Web Technologies'}, {'value': 'sig_entrepreneurship', 'text': 'SIG
-          Entrepreneurship'}, {'value': 'sig_ai_ml', 'text': 'SIG AI&ML'},
-          {'value': 'sig_mobile_dev', 'text': 'SIG Mobile Dev'}, {'value':
-          'sig_cloud_devops', 'text': 'SIG Cloud and Devops'} ] %} {% for role
-          in sig_roles %}
+          {% set committee_roles = [ {'value': 'media_head', 'text': 'Media
+          Team'}, {'value': 'web_team', 'text': 'Web Team'}, {'value':
+          'doc_team', 'text': 'Doc Team'}, {'value': 'tech_team', 'text': 'Tech
+          Team'}, {'value': 'event_management_team', 'text': 'Event Management
+          Team'} ] %} {% for role in committee_roles %}
           <label
             class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
           >
@@ -198,18 +171,16 @@ Form{% endblock %} {% block content %}
           </button>
         </div>
       </div>
-
       <div id="step-3" class="form-step hidden space-y-6">
         <p class="text-lg font-semibold text-gray-700 mb-2">
           Step 3: Experience & Role-Specific Questions
         </p>
         <hr class="border-t-2 border-gray-500 my-4" />
-
         {% for role_value, questions in questions_config.items() %}
-        <div id="{{role_value}}-fields" class="role-section hidden space-y-4">
+        <div id="{{ role_value }}-fields" class="role-section hidden space-y-4">
           <p class="text-md font-semibold text-gray-600 mb-2">
-            For {{ (committee_roles + sig_roles) | selectattr('value',
-            'equalto', role_value) | map(attribute='text') | first |
+            For {{ (committee_roles) | selectattr('value', 'equalto',
+            role_value) | map(attribute='text') | first |
             default(role_value.replace('_', ' ')|title) }}:
           </p>
           {% for question in questions %}
@@ -264,38 +235,9 @@ Form{% endblock %} {% block content %}
           {% endfor %}
         </div>
         {% endfor %}
-
-        <div
-          id="sig_common_profiles-fields"
-          class="role-section hidden space-y-4"
-        >
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >GitHub Profile</label
-            >
-            <input
-              type="text"
-              name="sig_github_profile"
-              placeholder="https://github.com/username"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >LinkedIn Profile</label
-            >
-            <input
-              type="text"
-              name="sig_linkedin_profile"
-              placeholder="https://linkedin.com/in/username"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        </div>
-
         <div class="space-y-4 mt-6 pt-4 border-t border-gray-300">
           <label class="block text-gray-700 font-semibold mb-2 mt-6"
-            >Anything else you want us to know about you?</label
+            >Anything else you want us to know about you? (Optional)</label
           >
           <textarea
             name="experience"
@@ -303,10 +245,10 @@ Form{% endblock %} {% block content %}
             placeholder="Briefly describe any previous roles, projects, or activities."
             class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           ></textarea>
-          <label class="block text-gray-700 font-semibold mb-2 mt-6"
-            >What knowledge do you have about the IOIT ACM Student Chapter and
-            what attracted you to the post for which you are applying?</label
-          >
+          <label class="block text-gray-700 font-semibold mb-2 mt-6">
+            What knowledge do you have about the IOIT ACM Student Chapter and
+            what attracted you to the post for which you are applying?
+          </label>
           <textarea
             name="whyApply"
             rows="3"
@@ -359,7 +301,6 @@ Form{% endblock %} {% block content %}
         </div>
         <p id="formMsg" class="text-center text-lg font-semibold mt-4"></p>
       </div>
-
       <div id="step-9" class="form-step hidden p-4 md:p-6">
         <h1 class="text-2xl md:text-3xl font-bold text-blue-600 mb-4">
           Thank You for Your Submission!
@@ -369,87 +310,36 @@ Form{% endblock %} {% block content %}
           Your application has been received successfully.
         </p>
         <p class="text-lg mb-6">
-          Our team will review your application and get in touch with you
-          soon.<br /><br />
-          Stay tuned for further updates!
+          Our team will review your application and get in touch with you soon.
         </p>
-        <div class="flex flex-col md:flex-row justify-center gap-4 mt-8">
+        <div class="mt-10 flex flex-col items-center">
           <a
-            href="/"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg w-full text-center"
+        href="https://chat.whatsapp.com/BjRmd2Y3nDL9Bj09YhgBcA"
+        target="_blank"
+        rel="noopener"
+        class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 w-full rounded-lg shadow transition text-center"
           >
-            Home
+        👉 Join our WhatsApp Group for Updates!
           </a>
-          <a
-            href="/gallery"
-            class="bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-2 px-6 rounded-lg w-full text-center"
-          >
-            Gallery
-          </a>
-          <a
-            href="/events"
-            class="bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-2 px-6 rounded-lg w-full text-center"
-          >
-            Events
-          </a>
+
+          <p class="mt-6 text-md text-red-600 font-semibold mb-4 text-center">
+        <span class="font-bold">Note:</span> It is <u>mandatory</u> to join the WhatsApp group in order to appear for the interviews and receive further updates.
+          </p>
         </div>
       </div>
     </form>
   </div>
 </div>
-
 <script>
   let currentStep = 0,
     formMemory = {};
 
   const roleSpecificQuestionKeys = {
-    technical_secretary: ['ts_q1', 'ts_q2', 'ts_q3'],
     media_head: ['mh_q1', 'mh_q2', 'mh_q3', 'mh_q4'],
-    media_team: ['mt_q1', 'mt_q2', 'mt_q3'],
     web_team: ['wt_q1', 'wt_q2', 'wt_q3'],
     doc_team: ['dt_q1', 'dt_q2', 'dt_q3'],
     tech_team: ['tt_q1', 'tt_q2', 'tt_q3'],
-    event_management_team: ['em_q1', 'em_q2'],
-    sig_web_technologies: [
-      'sig_web_technologies_q1',
-      'sig_web_technologies_q2',
-      'sig_web_technologies_q3',
-      'sig_web_technologies_q4',
-      'sig_github_profile',
-      'sig_linkedin_profile',
-    ],
-    sig_ai_ml: [
-      'sig_ai_ml_q1',
-      'sig_ai_ml_q2',
-      'sig_ai_ml_q3',
-      'sig_ai_ml_q4',
-      'sig_github_profile',
-      'sig_linkedin_profile',
-    ],
-    sig_mobile_dev: [
-      'sig_mobile_dev_q1',
-      'sig_mobile_dev_q2',
-      'sig_mobile_dev_q3',
-      'sig_mobile_dev_q4',
-      'sig_github_profile',
-      'sig_linkedin_profile',
-    ],
-    sig_cloud_devops: [
-      'sig_cloud_devops_q1',
-      'sig_cloud_devops_q2',
-      'sig_cloud_devops_q3',
-      'sig_cloud_devops_q4',
-      'sig_github_profile',
-      'sig_linkedin_profile',
-    ],
-    sig_entrepreneurship: [
-      'sig_entrepreneurship_q1',
-      'sig_entrepreneurship_q2',
-      'sig_entrepreneurship_q3',
-      'sig_entrepreneurship_q4',
-      'sig_github_profile',
-      'sig_linkedin_profile',
-    ],
+    event_management_team: ['em_q1', 'em_q2', 'em_q3'],
   };
 
   function saveFormData() {
@@ -467,13 +357,17 @@ Form{% endblock %} {% block content %}
     });
 
     const multichoiceFields = new Set();
-    document.querySelectorAll('input[type="checkbox"]').forEach(cb => multichoiceFields.add(cb.name));
+    document
+      .querySelectorAll('input[type="checkbox"]')
+      .forEach((cb) => multichoiceFields.add(cb.name));
 
-    multichoiceFields.forEach(name => {
-        const checkedValues = Array.from(f.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
-        if (checkedValues.length > 0) {
-            formMemory[name] = checkedValues.join(', ');
-        }
+    multichoiceFields.forEach((name) => {
+      const checkedValues = Array.from(
+        f.querySelectorAll(`input[name="${name}"]:checked`)
+      ).map((cb) => cb.value);
+      if (checkedValues.length > 0) {
+        formMemory[name] = checkedValues.join(', ');
+      }
     });
 
     formMemory.currentStep = currentStep;
@@ -494,17 +388,17 @@ Form{% endblock %} {% block content %}
             updateRadioStyling(r);
           }
         } else if (elType === 'checkbox') {
-            const values = formMemory[n].split(', ');
-            elements.forEach(cb => {
-                if (values.includes(cb.value)) {
-                    cb.checked = true;
-                    const label = cb.closest('label');
-                    if (label) {
-                        label.classList.add('bg-blue-100', 'border-blue-500');
-                        label.classList.remove('border-gray-300');
-                    }
-                }
-            });
+          const values = formMemory[n].split(', ');
+          elements.forEach((cb) => {
+            if (values.includes(cb.value)) {
+              cb.checked = true;
+              const label = cb.closest('label');
+              if (label) {
+                label.classList.add('bg-blue-100', 'border-blue-500');
+                label.classList.remove('border-gray-300');
+              }
+            }
+          });
         } else {
           elements[0].value = formMemory[n];
         }
@@ -568,16 +462,6 @@ Form{% endblock %} {% block content %}
         .forEach((el) => (el.disabled = true));
     });
 
-    const sigCommonProfilesSection = document.getElementById(
-      'sig_common_profiles-fields'
-    );
-    if (sigCommonProfilesSection) {
-      sigCommonProfilesSection.classList.add('hidden');
-      sigCommonProfilesSection
-        .querySelectorAll('textarea, input, select')
-        .forEach((el) => (el.disabled = true));
-    }
-
     if (selectedRoleRadio) {
       const roleValue = selectedRoleRadio.value;
       const container = document.getElementById(`${roleValue}-fields`);
@@ -586,15 +470,6 @@ Form{% endblock %} {% block content %}
         container
           .querySelectorAll('textarea, input, select')
           .forEach((el) => (el.disabled = false));
-      }
-
-      if (roleValue.startsWith('sig_')) {
-        if (sigCommonProfilesSection) {
-          sigCommonProfilesSection.classList.remove('hidden');
-          sigCommonProfilesSection
-            .querySelectorAll('textarea, input, select')
-            .forEach((el) => (el.disabled = false));
-        }
       }
     }
   }
@@ -610,7 +485,7 @@ Form{% endblock %} {% block content %}
     } else if (n === 2) {
       fieldsToValidate = ['roleType'];
     } else if (n === 3) {
-      fieldsToValidate = ['experience', 'whyApply'];
+      fieldsToValidate = ['whyApply'];
       const selectedRoleType = formData.get('roleType');
       if (selectedRoleType && roleSpecificQuestionKeys[selectedRoleType]) {
         fieldsToValidate = fieldsToValidate.concat(
@@ -660,6 +535,22 @@ Form{% endblock %} {% block content %}
           }
         });
         if (!firstInvalidField) firstInvalidField = elements[0];
+      } else if (fieldName === 'mobile') {
+        const mobileInput = elements[0];
+        const mobileValue = mobileInput.value.trim();
+        const mobileRegex = /^[0-9]{10}$/;
+        if (!mobileRegex.test(mobileValue)) {
+          isValid = false;
+          const parent = mobileInput.closest('div');
+          mobileInput.classList.add('border-red-500');
+          if (parent && !parent.querySelector('.error-msg')) {
+            const msg = document.createElement('p');
+            msg.className = 'text-sm text-red-500 mt-1 error-msg';
+            msg.innerText = 'Please enter a valid 10-digit mobile number.';
+            parent.appendChild(msg);
+          }
+          if (!firstInvalidField) firstInvalidField = mobileInput;
+        }
       }
     }
 
@@ -680,17 +571,17 @@ Form{% endblock %} {% block content %}
       });
     });
     document.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
-        cb.addEventListener('change', function() {
-            const label = this.closest('label');
-            if (this.checked) {
-                label.classList.add('bg-blue-100', 'border-blue-500');
-                label.classList.remove('border-gray-300');
-            } else {
-                label.classList.remove('bg-blue-100', 'border-blue-500');
-                label.classList.add('border-gray-300');
-            }
-            saveFormData();
-        });
+      cb.addEventListener('change', function () {
+        const label = this.closest('label');
+        if (this.checked) {
+          label.classList.add('bg-blue-100', 'border-blue-500');
+          label.classList.remove('border-gray-300');
+        } else {
+          label.classList.remove('bg-blue-100', 'border-blue-500');
+          label.classList.add('border-gray-300');
+        }
+        saveFormData();
+      });
     });
   }
 
