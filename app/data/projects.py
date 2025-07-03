@@ -10,7 +10,7 @@ projects_data = [
     },
     {
         "name": "TENET 2024",
-        "maintainer": "IOIT ACM Student Chapter",
+        "maintainer": "AISSMS IOIT ACM Student Chapter",
         "description": "The TENET 2024 website attracted 15,000 visitors within just three weeks leading up to the event. Designed and developed by Aditya Godse and Swaroop Patil, the site utilized a modern tech stack including TypeScript, GSAP, Three.js, WebGL, and Tailwind CSS. Featuring various interactive elements, the website successfully engaged users and enhanced their browsing experience.",
         "techstack": "NextJS WebGL ThreeJS GSAP TailwindCSS",
         "image_url": "/static/img/projects/tenet_2024.jpeg",

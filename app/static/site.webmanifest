@@ -1,7 +1,7 @@
 {
-  "name": "IOIT ACM",
-  "short_name": "IOIT ACM",
-  "description": "The official web application for IOIT ACM events and updates.",
+  "name": "AISSMS IOIT ACM",
+  "short_name": "AISSMS IOIT ACM",
+  "description": "The official web application for AISSMS IOIT ACM events and updates.",
   "icons": [
     {
       "src": "/static/web-app-manifest-192x192.png",

@@ -1,6 +1,6 @@
-# IOIT ACM Student Chapter Flask Project
+# AISSMS IOIT ACM Student Chapter Flask Project
 
-This is a Flask project for the IOIT ACM Student Chapter website.
+This is a Flask project for the AISSMS IOIT ACM Student Chapter website.
 
 [Production site](https://ioit.acm.org/)
 
@@ -28,7 +28,7 @@ npx tailwindcss -i ./app/static/css/input.css -o ./app/static/css/tailwind.css -
 ## data
 
 1. Teams
-   The `app/data/teams.py` file contains information about the members of the IOIT ACM committee, organized by year.
+   The `app/data/teams.py` file contains information about the members of the AISSMS IOIT ACM committee, organized by year.
 
 2. Events
    The `app/data/events.py` file contains a list of events organized by name, description, and date. Here's the structure:
@@ -68,7 +68,7 @@ The following routes are available in the project:
 - [x] **`/membership`**: The membership page.
 - [x] **`/membership/status`**: A page showing membership status.
 - [x] **`/gallery`**: A page (currently under development) displaying images or events.
-- [x] **`/team`**: A page with details of the IOIT ACM committee members.
+- [x] **`/team`**: A page with details of the AISSMS IOIT ACM committee members.
 - [x] **`/events`**: A page displaying upcoming events.
 - [x] **`/events/{event.name}`**: Event details page.
 
