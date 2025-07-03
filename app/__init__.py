@@ -61,6 +61,7 @@ def create_app():
     from app.blueprints.competitions.competition import competitions_bp
     from app.blueprints.competitions.auth import auth_bp
     from app.blueprints.recruitment import recruitment_bp
+    from app.blueprints.api import api_bp
 
     limiter.limit("200 per hour")(home_bp)
     limiter.limit("200 per hour")(team_bp)
@@ -75,6 +76,7 @@ def create_app():
     limiter.limit("200 per hour")(competitions_bp)
     limiter.limit("100 per hour")(auth_bp)
     limiter.limit("200 per hour")(recruitment_bp)
+    limiter.limit("100 per hour")(api_bp)
 
     # Register blueprints
     app.register_blueprint(home_bp)
@@ -90,6 +92,7 @@ def create_app():
     app.register_blueprint(competitions_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(recruitment_bp)
+    app.register_blueprint(api_bp)
 
     # Error Handlers
     @app.errorhandler(ProgrammingError)
