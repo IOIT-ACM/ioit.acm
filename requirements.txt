@@ -6,3 +6,4 @@ Flask-SQLAlchemy
 flask-login
 pymysql
 flask_limiter
+Flask-Mail

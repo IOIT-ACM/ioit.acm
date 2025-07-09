@@ -12,7 +12,8 @@ class DatabaseConfig:
             "virtual_contest_bitbyquery_jan2025": self.get_mysql_uri(
                 "virtual_contest_bitbyquery_jan2025"
             ),
-            "recruitment": self.get_mysql_uri("recruitment")
+            "recruitment": self.get_mysql_uri("recruitment"),
+            "workshop_registrations": self.get_mysql_uri("workshop_registrations"),
         }
 
     def get_mysql_uri(self, db_name):

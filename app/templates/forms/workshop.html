@@ -1,0 +1,301 @@
+{% extends "competitions/base.html" %}
+{% block title %}Move Programming Workshop - Registration{% endblock %}
+{% block content %}
+
+<div class="flex justify-center items-center bg-gray-100">
+    <div class="w-full">
+        <h3 class="text-2xl font-bold text-center md:my-20 md:mt-0 my-10">
+            Move Programming Workshop
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Workshop Details Column -->
+            <div class="w-full px-6">
+                <!-- Benefits Banner -->
+                <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-6 sm:p-8 mb-8 text-white">
+                    <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center">What You'll Get:</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                        <div>
+                            <i class="fas fa-code text-2xl sm:text-3xl mb-2"></i>
+                            <h3 class="font-semibold">Learn Move Programming</h3>
+                            <p class="text-sm text-blue-100">Master blockchain development with Move language</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-gift text-2xl sm:text-3xl mb-2"></i>
+                            <h3 class="font-semibold">Free Food & Certificates</h3>
+                            <p class="text-sm text-blue-100">Complimentary meals and completion certificates</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-briefcase text-2xl sm:text-3xl mb-2"></i>
+                            <h3 class="font-semibold">Career Opportunities</h3>
+                            <p class="text-sm text-blue-100">Internship opportunities in Sui ecosystem</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agenda -->
+                <div class="bg-white rounded-xl p-6 shadow-md mb-8">
+                    <h3 class="text-xl sm:text-2xl font-bold mb-4 text-gray-800">Workshop Agenda</h3>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-semibold text-blue-600">Day 1: Foundations</h4>
+                            <ul class="text-gray-700 text-sm sm:text-base space-y-1">
+                                <li>• Web3 and blockchain fundamentals</li>
+                                <li>• Introduction to Sui Network</li>
+                                <li>• Move programming language basics</li>
+                                <li>• Setting up development environment</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <h4 class="font-semibold text-purple-600">Day 2: Hands-on Development</h4>
+                            <ul class="text-gray-700 text-sm sm:text-base space-y-1">
+                                <li>• Building Move modules</li>
+                                <li>• Testing and deployment on Sui testnet</li>
+                                <li>• Best practices and debugging</li>
+                                <li>• Career opportunities in Sui ecosystem</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- What's Included -->
+                <div class="bg-green-50 rounded-xl p-6 border-2 border-green-200">
+                    <h3 class="text-lg sm:text-xl font-bold text-green-800 mb-4">What's Included:</h3>
+                    <ul class="text-green-700 text-sm sm:text-base space-y-2">
+                        <li>Expert instructors from Sui Foundation</li>
+                        <li>Complimentary food for all attendees</li>
+                        <li>Spot bounties for coding challenges</li>
+                        <li>Completion certificates</li>
+                        <li>Internship opportunities</li>
+                        <li>Dev resources and docs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Registration Form or Thank You Section -->
+            <div id="formContainer" class="p-5 md:p-0">
+                <div id="thankYouSection" class="hidden bg-white rounded-lg p-8 text-center">
+                    <div class="text-green-500 text-5xl mb-4">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Thank You for Registering!</h3>
+                    <p class="text-gray-600 mb-6">Your registration for the Move Programming Workshop has been
+                        successful.</p>
+                    <hr class="my-6" />
+                </div>
+
+                <!-- Form -->
+                <form id="registrationForm" method="POST" action="{{ url_for('workshop.register') }}">
+                    <p class="mb-5">Fill in your details to register</p>
+                    <hr class="border-t-2 border-gray-500 my-6 w-20" />
+
+                    <!-- Full Name -->
+                    <div class="mb-4">
+                        <label for="fullName" class="block text-gray-700 font-semibold mb-2">Full Name</label>
+                        <input type="text" id="fullName" name="fullName"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
+                        <input type="email" id="email" name="email"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <!-- Contact Number -->
+                    <div class="mb-4">
+                        <label for="contactNumber" class="block text-gray-700 font-semibold mb-2">Contact Number</label>
+                        <input type="tel" id="contactNumber" name="contactNumber"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <!-- College Roll -->
+                    <div class="mb-4">
+                        <label for="collegeRoll" class="block text-gray-700 font-semibold mb-2">College Roll /
+                            PRN</label>
+                        <input type="text" id="collegeRoll" name="collegeRoll"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <!-- Year of Study -->
+                    <div class="mb-4">
+                        <label for="yearOfStudy" class="block text-gray-700 font-semibold mb-2">Year of Study</label>
+                        <select id="yearOfStudy" name="yearOfStudy"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select your year</option>
+                            <option value="FY">FY (First Year)</option>
+                            <option value="SY">SY (Second Year)</option>
+                            <option value="TY">TY (Third Year)</option>
+                            <option value="BE">Final Year</option>
+                        </select>
+                    </div>
+
+                    <!-- Branch -->
+                    <div class="mb-4">
+                        <label for="branch" class="block text-gray-700 font-semibold mb-2">Branch / Department</label>
+                        <select id="branch" name="branch"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select your branch</option>
+                            <option value="CS">CS</option>
+                            <option value="IT">IT</option>
+                            <option value="AIDS">AI&DS</option>
+                            <option value="Elec">Elec</option>
+                            <option value="Instru">Instru</option>
+                            <option value="Entc">Entc</option>
+                        </select>
+                    </div>
+
+                    <!-- Web3 Familiar -->
+                    <div class="mb-4">
+                        <label for="web3Familiar" class="block text-gray-700 font-semibold mb-2">Familiar with
+                            Web3?</label>
+                        <select id="web3Familiar" name="web3Familiar"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <!-- Sui Network -->
+                    <div class="mb-4">
+                        <label for="suiNetwork" class="block text-gray-700 font-semibold mb-2">Heard of Sui
+                            Network?</label>
+                        <select id="suiNetwork" name="suiNetwork"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <!-- Languages Known -->
+                    <div class="mb-4">
+                        <label for="programmingLanguages" class="block text-gray-700 font-semibold mb-2">Languages
+                            Known</label>
+                        <textarea id="programmingLanguages" name="programmingLanguages" rows="3"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="e.g. Python, Rust, JavaScript"></textarea>
+                    </div>
+
+                    <!-- Portfolio -->
+                    <div class="mb-4">
+                        <label for="portfolio" class="block text-gray-700 font-semibold mb-2">GitHub/Portfolio
+                            (Optional)</label>
+                        <input type="text" id="portfolio" name="portfolio"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <!-- Agreement -->
+                    <div class="mb-6">
+                        <label class="flex items-start gap-2">
+                            <input type="checkbox" id="agreement" name="agreement" class="mt-1" />
+                            <span class="text-gray-700 text-sm">
+                                I agree to attend both days of the workshop (July 21-22, 2025) and commit to the full
+                                2-day program.
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" id="submitBtn"
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                        Register for Workshop
+                    </button>
+
+                    <hr class="my-6" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const registrationForm = document.getElementById('registrationForm');
+        const thankYouSection = document.getElementById('thankYouSection');
+        const submitBtn = document.getElementById('submitBtn');
+
+        const isSubmitted = localStorage.getItem('workshopRegistrationSubmitted');
+        if (isSubmitted === 'true') {
+            registrationForm.classList.add('hidden');
+            thankYouSection.classList.remove('hidden');
+            return;
+        }
+
+        function showError(input, msg) {
+            var parent = input.parentNode;
+            var oldError = parent.querySelector('.error-message');
+            if (oldError) oldError.remove();
+
+            var p = document.createElement('p');
+            p.className = 'error-message text-red-500 text-sm mt-1';
+            p.textContent = msg;
+            parent.appendChild(p);
+            input.classList.add('border-red-500');
+        }
+
+        function clearError(input) {
+            var parent = input.parentNode;
+            var oldError = parent.querySelector('.error-message');
+            if (oldError) oldError.remove();
+            input.classList.remove('border-red-500');
+        }
+
+        function isEmail(str) {
+            return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(str);
+        }
+
+        function isPhone(str) {
+            return /^\d{10}$/.test(str);
+        }
+
+        registrationForm.addEventListener('submit', function (e) {
+            let isValid = true;
+
+            const requiredFields = [
+                { id: 'fullName', message: 'Full name is required.' },
+                { id: 'email', message: 'Valid email required.', check: isEmail },
+                { id: 'contactNumber', message: 'Valid 10-digit phone required.', check: isPhone },
+                { id: 'collegeRoll', message: 'College roll number is required.' },
+                { id: 'yearOfStudy', message: 'Select your year of study.' },
+                { id: 'branch', message: 'Select your branch.' },
+                { id: 'web3Familiar', message: 'Choose if you know Web3.' },
+                { id: 'suiNetwork', message: 'Indicate Sui Network familiarity.' },
+                { id: 'programmingLanguages', message: 'Mention at least one language.' }
+            ];
+
+            requiredFields.forEach(field => {
+                var input = document.getElementById(field.id);
+                var value = input.value.trim();
+                if (value === '' || (field.check && !field.check(value))) {
+                    showError(input, field.message);
+                    isValid = false;
+                } else {
+                    clearError(input);
+                }
+            });
+
+            var agreement = document.getElementById('agreement');
+            if (!agreement.checked) {
+                showError(agreement, 'You must agree to the terms.');
+                isValid = false;
+            } else {
+                clearError(agreement);
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+                submitBtn.innerText = 'Register for Workshop';
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.innerText = 'Submitting...';
+                localStorage.setItem('workshopRegistrationSubmitted', 'true');
+            }
+        });
+    });
+</script>
+
+{% endblock %}
