@@ -59,9 +59,9 @@ class WorkshopRegistration(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(120), nullable=False, unique=True)
-    mobile = db.Column(db.String(15), nullable=False, unique=True)
-    college_roll = db.Column(db.String(50), nullable=False, unique=True)
+    email = db.Column(db.String(120), nullable=False)
+    mobile = db.Column(db.String(15), nullable=False)
+    college_roll = db.Column(db.String(50), nullable=False)
     year_of_study = db.Column(db.String(20), nullable=False)
     branch = db.Column(db.String(100), nullable=False)
 
