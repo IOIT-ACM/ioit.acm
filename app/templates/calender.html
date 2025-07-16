@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>College Academic Calendar | AISSMS IOIT ACM Student Chapter</title>
 
-    <!-- SEO Metadata -->
     <meta
       name="description"
       content="AISSMS IOIT ACM student chapter & College Academic Calendar - View upcoming ACM chapter events, college activities, academic calendar, exams, workshops, and more for IOIT students. Stay updated and never miss an important date!"
@@ -22,7 +21,6 @@
     <meta name="apple-mobile-web-app-title" content="IOIT ACM Calendar" />
     <meta name="mobile-web-app-capable" content="yes" />
 
-    <!-- Open Graph (OG) Tags -->
     <meta property="og:type" content="website" />
     <meta
       property="og:title"
@@ -37,7 +35,6 @@
     <meta property="og:site_name" content="AISSMS IOIT ACM Calendar" />
     <meta property="og:locale" content="en_US" />
 
-    <!-- Twitter Card Metadata -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
@@ -51,7 +48,6 @@
     <meta name="twitter:site" content="@AISSMSIOIT" />
     <meta name="twitter:creator" content="@AISSMSIOIT" />
 
-    <!-- Favicon Configuration -->
     <link
       rel="icon"
       type="image/png"
@@ -67,7 +63,6 @@
     />
     <link rel="manifest" href="/static/site.webmanifest" />
 
-    <!-- Google tag (gtag.js) -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-Y6Z6G51Z27"
@@ -82,7 +77,6 @@
       gtag('config', 'G-Y6Z6G51Z27');
     </script>
 
-    <!-- Stylesheets -->
     <link rel="stylesheet" href="/static/css/tailwind.css" />
     <link rel="stylesheet" href="/static/css/styles.css" />
 
@@ -92,6 +86,290 @@
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+
+    <style>
+      #calendar {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 450px;
+        background-color: hsl(var(--card));
+        overflow: hidden;
+        border: var(--border-width-thick) solid var(--border-color-strong);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-large);
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0.5rem;
+        width: 100%;
+        position: relative;
+        background-color: hsl(var(--card));
+        border-bottom: var(--border-width-medium) solid
+          var(--border-color-strong);
+        text-align: center;
+      }
+
+      .header h1 {
+        flex-grow: 1;
+        margin: 0;
+        padding: 0;
+        font-size: 1.125rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: hsl(var(--foreground));
+      }
+
+      .left,
+      .right {
+        position: static;
+        border: none;
+        background: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        font-size: 1.75rem;
+        line-height: 1;
+        color: hsl(var(--foreground));
+        font-weight: bold;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        width: 2.5rem;
+      }
+      .left:before {
+        content: '‹';
+      }
+      .right:before {
+        content: '›';
+      }
+      .left:active,
+      .right:active {
+        transform: translateY(1px);
+      }
+
+      .month {
+        width: 100%;
+        padding: 0.5rem;
+        flex-grow: 1;
+      }
+
+      .week {
+        display: flex;
+        width: 100%;
+      }
+
+      .day {
+        flex: 1;
+        min-width: 0;
+        padding: 0.5rem 0.25rem;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        border-left: 1px solid hsl(var(--border));
+      }
+      .week .day:first-child {
+        border-left: none;
+      }
+
+      .day.other {
+        color: hsl(var(--muted-foreground));
+        opacity: 0.7;
+      }
+
+      .day.today .day-number {
+        background-color: var(--black);
+        color: var(--card);
+        border-radius: 9999px;
+      }
+
+      .day-name {
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: hsl(var(--muted-foreground));
+      }
+
+      .day-number {
+        font-size: 1rem;
+        font-weight: 700;
+        width: 1.75rem;
+        height: 1.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        transition: all 0.2s ease;
+      }
+
+      .day .day-events {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        height: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
+      }
+
+      .day .day-events span {
+        display: block;
+        width: 6px;
+        height: 6px;
+        border-radius: 9999px;
+      }
+
+      .blue {
+        background: rgba(156, 202, 235, 1);
+      }
+      .orange {
+        background: rgba(247, 167, 0, 1);
+      }
+      .green {
+        background: rgba(153, 198, 109, 1);
+      }
+      .yellow {
+        background: rgba(249, 233, 0, 1);
+      }
+
+      .details {
+        position: relative;
+        z-index: 10;
+        margin-top: 0.5rem;
+        background: hsl(var(--secondary));
+        border: var(--border-width-medium) solid var(--border-color-strong);
+        border-radius: var(--radius-base);
+        box-shadow: var(--shadow-small);
+      }
+
+      .arrow {
+        position: absolute;
+        top: -10px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 8px 8px 8px;
+        border-color: transparent transparent var(--black) transparent;
+        transform: translateX(-50%);
+        transition: left 0.4s ease;
+      }
+
+      .events {
+        padding: 0.75rem;
+        max-height: 150px;
+        overflow-y: auto;
+      }
+
+      .event {
+        font-size: 0.875rem;
+        line-height: 1.5;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0;
+      }
+
+      .event-category {
+        height: 10px;
+        width: 10px;
+        border-radius: 9999px;
+        flex-shrink: 0;
+      }
+
+      .legend {
+        padding: 0.75rem;
+        width: 100%;
+        border-top: var(--border-width-medium) solid var(--border-color-strong);
+        background: hsl(var(--card));
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      .entry {
+        position: relative;
+        padding-left: 1.25rem;
+        font-size: 0.75rem;
+        display: inline-flex;
+        align-items: center;
+        color: hsl(var(--foreground));
+      }
+
+      .entry:after {
+        content: '';
+        position: absolute;
+        height: 10px;
+        width: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0.25rem;
+        border-radius: 9999px;
+      }
+
+      .entry.blue:after {
+        background: rgba(156, 202, 235, 1);
+      }
+      .entry.orange:after {
+        background: rgba(247, 167, 0, 1);
+      }
+      .entry.green:after {
+        background: rgba(153, 198, 109, 1);
+      }
+      .entry.yellow:after {
+        background: rgba(249, 233, 0, 1);
+      }
+
+      .month.new {
+        animation: fadeIn 0.5s ease-out;
+      }
+      .month.in {
+        animation: fadeIn 0.4s ease-out;
+      }
+      .month.out {
+        animation: fadeOut 0.4s ease-in;
+      }
+      .details.in {
+        animation: fadeIn 0.3s ease-out;
+      }
+      .details.out {
+        animation: fadeOut 0.3s ease-out forwards;
+      }
+      .events.in {
+        animation: fadeIn 0.3s 0.1s ease-out both;
+      }
+      .events.out {
+        animation: fadeOut 0.2s ease-in both;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+    </style>
+
     <style>
       :root {
         --background: 0 0% 100%;
@@ -228,6 +506,17 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
     </style>
   </head>
   <body class="min-h-screen">
@@ -240,7 +529,11 @@
       >
         <div class="flex justify-between items-center h-16 md:h-24">
           <div class="flex items-center space-x-4">
-            <i class="ri-calendar-event-fill text-4xl text-black"></i>
+            <img
+              src="{{ url_for('static', filename='img/assets/acm.png') }}"
+              alt="AISSMS IOIT ACM Logo"
+              class="w-auto h-10 mr-3"
+            />
             <h1 class="md:text-3xl uppercase tracking-tight">
               Annual Calender
             </h1>
@@ -286,7 +579,7 @@
     </header>
 
     <main class="max-w-screen-[1500px] mx-auto md:p-4">
-      <div class="p-4">
+      <div class="md:p-4">
         <div class="lg:grid lg:grid-cols-12 lg:gap-8">
           <aside
             id="filter-sidebar"
@@ -377,73 +670,102 @@
             </div>
           </aside>
 
-          <div class="lg:col-span-9 mt-8 lg:mt-0">
-            <div class="card bg-white">
-              <div
-                class="grid grid-cols-7 bg-white border-b-4 border-black"
-                role="row"
+          <div class="lg:col-span-9 lg:mt-0">
+            <div
+              id="calendar-wrapper"
+              class="flex justify-center md:hidden p-4"
+            >
+              <div id="calendar"></div>
+            </div>
+
+            <div class="card bg-white hidden md:block">
+              <section
+                id="calendar-view"
+                class="hidden md:block"
+                aria-labelledby="calendar-heading"
               >
-                <div
-                  class="p-3 text-center font-bold text-black uppercase"
-                  role="columnheader"
-                >
-                  Sun
-                </div>
-                <div
-                  class="p-3 text-center font-bold text-black uppercase"
-                  role="columnheader"
-                >
-                  Mon
-                </div>
-                <div
-                  class="p-3 text-center font-bold text-black uppercase"
-                  role="columnheader"
-                >
-                  Tue
-                </div>
-                <div
-                  class="p-3 text-center font-bold text-black uppercase"
-                  role="columnheader"
-                >
-                  Wed
-                </div>
-                <div
-                  class="p-3 text-center font-bold text-black uppercase"
-                  role="columnheader"
-                >
-                  Thu
-                </div>
-                <div
-                  class="p-3 text-center font-bold text-black uppercase"
-                  role="columnheader"
-                >
-                  Fri
-                </div>
-                <div
-                  class="p-3 text-center font-bold text-black uppercase"
-                  role="columnheader"
-                >
-                  Sat
-                </div>
-              </div>
+                <h2 id="calendar-heading" class="sr-only">
+                  Monthly Calendar View
+                </h2>
 
-              <div class="relative">
-                <div
-                  id="calendar-body"
-                  class="grid grid-cols-7 md:grid"
-                  role="grid"
-                ></div>
+                <header
+                  class="grid grid-cols-7 bg-white border-b-4 border-black"
+                  role="row"
+                >
+                  <div
+                    class="p-3 text-center font-bold text-black uppercase"
+                    role="columnheader"
+                  >
+                    Sun
+                  </div>
+                  <div
+                    class="p-3 text-center font-bold text-black uppercase"
+                    role="columnheader"
+                  >
+                    Mon
+                  </div>
+                  <div
+                    class="p-3 text-center font-bold text-black uppercase"
+                    role="columnheader"
+                  >
+                    Tue
+                  </div>
+                  <div
+                    class="p-3 text-center font-bold text-black uppercase"
+                    role="columnheader"
+                  >
+                    Wed
+                  </div>
+                  <div
+                    class="p-3 text-center font-bold text-black uppercase"
+                    role="columnheader"
+                  >
+                    Thu
+                  </div>
+                  <div
+                    class="p-3 text-center font-bold text-black uppercase"
+                    role="columnheader"
+                  >
+                    Fri
+                  </div>
+                  <div
+                    class="p-3 text-center font-bold text-black uppercase"
+                    role="columnheader"
+                  >
+                    Sat
+                  </div>
+                </header>
 
+                <div class="relative">
+                  <div
+                    id="calendar-body"
+                    class="grid grid-cols-7"
+                    role="grid"
+                  ></div>
+                  <div
+                    id="calendar-state-overlay"
+                    class="absolute hidden inset-0 z-10 bg-white/80 backdrop-blur-sm p-8 text-center min-h-[50vh] flex items-center justify-center"
+                    aria-live="polite"
+                  ></div>
+                </div>
+              </section>
+
+              <section id="agenda-view-wrapper">
+                <h2 id="agenda-heading" class="sr-only">Daily Agenda View</h2>
                 <div id="agenda-view"></div>
+              </section>
 
+              <div id="no-events-container" class="hidden">
                 <div
-                  id="calendar-state-overlay"
-                  class="absolute hidden inset-0 z-10 bg-white/80 backdrop-blur-sm p-8 text-center min-h-[50vh] flex items-center justify-center"
-                  aria-live="polite"
-                ></div>
+                  class="text-center p-8 md:border-t-4 border-black text-gray-500"
+                >
+                  <i class="ri-inbox-2-line text-5xl mb-4"></i>
+                  <h3 class="text-2xl font-bold uppercase">No Events Found</h3>
+                  <p class="mt-2">
+                    Try adjusting the filters or changing the month.
+                  </p>
+                </div>
               </div>
-
-              <div id="no-events-container" class="hidden"></div>
             </div>
           </div>
         </div>
@@ -506,7 +828,7 @@
             </div>
           </div>
           <div
-            class="p-4 bg-white border-t-4 border-black flex justify-end space-x-3"
+            class="p-4 bg-white border-t-4 border-black flex md:flex-row flex-col justify-end gap-5"
           >
             <button id="share-event-btn" class="btn btn-outline">
               <i class="ri-share-line mr-2"></i>Share
@@ -524,13 +846,22 @@
         const API_URL = 'http://localhost:8000/events/api/events/filter/';
         const LOCAL_STORAGE_KEY = 'collegeCalendarState';
 
+        let state = {
+          currentDate: new Date(),
+          filters: { eventType: 'all', academicYears: [] },
+          allEvents: [],
+          events: [],
+          isLoading: true,
+          error: null,
+        };
+
         const DOMElements = {
           prevMonthBtn: document.getElementById('prev-month'),
           nextMonthBtn: document.getElementById('next-month'),
           todayBtn: document.getElementById('today-btn'),
           currentMonthEl: document.getElementById('current-month'),
           calendarBody: document.getElementById('calendar-body'),
-          AgendaView: document.getElementById('agenda-view'),
+          agendaView: document.getElementById('agenda-view'),
           calendarStateOverlay: document.getElementById(
             'calendar-state-overlay'
           ),
@@ -551,25 +882,7 @@
           modalDate: document.getElementById('modal-date'),
           modalLocation: document.getElementById('modal-location'),
           modalDescription: document.getElementById('modal-description'),
-        };
-
-        let state = {
-          currentDate: new Date(),
-          filters: { eventType: 'all', academicYears: [] },
-          events: [],
-          isLoading: true,
-          error: null,
-        };
-        const apiCache = new Map();
-        const setState = (newState) => {
-          state = { ...state, ...newState };
-          render();
-          saveStateToLocalStorage();
-        };
-        const setFilters = (newFilters) => {
-          const updatedFilters = { ...state.filters, ...newFilters };
-          setState({ filters: updatedFilters, isLoading: true });
-          fetchEvents();
+          mobileCalendar: document.getElementById('calendar'),
         };
 
         const saveStateToLocalStorage = () => {
@@ -583,6 +896,7 @@
             console.error('Could not save state to localStorage', e);
           }
         };
+
         const loadStateFromLocalStorage = () => {
           try {
             const savedState = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -599,37 +913,21 @@
           }
         };
 
-        const fetchEvents = async () => {
-          const year = state.currentDate.getFullYear();
-          const month = state.currentDate.getMonth();
-          const startDate = new Date(year, month, 1);
-          const endDate = new Date(year, month + 1, 0);
+        const fetchAllEvents = async () => {
+          state.isLoading = true;
+          render();
+
+          const year = new Date().getFullYear();
+          const startDate = new Date(year, 0, 1);
+          const endDate = new Date(year, 11, 31);
           const formatDateForAPI = (date) => date.toISOString().split('T')[0];
+
           const requestBody = {
             start_date: formatDateForAPI(startDate),
             end_date: formatDateForAPI(endDate),
           };
-          if (state.filters.academicYears.length > 0)
-            requestBody.academic_years = state.filters.academicYears;
 
-          const categoriesToFilter = new Set();
-          if (
-            state.filters.eventType === 'acm' ||
-            state.filters.eventType === 'non-acm'
-          ) {
-            categoriesToFilter.add(state.filters.eventType);
-          }
-          if (categoriesToFilter.size > 0) {
-            requestBody.categories = Array.from(categoriesToFilter);
-          }
-
-          const cacheKey = JSON.stringify(requestBody);
-          if (apiCache.has(cacheKey)) {
-            processApiData(apiCache.get(cacheKey));
-            return;
-          }
           try {
-            setState({ ...state, isLoading: true });
             const response = await fetch(API_URL, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -644,23 +942,68 @@
               throw new Error(errorMessage);
             }
             const data = await response.json();
-            apiCache.set(cacheKey, data);
             processApiData(data);
           } catch (error) {
             console.error('Failed to fetch events:', error);
-            setState({ error: error.message, isLoading: false, events: [] });
+            state.error = error.message;
+            state.isLoading = false;
+            state.allEvents = [];
+            applyFiltersAndRender();
           }
         };
 
         const processApiData = (data) => {
-          const events = data.map((event) => {
+          state.allEvents = data.map((event) => {
             const start = new Date(event.start_date + 'T00:00:00');
             const end = event.end_date
               ? new Date(event.end_date + 'T00:00:00')
               : new Date(start.getTime());
             return { ...event, start, end };
           });
-          setState({ events, isLoading: false, error: null });
+          state.isLoading = false;
+          state.error = null;
+          applyFiltersAndRender();
+        };
+
+        const applyFiltersAndRender = () => {
+          const year = state.currentDate.getFullYear();
+          const month = state.currentDate.getMonth();
+          const monthStart = new Date(year, month, 1);
+          const monthEnd = new Date(year, month + 1, 0);
+
+          let filteredEvents = state.allEvents.filter((event) => {
+            const eventStartsInMonth =
+              event.start >= monthStart && event.start <= monthEnd;
+            const eventEndsInMonth =
+              event.end >= monthStart && event.end <= monthEnd;
+            const eventSpansMonth =
+              event.start < monthStart && event.end > monthEnd;
+            if (!eventStartsInMonth && !eventEndsInMonth && !eventSpansMonth) {
+              return false;
+            }
+
+            if (
+              state.filters.eventType !== 'all' &&
+              event.category !== state.filters.eventType
+            ) {
+              return false;
+            }
+
+            if (
+              state.filters.academicYears.length > 0 &&
+              !state.filters.academicYears.some((yr) =>
+                event.academic_years.includes(yr)
+              )
+            ) {
+              return false;
+            }
+
+            return true;
+          });
+
+          state.events = filteredEvents;
+          saveStateToLocalStorage();
+          render();
         };
 
         const getTextColorForBg = (hexColor) => {
@@ -678,7 +1021,8 @@
         const render = () => {
           renderHeader();
           renderFilters();
-          renderCalendar();
+          renderDesktopCalendar();
+          renderMobileCalendar();
         };
 
         const renderHeader = () => {
@@ -719,22 +1063,18 @@
             count > 0 ? 'block' : 'none';
         };
 
-        const renderCalendar = () => {
+        const renderDesktopCalendar = () => {
           DOMElements.calendarStateOverlay.classList.add('hidden');
           DOMElements.noEventsContainer.classList.add('hidden');
-          DOMElements.noEventsContainer.innerHTML = '';
+          DOMElements.agendaView.innerHTML = '';
 
           if (state.isLoading) {
             renderSkeletonCalendar();
-            DOMElements.AgendaView.innerHTML = '';
           } else if (state.error) {
-            renderDesktopCalendar([]);
-            DOMElements.AgendaView.innerHTML = '';
             showErrorState(state.error);
           } else {
-            renderDesktopCalendar(state.events);
+            renderDesktopCalendarGrid(state.events);
             renderMobileAgenda(state.events);
-
             if (state.events.length === 0) {
               showEmptyState();
             }
@@ -751,40 +1091,27 @@
           DOMElements.calendarBody.innerHTML = '';
 
           for (let i = 0; i < firstDayOfWeek; i++) {
-            DOMElements.calendarBody.innerHTML +=
-              '<div class="border-r border-b border-gray-200 bg-gray-50 min-h-[9rem]"></div>';
+            const paddingCell = document.createElement('div');
+            paddingCell.className =
+              'border-r border-b border-gray-200 bg-gray-50 min-h-[9rem]';
+            DOMElements.calendarBody.appendChild(paddingCell);
           }
 
           for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
-            const date = new Date(year, month, day);
             const dayEl = document.createElement('div');
             dayEl.className =
               'min-h-[9rem] relative p-1 border-r border-b border-gray-200 flex flex-col';
-
-            const dayNumber = document.createElement('span');
-            dayNumber.textContent = day;
-            dayNumber.className =
-              'text-sm font-bold text-gray-500 w-7 h-7 flex items-center justify-center rounded-full';
-
-            if (date.toDateString() === new Date().toDateString()) {
-              dayNumber.className =
-                'bg-black text-white w-7 h-7 flex items-center justify-center font-bold rounded-full';
-            }
-            dayEl.appendChild(dayNumber);
-
-            const eventsWrapper = document.createElement('div');
-            eventsWrapper.className =
-              'mt-1 flex-grow overflow-hidden space-y-2 p-1';
-            eventsWrapper.innerHTML = `
+            dayEl.innerHTML = `
+              <span class="text-sm font-bold text-gray-500 w-7 h-7 flex items-center justify-center rounded-full">${day}</span>
+              <div class="mt-1 flex-grow overflow-hidden space-y-2 p-1">
                 <div class="h-5 bg-gray-200 rounded animate-pulse"></div>
                 <div class="h-5 bg-gray-200 rounded animate-pulse w-2/3"></div>
-            `;
-            dayEl.appendChild(eventsWrapper);
+              </div>`;
             DOMElements.calendarBody.appendChild(dayEl);
           }
         };
 
-        const renderDesktopCalendar = (events) => {
+        const renderDesktopCalendarGrid = (events) => {
           const year = state.currentDate.getFullYear();
           const month = state.currentDate.getMonth();
           const firstDayOfMonth = new Date(year, month, 1);
@@ -794,8 +1121,10 @@
           DOMElements.calendarBody.innerHTML = '';
 
           for (let i = 0; i < firstDayOfWeek; i++) {
-            DOMElements.calendarBody.innerHTML +=
-              '<div class="border-r border-b border-gray-200 bg-gray-50 min-h-[9rem]"></div>';
+            const paddingCell = document.createElement('div');
+            paddingCell.className =
+              'border-r border-b border-gray-200 bg-gray-50 min-h-[9rem]';
+            DOMElements.calendarBody.appendChild(paddingCell);
           }
 
           const dayCells = [];
@@ -840,11 +1169,13 @@
           events.forEach((event) => {
             const startDate = new Date(event.start);
             const endDate = new Date(event.end);
-
             const currentDate = new Date(startDate);
 
             while (currentDate <= endDate) {
-              if (currentDate.getMonth() === month) {
+              if (
+                currentDate.getMonth() === month &&
+                currentDate.getFullYear() === year
+              ) {
                 const dayNumber = currentDate.getDate();
                 const dayCell = dayCells[dayNumber - 1];
                 if (dayCell) {
@@ -875,17 +1206,19 @@
         };
 
         const renderMobileAgenda = (events) => {
-          DOMElements.AgendaView.innerHTML = '';
           if (events.length === 0) return;
+
           const groupedEvents = events.reduce((acc, event) => {
             const dateKey = event.start.toDateString();
             if (!acc[dateKey]) acc[dateKey] = [];
             acc[dateKey].push(event);
             return acc;
           }, {});
+
           const sortedDates = Object.keys(groupedEvents).sort(
             (a, b) => new Date(a) - new Date(b)
           );
+
           sortedDates.forEach((dateStr) => {
             const date = new Date(dateStr);
             const dayHeader = document.createElement('div');
@@ -895,44 +1228,45 @@
               date,
               { weekday: 'long' }
             )} - ${formatDate(date, { month: 'long', day: 'numeric' })}</h3>`;
-            DOMElements.AgendaView.appendChild(dayHeader);
+            DOMElements.agendaView.appendChild(dayHeader);
+
             groupedEvents[dateStr].forEach((event) => {
               const eventEl = document.createElement('div');
               eventEl.className = 'p-4 border-b-2 border-gray-200';
               eventEl.innerHTML = `
-            <button class="w-full text-left focus:outline-none">
-              <h4 class="font-bold text-black uppercase">${event.title}</h4>
-              <p class="text-sm text-gray-600 mt-1">${event.location}</p>
-              <div class="flex items-center space-x-2 mt-2">
-                <span class="px-2 py-0.5 text-xs font-bold uppercase rounded-md" style="background-color:${
-                  event.color
-                }; color:${getTextColorForBg(event.color)}">${
+                <button class="w-full text-left focus:outline-none">
+                  <h4 class="font-bold text-black uppercase">${event.title}</h4>
+                  <p class="text-sm text-gray-600 mt-1">${event.location}</p>
+                  <div class="flex flex-wrap items-center gap-2 mt-2">
+                    <span class="px-2 py-0.5 text-xs font-bold uppercase rounded-md" style="background-color:${
+                      event.color
+                    }; color:${getTextColorForBg(event.color)}">${
                 event.category
               }</span>
-                ${event.academic_years
-                  .map(
-                    (yr) =>
-                      `<span class="text-xs bg-gray-200 text-gray-800 px-2 py-0.5 font-bold rounded-md">
-                        ${
-                          yr === 'FY'
-                            ? 'First Year'
-                            : yr === 'SY'
-                            ? 'Second Year'
-                            : yr === 'TY'
-                            ? 'Third Year'
-                            : yr === 'FR'
-                            ? 'Fourth Year'
-                            : ''
-                        }
-                      </span>`
-                  )
-                  .join('')}
-              </div>
-            </button>
-          `;
+                    ${event.academic_years
+                      .map(
+                        (yr) =>
+                          `<span class="text-xs bg-gray-200 text-gray-800 px-2 py-0.5 font-bold rounded-md">
+                            ${
+                              yr === 'FY'
+                                ? 'First Year'
+                                : yr === 'SY'
+                                ? 'Second Year'
+                                : yr === 'TY'
+                                ? 'Third Year'
+                                : yr === 'FR'
+                                ? 'Fourth Year'
+                                : ''
+                            }
+                          </span>`
+                      )
+                      .join('')}
+                  </div>
+                </button>
+              `;
               eventEl.querySelector('button').onclick = () =>
                 showEventModal(event);
-              DOMElements.AgendaView.appendChild(eventEl);
+              DOMElements.agendaView.appendChild(eventEl);
             });
           });
         };
@@ -940,25 +1274,18 @@
         const showErrorState = (message) => {
           DOMElements.calendarStateOverlay.classList.remove('hidden');
           DOMElements.calendarStateOverlay.innerHTML = `
-        <div class="text-red-600">
-          <i class="ri-error-warning-line text-5xl mb-4"></i>
-          <h3 class="text-2xl font-bold uppercase">ERROR</h3>
-          <p class="text-gray-600 mt-2">${message}</p>
-          <button id="retry-fetch" class="mt-6 btn btn-primary">Try Again</button>
-        </div>`;
+            <div class="text-red-600">
+              <i class="ri-error-warning-line text-5xl mb-4"></i>
+              <h3 class="text-2xl font-bold uppercase">ERROR</h3>
+              <p class="text-gray-600 mt-2">${message}</p>
+              <button id="retry-fetch" class="mt-6 btn btn-primary">Try Again</button>
+            </div>`;
           document
             .getElementById('retry-fetch')
-            .addEventListener('click', fetchEvents);
+            .addEventListener('click', fetchAllEvents);
         };
 
         const showEmptyState = () => {
-          const noEventsHTML = `
-            <div class="text-center p-8 border-t-4 border-black text-gray-500">
-                <i class="ri-inbox-2-line text-5xl mb-4"></i>
-                <h3 class="text-2xl font-bold uppercase">No Events Found</h3>
-                <p class="mt-2">Try adjusting the filters or changing the month.</p>
-            </div>`;
-          DOMElements.noEventsContainer.innerHTML = noEventsHTML;
           DOMElements.noEventsContainer.classList.remove('hidden');
         };
 
@@ -1010,17 +1337,23 @@
           DOMElements.eventModal.classList.remove('hidden');
           DOMElements.closeModalBtn.focus();
         };
+
         const hideEventModal = () => {
           DOMElements.eventModal.classList.add('hidden');
         };
 
+        const changeMonth = (offset) => {
+          const d = new Date(state.currentDate);
+          d.setDate(1);
+          d.setMonth(d.getMonth() + offset);
+          state.currentDate = d;
+
+          mobileCalendarState.selectedDayEl = null;
+
+          applyFiltersAndRender();
+        };
+
         const setupEventListeners = () => {
-          const changeMonth = (offset) => {
-            const d = new Date(state.currentDate);
-            d.setMonth(d.getMonth() + offset);
-            setState({ currentDate: d });
-            fetchEvents();
-          };
           DOMElements.prevMonthBtn.addEventListener('click', () =>
             changeMonth(-1)
           );
@@ -1028,13 +1361,16 @@
             changeMonth(1)
           );
           DOMElements.todayBtn.addEventListener('click', () => {
-            setState({ currentDate: new Date() });
-            fetchEvents();
+            state.currentDate = new Date();
+            applyFiltersAndRender();
           });
 
           DOMElements.eventTypeFilter.addEventListener('click', (e) => {
             const btn = e.target.closest('button');
-            if (btn) setFilters({ eventType: btn.dataset.type });
+            if (btn) {
+              state.filters.eventType = btn.dataset.type;
+              applyFiltersAndRender();
+            }
           });
 
           DOMElements.academicYearFilter.addEventListener('click', (e) => {
@@ -1044,12 +1380,14 @@
               const newYears = state.filters.academicYears.includes(year)
                 ? state.filters.academicYears.filter((y) => y !== year)
                 : [...state.filters.academicYears, year];
-              setFilters({ academicYears: newYears });
+              state.filters.academicYears = newYears;
+              applyFiltersAndRender();
             }
           });
 
           DOMElements.clearFiltersBtn.addEventListener('click', () => {
-            setFilters({ eventType: 'all', academicYears: [] });
+            state.filters = { eventType: 'all', academicYears: [] };
+            applyFiltersAndRender();
           });
 
           DOMElements.mobileFilterToggle.addEventListener('click', () =>
@@ -1072,11 +1410,182 @@
           });
         };
 
+        let mobileCalendarState = {
+          selectedDayEl: null,
+        };
+
+        const renderMobileCalendar = () => {
+          const calendarEl = DOMElements.mobileCalendar;
+          calendarEl.innerHTML = '';
+          if (state.isLoading) {
+            calendarEl.innerHTML =
+              '<div class="p-4 text-center">Loading...</div>';
+            return;
+          }
+          if (state.error) {
+            calendarEl.innerHTML = `<div class="p-4 text-center text-red-500">Error loading events.</div>`;
+            return;
+          }
+
+          const momentDate = moment(state.currentDate);
+
+          const header = document.createElement('div');
+          header.className = 'header';
+          const title = document.createElement('h1');
+          title.textContent = momentDate.format('MMMM YYYY');
+          const left = document.createElement('div');
+          left.className = 'left';
+          left.onclick = () => changeMonth(-1);
+          const right = document.createElement('div');
+          right.className = 'right';
+          right.onclick = () => changeMonth(1);
+          header.append(left, title, right);
+          calendarEl.appendChild(header);
+
+          const monthEl = document.createElement('div');
+          monthEl.className = 'month';
+
+          const firstDay = momentDate.clone().startOf('month');
+          const lastDay = momentDate.clone().endOf('month');
+          const startOfWeek = firstDay.clone().startOf('week');
+          const endOfWeek = lastDay.clone().endOf('week');
+
+          let currentDay = startOfWeek.clone();
+          while (currentDay.isBefore(endOfWeek, 'day')) {
+            const weekEl = document.createElement('div');
+            weekEl.className = 'week';
+            for (let i = 0; i < 7; i++) {
+              const dayClasses = ['day'];
+              if (!currentDay.isSame(momentDate, 'month'))
+                dayClasses.push('other');
+              if (currentDay.isSame(moment(), 'day')) dayClasses.push('today');
+
+              const dayEl = document.createElement('div');
+              dayEl.className = dayClasses.join(' ');
+              dayEl.dataset.date = currentDay.format('YYYY-MM-DD');
+
+              const dayName = document.createElement('div');
+              dayName.className = 'day-name';
+              dayName.textContent = currentDay.format('ddd');
+
+              const dayNumber = document.createElement('div');
+              dayNumber.className = 'day-number';
+              dayNumber.textContent = currentDay.format('DD');
+
+              const dayEvents = document.createElement('div');
+              dayEvents.className = 'day-events';
+
+              const eventsForDay = state.events.filter((ev) =>
+                moment(ev.start).isSame(currentDay, 'day')
+              );
+
+              const uniqueColors = new Set(eventsForDay.map((ev) => ev.color));
+
+              uniqueColors.forEach((color) => {
+                const evSpan = document.createElement('span');
+                evSpan.style.backgroundColor = color;
+                dayEvents.appendChild(evSpan);
+              });
+
+              dayEl.append(dayName, dayNumber, dayEvents);
+              dayEl.addEventListener('click', (e) =>
+                openMobileDayDetails(e.currentTarget)
+              );
+              weekEl.appendChild(dayEl);
+              currentDay.add(1, 'day');
+            }
+            monthEl.appendChild(weekEl);
+          }
+          calendarEl.appendChild(monthEl);
+        };
+
+        const openMobileDayDetails = (dayEl) => {
+          const date = dayEl.dataset.date;
+          const eventsForDay = state.events.filter((ev) =>
+            moment(ev.start).isSame(date, 'day')
+          );
+
+          const weekElement = dayEl.parentNode;
+          const existingDetails =
+            DOMElements.mobileCalendar.querySelector('.details');
+
+          if (mobileCalendarState.selectedDayEl === dayEl) {
+            if (existingDetails) existingDetails.remove();
+            mobileCalendarState.selectedDayEl = null;
+            return;
+          }
+
+          let details;
+          let arrow;
+
+          if (
+            existingDetails &&
+            existingDetails.previousSibling === weekElement
+          ) {
+            details = existingDetails;
+            arrow = details.querySelector('.arrow');
+          } else {
+            if (existingDetails) {
+              existingDetails.remove();
+            }
+            details = document.createElement('div');
+            details.className = 'details in';
+            arrow = document.createElement('div');
+            arrow.className = 'arrow';
+            details.appendChild(arrow);
+            weekElement.parentNode.insertBefore(
+              details,
+              weekElement.nextSibling
+            );
+          }
+
+          mobileCalendarState.selectedDayEl = dayEl;
+
+          const dayCenter =
+            dayEl.offsetLeft - weekElement.offsetLeft + dayEl.offsetWidth / 2;
+          arrow.style.left = dayCenter + 'px';
+
+          const oldEventsWrapper = details.querySelector('.events');
+          if (oldEventsWrapper) oldEventsWrapper.remove();
+
+          const eventsWrapper = document.createElement('div');
+          eventsWrapper.className = 'events in';
+
+          if (eventsForDay.length > 0) {
+            eventsForDay.forEach((ev) => {
+              const div = document.createElement('div');
+              div.className = 'event';
+              div.style.cursor = 'pointer';
+              div.onclick = (e) => {
+                e.stopPropagation();
+                showEventModal(ev);
+              };
+
+              const square = document.createElement('div');
+              square.className = 'event-category';
+              square.style.backgroundColor = ev.color;
+              const span = document.createElement('span');
+              span.textContent = ev.title;
+              div.append(square, span);
+              eventsWrapper.appendChild(div);
+            });
+          } else {
+            const div = document.createElement('div');
+            div.className = 'event empty';
+            const span = document.createElement('span');
+            span.textContent = 'No Events';
+            div.appendChild(span);
+            eventsWrapper.appendChild(div);
+          }
+          details.appendChild(eventsWrapper);
+        };
+
         const init = () => {
           loadStateFromLocalStorage();
           setupEventListeners();
-          fetchEvents();
+          fetchAllEvents();
         };
+
         init();
       });
     </script>
