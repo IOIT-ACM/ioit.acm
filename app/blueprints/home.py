@@ -2,6 +2,7 @@
 from flask import Blueprint, render_template
 from app.data.events import events
 from app.data.stories import stories
+from flask import redirect, url_for
 
 # Define the blueprint
 home_bp = Blueprint("home", __name__, template_folder="../templates")
@@ -37,3 +38,13 @@ def home():
         images_2=images_2,
         stories=stories[:4],
     )
+
+@home_bp.route("/calendar")
+def calender():
+    return render_template(
+        "calender.html",
+    )
+
+@home_bp.route("/cal")
+def calender_redirect():
+    return redirect(url_for("home.calender"))
