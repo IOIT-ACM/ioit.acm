@@ -188,7 +188,7 @@
 
       .day.today .day-number {
         background-color: var(--black);
-        color: var(--card);
+        color: white;
         border-radius: 9999px;
       }
 
@@ -528,7 +528,7 @@
         aria-label="Primary navigation"
       >
         <div class="flex justify-between items-center h-16 md:h-24">
-          <div class="flex items-center space-x-4">
+          <a href="/" class="flex items-center space-x-4">
             <img
               src="{{ url_for('static', filename='img/assets/acm.png') }}"
               alt="AISSMS IOIT ACM Logo"
@@ -537,7 +537,7 @@
             <h1 class="md:text-3xl uppercase tracking-tight">
               Annual Calender
             </h1>
-          </div>
+          </a>
           <div class="hidden md:flex items-center space-x-4">
             <button id="today-btn" class="btn btn-primary">Today</button>
             <div
@@ -579,13 +579,13 @@
     </header>
 
     <main class="max-w-screen-[1500px] mx-auto md:p-4">
-      <div class="md:p-4">
+      <div class="p-4">
         <div class="lg:grid lg:grid-cols-12 lg:gap-8">
           <aside
             id="filter-sidebar"
             class="fixed inset-0 bg-black/50 z-40 lg:z-auto lg:static lg:bg-transparent lg:block lg:col-span-3 hidden"
           >
-            <div class="card bg-white w-80 lg:w-auto p-6 lg:sticky lg:top-32">
+            <div class="card bg-white w-80 lg:w-auto p-6 lg:sticky lg:top-32 top-10">
               <div class="flex justify-between items-center lg:hidden mb-6">
                 <h2 class="text-2xl uppercase">Filters</h2>
                 <button id="close-filters" aria-label="Close filters">
@@ -673,7 +673,7 @@
           <div class="lg:col-span-9 lg:mt-0">
             <div
               id="calendar-wrapper"
-              class="flex justify-center md:hidden p-4"
+              class="flex justify-center md:hidden pt-4"
             >
               <div id="calendar"></div>
             </div>
@@ -750,11 +750,6 @@
                 </div>
               </section>
 
-              <section id="agenda-view-wrapper">
-                <h2 id="agenda-heading" class="sr-only">Daily Agenda View</h2>
-                <div id="agenda-view"></div>
-              </section>
-
               <div id="no-events-container" class="hidden">
                 <div
                   class="text-center p-8 md:border-t-4 border-black text-gray-500"
@@ -767,6 +762,8 @@
                 </div>
               </div>
             </div>
+
+            <div id="mobile-agenda-list"></div>
           </div>
         </div>
       </div>
@@ -843,16 +840,20 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        const API_URL = 'http://localhost:8000/events/api/events/filter/';
+        const API_URL = 'https://os.ioit.acm.org/events/api/events/filter/';
         const LOCAL_STORAGE_KEY = 'collegeCalendarState';
+        const apiCache = new Map();
 
         let state = {
           currentDate: new Date(),
           filters: { eventType: 'all', academicYears: [] },
-          allEvents: [],
           events: [],
           isLoading: true,
           error: null,
+        };
+
+        let mobileCalendarState = {
+          selectedDayEl: null,
         };
 
         const DOMElements = {
@@ -861,7 +862,6 @@
           todayBtn: document.getElementById('today-btn'),
           currentMonthEl: document.getElementById('current-month'),
           calendarBody: document.getElementById('calendar-body'),
-          agendaView: document.getElementById('agenda-view'),
           calendarStateOverlay: document.getElementById(
             'calendar-state-overlay'
           ),
@@ -883,6 +883,7 @@
           modalLocation: document.getElementById('modal-location'),
           modalDescription: document.getElementById('modal-description'),
           mobileCalendar: document.getElementById('calendar'),
+          mobileAgendaList: document.getElementById('mobile-agenda-list'),
         };
 
         const saveStateToLocalStorage = () => {
@@ -913,19 +914,31 @@
           }
         };
 
-        const fetchAllEvents = async () => {
+        const fetchEvents = async () => {
           state.isLoading = true;
           render();
-
-          const year = new Date().getFullYear();
-          const startDate = new Date(year, 0, 1);
-          const endDate = new Date(year, 11, 31);
+          const year = state.currentDate.getFullYear();
+          const month = state.currentDate.getMonth();
+          const startDate = new Date(year, month, 1);
+          const endDate = new Date(year, month + 1, 0);
           const formatDateForAPI = (date) => date.toISOString().split('T')[0];
 
           const requestBody = {
             start_date: formatDateForAPI(startDate),
             end_date: formatDateForAPI(endDate),
           };
+          if (state.filters.academicYears.length > 0) {
+            requestBody.academic_years = state.filters.academicYears;
+          }
+          if (state.filters.eventType !== 'all') {
+            requestBody.categories = [state.filters.eventType];
+          }
+
+          const cacheKey = JSON.stringify(requestBody);
+          if (apiCache.has(cacheKey)) {
+            processApiData(apiCache.get(cacheKey));
+            return;
+          }
 
           try {
             const response = await fetch(API_URL, {
@@ -942,18 +955,19 @@
               throw new Error(errorMessage);
             }
             const data = await response.json();
+            apiCache.set(cacheKey, data);
             processApiData(data);
           } catch (error) {
             console.error('Failed to fetch events:', error);
             state.error = error.message;
             state.isLoading = false;
-            state.allEvents = [];
-            applyFiltersAndRender();
+            state.events = [];
+            render();
           }
         };
 
         const processApiData = (data) => {
-          state.allEvents = data.map((event) => {
+          state.events = data.map((event) => {
             const start = new Date(event.start_date + 'T00:00:00');
             const end = event.end_date
               ? new Date(event.end_date + 'T00:00:00')
@@ -962,57 +976,16 @@
           });
           state.isLoading = false;
           state.error = null;
-          applyFiltersAndRender();
-        };
-
-        const applyFiltersAndRender = () => {
-          const year = state.currentDate.getFullYear();
-          const month = state.currentDate.getMonth();
-          const monthStart = new Date(year, month, 1);
-          const monthEnd = new Date(year, month + 1, 0);
-
-          let filteredEvents = state.allEvents.filter((event) => {
-            const eventStartsInMonth =
-              event.start >= monthStart && event.start <= monthEnd;
-            const eventEndsInMonth =
-              event.end >= monthStart && event.end <= monthEnd;
-            const eventSpansMonth =
-              event.start < monthStart && event.end > monthEnd;
-            if (!eventStartsInMonth && !eventEndsInMonth && !eventSpansMonth) {
-              return false;
-            }
-
-            if (
-              state.filters.eventType !== 'all' &&
-              event.category !== state.filters.eventType
-            ) {
-              return false;
-            }
-
-            if (
-              state.filters.academicYears.length > 0 &&
-              !state.filters.academicYears.some((yr) =>
-                event.academic_years.includes(yr)
-              )
-            ) {
-              return false;
-            }
-
-            return true;
-          });
-
-          state.events = filteredEvents;
-          saveStateToLocalStorage();
           render();
         };
 
         const getTextColorForBg = (hexColor) => {
-          if (!hexColor || hexColor.length < 7) return 'text-black';
+          if (!hexColor || hexColor.length < 7) return 'black';
           const r = parseInt(hexColor.substr(1, 2), 16);
           const g = parseInt(hexColor.substr(3, 2), 16);
           const b = parseInt(hexColor.substr(5, 2), 16);
           const yiq = (r * 299 + g * 587 + b * 114) / 1000;
-          return yiq >= 128 ? 'text-black' : 'text-white';
+          return yiq >= 128 ? 'black' : 'white';
         };
 
         const formatDate = (date, options) =>
@@ -1023,6 +996,7 @@
           renderFilters();
           renderDesktopCalendar();
           renderMobileCalendar();
+          renderMobileEventList();
         };
 
         const renderHeader = () => {
@@ -1066,15 +1040,15 @@
         const renderDesktopCalendar = () => {
           DOMElements.calendarStateOverlay.classList.add('hidden');
           DOMElements.noEventsContainer.classList.add('hidden');
-          DOMElements.agendaView.innerHTML = '';
 
           if (state.isLoading) {
             renderSkeletonCalendar();
           } else if (state.error) {
+            renderDesktopCalendarGrid([]);
             showErrorState(state.error);
           } else {
             renderDesktopCalendarGrid(state.events);
-            renderMobileAgenda(state.events);
+            renderDesktopAgenda(state.events);
             if (state.events.length === 0) {
               showEmptyState();
             }
@@ -1112,87 +1086,112 @@
         };
 
         const renderDesktopCalendarGrid = (events) => {
-          const year = state.currentDate.getFullYear();
-          const month = state.currentDate.getMonth();
-          const firstDayOfMonth = new Date(year, month, 1);
-          const lastDayOfMonth = new Date(year, month + 1, 0);
-          const firstDayOfWeek = firstDayOfMonth.getDay();
+            const year = state.currentDate.getFullYear();
+            const month = state.currentDate.getMonth();
+            const firstDayOfMonth = new Date(year, month, 1);
+            const lastDayOfMonth = new Date(year, month + 1, 0);
+            const firstDayOfWeek = firstDayOfMonth.getDay();
 
-          DOMElements.calendarBody.innerHTML = '';
+            DOMElements.calendarBody.innerHTML = '';
 
-          for (let i = 0; i < firstDayOfWeek; i++) {
-            const paddingCell = document.createElement('div');
-            paddingCell.className =
-              'border-r border-b border-gray-200 bg-gray-50 min-h-[9rem]';
-            DOMElements.calendarBody.appendChild(paddingCell);
-          }
+            const dayCells = [];
 
-          const dayCells = [];
-
-          for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
-            const date = new Date(year, month, day);
-            const dayEl = document.createElement('div');
-            dayEl.className =
-              'min-h-[9rem] relative p-1 border-r border-b border-gray-200 flex flex-col';
-            dayEl.setAttribute('role', 'gridcell');
-            dayEl.setAttribute(
-              'aria-label',
-              formatDate(date, {
-                weekday: 'long',
-                month: 'long',
-                day: 'numeric',
-              })
-            );
-
-            const dayNumber = document.createElement('span');
-            dayNumber.textContent = day;
-            dayNumber.className =
-              'text-sm font-bold text-gray-500 w-7 h-7 flex items-center justify-center rounded-full';
-
-            if (date.toDateString() === new Date().toDateString()) {
-              dayNumber.className =
-                'bg-black text-white w-7 h-7 flex items-center justify-center font-bold rounded-full';
+            for (let i = 0; i < firstDayOfWeek; i++) {
+                const paddingCell = document.createElement('div');
+                paddingCell.className = 'border-r border-b border-gray-200 bg-gray-50 min-h-[9rem]';
+                DOMElements.calendarBody.appendChild(paddingCell);
             }
 
-            dayEl.appendChild(dayNumber);
+            for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
+                const date = new Date(year, month, day);
+                const dayEl = document.createElement('div');
+                dayEl.className = 'min-h-[9rem] relative p-1 border-r border-b border-gray-200 flex flex-col overflow-visible';
+                dayEl.setAttribute('role', 'gridcell');
+                dayEl.setAttribute('aria-label', formatDate(date, { weekday: 'long', month: 'long', day: 'numeric' }));
 
-            const eventsWrapper = document.createElement('div');
-            eventsWrapper.className =
-              'mt-1 flex-grow overflow-y-auto no-scrollbar space-y-1';
-            dayEl.appendChild(eventsWrapper);
+                const dayNumber = document.createElement('span');
+                dayNumber.textContent = day;
+                dayNumber.className = 'text-sm font-bold text-gray-500 w-7 h-7 flex items-center justify-center rounded-full';
 
-            DOMElements.calendarBody.appendChild(dayEl);
-
-            dayCells[day - 1] = dayEl;
-          }
-
-          events.forEach((event) => {
-            const startDate = new Date(event.start);
-            const endDate = new Date(event.end);
-            const currentDate = new Date(startDate);
-
-            while (currentDate <= endDate) {
-              if (
-                currentDate.getMonth() === month &&
-                currentDate.getFullYear() === year
-              ) {
-                const dayNumber = currentDate.getDate();
-                const dayCell = dayCells[dayNumber - 1];
-                if (dayCell) {
-                  const eventEl = createEventElement(event);
-                  dayCell.querySelector('.flex-grow').appendChild(eventEl);
+                if (date.toDateString() === new Date().toDateString()) {
+                    dayNumber.className = 'bg-black text-white w-7 h-7 flex items-center justify-center font-bold rounded-full';
                 }
-              }
-              currentDate.setDate(currentDate.getDate() + 1);
+
+                dayEl.appendChild(dayNumber);
+
+                const eventsWrapper = document.createElement('div');
+                eventsWrapper.className = 'mt-1 flex-grow space-y-1';
+                dayEl.appendChild(eventsWrapper);
+
+                DOMElements.calendarBody.appendChild(dayEl);
+                dayCells[day - 1] = dayEl;
             }
-          });
+
+            const processedEvents = new Set();
+            const sortedEvents = [...events].sort((a, b) => a.start - b.start);
+
+            sortedEvents.forEach((event) => {
+                const startDate = new Date(event.start);
+                const endDate = new Date(event.end);
+                const isMultiDay = startDate.toDateString() !== endDate.toDateString();
+
+                if (!isMultiDay) {
+                    if (startDate.getMonth() === month) {
+                        const dayCell = dayCells[startDate.getDate() - 1];
+                        if (dayCell) {
+                            const eventEl = createEventElement(event);
+                            dayCell.querySelector('.flex-grow').appendChild(eventEl);
+                        }
+                    }
+                } else {
+                    if (processedEvents.has(event.id)) return;
+                    processedEvents.add(event.id);
+
+                    let segmentStart = new Date(startDate);
+                    while (segmentStart <= endDate) {
+                        if (segmentStart.getMonth() !== month || segmentStart.getFullYear() !== year) {
+                            segmentStart.setDate(segmentStart.getDate() + 1);
+                            continue;
+                        }
+
+                        const dayCell = dayCells[segmentStart.getDate() - 1];
+                        if (!dayCell) {
+                            segmentStart.setDate(segmentStart.getDate() + 1);
+                            continue;
+                        }
+
+                        let span = 1;
+                        let segmentEnd = new Date(segmentStart);
+                        while (true) {
+                            let nextDay = new Date(segmentEnd);
+                            nextDay.setDate(nextDay.getDate() + 1);
+                            if (nextDay > endDate || nextDay.getDay() === 0 || nextDay.getMonth() !== month) {
+                                break;
+                            }
+                            segmentEnd = nextDay;
+                            span++;
+                        }
+
+                        const eventEl = createEventElement(event);
+                        eventEl.style.position = 'absolute';
+                        eventEl.style.width = `calc(${span * 100}% - 0.5rem)`;
+                        eventEl.style.zIndex = '10';
+                        eventEl.classList.remove('w-full');
+
+                        dayCell.querySelector('.flex-grow').appendChild(eventEl);
+
+                        segmentStart = new Date(segmentEnd);
+                        segmentStart.setDate(segmentStart.getDate() + 1);
+                    }
+                }
+            });
         };
 
         const createEventElement = (event) => {
           const eventEl = document.createElement('button');
           eventEl.className = `w-full text-left p-1.5 text-xs font-bold uppercase rounded-md border-2 border-transparent hover:border-black transition-colors`;
           eventEl.style.backgroundColor = event.color;
-          eventEl.classList.add(getTextColorForBg(event.color));
+          eventEl.style.color = getTextColorForBg(event.color);
           eventEl.textContent = event.title;
           eventEl.setAttribute(
             'aria-label',
@@ -1205,7 +1204,7 @@
           return eventEl;
         };
 
-        const renderMobileAgenda = (events) => {
+        const renderDesktopAgenda = (events) => {
           if (events.length === 0) return;
 
           const groupedEvents = events.reduce((acc, event) => {
@@ -1228,46 +1227,6 @@
               date,
               { weekday: 'long' }
             )} - ${formatDate(date, { month: 'long', day: 'numeric' })}</h3>`;
-            DOMElements.agendaView.appendChild(dayHeader);
-
-            groupedEvents[dateStr].forEach((event) => {
-              const eventEl = document.createElement('div');
-              eventEl.className = 'p-4 border-b-2 border-gray-200';
-              eventEl.innerHTML = `
-                <button class="w-full text-left focus:outline-none">
-                  <h4 class="font-bold text-black uppercase">${event.title}</h4>
-                  <p class="text-sm text-gray-600 mt-1">${event.location}</p>
-                  <div class="flex flex-wrap items-center gap-2 mt-2">
-                    <span class="px-2 py-0.5 text-xs font-bold uppercase rounded-md" style="background-color:${
-                      event.color
-                    }; color:${getTextColorForBg(event.color)}">${
-                event.category
-              }</span>
-                    ${event.academic_years
-                      .map(
-                        (yr) =>
-                          `<span class="text-xs bg-gray-200 text-gray-800 px-2 py-0.5 font-bold rounded-md">
-                            ${
-                              yr === 'FY'
-                                ? 'First Year'
-                                : yr === 'SY'
-                                ? 'Second Year'
-                                : yr === 'TY'
-                                ? 'Third Year'
-                                : yr === 'FR'
-                                ? 'Fourth Year'
-                                : ''
-                            }
-                          </span>`
-                      )
-                      .join('')}
-                  </div>
-                </button>
-              `;
-              eventEl.querySelector('button').onclick = () =>
-                showEventModal(event);
-              DOMElements.agendaView.appendChild(eventEl);
-            });
           });
         };
 
@@ -1282,7 +1241,7 @@
             </div>`;
           document
             .getElementById('retry-fetch')
-            .addEventListener('click', fetchAllEvents);
+            .addEventListener('click', fetchEvents);
         };
 
         const showEmptyState = () => {
@@ -1347,10 +1306,15 @@
           d.setDate(1);
           d.setMonth(d.getMonth() + offset);
           state.currentDate = d;
-
           mobileCalendarState.selectedDayEl = null;
+          fetchEvents();
+        };
 
-          applyFiltersAndRender();
+        const setFilters = (newFilters) => {
+          state.filters = { ...state.filters, ...newFilters };
+          mobileCalendarState.selectedDayEl = null;
+          saveStateToLocalStorage();
+          fetchEvents();
         };
 
         const setupEventListeners = () => {
@@ -1362,32 +1326,28 @@
           );
           DOMElements.todayBtn.addEventListener('click', () => {
             state.currentDate = new Date();
-            applyFiltersAndRender();
+            fetchEvents();
           });
 
           DOMElements.eventTypeFilter.addEventListener('click', (e) => {
             const btn = e.target.closest('button');
-            if (btn) {
-              state.filters.eventType = btn.dataset.type;
-              applyFiltersAndRender();
-            }
+            if (btn) setFilters({ eventType: btn.dataset.type });
           });
 
           DOMElements.academicYearFilter.addEventListener('click', (e) => {
             const btn = e.target.closest('button');
             if (btn) {
               const year = btn.dataset.year;
-              const newYears = state.filters.academicYears.includes(year)
-                ? state.filters.academicYears.filter((y) => y !== year)
-                : [...state.filters.academicYears, year];
-              state.filters.academicYears = newYears;
-              applyFiltersAndRender();
+              const currentYears = state.filters.academicYears;
+              const newYears = currentYears.includes(year)
+                ? currentYears.filter((y) => y !== year)
+                : [...currentYears, year];
+              setFilters({ academicYears: newYears });
             }
           });
 
           DOMElements.clearFiltersBtn.addEventListener('click', () => {
-            state.filters = { eventType: 'all', academicYears: [] };
-            applyFiltersAndRender();
+            setFilters({ eventType: 'all', academicYears: [] });
           });
 
           DOMElements.mobileFilterToggle.addEventListener('click', () =>
@@ -1410,104 +1370,48 @@
           });
         };
 
-        let mobileCalendarState = {
-          selectedDayEl: null,
-        };
+        function createElement(tagName, className, innerText) {
+          const ele = document.createElement(tagName);
+          if (className) ele.className = className;
+          if (innerText) ele.innerText = ele.textContent = innerText;
+          return ele;
+        }
 
-        const renderMobileCalendar = () => {
-          const calendarEl = DOMElements.mobileCalendar;
-          calendarEl.innerHTML = '';
-          if (state.isLoading) {
-            calendarEl.innerHTML =
-              '<div class="p-4 text-center">Loading...</div>';
-            return;
+        const renderMobileEventsInDetails = (events, wrapper) => {
+          wrapper.innerHTML = '';
+          if (events.length > 0) {
+            events.forEach((ev) => {
+              const div = createElement('div', 'event');
+              div.style.cursor = 'pointer';
+              div.onclick = () => showEventModal(ev);
+              const square = createElement('div', 'event-category');
+              square.style.backgroundColor = ev.color;
+              const span = createElement('span', '', ev.title);
+              div.append(square, span);
+              wrapper.appendChild(div);
+            });
+          } else {
+            const div = createElement('div', 'event empty');
+            const span = createElement('span', '', 'No Events');
+            div.appendChild(span);
+            wrapper.appendChild(div);
           }
-          if (state.error) {
-            calendarEl.innerHTML = `<div class="p-4 text-center text-red-500">Error loading events.</div>`;
-            return;
-          }
-
-          const momentDate = moment(state.currentDate);
-
-          const header = document.createElement('div');
-          header.className = 'header';
-          const title = document.createElement('h1');
-          title.textContent = momentDate.format('MMMM YYYY');
-          const left = document.createElement('div');
-          left.className = 'left';
-          left.onclick = () => changeMonth(-1);
-          const right = document.createElement('div');
-          right.className = 'right';
-          right.onclick = () => changeMonth(1);
-          header.append(left, title, right);
-          calendarEl.appendChild(header);
-
-          const monthEl = document.createElement('div');
-          monthEl.className = 'month';
-
-          const firstDay = momentDate.clone().startOf('month');
-          const lastDay = momentDate.clone().endOf('month');
-          const startOfWeek = firstDay.clone().startOf('week');
-          const endOfWeek = lastDay.clone().endOf('week');
-
-          let currentDay = startOfWeek.clone();
-          while (currentDay.isBefore(endOfWeek, 'day')) {
-            const weekEl = document.createElement('div');
-            weekEl.className = 'week';
-            for (let i = 0; i < 7; i++) {
-              const dayClasses = ['day'];
-              if (!currentDay.isSame(momentDate, 'month'))
-                dayClasses.push('other');
-              if (currentDay.isSame(moment(), 'day')) dayClasses.push('today');
-
-              const dayEl = document.createElement('div');
-              dayEl.className = dayClasses.join(' ');
-              dayEl.dataset.date = currentDay.format('YYYY-MM-DD');
-
-              const dayName = document.createElement('div');
-              dayName.className = 'day-name';
-              dayName.textContent = currentDay.format('ddd');
-
-              const dayNumber = document.createElement('div');
-              dayNumber.className = 'day-number';
-              dayNumber.textContent = currentDay.format('DD');
-
-              const dayEvents = document.createElement('div');
-              dayEvents.className = 'day-events';
-
-              const eventsForDay = state.events.filter((ev) =>
-                moment(ev.start).isSame(currentDay, 'day')
-              );
-
-              const uniqueColors = new Set(eventsForDay.map((ev) => ev.color));
-
-              uniqueColors.forEach((color) => {
-                const evSpan = document.createElement('span');
-                evSpan.style.backgroundColor = color;
-                dayEvents.appendChild(evSpan);
-              });
-
-              dayEl.append(dayName, dayNumber, dayEvents);
-              dayEl.addEventListener('click', (e) =>
-                openMobileDayDetails(e.currentTarget)
-              );
-              weekEl.appendChild(dayEl);
-              currentDay.add(1, 'day');
-            }
-            monthEl.appendChild(weekEl);
-          }
-          calendarEl.appendChild(monthEl);
         };
 
         const openMobileDayDetails = (dayEl) => {
-          const date = dayEl.dataset.date;
-          const eventsForDay = state.events.filter((ev) =>
-            moment(ev.start).isSame(date, 'day')
+          const dateString = dayEl.dataset.date;
+          const clickedMomentDay = moment(dateString);
+          const eventsForDay = state.events.filter(
+            (ev) =>
+              (moment(ev.start).isSame(clickedMomentDay, 'day') ||
+                moment(ev.start).isBefore(clickedMomentDay, 'day')) &&
+              (moment(ev.end).isSame(clickedMomentDay, 'day') ||
+                moment(ev.end).isAfter(clickedMomentDay, 'day'))
           );
 
-          const weekElement = dayEl.parentNode;
           const existingDetails =
             DOMElements.mobileCalendar.querySelector('.details');
+          const weekElement = dayEl.parentNode;
 
           if (mobileCalendarState.selectedDayEl === dayEl) {
             if (existingDetails) existingDetails.remove();
@@ -1525,13 +1429,9 @@
             details = existingDetails;
             arrow = details.querySelector('.arrow');
           } else {
-            if (existingDetails) {
-              existingDetails.remove();
-            }
-            details = document.createElement('div');
-            details.className = 'details in';
-            arrow = document.createElement('div');
-            arrow.className = 'arrow';
+            if (existingDetails) existingDetails.remove();
+            details = createElement('div', 'details in');
+            arrow = createElement('div', 'arrow');
             details.appendChild(arrow);
             weekElement.parentNode.insertBefore(
               details,
@@ -1540,7 +1440,6 @@
           }
 
           mobileCalendarState.selectedDayEl = dayEl;
-
           const dayCenter =
             dayEl.offsetLeft - weekElement.offsetLeft + dayEl.offsetWidth / 2;
           arrow.style.left = dayCenter + 'px';
@@ -1548,42 +1447,236 @@
           const oldEventsWrapper = details.querySelector('.events');
           if (oldEventsWrapper) oldEventsWrapper.remove();
 
-          const eventsWrapper = document.createElement('div');
-          eventsWrapper.className = 'events in';
-
-          if (eventsForDay.length > 0) {
-            eventsForDay.forEach((ev) => {
-              const div = document.createElement('div');
-              div.className = 'event';
-              div.style.cursor = 'pointer';
-              div.onclick = (e) => {
-                e.stopPropagation();
-                showEventModal(ev);
-              };
-
-              const square = document.createElement('div');
-              square.className = 'event-category';
-              square.style.backgroundColor = ev.color;
-              const span = document.createElement('span');
-              span.textContent = ev.title;
-              div.append(square, span);
-              eventsWrapper.appendChild(div);
-            });
-          } else {
-            const div = document.createElement('div');
-            div.className = 'event empty';
-            const span = document.createElement('span');
-            span.textContent = 'No Events';
-            div.appendChild(span);
-            eventsWrapper.appendChild(div);
-          }
+          const eventsWrapper = createElement('div', 'events in');
+          renderMobileEventsInDetails(eventsForDay, eventsWrapper);
           details.appendChild(eventsWrapper);
+        };
+
+        const renderMobileCalendar = () => {
+          const calendarEl = DOMElements.mobileCalendar;
+          calendarEl.innerHTML = '';
+
+          if (state.isLoading) {
+            calendarEl.innerHTML =
+              '<div class="p-8 text-center font-bold">Loading...</div>';
+            return;
+          }
+          if (state.error) {
+            calendarEl.innerHTML = `<div class="p-8 text-center text-red-500">Error: ${state.error}</div>`;
+            return;
+          }
+
+          const momentDate = moment(state.currentDate);
+          const header = createElement('div', 'header');
+          const title = createElement('h1', '', momentDate.format('MMMM YYYY'));
+          const left = createElement('div', 'left');
+          left.onclick = () => changeMonth(-1);
+          const right = createElement('div', 'right');
+          right.onclick = () => changeMonth(1);
+          header.append(left, title, right);
+          calendarEl.appendChild(header);
+
+          const monthEl = createElement('div', 'month new');
+          const firstDayOfMonth = momentDate.clone().startOf('month');
+          const lastDayOfMonth = momentDate.clone().endOf('month');
+          const startOfWeek = firstDayOfMonth.clone().startOf('week');
+          const endOfWeek = lastDayOfMonth.clone().endOf('week');
+
+          let currentDay = startOfWeek.clone();
+          while (
+            currentDay.isSame(endOfWeek, 'day') ||
+            currentDay.isBefore(endOfWeek, 'day')
+          ) {
+            const weekEl = createElement('div', 'week');
+            for (let i = 0; i < 7; i++) {
+              const dayClasses = ['day'];
+              if (!currentDay.isSame(momentDate, 'month'))
+                dayClasses.push('other');
+              if (currentDay.isSame(moment(), 'day')) dayClasses.push('today');
+
+              const dayEl = createElement('div', dayClasses.join(' '));
+              dayEl.dataset.date = currentDay.format('YYYY-MM-DD');
+
+              const dayName = createElement(
+                'div',
+                'day-name',
+                currentDay.format('ddd')
+              );
+              const dayNumber = createElement(
+                'div',
+                'day-number',
+                currentDay.format('DD')
+              );
+              const dayEvents = createElement('div', 'day-events');
+
+              const eventsForDay = state.events.filter(
+                (ev) =>
+                  (moment(ev.start).isSame(currentDay, 'day') ||
+                    moment(ev.start).isBefore(currentDay, 'day')) &&
+                  (moment(ev.end).isSame(currentDay, 'day') ||
+                    moment(ev.end).isAfter(currentDay, 'day'))
+              );
+              const uniqueColors = new Set(eventsForDay.map((ev) => ev.color));
+              uniqueColors.forEach((color) => {
+                const evSpan = createElement('span');
+                evSpan.style.backgroundColor = color;
+                dayEvents.appendChild(evSpan);
+              });
+
+              dayEl.append(dayName, dayNumber, dayEvents);
+              dayEl.addEventListener('click', (e) =>
+                openMobileDayDetails(e.currentTarget)
+              );
+              weekEl.appendChild(dayEl);
+              currentDay.add(1, 'day');
+            }
+            monthEl.appendChild(weekEl);
+          }
+          calendarEl.appendChild(monthEl);
+        };
+
+                const renderMobileEventList = () => {
+          const container = DOMElements.mobileAgendaList;
+          container.innerHTML = '';
+
+          if (state.isLoading || state.error) {
+            return;
+          }
+
+          if (state.events.length === 0) {
+            container.innerHTML = `
+                <div class="text-center p-8 bg-white border-4 border-black rounded-lg shadow-large">
+                    <i class="ri-inbox-2-line text-4xl mb-2 text-gray-400"></i>
+                    <h3 class="text-xl font-bold uppercase text-gray-600">No Events This Month</h3>
+                </div>
+            `;
+            return;
+          }
+
+          const sortedEvents = [...state.events].sort(
+            (a, b) => a.start - b.start
+          );
+
+          const listTitle = createElement(
+            'h2',
+            'text-2xl uppercase font-bold my-10 text-center md:text-left',
+            'Events This Month'
+          );
+          container.appendChild(listTitle);
+
+          const today = moment().startOf('day');
+
+          sortedEvents.forEach((event) => {
+            const eventMoment = moment(event.start);
+            const diff = eventMoment.diff(today, 'days');
+            let timeAgoText = '';
+            let timeAgoClass = '';
+
+            if (diff === 0) {
+              timeAgoText = 'Today';
+              timeAgoClass = 'bg-blue-500 text-white';
+            } else if (diff > 0) {
+              timeAgoText = `${diff} day${diff > 1 ? 's' : ''} left`;
+              timeAgoClass = 'bg-green-500 text-white';
+            } else {
+              timeAgoText = `${Math.abs(diff)} day${
+                Math.abs(diff) > 1 ? 's' : ''
+              } ago`;
+              timeAgoClass = 'bg-gray-400 text-white';
+            }
+
+            const eventCard = createElement(
+              'div',
+              'bg-white border-4 border-black rounded-lg shadow-large mb-4 p-4'
+            );
+            eventCard.style.cursor = 'pointer';
+            eventCard.onclick = () => showEventModal(event);
+
+            const header = createElement(
+              'div',
+              'flex justify-between items-start mb-2'
+            );
+            const title = createElement(
+              'h3',
+              'text-lg font-bold uppercase',
+              event.title
+            );
+            const timeAgoBadge = createElement(
+              'span',
+              `text-xs font-bold uppercase px-2 py-1 rounded-md ${timeAgoClass}`,
+              timeAgoText
+            );
+
+            header.append(title, timeAgoBadge);
+
+            const details = createElement('div', 'text-sm text-gray-600 space-y-2');
+            const location = createElement('div', 'flex items-center');
+            location.innerHTML = `<i class="ri-map-pin-line mr-2"></i><span>${
+              event.location || 'Not specified'
+            }</span>`;
+
+            const dateInfo = createElement('div', 'flex items-center');
+            let dateText;
+
+            if (event.start.toDateString() === event.end.toDateString()) {
+              dateText = formatDate(event.start, {
+                month: 'long',
+                day: 'numeric',
+              });
+            } else {
+              const startDateText = formatDate(event.start, {
+                month: 'long',
+                day: 'numeric',
+              });
+              const endDateText = formatDate(event.end, {
+                month: 'long',
+                day: 'numeric',
+              });
+              dateText = `${startDateText} to ${endDateText}`;
+            }
+
+            dateInfo.innerHTML = `<i class="ri-calendar-line mr-2"></i><span>${dateText}</span>`;
+
+            details.append(location, dateInfo);
+
+            const tags = createElement(
+              'div',
+              'flex flex-wrap gap-2 mt-3 pt-3 border-t-2 border-gray-200'
+            );
+            const categoryTag = createElement(
+              'span',
+              'px-2 py-1 text-xs font-bold uppercase rounded-md'
+            );
+            categoryTag.textContent = event.category;
+            categoryTag.style.backgroundColor = event.color;
+            categoryTag.style.color = getTextColorForBg(event.color);
+
+            tags.appendChild(categoryTag);
+
+            event.academic_years.forEach((yr) => {
+              const yearMap = {
+                FY: 'First Year',
+                SY: 'Second Year',
+                TY: 'Third Year',
+                FR: 'Fourth Year',
+              };
+              const yearTag = createElement(
+                'span',
+                'text-xs bg-gray-200 text-gray-800 px-2 py-1 font-bold rounded-md',
+                yearMap[yr] || yr
+              );
+              tags.appendChild(yearTag);
+            });
+
+            eventCard.append(header, details, tags);
+            container.appendChild(eventCard);
+          });
         };
 
         const init = () => {
           loadStateFromLocalStorage();
           setupEventListeners();
-          fetchAllEvents();
+          fetchEvents();
         };
 
         init();
