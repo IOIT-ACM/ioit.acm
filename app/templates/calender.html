@@ -769,6 +769,13 @@
       </div>
     </main>
 
+    <footer class="text-center py-6 text-sm text-gray-700">
+      Made with <span style="color: #e25555;">❤️</span> by 
+      <a href="https://adimail.github.io/" target="_blank" rel="noopener" class="font-bold underline hover:text-blue-600">
+      Aditya Godse
+      </a>
+    </footer>
+
     <div
       id="event-modal"
       class="fixed inset-0 bg-black/80 hidden z-50"
@@ -850,6 +857,7 @@
           events: [],
           isLoading: true,
           error: null,
+          currentEventForModal: null,
         };
 
         let mobileCalendarState = {
@@ -882,6 +890,8 @@
           modalDate: document.getElementById('modal-date'),
           modalLocation: document.getElementById('modal-location'),
           modalDescription: document.getElementById('modal-description'),
+          shareEventBtn: document.getElementById('share-event-btn'),
+          addToCalendarBtn: document.getElementById('add-to-calendar-btn'),
           mobileCalendar: document.getElementById('calendar'),
           mobileAgendaList: document.getElementById('mobile-agenda-list'),
         };
@@ -1249,6 +1259,7 @@
         };
 
         const showEventModal = (event) => {
+          state.currentEventForModal = event;
           DOMElements.modalTitle.textContent = event.title;
           DOMElements.modalCategory.textContent = event.category;
           DOMElements.modalCategory.style.backgroundColor = event.color;
@@ -1299,6 +1310,7 @@
 
         const hideEventModal = () => {
           DOMElements.eventModal.classList.add('hidden');
+          state.currentEventForModal = null;
         };
 
         const changeMonth = (offset) => {
@@ -1361,6 +1373,63 @@
           DOMElements.modalBackdrop.addEventListener('click', (e) => {
             if (e.target === DOMElements.modalBackdrop) hideEventModal();
           });
+          
+          DOMElements.shareEventBtn.addEventListener('click', async () => {
+            const event = state.currentEventForModal;
+            if (!event) return;
+
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = event.description || '';
+            const cleanDescription = tempDiv.textContent || tempDiv.innerText || '';
+
+            const shareData = {
+                title: `Event: ${event.title}`,
+                text: `${event.title}\nDate: ${DOMElements.modalDate.textContent}\n\n${cleanDescription}`,
+                url: window.location.href,
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {
+                    console.error('Share failed:', err);
+                }
+            } else {
+                alert('Web Share API is not supported in your browser.');
+            }
+          });
+
+          DOMElements.addToCalendarBtn.addEventListener('click', () => {
+            const event = state.currentEventForModal;
+            if (!event) return;
+
+            const formatGCDateAllDay = (date) => {
+                const d = new Date(date);
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${year}${month}${day}`;
+            };
+
+            const startDate = formatGCDateAllDay(event.start);
+            const endDate = new Date(event.end);
+            endDate.setDate(endDate.getDate() + 1);
+            const formattedEndDate = formatGCDateAllDay(endDate);
+
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = event.description || '';
+            const cleanDescription = tempDiv.textContent || tempDiv.innerText || '';
+
+            const googleCalendarUrl = new URL('https://www.google.com/calendar/render');
+            googleCalendarUrl.searchParams.append('action', 'TEMPLATE');
+            googleCalendarUrl.searchParams.append('text', event.title);
+            googleCalendarUrl.searchParams.append('dates', `${startDate}/${formattedEndDate}`);
+            googleCalendarUrl.searchParams.append('details', cleanDescription);
+            googleCalendarUrl.searchParams.append('location', event.location || '');
+
+            window.open(googleCalendarUrl.toString(), '_blank');
+          });
+
           document.addEventListener('keydown', (e) => {
             if (
               e.key === 'Escape' &&

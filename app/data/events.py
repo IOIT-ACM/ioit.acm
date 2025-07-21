@@ -550,6 +550,22 @@ events = [
         ],
     },
     {
+        "name": "Conflux Blockchain Workshop",
+        "description": "Introduction to Blockchain & Building on Conflux eSpace",
+        "date": "July 18, 2025",
+        "moredetails": "",
+        "image_url": "/static/img/workshops/conflux-july2025.jpeg",
+        "instagram_link": "",
+        "facebook_link": "",
+        "topics": [
+            "Introduction to Blockchain and Web3 fundamentals",
+            "Overview of the Conflux Network and its architecture",
+            "Setting up the development environment using Remix and Hardhat",
+            "Writing and deploying smart contracts on the Conflux eSpace Testnet",
+            "Q&A and interactive coding session with live examples",
+        ],
+    },
+    {
         "name": "Inauguration of ACM Student Chapter 2024-25",
         "description": "The inauguration ceremony of the ACM Student Chapter for the year 2024-25.",
         "date": "August 20, 2024",
