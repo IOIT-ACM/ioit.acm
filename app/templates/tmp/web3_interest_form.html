@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web3 Interest & Experience Survey</title>
+    <meta name="description"
+        content="Web3 Interest & Experience Survey by AISSMS IOIT ACM Student Chapter. Help us understand your familiarity with Web3 technologies to design better workshops and events for you." />
+    <meta name="keywords"
+        content="ACM, computing, technology, research, student chapter, events, workshops, education, networking, web3, blockchain" />
+    <meta name="author" content="AISSMS IOIT ACM Student Chapter" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="theme-color" content="#000A14" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="AISSMS IOIT ACM" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Web3 Interest & Experience Survey" />
+    <meta property="og:description"
+        content="Help us understand your familiarity with Web3 technologies to design better workshops and events for you." />
+    <meta property="og:url" content="https://ioit.acm.org/web3-interest-form" />
+    <meta property="og:image" content="/static/og-image.png" />
+    <meta property="og:site_name" content="AISSMS IOIT ACM" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Web3 Interest & Experience Survey" />
+    <meta name="twitter:description"
+        content="Help us understand your familiarity with Web3 technologies to design better workshops and events for you." />
+    <meta name="twitter:image" content="/static/og-image.png" />
+    <meta name="twitter:site" content="@IOITACM" />
+    <meta name="twitter:creator" content="@IOITACM" />
+    <link rel="icon" type="image/png" href="/static/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+    <link rel="shortcut icon" href="/static/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png" />
+    <link rel="manifest" href="/static/site.webmanifest" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Source Code Pro', monospace;
+            background-color: #000A14;
+        }
+
+        @media (max-width: 640px) {
+            html {
+                font-size: 12px;
+            }
+        }
+
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .fade-leave {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-leave-active {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .progress-bar {
+            transition: width 0.6s ease;
+        }
+
+        .btn-hover:hover {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .input-focus:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        input[type="checkbox"] {
+            appearance: none;
+            background-color: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            width: 1.25rem;
+            height: 1.25rem;
+            display: grid;
+            place-content: center;
+        }
+
+        input[type="checkbox"]::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em #00d1ff;
+            transform-origin: bottom left;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+
+        input[type="checkbox"]:checked::before {
+            transform: scale(1);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+    <a href="/">
+        <img src="/static/img/assets/acm.png" alt="AISSMS IOIT ACM Student Chapter Logo"
+            class="fixed top-4 left-4 h-10 w-auto z-50">
+    </a></a>
+    <canvas id="space" class="fixed top-0 left-0 -z-10 w-full h-full"></canvas>
+
+    <div class="fixed top-0 left-0 w-full h-1 bg-black bg-opacity-20 z-50">
+        <div id="progressBar" class="h-full bg-white progress-bar" style="width: 0%"></div>
+    </div>
+
+    <div id="formContainer" class="min-h-screen flex justify-center p-4 py-32">
+        <div id="welcomeScreen" class="text-center text-white max-w-2xl mx-auto">
+            <div class="mb-8">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 fade-enter-active"></h1>
+                <p class="text-lg md:text-xl opacity-90 mb-8 mt-5 fade-enter-active" style="animation-delay: 0.2s"></p>
+            </div>
+            <button id="startBtn"
+                class="bg-white text-gray-800 px-6 py-3 md:px-8 md:py-4 rounded-lg text-base md:text-lg font-semibold btn-hover transition-all duration-300 fade-enter-active"
+                style="animation-delay: 0.4s">
+                Start Survey →
+            </button>
+        </div>
+
+        <div id="questionScreen" class="hidden text-white max-w-2xl mx-auto w-full pt-20">
+            <div class="mb-8">
+                <h2 id="questionTitle" class="text-3xl md:text-4xl font-bold mb-4"></h2>
+                <p id="questionDescription" class="text-base md:text-lg opacity-90"></p>
+            </div>
+            <div id="questionContent" class="mb-8"></div>
+        </div>
+
+        <div id="thankYouScreen" class="hidden text-center text-white max-w-2xl mx-auto">
+            <div class="mb-8 bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-8 border border-white/20">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">Thank You! 🚀</h1>
+                <p class="text-lg md:text-xl opacity-90 mb-8 drop-shadow">
+                    Your responses have been recorded. We appreciate your time!
+                </p>
+            </div>
+            <div
+                class="flex flex-col md:flex-row justify-center items-center gap-4 bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 shadow">
+                <button id="restartBtn"
+                    class="bg-white text-gray-800 px-8 py-4 rounded-lg text-lg font-semibold btn-hover transition-all duration-300">
+                    Start Over
+                </button>
+                <a href="/"
+                    class="bg-white text-gray-800 px-8 py-4 rounded-lg text-lg font-semibold btn-hover transition-all duration-300 flex items-center justify-center">
+                    Home
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 flex space-x-3">
+        <button id="prevBtn"
+            class="w-12 h-12 rounded-full bg-white bg-opacity-20 text-white flex items-center justify-center btn-hover transition-all duration-300 opacity-50 cursor-not-allowed"
+            disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        <button id="nextBtn"
+            class="w-12 h-12 rounded-full bg-white bg-opacity-90 text-gray-800 flex items-center justify-center btn-hover transition-all duration-300 opacity-50 cursor-not-allowed"
+            disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        const formConfig = {
+            title: "Web3 Interest & Experience Survey",
+            description: "Hey there! We're trying to figure out how familiar students are with Web3. Your answers will help us create awesome workshops and events tailored to your interests with collaboration with big names in the domain!",
+            questions: [
+                {
+                    id: "web3Familiarity",
+                    type: "multiple_choice",
+                    title: "How familiar are you with Web3?",
+                    description: "Web3 includes concepts like blockchain, cryptocurrencies, NFTs, smart contracts, and dApps.",
+                    options: [
+                        { value: "curious", label: "I've heard of it and I'm curious to learn more." },
+                        { value: "beginner", label: "I know the basic concepts." },
+                        { value: "experienced", label: "I have hands-on experience or have built a project." },
+                    ],
+                    required: true,
+                },
+                {
+                    id: "learningInterest",
+                    type: "checkbox",
+                    title: "What aspects of Web3 are you most interested in learning?",
+                    description: "Select all that apply. This helps us plan our first workshops!",
+                    options: [
+                        { value: "basics", label: "The absolute basics: What is Web3/Blockchain?" },
+                        { value: "dapps", label: "Building decentralized applications (dApps)" },
+                        { value: "smart_contracts", label: "Writing smart contracts (e.g., with Solidity)" },
+                        { value: "defi", label: "Decentralized Finance (DeFi)" },
+                        { value: "nfts", label: "NFTs and the creator economy" },
+                        { value: "daos", label: "DAOs (Decentralized Autonomous Organizations)" },
+                    ],
+                    required: true,
+                    condition: { questionId: "web3Familiarity", value: ["curious", "beginner"] }
+                },
+                {
+                    id: "beginnerWorkshopInterest",
+                    type: "multiple_choice",
+                    title: "Would you attend a beginner-friendly, hands-on Web3 workshop?",
+                    options: [{ value: "yes", label: "Yes, definitely!" }, { value: "maybe", label: "Maybe, depends on the topic/timing" }, { value: "no", label: "No, thanks" }],
+                    required: true,
+                    condition: { questionId: "web3Familiarity", value: ["curious", "beginner"] }
+                },
+                {
+                    id: "projectDescription",
+                    type: "textarea",
+                    title: "That's awesome! Could you briefly describe your Web3 project(s) or experience?",
+                    description: "No need for a long essay! Just a few lines about what you built or worked on is perfect.",
+                    required: true,
+                    condition: { questionId: "web3Familiarity", value: "experienced" }
+                },
+                {
+                    id: "toolsUsed",
+                    type: "checkbox",
+                    title: "Which tools, languages, or platforms have you used?",
+                    description: "Select all that apply.",
+                    options: [
+                        { value: "solidity", label: "Solidity" },
+                        { value: "rust", label: "Rust" },
+                        { value: "ethers_js", label: "Ethers.js / Web3.js" },
+                        { value: "hardhat", label: "Hardhat / Truffle" },
+                        { value: "remix", label: "Remix IDE" },
+                        { value: "metamask", label: "MetaMask" },
+                        { value: "ethereum", label: "Ethereum" },
+                        { value: "polygon", label: "Polygon" },
+                        { value: "solana", label: "Solana" },
+                        { value: "other", label: "Other (please specify below)" },
+                    ],
+                    required: true,
+                    condition: { questionId: "web3Familiarity", value: "experienced" }
+                },
+                {
+                    id: "otherTools",
+                    type: "text",
+                    title: "Other tools you've used?",
+                    description: "If you selected 'Other' above, please list them here.",
+                    required: false,
+                    condition: { questionId: "web3Familiarity", value: "experienced" }
+                },
+                {
+                    id: "advancedWorkshopTopics",
+                    type: "checkbox",
+                    title: "What advanced topics would you want in a future workshop?",
+                    description: "Your input will help us plan more advanced sessions.",
+                    options: [
+                        { value: "advanced_solidity", label: "Advanced Solidity (e.g., Proxies, Gas Optimization)" },
+                        { value: "security", label: "Smart Contract Security & Auditing" },
+                        { value: "layer2", label: "Layer 2 Scaling Solutions (e.g., Optimism, Arbitrum)" },
+                        { value: "mev", label: "MEV (Maximal Extractable Value)" },
+                        { value: "zero_knowledge", label: "Zero-Knowledge Proofs" },
+                    ],
+                    required: true,
+                    condition: { questionId: "web3Familiarity", value: "experienced" }
+                },
+                { id: "fullName", type: "text", title: "what's your name?", required: true },
+                {
+                    id: "branch",
+                    type: "multiple_choice",
+                    title: "What is your branch?",
+                    options: [
+                        { value: "aids", label: "AI&DS" }, { value: "cs", label: "CS" }, { value: "it", label: "IT" },
+                        { value: "electrical", label: "Electrical" }, { value: "instrumentation", label: "Instrumentation" },
+                        { value: "entc", label: "ENTC" }, { value: "other", label: "Other" }
+                    ],
+                    required: true,
+                },
+                {
+                    id: "gradYear",
+                    type: "multiple_choice",
+                    title: "What's your graduation year?",
+                    options: [
+                        { value: "2025", label: "2025" }, { value: "2026", label: "2026" }, { value: "2027", label: "2027" },
+                        { value: "2028", label: "2028" }, { value: "2029", label: "2029" }
+                    ],
+                    required: true,
+                },
+                {
+                    id: "isIoitStudent",
+                    type: "multiple_choice",
+                    title: "Are you a student of AISSMS IOIT?",
+                    options: [{ value: "Yes", label: "Yes" }, { value: "No", label: "No" }],
+                    required: true,
+                }
+            ]
+        };
+
+        let currentVisibleIndex = 0;
+        let answers = {};
+        let isTransitioning = false;
+        let visibleQuestions = [];
+
+        const welcomeScreen = document.getElementById("welcomeScreen");
+        const questionScreen = document.getElementById("questionScreen");
+        const thankYouScreen = document.getElementById("thankYouScreen");
+        const progressBar = document.getElementById("progressBar");
+        const startBtn = document.getElementById("startBtn");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const restartBtn = document.getElementById("restartBtn");
+
+        function init() {
+            startBtn.addEventListener("click", startForm);
+            prevBtn.addEventListener("click", goToPrevious);
+            nextBtn.addEventListener("click", goToNext);
+            restartBtn.addEventListener("click", restartForm);
+            document.getElementById("welcomeScreen").querySelector("h1").textContent = formConfig.title;
+            document.getElementById("welcomeScreen").querySelector("p").textContent = formConfig.description;
+        }
+
+        function updateVisibleQuestions() {
+            visibleQuestions = formConfig.questions.filter(q => {
+                if (!q.condition) return true;
+                const { questionId, value } = q.condition;
+                const answer = answers[questionId];
+                return Array.isArray(value) ? value.includes(answer) : answer === value;
+            });
+        }
+
+        function startForm() {
+            if (isTransitioning) return;
+            window.warp = 0;
+            updateVisibleQuestions();
+            transitionToScreen(welcomeScreen, questionScreen, () => showQuestion(0));
+        }
+
+        function showQuestion(index) {
+            if (index < 0 || index >= visibleQuestions.length) return;
+            currentVisibleIndex = index;
+            const question = visibleQuestions[index];
+            const progress = ((index + 1) / visibleQuestions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            document.getElementById("questionTitle").textContent = question.title;
+            document.getElementById("questionDescription").textContent = question.description || "";
+            const contentContainer = document.getElementById("questionContent");
+            contentContainer.innerHTML = "";
+            switch (question.type) {
+                case "text":
+                case "email":
+                    renderTextInput(contentContainer, question);
+                    break;
+                case "textarea":
+                    renderTextarea(contentContainer, question);
+                    break;
+                case "multiple_choice":
+                    renderMultipleChoice(contentContainer, question);
+                    break;
+                case "checkbox":
+                    renderCheckbox(contentContainer, question);
+                    break;
+            }
+            updateNavigationButtons();
+            const firstInput = contentContainer.querySelector("input, textarea");
+            if (firstInput) setTimeout(() => firstInput.focus(), 100);
+        }
+
+        function renderTextInput(container, question) {
+            const input = document.createElement("input");
+            input.type = question.type;
+            input.className = "w-full p-3 md:p-4 text-base md:text-lg bg-white bg-opacity-20 text-white placeholder-white placeholder-opacity-70 rounded-lg border-2 border-white border-opacity-30 focus:border-white focus:outline-none input-focus transition-all duration-300";
+            input.placeholder = "Type your answer here...";
+            input.value = answers[question.id] || "";
+            input.addEventListener("input", (e) => {
+                answers[question.id] = e.target.value;
+                updateNavigationButtons();
+            });
+            input.addEventListener("keypress", (e) => {
+                if (e.key === "Enter" && canGoNext()) goToNext();
+            });
+            container.appendChild(input);
+        }
+
+        function renderTextarea(container, question) {
+            const textarea = document.createElement("textarea");
+            textarea.className = "w-full p-3 md:p-4 text-base md:text-lg bg-white bg-opacity-20 text-white placeholder-white placeholder-opacity-70 rounded-lg border-2 border-white border-opacity-30 focus:border-white focus:outline-none input-focus transition-all duration-300 resize-none";
+            textarea.placeholder = "Type your answer here...";
+            textarea.value = answers[question.id] || "";
+            textarea.rows = 4;
+            textarea.addEventListener("input", (e) => {
+                answers[question.id] = e.target.value;
+                updateNavigationButtons();
+            });
+            container.appendChild(textarea);
+        }
+
+        function renderMultipleChoice(container, question) {
+            const optionsContainer = document.createElement("div");
+            optionsContainer.className = "grid grid-cols-1 gap-4";
+            question.options.forEach((option) => {
+                const button = document.createElement("button");
+                button.className = "w-full p-3 md:p-4 text-left bg-white bg-opacity-20 text-white rounded-lg border-2 border-white border-opacity-30 hover:bg-opacity-30 btn-hover transition-all duration-300 flex items-center space-x-3";
+                if (answers[question.id] === option.value) button.classList.add("bg-opacity-40", "border-opacity-100");
+                button.innerHTML = `<span class="text-base md:text-lg font-medium">${option.label}</span>`;
+                button.addEventListener("click", () => {
+                    answers[question.id] = option.value;
+                    updateVisibleQuestions();
+                    optionsContainer.querySelectorAll("button").forEach(btn => btn.classList.remove("bg-opacity-40", "border-opacity-100"));
+                    button.classList.add("bg-opacity-40", "border-opacity-100");
+                    updateNavigationButtons();
+                    setTimeout(() => { if (canGoNext()) goToNext(); }, 500);
+                });
+                optionsContainer.appendChild(button);
+            });
+            container.appendChild(optionsContainer);
+        }
+
+        function renderCheckbox(container, question) {
+            const optionsContainer = document.createElement("div");
+            optionsContainer.className = "grid grid-cols-1 gap-4";
+            answers[question.id] = answers[question.id] || [];
+            question.options.forEach((option) => {
+                const label = document.createElement("label");
+                label.className = "w-full p-3 md:p-4 text-left bg-white bg-opacity-20 text-white rounded-lg border-2 border-white border-opacity-30 hover:bg-opacity-30 btn-hover transition-all duration-300 flex items-center space-x-3 cursor-pointer";
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.value = option.value;
+                if (answers[question.id].includes(option.value)) {
+                    checkbox.checked = true;
+                    label.classList.add("bg-opacity-40", "border-opacity-100");
+                }
+                checkbox.addEventListener("change", (e) => {
+                    const value = e.target.value;
+                    if (e.target.checked) {
+                        if (!answers[question.id].includes(value)) answers[question.id].push(value);
+                        label.classList.add("bg-opacity-40", "border-opacity-100");
+                    } else {
+                        answers[question.id] = answers[question.id].filter(v => v !== value);
+                        label.classList.remove("bg-opacity-40", "border-opacity-100");
+                    }
+                    updateNavigationButtons();
+                });
+                const span = document.createElement("span");
+                span.className = "text-base md:text-lg font-medium";
+                span.textContent = option.label;
+                label.appendChild(checkbox);
+                label.appendChild(span);
+                optionsContainer.appendChild(label);
+            });
+            container.appendChild(optionsContainer);
+        }
+
+        function goToPrevious() {
+            if (isTransitioning || currentVisibleIndex <= 0) return;
+            const prevIndex = currentVisibleIndex - 1;
+            transitionQuestion(() => showQuestion(prevIndex));
+        }
+
+        function goToNext() {
+            if (isTransitioning || !canGoNext()) return;
+            updateVisibleQuestions();
+            if (currentVisibleIndex >= visibleQuestions.length - 1) {
+                transitionToScreen(questionScreen, thankYouScreen, () => {
+                    progressBar.style.width = "100%";
+                    fetch('/web3-interest-form', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(answers),
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                console.log('Successfully submitted to backend.');
+                            } else {
+                                console.error('Backend submission failed:', data.error);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error submitting form:', error);
+                        });
+                    window.warp = 1;
+                });
+            } else {
+                const nextIndex = currentVisibleIndex + 1;
+                transitionQuestion(() => showQuestion(nextIndex));
+            }
+        }
+
+        function canGoNext() {
+            const question = visibleQuestions[currentVisibleIndex];
+            if (!question.required) return true;
+            const answer = answers[question.id];
+            return Array.isArray(answer) ? answer.length > 0 : (answer !== undefined && answer !== null && answer !== "");
+        }
+
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentVisibleIndex <= 0;
+            prevBtn.classList.toggle("opacity-50", prevBtn.disabled);
+            prevBtn.classList.toggle("cursor-not-allowed", prevBtn.disabled);
+            nextBtn.disabled = !canGoNext();
+            nextBtn.classList.toggle("opacity-50", nextBtn.disabled);
+            nextBtn.classList.toggle("cursor-not-allowed", nextBtn.disabled);
+        }
+
+        function transitionToScreen(from, to, callback) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            from.classList.add("fade-leave", "fade-leave-active");
+            setTimeout(() => {
+                from.classList.add("hidden");
+                from.classList.remove("fade-leave", "fade-leave-active");
+                to.classList.remove("hidden");
+                to.classList.add("fade-enter");
+                setTimeout(() => {
+                    to.classList.add("fade-enter-active");
+                    setTimeout(() => {
+                        to.classList.remove("fade-enter", "fade-enter-active");
+                        isTransitioning = false;
+                        if (callback) callback();
+                    }, 400);
+                }, 10);
+            }, 400);
+        }
+
+        function transitionQuestion(callback) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            const content = document.getElementById("questionContent");
+            content.classList.add("fade-leave", "fade-leave-active");
+            setTimeout(() => {
+                content.classList.remove("fade-leave", "fade-leave-active");
+                if (callback) callback();
+                content.classList.add("fade-enter");
+                setTimeout(() => {
+                    content.classList.add("fade-enter-active");
+                    setTimeout(() => {
+                        content.classList.remove("fade-enter", "fade-enter-active");
+                        isTransitioning = false;
+                    }, 400);
+                }, 10);
+            }, 400);
+        }
+
+        function restartForm() {
+            currentVisibleIndex = 0;
+            answers = {};
+            progressBar.style.width = "0%";
+            window.warp = 0;
+            transitionToScreen(thankYouScreen, welcomeScreen);
+        }
+
+        document.addEventListener("keydown", (e) => {
+            if (isTransitioning) return;
+            if (e.key === "ArrowUp" && !prevBtn.disabled) goToPrevious();
+            if (e.key === "ArrowDown" && !nextBtn.disabled) goToNext();
+        });
+
+        init();
+
+        window.requestAnimFrame = (function () { return window.requestAnimationFrame })();
+        var canvas = document.getElementById("space");
+        var c = canvas.getContext("2d");
+        var numStars = 1900;
+        var radius = '0.' + Math.floor(Math.random() * 9) + 1;
+        var focalLength = canvas.width * 2;
+        var warp = 0;
+        var centerX, centerY;
+        var stars = [], star;
+        var i;
+        var animate = true;
+
+        initializeStars();
+
+        function executeFrame() {
+            if (animate)
+                requestAnimFrame(executeFrame);
+            moveStars();
+            drawStars();
+        }
+
+        function initializeStars() {
+            centerX = canvas.width / 2;
+            centerY = canvas.height / 2;
+
+            stars = [];
+            for (i = 0; i < numStars; i++) {
+                star = {
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    z: Math.random() * canvas.width,
+                    o: '0.' + Math.floor(Math.random() * 99) + 1
+                };
+                stars.push(star);
+            }
+        }
+
+        function moveStars() {
+            for (i = 0; i < numStars; i++) {
+                star = stars[i];
+                star.z--;
+
+                if (star.z <= 0) {
+                    star.z = canvas.width;
+                }
+            }
+        }
+
+        function drawStars() {
+            var pixelX, pixelY, pixelRadius;
+
+            if (canvas.width != window.innerWidth || canvas.height != window.innerHeight) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                initializeStars();
+            }
+
+            if (warp == 0) {
+                c.fillStyle = "rgba(0,10,20,1)";
+                c.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            c.fillStyle = "rgba(209, 255, 255, " + radius + ")";
+            for (i = 0; i < numStars; i++) {
+                star = stars[i];
+
+                pixelX = (star.x - centerX) * (focalLength / star.z);
+                pixelX += centerX;
+                pixelY = (star.y - centerY) * (focalLength / star.z);
+                pixelY += centerY;
+                pixelRadius = 1 * (focalLength / star.z);
+
+                c.fillRect(pixelX, pixelY, pixelRadius, pixelRadius);
+                c.fillStyle = "rgba(209, 255, 255, " + star.o + ")";
+            }
+        }
+
+        executeFrame();
+
+    </script>
+</body>
+
+</html>

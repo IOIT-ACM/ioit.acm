@@ -51,22 +51,3 @@ class Recruitment(db.Model):
     whyApply = db.Column(db.Text, nullable=False)
     date = db.Column(db.DateTime, nullable=False)
     extra_answers = db.Column(db.JSON)
-
-
-class WorkshopRegistration(db.Model):
-    __bind_key__ = "workshop_registrations"
-    __tablename__ = 'workshop_registrations'
-
-    id = db.Column(db.Integer, primary_key=True)
-    full_name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(120), nullable=False)
-    mobile = db.Column(db.String(15), nullable=False)
-    college_roll = db.Column(db.String(50), nullable=False)
-    year_of_study = db.Column(db.String(20), nullable=False)
-    branch = db.Column(db.String(100), nullable=False)
-
-    web3_familiar = db.Column(db.Boolean, nullable=False)
-    sui_network = db.Column(db.Boolean, nullable=False)
-    programming_languages = db.Column(db.Text, nullable=False)
-    portfolio = db.Column(db.String(255))
-    registered_on = db.Column(db.DateTime, default=db.func.current_timestamp())

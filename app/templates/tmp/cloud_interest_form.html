@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cloud Computing Interest Form - ACM</title>
+    <meta name="description"
+        content="Cloud Computing Interest Form and Survey by AISSMS IOIT ACM Student Chapter. Help us understand your familiarity with Cloud technologies to design better workshops and events for you." />
+    <meta name="keywords"
+        content="ACM, computing, technology, research, student chapter, events, workshops, education, networking, cloud, AWS, Azure, GCP" />
+    <meta name="author" content="AISSMS IOIT ACM Student Chapter" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="theme-color" content="#000A14" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="AISSMS IOIT ACM" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Cloud Computing Interest Form and Survey" />
+    <meta property="og:description"
+        content="Help us understand your familiarity with Cloud technologies to design better workshops and events for you." />
+    <meta property="og:url" content="https://ioit.acm.org/cloud-interest-form" />
+    <meta property="og:image" content="/static/og-image.png" />
+    <meta property="og:site_name" content="AISSMS IOIT ACM" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cloud Computing Interest Form and Survey" />
+    <meta name="twitter:description"
+        content="Help us understand your familiarity with Cloud technologies to design better workshops and events for you." />
+    <meta name="twitter:image" content="/static/og-image.png" />
+    <meta name="twitter:site" content="@IOITACM" />
+    <meta name="twitter:creator" content="@IOITACM" />
+    <link rel="icon" type="image/png" href="/static/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+    <link rel="shortcut icon" href="/static/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png" />
+    <link rel="manifest" href="/static/site.webmanifest" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Source Code Pro', monospace;
+            background-color: #000A14;
+        }
+
+        @media (max-width: 640px) {
+            html {
+                font-size: 12px;
+            }
+        }
+
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .fade-leave {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-leave-active {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .progress-bar {
+            transition: width 0.6s ease;
+        }
+
+        .btn-hover:hover {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .input-focus:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        input[type="checkbox"] {
+            appearance: none;
+            background-color: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            width: 1.25rem;
+            height: 1.25rem;
+            display: grid;
+            place-content: center;
+        }
+
+        input[type="checkbox"]::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em #00d1ff;
+            transform-origin: bottom left;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+
+        input[type="checkbox"]:checked::before {
+            transform: scale(1);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+    <a href="/">
+        <img src="/static/img/assets/acm.png" alt="AISSMS IOIT ACM Student Chapter Logo"
+            class="fixed top-4 left-4 h-10 w-auto z-50">
+    </a></a>
+    <canvas id="space" class="fixed top-0 left-0 -z-10 w-full h-full"></canvas>
+
+    <div class="fixed top-0 left-0 w-full h-1 bg-black bg-opacity-20 z-50">
+        <div id="progressBar" class="h-full bg-white progress-bar" style="width: 0%"></div>
+    </div>
+
+    <div id="formContainer" class="min-h-screen flex justify-center p-4 py-32">
+        <div id="welcomeScreen" class="text-center text-white max-w-2xl mx-auto">
+            <div class="mb-8">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 fade-enter-active">Cloud Computing Interest Form and
+                    Survey</h1>
+                <p class="text-lg md:text-xl opacity-90 mb-8 mt-5 fade-enter-active" style="animation-delay: 0.2s">Your
+                    answers will help us create awesome workshops and events tailored to your interests, in
+                    collaboration with big names in the domain!</p>
+            </div>
+            <button id="startBtn"
+                class="bg-white text-gray-800 px-6 py-3 md:px-8 md:py-4 rounded-lg text-base md:text-lg font-semibold btn-hover transition-all duration-300 fade-enter-active"
+                style="animation-delay: 0.4s">
+                Start Survey →
+            </button>
+        </div>
+
+        <div id="questionScreen" class="hidden text-white max-w-2xl mx-auto w-full pt-20">
+            <div class="mb-8">
+                <h2 id="questionTitle" class="text-3xl md:text-4xl font-bold mb-4"></h2>
+                <p id="questionDescription" class="text-base md:text-lg opacity-90"></p>
+            </div>
+            <div id="questionContent" class="mb-8"></div>
+        </div>
+
+        <div id="thankYouScreen" class="hidden text-center text-white max-w-2xl mx-auto">
+            <div class="mb-8 bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-8 border border-white/20">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">Thank You! 🚀</h1>
+                <p class="text-lg md:text-xl opacity-90 mb-8 drop-shadow">
+                    Your responses have been recorded. We appreciate your time!
+                </p>
+            </div>
+            <div
+                class="flex flex-col md:flex-row justify-center items-center gap-4 bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 shadow">
+                <button id="restartBtn"
+                    class="bg-white text-gray-800 px-8 py-4 rounded-lg text-lg font-semibold btn-hover transition-all duration-300">
+                    Start Over
+                </button>
+                <a href="/"
+                    class="bg-white text-gray-800 px-8 py-4 rounded-lg text-lg font-semibold btn-hover transition-all duration-300 flex items-center justify-center">
+                    Home
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 flex space-x-3">
+        <button id="prevBtn"
+            class="w-12 h-12 rounded-full bg-white bg-opacity-20 text-white flex items-center justify-center btn-hover transition-all duration-300 opacity-50 cursor-not-allowed"
+            disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        <button id="nextBtn"
+            class="w-12 h-12 rounded-full bg-white bg-opacity-90 text-gray-800 flex items-center justify-center btn-hover transition-all duration-300 opacity-50 cursor-not-allowed"
+            disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        const formConfig = {
+            title: "Cloud Computing Interest Form and Survey",
+            description: "Your answers will help us create awesome workshops and events tailored to your interests, in collaboration with big names in the domain!",
+            questions: [
+                {
+                    id: "fullName",
+                    type: "text",
+                    title: "Enter your full name:",
+                    description: "",
+                    required: true,
+                    placeholder: "Ada Lovelace"
+                },
+                {
+                    id: "email",
+                    type: "text",
+                    title: "Enter your email address:",
+                    description: "",
+                    required: true,
+                    placeholder: "ada@example.com"
+                },
+                {
+                    id: "cloudProviders",
+                    type: "checkbox",
+                    title: "Cloud Providers",
+                    description: "What cloud providers are you familiar with and have worked on before?",
+                    options: [
+                        { value: "AWS", label: "AWS" },
+                        { value: "Azure", label: "Azure" },
+                        { value: "GCP", label: "GCP" },
+                        { value: "Oracle", label: "Oracle" },
+                        { value: "None", label: "None of the above" }
+                    ],
+                    required: true
+                },
+                {
+                    id: "areasOfInterest",
+                    type: "checkbox",
+                    title: "Areas of Interest",
+                    description: "Select all that apply.",
+                    options: [
+                        { value: "DevOps", label: "DevOps / SRE" },
+                        { value: "Data", label: "Data & Analytics" },
+                        { value: "AI", label: "AI / ML" },
+                        { value: "Security", label: "Cloud Security" },
+                        { value: "Web", label: "Web & App Hosting" },
+                        { value: "IoT", label: "IoT & Edge Computing" },
+                        { value: "Serverless", label: "Serverless / Functions" },
+                        { value: "Containers", label: "Containers & Kubernetes" },
+                        { value: "Networking", label: "Cloud Networking" },
+                        { value: "Storage", label: "Cloud Storage & Databases" }
+                    ],
+                    required: true
+                },
+                {
+                    id: "experienceLevel",
+                    type: "multiple_choice",
+                    title: "What is your current experience level?",
+                    description: "",
+                    options: [
+                        { value: "Novice", label: "Novice" },
+                        { value: "Beginner", label: "Beginner" },
+                        { value: "Intermediate", label: "Intermediate" },
+                        { value: "Advanced", label: "Advanced" }
+                    ],
+                    required: true
+                },
+                {
+                    id: "linuxSkill",
+                    type: "slider",
+                    title: "Rate your familiarity with Linux/command line:",
+                    description: "",
+                    min: 1,
+                    max: 5,
+                    defaultValue: 3,
+                    labels: ["1 - Novice", "5 - Expert"],
+                    required: true
+                },
+                {
+                    id: "branch",
+                    type: "multiple_choice",
+                    title: "Select your branch:",
+                    description: "",
+                    options: [
+                        { value: "CS", label: "Computer Science (CS)" },
+                        { value: "IT", label: "Information Technology (IT)" },
+                        { value: "AIDS", label: "AI & Data Science (AIDS)" },
+                        { value: "ECE", label: "Electrical (ELC)" },
+                        { value: "ENTC", label: "Electronics & Telecomm. (ENTC)" },
+                        { value: "INSTRU", label: "Instrumentation (INSTRU)" }
+                    ],
+                    required: true
+                },
+                {
+                    id: "year",
+                    type: "multiple_choice",
+                    title: "Select your year:",
+                    description: "",
+                    options: [
+                        { value: "First", label: "First Year" },
+                        { value: "Second", label: "Second Year" },
+                        { value: "Third", label: "Third Year" },
+                        { value: "Final", label: "Final Year" }
+                    ],
+                    required: true
+                },
+                {
+                    id: "mobileNumber",
+                    type: "text",
+                    title: "Mobile Number (Optional):",
+                    description: "If you'd like us to contact you in the future via WhatsApp, please provide your number.",
+                    required: false,
+                    placeholder: "+91 12345 67890"
+                },
+                {
+                    id: "interestReason",
+                    type: "textarea",
+                    title: "Why are you interested in Cloud Computing?",
+                    description: "Share your motivations and what you hope to gain.",
+                    required: true
+                },
+                {
+                    id: "topicsToExplore",
+                    type: "textarea",
+                    title: "What specific topics or services in Cloud Computing would you like to explore in depth?",
+                    description: "E.g., Serverless, Kubernetes, Machine Learning on Cloud, specific AWS/Azure/GCP services.",
+                    required: false
+                }
+            ]
+        };
+        let currentVisibleIndex = 0;
+        let answers = {};
+        let isTransitioning = false;
+        let visibleQuestions = [];
+        const welcomeScreen = document.getElementById("welcomeScreen");
+        const questionScreen = document.getElementById("questionScreen");
+        const thankYouScreen = document.getElementById("thankYouScreen");
+        const questionTitle = document.getElementById("questionTitle");
+        const questionDescription = document.getElementById("questionDescription");
+        const questionContent = document.getElementById("questionContent");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const progressBar = document.getElementById("progressBar");
+        const startBtn = document.getElementById("startBtn");
+        const restartBtn = document.getElementById("restartBtn");
+
+        function updateProgressBar() {
+            const progress = (currentVisibleIndex / visibleQuestions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentVisibleIndex === 0;
+            // The next button should be disabled only if the current question is required and not answered.
+            // It should be enabled on the last question to allow submission, as long as the last question is answered (if required).
+            nextBtn.disabled = !isCurrentQuestionAnswered();
+
+            if (prevBtn.disabled) {
+                prevBtn.classList.add("opacity-50", "cursor-not-allowed");
+            } else {
+                prevBtn.classList.remove("opacity-50", "cursor-not-allowed");
+            }
+
+            if (nextBtn.disabled) {
+                nextBtn.classList.add("opacity-50", "cursor-not-allowed");
+            } else {
+                nextBtn.classList.remove("opacity-50", "cursor-not-allowed");
+            }
+        }
+
+        function isCurrentQuestionAnswered() {
+            if (visibleQuestions.length === 0) return true; // No questions yet
+            const currentQuestion = visibleQuestions[currentVisibleIndex];
+            const answer = answers[currentQuestion.id];
+
+            if (currentQuestion.required) {
+                if (currentQuestion.type === "text" || currentQuestion.type === "textarea") {
+                    return answer && answer.trim() !== "";
+                } else if (currentQuestion.type === "multiple_choice") {
+                    return answer !== undefined;
+                } else if (currentQuestion.type === "checkbox") {
+                    return Array.isArray(answer) && answer.length > 0;
+                } else if (currentQuestion.type === "slider") {
+                    return answer !== undefined; // Slider always has a value
+                }
+            }
+            return true; // If not required, it's considered answered
+        }
+
+        function filterQuestions() {
+            visibleQuestions = formConfig.questions.filter(q => {
+                if (!q.condition) return true;
+                const conditionQuestionAnswer = answers[q.condition.questionId];
+                if (!conditionQuestionAnswer) return false;
+
+                if (Array.isArray(q.condition.value)) {
+                    return q.condition.value.includes(conditionQuestionAnswer);
+                } else {
+                    return conditionQuestionAnswer === q.condition.value;
+                }
+            });
+        }
+
+        function renderQuestion(index) {
+            if (index < 0 || index >= visibleQuestions.length) {
+                if (index >= visibleQuestions.length) {
+                    showThankYouScreen();
+                }
+                return;
+            }
+
+            isTransitioning = true;
+            const currentQuestion = visibleQuestions[index];
+            questionContent.classList.add("fade-leave-active");
+
+            setTimeout(() => {
+                questionTitle.textContent = currentQuestion.title;
+                questionDescription.textContent = currentQuestion.description;
+                questionContent.innerHTML = ""; // Clear previous content
+
+                if (currentQuestion.type === "text") {
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    input.id = currentQuestion.id;
+                    input.className = "w-full p-3 md:p-4 bg-white/10 text-white rounded-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 input-focus transition-all duration-200";
+                    input.placeholder = currentQuestion.placeholder || "";
+                    input.value = answers[currentQuestion.id] || "";
+                    input.addEventListener("input", (e) => {
+                        answers[currentQuestion.id] = e.target.value;
+                        updateNavigationButtons();
+                    });
+                    questionContent.appendChild(input);
+                } else if (currentQuestion.type === "textarea") {
+                    const textarea = document.createElement("textarea");
+                    textarea.id = currentQuestion.id;
+                    textarea.className = "w-full p-3 md:p-4 bg-white/10 text-white rounded-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 input-focus transition-all duration-200 h-32";
+                    textarea.placeholder = currentQuestion.placeholder || "";
+                    textarea.value = answers[currentQuestion.id] || "";
+                    textarea.addEventListener("input", (e) => {
+                        answers[currentQuestion.id] = e.target.value;
+                        updateNavigationButtons();
+                    });
+                    questionContent.appendChild(textarea);
+                } else if (currentQuestion.type === "multiple_choice") {
+                    currentQuestion.options.forEach(option => {
+                        const div = document.createElement("div");
+                        div.className = `flex items-center mb-3 p-3 bg-white/10 rounded-lg cursor-pointer hover:bg-white/20 transition-colors duration-200 ${answers[currentQuestion.id] === option.value ? "bg-opacity-40 border-opacity-100" : ""}`;
+                        div.innerHTML = `
+                <input type="radio" id="${currentQuestion.id}-${option.value}" name="${currentQuestion.id}" value="${option.value}" class="hidden" ${answers[currentQuestion.id] === option.value ? "checked" : ""}>
+                <div class="w-5 h-5 border-2 border-white rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                  <div class="w-3 h-3 bg-blue-400 rounded-full ${answers[currentQuestion.id] === option.value ? "" : "hidden"}"></div>
+                </div>
+                <label for="${currentQuestion.id}-${option.value}" class="text-white text-lg cursor-pointer flex-grow">${option.label}</label>
+              `;
+                        div.addEventListener("click", () => {
+                            answers[currentQuestion.id] = option.value;
+                            // Update UI for all options in this group without re-rendering the whole question
+                            div.parentElement.querySelectorAll('.flex.items-center').forEach(btn => {
+                                btn.classList.remove("bg-opacity-40", "border-opacity-100");
+                                btn.querySelector('.w-3.h-3').classList.add("hidden");
+                            });
+                            div.classList.add("bg-opacity-40", "border-opacity-100");
+                            div.querySelector('.w-3.h-3').classList.remove("hidden");
+
+                            updateNavigationButtons();
+                            // Automatically go to the next question after a short delay
+                            setTimeout(() => { if (canGoNext()) goToNext(); }, 500);
+                        });
+                        questionContent.appendChild(div);
+                    });
+                } else if (currentQuestion.type === "checkbox") {
+                    const selectedOptions = answers[currentQuestion.id] || [];
+                    currentQuestion.options.forEach(option => {
+                        const isChecked = selectedOptions.includes(option.value);
+                        const div = document.createElement("div");
+                        div.className = `flex items-center mb-3 p-3 bg-white/10 rounded-lg cursor-pointer hover:bg-white/20 transition-colors duration-200 ${isChecked ? "bg-opacity-40 border-opacity-100" : ""}`;
+                        div.innerHTML = `
+                <input type="checkbox" id="${currentQuestion.id}-${option.value}" name="${currentQuestion.id}" value="${option.value}" class="mr-3" ${isChecked ? "checked" : ""}>
+                <label for="${currentQuestion.id}-${option.value}" class="text-white text-lg cursor-pointer flex-grow">${option.label}</label>
+              `;
+                        div.addEventListener("click", (e) => {
+                            // Prevent label click from toggling twice
+                            if (e.target.tagName === 'INPUT') return;
+
+                            const checkbox = div.querySelector('input[type="checkbox"]');
+                            checkbox.checked = !checkbox.checked; // Toggle the checkbox state
+
+                            if (checkbox.checked) {
+                                if (!selectedOptions.includes(option.value)) {
+                                    selectedOptions.push(option.value);
+                                }
+                                div.classList.add("bg-opacity-40", "border-opacity-100");
+                            } else {
+                                const index = selectedOptions.indexOf(option.value);
+                                if (index > -1) {
+                                    selectedOptions.splice(index, 1);
+                                }
+                                div.classList.remove("bg-opacity-40", "border-opacity-100");
+                            }
+                            answers[currentQuestion.id] = selectedOptions;
+                            updateNavigationButtons();
+                        });
+                        questionContent.appendChild(div);
+                    });
+                } else if (currentQuestion.type === "slider") {
+                    const sliderDiv = document.createElement("div");
+                    sliderDiv.className = "mb-4";
+                    sliderDiv.innerHTML = `
+                  <input type="range" id="${currentQuestion.id}" min="${currentQuestion.min}" max="${currentQuestion.max}" value="${answers[currentQuestion.id] || currentQuestion.defaultValue}" class="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                  <div class="flex justify-between text-white text-sm mt-2">
+                      ${currentQuestion.labels.map(label => `<span>${label}</span>`).join("")}
+                  </div>
+                  <p class="text-white text-center mt-2">Current Value: <span id="${currentQuestion.id}Value">${answers[currentQuestion.id] || currentQuestion.defaultValue}</span></p>
+              `;
+                    questionContent.appendChild(sliderDiv);
+                    const slider = document.getElementById(currentQuestion.id);
+                    const sliderValueSpan = document.getElementById(`${currentQuestion.id}Value`);
+                    slider.addEventListener("input", (e) => {
+                        answers[currentQuestion.id] = parseInt(e.target.value);
+                        sliderValueSpan.textContent = e.target.value;
+                        updateNavigationButtons();
+                    });
+                }
+
+
+                questionContent.classList.remove("fade-leave-active");
+                questionContent.classList.add("fade-enter-active");
+                isTransitioning = false;
+                updateProgressBar();
+                updateNavigationButtons();
+            }, 400); // Wait for fade-out transition
+        }
+
+        function showQuestionScreen() {
+            welcomeScreen.classList.add("hidden");
+            thankYouScreen.classList.add("hidden");
+            questionScreen.classList.remove("hidden");
+            filterQuestions(); // Filter questions initially
+            currentVisibleIndex = 0; // Reset to the first valid question
+            renderQuestion(currentVisibleIndex);
+        }
+
+        function showThankYouScreen() {
+            questionScreen.classList.add("hidden");
+            welcomeScreen.classList.add("hidden");
+            thankYouScreen.classList.remove("hidden");
+            progressBar.style.width = "100%";
+
+            // Construct payload with specific key order
+            const payload = {
+                name: answers.fullName || '',
+                email: answers.email || '',
+                providers: answers.cloudProviders || [],
+                interests: answers.areasOfInterest || [],
+                experience: answers.experienceLevel || '',
+                linuxSkill: answers.linuxSkill || 3,
+                branch: answers.branch || '',
+                year: answers.year || '',
+                mobileNumber: answers.mobileNumber || '',
+                interestReason: answers.interestReason || '',
+                topicsToExplore: answers.topicsToExplore || ''
+                // timestamp will be added by the Flask backend
+            };
+
+            // Send data to Flask endpoint
+            fetch('/cloud-interest-form', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        console.log('Successfully submitted to backend:', data.message);
+                    } else {
+                        console.error('Backend submission failed:', data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error submitting form:', error);
+                });
+        }
+
+        startBtn.addEventListener("click", showQuestionScreen);
+
+        prevBtn.addEventListener("click", () => {
+            if (isTransitioning) return;
+            currentVisibleIndex--;
+            filterQuestions(); // Re-filter in case conditions changed
+            renderQuestion(currentVisibleIndex);
+        });
+
+        nextBtn.addEventListener("click", () => {
+            if (isTransitioning || !isCurrentQuestionAnswered()) return;
+            currentVisibleIndex++;
+            filterQuestions(); // Re-filter in case conditions changed
+            renderQuestion(currentVisibleIndex);
+        });
+
+        restartBtn.addEventListener("click", () => {
+            answers = {}; // Clear answers
+            currentVisibleIndex = 0; // Reset index
+            filterQuestions(); // Re-filter questions
+            welcomeScreen.classList.remove("hidden");
+            questionScreen.classList.add("hidden");
+            thankYouScreen.classList.add("hidden");
+            progressBar.style.width = "0%";
+            updateNavigationButtons();
+        });
+
+        // Initial setup
+        updateNavigationButtons();
+
+        // Space animation
+        const canvas = document.getElementById('space');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        const numStars = 500;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Star {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.radius = Math.random() * 1.5;
+                this.vx = Math.random() * 0.5 - 0.25;
+                this.vy = Math.random() * 0.5 - 0.25;
+                this.alpha = Math.random();
+                this.phase = Math.random() * Math.PI * 2;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+                ctx.fill();
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.alpha = Math.abs(Math.sin(this.phase));
+                this.phase += 0.01;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+        }
+
+        function createStars() {
+            for (let i = 0; i < numStars; i++) {
+                stars.push(new Star());
+            }
+        }
+
+        function animateStars() {
+            requestAnimationFrame(animateStars);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#000A14";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        createStars();
+        animateStars();
+    </script>
+</body>
+
+</html>
