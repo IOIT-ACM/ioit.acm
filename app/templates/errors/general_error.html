@@ -1,23 +1,44 @@
 {% extends "base.html" %} {% block title %}Error Occurred{% endblock %} {% block
 content %}
-<div
-  class="flex mx-auto p-5 items-center justify-center min-h-screen max-w-5xl bg-gray-100"
->
-  <div class="text-center">
-    <h1 class="text-4xl font-bold text-red-600 mb-4">An Error Occurred</h1>
-    <p class="mb-6">Oops! Something went wrong. Please try again later.</p>
-    <p class="mb-6">
-      The issue has been logged, and the
-      <a href="https://adimail.github.io/">webmaster</a> has been alerted. We
-      apologize for any inconvenience this may have caused.
-    </p>
-    <p class="mb-6 text-sm text-gray-600">Error Details: {{ details }}</p>
-    <a
-      href="/"
-      class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-    >
-      Go Back Home
-    </a>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Nunito', sans-serif;
+  }
+</style>
+
+<div class="flex items-center justify-center min-h-screen pt-16 pb-16 bg-gradient-to-br from-gray-100 to-blue-100 px-4">
+  <div class="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-4 md:px-0">
+
+    <div class="flex justify-center">
+      <img src="{{ url_for('static', filename='errors/general.png') }}"
+           alt="A large crowd of diverse people figures gathered outside a maze, symbolizing request overload and limited access pathways."/>
+    </div>
+
+    
+    <div class="text-center md:text-center">
+      <h1 class="text-5xl md:text-6xl font-extrabold text-gray-800 mb-4"  style="font-family: 'Orbitron', sans-serif;">Error!</h1>
+
+      <p class="text-lg md:text-2xl text-gray-700 mb-1">
+        Oops! Something went wrong on our end.
+      </p>
+      <p class="text-lg md:text-2xl text-gray-700 mb-4 leading-relaxed">
+        Our support team is aware and working to <br>resolve it promptly.
+      </p>
+
+      <p class="text-sm text-gray-500 mb-10 md:mb-6">
+        Please refresh the page or try again shortly.</p>
+
+      <div class="flex justify-center">
+        <a
+          href="/"
+          class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-6 py-2 rounded-lg shadow-md transition-transform transform hover:no-underline backdrop-blur-sm text-sm md:text-base"
+        >
+          Go Back Home
+        </a>
+      </div>
+    </div>
+
   </div>
 </div>
 {% endblock %}
