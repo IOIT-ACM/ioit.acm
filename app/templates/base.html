@@ -133,160 +133,41 @@
     {% endblock %}
   </head>
   <body class="bg-gray-100 text-gray-800">
-    <!-- Navbar -->
-    <nav class="fixed top-0 left-0 w-full bg-white shadow-lg z-[9999]">
-      <div class="flex items-center justify-between md:px-6 md:py-2 px-4 py-1">
-        <div class="flex items-center w-auto">
-          <img
-            src="{{ url_for('static', filename='img/assets/acm.png') }}"
-            alt="AISSMS IOIT ACM Logo"
-            class="w-auto h-10 mr-3"
-          />
-          <a
-            href="/"
-            class="md:text-xl text-lg font-bold text-blue-600 font-sans whitespace-nowrap"
-            >AISSMS IOIT ACM</a
-          >
-        </div>
-        <button
-          class="block sm:hidden text-blue-600 focus:outline-none"
-          onclick="toggleNav()"
-          aria-label="Toggle navigation"
-        >
-          <span class="sr-only">Toggle navigation</span>
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            ></path>
-          </svg>
-        </button>
-        <ul
-          class="hidden sm:flex space-x-8 font-medium overflow-x-auto no-scroll-bar"
-        >
-          {% set menu_items = [ {'link': '/', 'text': 'Home'}, {'link': '/team',
-          'text': 'Team'}, {'link': '/membership', 'text': 'Membership'},
-          {'link': '/events', 'text': 'Events'}, {'link': '/opensource', 'text':
-          'Open Source'}, {'link': '/projects', 'text': 'Projects'}, {'link':
-          '/gallery', 'text': 'Gallery'}, {'link': '/about', 'text': 'About'} ]
-          %} {% for item in menu_items %}
-          <li>
+    <div class="fixed top-4 left-0 w-full flex justify-center z-[9999]">
+      <div class="bg-white rounded-full shadow-2xl border border-gray-200 px-6 py-2 backdrop-blur-sm bg-opacity-90 max-w-max">
+        <div class="flex items-center justify-center space-x-4 sm:space-x-6">
+          <!-- Logo -->
+          <div class="flex items-center">
+            <img
+              src="{{ url_for('static', filename='img/assets/acm.png') }}"
+              alt="AISSMS IOIT ACM Logo"
+              class="w-auto h-8 mr-2"
+            />
+          </div>
+          
+          <!-- Navigation Links -->
+          {% set nav_items = [
+            {'link': '/', 'text': 'Home', 'icon': 'fa-home'},
+            {'link': '/team', 'text': 'Team', 'icon': 'fa-users'},
+            {'link': '/events', 'text': 'Events', 'icon': 'fa-calendar'},
+            {'link': '/gallery', 'text': 'Gallery', 'icon': 'fa-images'},
+            {'link': '/about', 'text': 'About', 'icon': 'fa-info-circle'}
+          ] %}
+          
+          {% for item in nav_items %}
+          <div class="group relative">
             <a
               href="{{ item.link }}"
-              class="truncate text-gray-700 hover:text-blue-600 transition relative {{ 'text-blue-500 underline' if request.path == item.link else '' }}"
+              class="flex flex-col items-center text-gray-700 hover:text-blue-600 transition"
+              style="text-decoration: none;"
             >
-              {{ item.text }}
+              <i class="fas {{ item.icon }} text-lg mb-1"></i>
+              <span class="text-xs">{{ item.text }}</span>
+              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full {{ 'w-full' if request.path == item.link else '' }}"></span>
             </a>
-          </li>
+          </div>
           {% endfor %}
-        </ul>
-      </div>
-      <!-- Mobile Menu -->
-      <div
-        id="mobile-nav"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center md:hidden hidden"
-        onclick="closeNav(event)"
-      >
-        <div
-          class="relative bg-white w-4/5 max-w-md rounded-lg shadow-lg"
-          onclick="event.stopPropagation()"
-        >
-          <button
-            class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 focus:outline-none"
-            onclick="toggleNav()"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
-            </svg>
-          </button>
-          <nav class="flex flex-col items-center text-center space-y-6 p-8">
-            {% set mobile_menu_items = [ {'link': '/', 'text': 'Home'}, {'link':
-            '/team', 'text': 'Team'}, {'link': '/membership', 'text':
-            'Membership'}, {'link': '/feedback', 'text': 'Feedback Form'},
-            {'link': '/opensource', 'text': 'Open Source'}, {'link':
-            '/projects', 'text': 'Projects'}, {'link': '/membership/status',
-            'text': 'Membership Status'}, {'link': '/events', 'text': 'Events'},
-            {'link': '/gallery', 'text': 'Gallery'}, {'link': '/about', 'text':
-            'About'} ] %} {% for item in mobile_menu_items %}
-            <a
-              href="{{ item.link }}"
-              class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == item.link else '' }}"
-              onclick="closeNav()"
-            >
-              {{ item.text }}
-            </a>
-            {% endfor %}
-          </nav>
         </div>
-      </div>
-    </nav>
-
-    <!-- mobile menu -->
-    <div
-      id="mobile-nav"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center md:hidden hidden"
-      onclick="closenav(event)"
-    >
-      <div
-        class="relative bg-white w-4/5 max-w-md rounded-lg shadow-lg"
-        onclick="event.stoppropagation()"
-      >
-        <button
-          class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 focus:outline-none"
-          onclick="togglenav()"
-        >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentcolor"
-            viewbox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="m6 18l18 6m6 6l12 12"
-            ></path>
-          </svg>
-        </button>
-        <nav class="flex flex-col items-center text-center space-y-6 p-8">
-          {% set mobile_menu_items = [ {'link': '/', 'text': 'home'}, {'link':
-          '/team', 'text': 'team'}, {'link': '/membership', 'text':
-          'membership'}, {'link': '/feedback', 'text': 'feedback form'},
-          {'link': '/opensource', 'text': 'open source'}, {'link': '/projects',
-          'text': 'projects'}, {'link': '/membership/status', 'text':
-          'membership status'}, {'link': '/events', 'text': 'events'}, {'link':
-          '/gallery', 'text': 'gallery'}, {'link': '/about', 'text': 'about'} ]
-          %} {% for item in mobile_menu_items %}
-          <a
-            href="{{ item.link }}"
-            class="text-lg font-medium text-gray-800 hover:text-blue-600 {{ 'text-blue-500 underline' if request.path == item.link else '' }}"
-            onclick="closenav()"
-          >
-            {{ item.text }}
-          </a>
-          {% endfor %}
-        </nav>
       </div>
     </div>
 
@@ -311,7 +192,7 @@
             class="h-16 mb-4"
           />
           <p class="text-sm leading-relaxed">
-            AISSMS IOIT ACM Student Chapter is a part of ACM, the world’s largest
+            AISSMS IOIT ACM Student Chapter is a part of ACM, the world's largest
             educational and scientific computing society. Dedicated to fostering
             a community of innovation, collaboration, and excellence in
             technology.
@@ -343,37 +224,19 @@
           <h3 class="text-lg font-bold mb-4">Quick Links</h3>
           <ul class="space-y-2">
             <li>
-              <a href="/membership" class="hover:text-white transition"
-                >Memberships</a
-              >
+              <a href="/" class="hover:text-white transition">Home</a>
             </li>
             <li>
-              <a href="/feedback" class="hover:text-white transition"
-                >Feedback</a
-              >
-            </li>
-            <li>
-              <a href="/gallery" class="hover:text-white transition">Gallery</a>
+              <a href="/team" class="hover:text-white transition">Team</a>
             </li>
             <li>
               <a href="/events" class="hover:text-white transition">Events</a>
             </li>
             <li>
+              <a href="/gallery" class="hover:text-white transition">Gallery</a>
+            </li>
+            <li>
               <a href="/about" class="hover:text-white transition">About</a>
-            </li>
-            <li>
-              <a
-                href="https://www.ioittenet.com/"
-                class="hover:text-white transition"
-                >IOIT TENET</a
-              >
-            </li>
-            <li>
-              <a
-                href="https://www.ioitmun.com/"
-                class="hover:text-white transition"
-                >IOIT MUN</a
-              >
             </li>
           </ul>
         </div>
@@ -452,23 +315,5 @@
         </div>
       </div>
     </footer>
-
-    <script>
-      function toggleNav() {
-        const nav = document.getElementById("mobile-nav");
-        if (nav.classList.contains("hidden")) {
-          nav.classList.remove("hidden");
-        } else {
-          nav.classList.add("hidden");
-        }
-      }
-
-      function closeNav(event) {
-        const nav = document.getElementById("mobile-nav");
-        if (!event.target.closest(".relative")) {
-          nav.classList.add("hidden");
-        }
-      }
-    </script>
   </body>
 </html>
