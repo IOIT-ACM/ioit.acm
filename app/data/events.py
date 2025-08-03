@@ -1,5 +1,24 @@
 events = [
     {
+        "name": "Build on Sui: Move 101 Workshop",
+        "description": "The Sui Move Workshop was an exciting, hands-on introduction to the Sui blockchain and the Move programming language. Held over a full day, the workshop welcomed students and developers eager to explore the world of Web3. With live coding, interactive Q&As, and real-time deployment, the event offered an excellent entry point into Sui development.",
+        "date": "July 21, 2025",
+        "moredetails": "",
+        "image_url": "/static/img/gallery/events/sui_workshop.jpeg",
+        "instagram_link": "",
+        "facebook_link": "",
+        "topics": [
+            "The Sui Move Workshop was conducted over two days, totaling 6 hours of hands-on learning.",
+            "Day 1 focused on the fundamentals of the Sui blockchain and wallet setup.",
+            "An introduction to the Move programming language covered its core concepts and security model.",
+            "Day 2 centered on writing, testing, and deploying smart contracts using Move.",
+            "Participants built simple smart contracts such as NFTs.",
+            "The workshop was beginner-friendly, aimed at students and Web2 developers transitioning to Web3.",
+            "Top performers were awarded prizes and given visibility in the Sui developer ecosystem.",
+            "The event emphasized practical exposure, real-time coding, and interaction with blockchain tools."
+        ]
+    },
+    {
         "name": "Bit By Query - Vol 1",
         "description": "The first edition of Bit By Query 2025 was a thrilling two-hour competition where 25 participants demonstrated their SQL expertise. The event challenged competitors with 100 carefully crafted problems, covering a range of difficulty levels and testing their skills in database management and query optimization.",
         "date": "January 24, 2025",
