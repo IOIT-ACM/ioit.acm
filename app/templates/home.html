@@ -100,9 +100,9 @@
       </a>
     </div>
 
+    <!-- Mobile Menu -->
     <div class="block md:hidden px-4 py-2 text-left text-white mt-5">
       <div class="space-y-2">
-        <!-- Mobile Menu -->
         <a href="/competitions"
           class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline">
           <img src="{{ url_for('static', filename='img/assets/contests.svg') }}" alt="Events Icon"
@@ -110,6 +110,15 @@
           <div>
             <h2 class="text-blue-400 font-semibold text-sm">Competitions</h2>
             <p class="text-gray-300 text-xs">DSA, ML, DBMS and more</p>
+          </div>
+        </a>
+        <a href="/calendar"
+          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline">
+          <img src="{{ url_for('static', filename='img/assets/calendar-icon.svg') }}" alt="Calendar Icon"
+            class="w-8 h-8 mr-4" />
+          <div>
+            <h2 class="text-blue-400 font-semibold text-sm">Calendar</h2>
+            <p class="text-gray-300 text-xs">Chapter Calendar</p>
           </div>
         </a>
         <a href="/events"
@@ -123,7 +132,6 @@
             </p>
           </div>
         </a>
-        <!-- Additional Mobile Links -->
         <a href="https://www.ioittenet.com/"
           class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline">
           <img src="{{ url_for('static', filename='img/assets/tenet-logo.svg') }}" alt="Tenet Icon"
@@ -131,16 +139,6 @@
           <div>
             <h2 class="text-blue-400 font-semibold text-sm">Flagship Events</h2>
             <p class="text-gray-300 text-xs">TENET & IOIT MUN</p>
-          </div>
-        </a>
-        <!-- Other Mobile Menu Items -->
-        <a href="/about"
-          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline">
-          <img src="{{ url_for('static', filename='img/assets/achievements-icon.svg') }}" alt="Achievements Icon"
-            class="w-8 h-8 mr-4" />
-          <div>
-            <h2 class="text-blue-400 font-semibold text-sm">Achievements</h2>
-            <p class="text-gray-300 text-xs">Our Success</p>
           </div>
         </a>
         <a href="/gallery"
