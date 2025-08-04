@@ -147,7 +147,7 @@ def tenet_phase1():
     if request.method == "POST":
         origin = request.headers.get("Origin")
 
-        allowed_origins = ["https://ioit.acm.org", "http://localhost:5000"]
+        allowed_origins = ["https://ioit.acm.org"]
 
         if not origin or origin not in allowed_origins:
             return make_response(
@@ -187,7 +187,6 @@ def tenet_phase1():
                 200,
             )
         except requests.exceptions.RequestException as e:
-            print("Error sending data to SheetDB: {}".format(e))
             response = make_response(
                 jsonify(
                     {

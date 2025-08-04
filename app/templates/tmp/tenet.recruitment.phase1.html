@@ -624,11 +624,6 @@
                 image: "/static/form-assets/hacksmith.jpeg",
               },
               {
-                value: "competitions_strategy",
-                label: "Competitions Strategy Team",
-                image: "/static/form-assets/codesmith.jpeg",
-              },
-              {
                 value: "technical_events_strategy",
                 label: "Technical Events Strategy Team",
                 image: "/static/form-assets/techsmith.jpeg",
@@ -652,6 +647,16 @@
                 value: "finance",
                 label: "Finance Team",
                 image: "/static/form-assets/finance.jpeg",
+              },
+              {
+                value: "marketing_head",
+                label: "Marketing Head",
+                image: "/static/form-assets/marketing_head.jpeg",
+              },
+              {
+                value: "marketing_team",
+                label: "Marketing Team",
+                image: "/static/form-assets/marketing_team.jpeg",
               },
             ],
             required: true,
@@ -687,56 +692,6 @@
             ],
             required: true,
             condition: (answers) => answers.position === "hackathon_strategy",
-          },
-          {
-            id: "competitions_cp_1",
-            type: "multiple_choice",
-            title: "Competitive Programming & Cybersecurity",
-            description:
-              "Are you familiar with current trends in competitive programming and cybersecurity?",
-            options: [
-              { value: "yes", label: "Yes" },
-              { value: "no", label: "No" },
-            ],
-            required: true,
-            condition: (answers) =>
-              answers.position === "competitions_strategy",
-          },
-          {
-            id: "competitions_ctf",
-            type: "multiple_choice",
-            title: "CTF Awareness",
-            description:
-              "Have you heard of Capture The Flag (CTF) competitions?",
-            options: [
-              { value: "yes", label: "Yes" },
-              { value: "no", label: "No" },
-            ],
-            required: true,
-            condition: (answers) =>
-              answers.position === "competitions_strategy",
-          },
-          {
-            id: "competitions_event_formats_1",
-            type: "textarea",
-            title: "Engaging Formats",
-            description:
-              "What types of competition formats do you think students enjoy the most?",
-            placeholder: "Share formats, ideas, or examples...",
-            required: true,
-            condition: (answers) =>
-              answers.position === "competitions_strategy",
-          },
-          {
-            id: "competitions_metrics_1",
-            type: "textarea",
-            title: "Measuring Impact",
-            description:
-              "How would you define or measure the success of a competition?",
-            placeholder: "Your answer here...",
-            required: true,
-            condition: (answers) =>
-              answers.position === "competitions_strategy",
           },
           {
             id: "tech_events_experience",
@@ -865,26 +820,6 @@
             placeholder: "Your answer here...",
             required: true,
             condition: (answers) => answers.position === "media",
-          },
-          {
-            id: "doc_clarity_1",
-            type: "text",
-            title: "Clarity & Structure",
-            description:
-              "Show us an example (or describe) of technical documentation you’ve written. How did you organize it?",
-            placeholder: "Paste a link (e.g., Google Doc) or describe here...",
-            required: true,
-            condition: (answers) => answers.position === "documentation",
-          },
-          {
-            id: "doc_clarity_2",
-            type: "textarea",
-            title: "Clarity & Structure",
-            description:
-              "How would you structure an “Event Day Handbook” for volunteers and participants?",
-            placeholder: "Your answer here...",
-            required: true,
-            condition: (answers) => answers.position === "documentation",
           },
           {
             id: "doc_tools",
@@ -1020,6 +955,16 @@
             placeholder: "Your answer here...",
             required: true,
             condition: (answers) => answers.position === "finance",
+          },
+          {
+            id: "marketing_exp",
+            type: "textarea",
+            title: "Marketing Experience",
+            description:
+              "Do you have any experience working with the domain you have choosen?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "marketing_team" || answers.position === "marketing_head",
           },
           {
             id: "reason",
