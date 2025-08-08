@@ -620,18 +620,28 @@
             options: [
               {
                 value: "hackathon_strategy",
-                label: "Hackathon Strategy Team",
+                label: "Hackathon Strategy Lead",
                 image: "/static/form-assets/hacksmith.jpeg",
               },
               {
                 value: "technical_events_strategy",
-                label: "Technical Events Strategy Team",
+                label: "Technical Events Strategy Lead",
                 image: "/static/form-assets/techsmith.jpeg",
+              },
+              {
+                value: "media_head",
+                label: "Media Head",
+                image: "/static/form-assets/media.jpeg",
               },
               {
                 value: "media",
                 label: "Media Team",
-                image: "/static/form-assets/media.jpeg",
+                image: "/static/form-assets/media-team.jpeg",
+              },
+              {
+                value: "documentation_head",
+                label: "Documentation Head",
+                image: "/static/form-assets/doc-head.jpeg",
               },
               {
                 value: "documentation",
@@ -639,14 +649,14 @@
                 image: "/static/form-assets/documentation.jpeg",
               },
               {
-                value: "sponsorship",
-                label: "Sponsorship Team",
+                value: "sponsorship_head",
+                label: "Sponsorship Head",
                 image: "/static/form-assets/sponsor.jpeg",
               },
               {
-                value: "finance",
-                label: "Finance Team",
-                image: "/static/form-assets/finance.jpeg",
+                value: "sponsorship",
+                label: "Sponsorship Team",
+                image: "/static/form-assets/sponsor-team.jpeg",
               },
               {
                 value: "marketing_head",
@@ -658,6 +668,11 @@
                 label: "Marketing Team",
                 image: "/static/form-assets/marketing_team.jpeg",
               },
+              {
+                value: "finance",
+                label: "Finance Head",
+                image: "/static/form-assets/finance.jpeg",
+              },
             ],
             required: true,
           },
@@ -666,7 +681,7 @@
             type: "textarea",
             title: "Experience & Vision",
             description:
-              "Tell us about an event or hackathon you've helped plan. What went well, what would you change?",
+              "Tell us about an hackathon you've helped plan or a hackathon you participated in which was brilliant. What went well, what would you change?",
             placeholder: "Your answer here...",
             required: true,
             condition: (answers) => answers.position === "hackathon_strategy",
@@ -679,33 +694,6 @@
             placeholder: "Your answer here...",
             required: true,
             condition: (answers) => answers.position === "hackathon_strategy",
-          },
-          {
-            id: "hackathon",
-            type: "multiple_choice",
-            title: "Willing to Commit 15 Hours/Week?",
-            description:
-              "Can you consistently commit 15 hours weekly to work on this initiative until the event date?",
-            options: [
-              { value: "yes", label: "YES" },
-              { value: "no", label: "NO" },
-            ],
-            required: true,
-            condition: (answers) => answers.position === "hackathon_strategy",
-          },
-          {
-            id: "tech_events_experience",
-            type: "multiple_choice",
-            title: "Past Participation",
-            description:
-              "Did you attend the drone workshop conducted during TENET'24?",
-            options: [
-              { value: "yes", label: "Yes" },
-              { value: "no", label: "No" },
-            ],
-            required: true,
-            condition: (answers) =>
-              answers.position === "technical_events_strategy",
           },
           {
             id: "tech_events_ideas",
@@ -765,12 +753,12 @@
           {
             id: "media_content",
             type: "text",
-            title: "Content Creation",
+            title: "Portfolio Link",
             description:
-              "Show us a sample social-media post or graphic you’ve created. What was your workflow?",
-            placeholder: "Paste a link to your work here...",
+              "Show us your work!",
+            placeholder: "Paste a link to your work here (Instagram, canva, etc.)",
             required: true,
-            condition: (answers) => answers.position === "media",
+            condition: (answers) => answers.position === "media" || answers.position === "media_head",
           },
           {
             id: "media_skills",
@@ -791,45 +779,40 @@
                 value: "photography",
                 label: "Photography",
                 image: "/static/form-assets/media/photo.jpeg",
-              },
-              {
-                value: "graphic_design",
-                label: "Graphic Design",
-                image: "/static/form-assets/media/graphic.jpeg",
-              },
+              }
             ],
             required: true,
-            condition: (answers) => answers.position === "media",
+            condition: (answers) => answers.position === "media" || answers.position === "media_head",
+          },
+          {
+            id: "media_analytics_1",
+            type: "textarea",
+            title: "Experience",
+            description:
+              "What experience/Knowledge do you have in your chosen media domain?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "media" || answers.position === "media_head",
           },
           {
             id: "media_campaign",
             type: "textarea",
             title: "Campaign Planning",
             description:
-              "Walk us through a short 4-week promotional calendar for the tech feast, including key milestones.",
+              "Walk us through a short 4-week promotional calendar for the tech fest, including key milestones.",
             placeholder: "Your answer here...",
             required: true,
-            condition: (answers) => answers.position === "media",
-          },
-          {
-            id: "media_analytics_1",
-            type: "textarea",
-            title: "Analytics & Adaptation",
-            description:
-              "Which metrics matter most to you (engagement, reach, clicks)? How would you report them to leadership?",
-            placeholder: "Your answer here...",
-            required: true,
-            condition: (answers) => answers.position === "media",
+            condition: (answers) => answers.position === "media_head",
           },
           {
             id: "doc_tools",
             type: "textarea",
             title: "Tools & Collaboration",
             description:
-              "Which documentation tools (Google Docs, Notion, Confluence, Markdown, etc.) are you most comfortable with?",
+              "Which documentation tools (Google Docs, Notion, Markdown, etc.) are you most comfortable with?",
             placeholder: "List the tools you are comfortable with...",
             required: true,
-            condition: (answers) => answers.position === "documentation",
+            condition: (answers) => answers.position === "documentation" || answers.position === "documentation_head",
           },
           {
             id: "doc_mun",
@@ -841,7 +824,7 @@
               { value: "no", label: "NO" },
             ],
             required: true,
-            condition: (answers) => answers.position === "documentation",
+            condition: (answers) => answers.position === "documentation" || answers.position === "documentation_head"
           },
           {
             id: "doc_permission_letters",
@@ -854,27 +837,27 @@
               { value: "no", label: "NO" },
             ],
             required: true,
-            condition: (answers) => answers.position === "documentation",
+            condition: (answers) => answers.position === "documentation" || answers.position === "documentation_head"
           },
           {
             id: "sponsorship_prospecting_1",
             type: "textarea",
             title: "Prospecting & Pitching",
             description:
-              "Which industries or companies would you target first for a student-run tech feast, and why?",
+              "Which industries or companies would you target first for a student-run tech fest, and why?",
             placeholder: "Your answer here...",
             required: true,
-            condition: (answers) => answers.position === "sponsorship",
+            condition: (answers) => answers.position === "sponsorship" || answers.position === "sponsorship_head",
           },
           {
             id: "sponsorship_prospecting_2",
             type: "textarea",
-            title: "Prospecting & Pitching",
+            title: "Pitch",
             description:
-              "How would you tailor a sponsorship deck to a tech-hardware vendor vs. a software-services firm?",
+              "What would be your approach to connect with potential sponsors?",
             placeholder: "Your answer here...",
             required: true,
-            condition: (answers) => answers.position === "sponsorship",
+            condition: (answers) => answers.position === "sponsorship" || answers.position === "sponsorship_head",
           },
           {
             id: "sponsorship_negotiation_1",
@@ -884,7 +867,7 @@
               "Tell us about a time you negotiated terms or benefits with a partner. What was your approach?",
             placeholder: "Your answer here...",
             required: true,
-            condition: (answers) => answers.position === "sponsorship",
+            condition: (answers) => answers.position === "sponsorship_head",
           },
           {
             id: "sponsorship_negotiation_2",
@@ -894,17 +877,7 @@
               "How would you handle a sponsor who requests last-minute deliverables outside our agreement?",
             placeholder: "Your answer here...",
             required: true,
-            condition: (answers) => answers.position === "sponsorship",
-          },
-          {
-            id: "sponsorship_fulfillment",
-            type: "textarea",
-            title: "Fulfillment & Reporting",
-            description:
-              "What materials and metrics would you provide post-event to demonstrate ROI for sponsors?",
-            placeholder: "Your answer here...",
-            required: true,
-            condition: (answers) => answers.position === "sponsorship",
+            condition: (answers) => answers.position === "sponsorship_head",
           },
           {
             id: "finance_budgeting_1",
@@ -965,6 +938,16 @@
             placeholder: "Your answer here...",
             required: true,
             condition: (answers) => answers.position === "marketing_team" || answers.position === "marketing_head",
+          },
+          {
+            id: "marketing_responsibilities",
+            type: "textarea",
+            title: "Marketing Experience",
+            description:
+              "What are the roles and responsibilities of the position you have selected? (According to you)",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === answers.position === "marketing_head" || answers.position === "marketing_team",
           },
           {
             id: "reason",
@@ -1055,7 +1038,7 @@
 
         if (localStorage.getItem(SUBMISSION_STATUS_KEY) === "true") {
           alert(
-            "You have already submitted your application, submitting again will overwrite your previous submission.",
+            "You have already submitted your application, do you want to submit another one?",
           );
         }
         heroVideo.muted = true;
