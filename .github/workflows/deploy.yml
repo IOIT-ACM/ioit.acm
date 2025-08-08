@@ -1,0 +1,39 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo (to read commit message)
+        uses: actions/checkout@v4
+
+      - name: Get last commit message
+        id: vars
+        run: |
+          msg=$(git log -1 --pretty=%B)
+          echo "commit_msg=$msg" >> $GITHUB_OUTPUT
+          if echo "$msg" | grep -Eiq "update[[:space:]]+dependencies|deps"; then
+            echo "with_deps=true" >> $GITHUB_OUTPUT
+          else
+            echo "with_deps=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            if [ "${{ steps.vars.outputs.with_deps }}" = "true" ]; then
+              bash "$HOME/deploy.sh" --with-deps
+            else
+              bash "$HOME/deploy.sh"
+            fi
