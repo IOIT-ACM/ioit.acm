@@ -1,0 +1,61 @@
+<div id="recruitmentModal"
+    class="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center px-4 sm:px-0 hidden">
+    <div
+        class="bg-white rounded-2xl shadow-lg w-full max-w-md sm:max-w-lg p-6 relative border border-blue-200 overflow-hidden">
+
+        <button id="closeModal"
+            class="absolute top-1 right-1 w-8 h-8 flex items-center justify-center text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded-full text-xl font-bold transition-colors">
+            ✕
+        </button>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-blue-600 mb-2">We’re Recruiting!</h2>
+        <p class="text-gray-700 mb-4 text-sm sm:text-base">
+            Join us for <span class="font-semibold text-blue-500">TENET Phase 1</span> and
+            <span class="font-semibold text-blue-500">MUN Secretariat</span>.
+            Be part of something big — your journey starts here!
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+            <a href="/tenet-phase1"
+                class="w-full sm:flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg text-center font-medium">
+                Apply for TENET
+            </a>
+            <a href="https://forms.gle/hKWJR7bRU6edoX727"
+                class="w-full sm:flex-1 border border-blue-500 text-blue-500 hover:bg-blue-50 py-2 rounded-lg text-center font-medium">
+                Apply for MUN
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const modal = document.getElementById("recruitmentModal");
+        const closeBtn = document.getElementById("closeModal");
+        const tenetLink = document.querySelector('a[href="/tenet-phase1"]');
+        const munLink = document.querySelector('a[href="https://forms.gle/hKWJR7bRU6edoX727"]');
+
+        if (!localStorage.getItem("modalSeen")) {
+            modal.classList.remove("hidden");
+        }
+
+        closeBtn.addEventListener("click", () => {
+            modal.classList.add("hidden");
+            localStorage.setItem("modalSeen", "true");
+        });
+
+        tenetLink.addEventListener("click", () => {
+            localStorage.setItem("modalSeen", "true");
+        });
+
+        munLink.addEventListener("click", () => {
+            localStorage.setItem("modalSeen", "true");
+        });
+    });
+</script>
+
+<style>
+    #recruitmentModal a {
+        text-decoration: none;
+    }
+</style>
