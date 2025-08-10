@@ -16,6 +16,16 @@ DATA_JSON_FILE = "snapshot.json"
 
 school_participants = [
     {
+        "name": "Sakshi Mane",
+        "imageurl": "sakshi-mane.jpeg",
+        "school": "ACM India Summer School 2025",
+    },
+    {
+        "name": "Devang Gandhi",
+        "imageurl": "devang.jpeg",
+        "school": "ACM India Summer School 2025",
+    },
+    {
         "name": "Chaitali Khachane",
         "imageurl": "chaitali.jpeg",
         "school": "ACM India Winter School 2023",
