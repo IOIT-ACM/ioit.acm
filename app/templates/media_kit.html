@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}IOIT ACM Media Kit{% endblock %}
+
+{% block content %}
+<div class="bg-slate-100 min-h-screen">
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-28">
+    <div class="text-center mb-12">
+      <h1 class="text-5xl font-extrabold tracking-tight text-slate-800 sm:text-6xl">Media Kit</h1>
+      <p class="mt-4 max-w-2xl mx-auto text-lg text-slate-600">
+        Download official logos and assets for the IOIT ACM Student Chapter.
+      </p>
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-10">
+      <div class="relative w-full sm:max-w-xs">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+            fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+              clip-rule="evenodd" />
+          </svg>
+        </div>
+        <input id="searchInput" type="text" placeholder="Search assets..."
+          class="block w-full bg-white border border-slate-300 rounded-lg py-2 pl-10 pr-3 text-sm placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+      </div>
+
+      <div id="tabsContainer" class="flex-shrink-0 flex items-center gap-2 p-1 bg-slate-200/80 rounded-lg">
+        <button data-filter="All"
+          class="tab-btn px-4 py-1.5 rounded-md font-semibold text-sm transition-colors duration-200 bg-blue-600 text-white shadow">All</button>
+        {% for category in categories %}
+        <button data-filter="{{ category }}"
+          class="tab-btn px-4 py-1.5 rounded-md font-semibold text-sm transition-colors duration-200 text-slate-600 hover:bg-white hover:shadow">{{
+          category }}</button>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div id="cardsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      {% for asset in assets %}
+      <div
+        class="asset-card group bg-white rounded-xl shadow-md hover:shadow-lg border border-slate-100 hover:border-slate-200 transition-all duration-300"
+        data-title="{{ asset.title|lower }}" data-category="{{ asset.category }}">
+        <div class="w-full h-48 flex items-center justify-center p-4 rounded-t-xl"
+          style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22%3E%3Crect fill=%22%23e5e7eb%22 width=%2210%22 height=%2210%22/%3E%3Crect fill=%22%23d1d5db%22 x=%2210%22 width=%2210%22 height=%2210%22/%3E%3Crect fill=%22%23d1d5db%22 y=%2210%22 width=%2210%22 height=%2210%22/%3E%3Crect fill=%22%23e5e7eb%22 x=%2210%22 y=%2210%22 width=%2210%22 height=%2210%22/%3E%3C/svg%3E');">
+          <img src="{{ asset.files[0].url }}" alt="{{ asset.title }}"
+            class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110" />
+        </div>
+        <div class="p-5 text-center bg-white rounded-b-xl border-t border-slate-50">
+          <h3 class="font-bold text-lg text-slate-800 truncate" title="{{ asset.title }}">{{ asset.title }}</h3>
+          <div class="mt-4 flex flex-wrap gap-3 justify-center">
+            {% for file in asset.files %}
+            {% if file.format == 'JPG' %}
+            <a href="{{ file.url }}" download style="text-decoration: none;"
+              class="flex-1 bg-blue-500 hover:bg-blue-600 text-white text-sm font-bold py-2 px-4 rounded-lg transition-all shadow-sm hover:shadow">
+              Download {{ file.format }}
+            </a>
+            {% else %}
+            <a href="{{ file.url }}" download style="text-decoration: none;"
+              class="flex-1 bg-green-500 hover:bg-green-600 text-white text-sm font-bold py-2 px-4 rounded-lg transition-all shadow-sm hover:shadow">
+              Download {{ file.format }}
+            </a>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div id="noResults" class="hidden text-center py-16">
+      <h3 class="text-xl font-semibold text-slate-700">No assets found</h3>
+      <p class="text-slate-500 mt-2">Try adjusting your search or filter.</p>
+    </div>
+  </main>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('searchInput');
+    const tabsContainer = document.getElementById('tabsContainer');
+    const allCards = Array.from(document.getElementsByClassName('asset-card'));
+    const noResultsMessage = document.getElementById('noResults');
+    const activeClasses = ['bg-blue-600', 'text-white', 'shadow'];
+    const inactiveClasses = ['text-slate-600', 'hover:bg-white', 'hover:shadow'];
+
+    let activeFilter = 'All';
+    let searchTerm = '';
+
+    function filterAssets() {
+      let visibleCount = 0;
+      allCards.forEach(card => {
+        const title = card.dataset.title.toLowerCase();
+        const category = card.dataset.category;
+        const categoryMatch = activeFilter === 'All' || category === activeFilter;
+        const searchMatch = title.includes(searchTerm);
+
+        if (categoryMatch && searchMatch) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      noResultsMessage.classList.toggle('hidden', visibleCount > 0);
+    }
+
+    tabsContainer.addEventListener('click', (e) => {
+      const clickedTab = e.target.closest('.tab-btn');
+      if (!clickedTab) return;
+
+      tabsContainer.querySelectorAll('.tab-btn').forEach(tab => {
+        tab.classList.remove(...activeClasses);
+        tab.classList.add(...inactiveClasses);
+      });
+
+      clickedTab.classList.remove(...inactiveClasses);
+      clickedTab.classList.add(...activeClasses);
+
+      activeFilter = clickedTab.dataset.filter;
+      filterAssets();
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      searchTerm = e.target.value.toLowerCase().trim();
+      filterAssets();
+    });
+  });
+</script>
+{% endblock %}

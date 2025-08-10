@@ -63,6 +63,7 @@ def create_app():
     from app.blueprints.recruitment import recruitment_bp
     from app.blueprints.api import api_bp
     from app.blueprints.tmp import form_bp
+    from app.blueprints.media_kit import media_kit_bp
 
     limiter.limit("200 per hour")(home_bp)
     limiter.limit("200 per hour")(team_bp)
@@ -79,6 +80,7 @@ def create_app():
     limiter.limit("200 per hour")(recruitment_bp)
     limiter.limit("100 per hour")(api_bp)
     limiter.limit("80 per hour")(form_bp)
+    limiter.limit("200 per hour")(media_kit_bp)
 
     # Register blueprints
     app.register_blueprint(home_bp)
@@ -96,6 +98,7 @@ def create_app():
     app.register_blueprint(recruitment_bp)
     app.register_blueprint(api_bp)
     app.register_blueprint(form_bp)
+    app.register_blueprint(media_kit_bp)
 
     # Error Handlers
     @app.errorhandler(ProgrammingError)
