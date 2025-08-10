@@ -6,14 +6,9 @@ from app.db import DatabaseConfig, db
 from app.models import User
 from sqlalchemy.exc import ProgrammingError, SQLAlchemyError, OperationalError
 from dotenv import load_dotenv
-import os
-from flask_mail import Mail
-from .blueprints.media_kit import media_kit_bp
-
 
 load_dotenv()
 
-mail = Mail()
 database_config = DatabaseConfig()
 login_manager = LoginManager()
 
@@ -33,15 +28,6 @@ def create_app():
     app.config["SESSION_COOKIE_SECURE"] = True
     app.config["SESSION_PERMANENT"] = False
     app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
-
-    app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
-    app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT', 587))
-    app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS', 'True').lower() in ['true', '1', 'yes']
-    app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
-    app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
-    app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_USERNAME')
-
-    mail.init_app(app)
 
     db.init_app(app)
 
@@ -76,8 +62,8 @@ def create_app():
     from app.blueprints.competitions.auth import auth_bp
     from app.blueprints.recruitment import recruitment_bp
     from app.blueprints.api import api_bp
-    from app.blueprints.workshop import workshop_bp
     from app.blueprints.tmp import form_bp
+    from app.blueprints.media_kit import media_kit_bp
 
     limiter.limit("200 per hour")(home_bp)
     limiter.limit("200 per hour")(team_bp)
@@ -93,9 +79,8 @@ def create_app():
     limiter.limit("100 per hour")(auth_bp)
     limiter.limit("200 per hour")(recruitment_bp)
     limiter.limit("100 per hour")(api_bp)
-    limiter.limit("200 per hour")(workshop_bp)
-    limiter.limit("200 per hour")(media_kit_bp)
     limiter.limit("80 per hour")(form_bp)
+    limiter.limit("200 per hour")(media_kit_bp)
 
     # Register blueprints
     app.register_blueprint(home_bp)
@@ -112,9 +97,8 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(recruitment_bp)
     app.register_blueprint(api_bp)
-    app.register_blueprint(workshop_bp)
-    app.register_blueprint(media_kit_bp)
     app.register_blueprint(form_bp)
+    app.register_blueprint(media_kit_bp)
 
     # Error Handlers
     @app.errorhandler(ProgrammingError)
@@ -148,11 +132,6 @@ def create_app():
             message="A database error occurred.",
             details=str(error),
         ), 500
-    
-    @app.route("/cause-error")
-    def cause_error():
-        1 / 0  # This will cause an error → you'll see your 500 page
-
 
     @app.errorhandler(404)
     def page_not_found(_):
