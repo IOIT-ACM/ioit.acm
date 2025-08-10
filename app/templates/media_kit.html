@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% block title %}IOIT ACM Media Kit{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen">
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="w-64 bg-white shadow-lg fixed top-0 left-0 h-full z-30 transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out pt-20">
+    <div class="p-6 text-center border-b">
+      <h2 class="text-2xl font-extrabold text-blue-600">IOIT ACM</h2>
+      <p class="text-sm text-gray-600 mt-1">Media Kit</p>
+    </div>
+    <nav class="mt-6">
+      <ul class="flex flex-col gap-2 px-4">
+        <li><a href="#" class="block px-4 py-2 rounded hover:bg-blue-100 text-gray-700">Logos</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <main id="mainContent" class="flex-1 pt-28 pb-8 px-4 md:pl-72 transition-all duration-300 ease-in-out">
+    <!-- Top bar: hamburger + search -->
+    <div class="flex items-center gap-4 mb-8">
+      <button id="menuToggle" class="hamburger px-3 py-2 bg-blue-600 text-white rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      <input id="searchInput" type="text" placeholder="Search assets..."
+        class="flex-1 p-3 rounded-lg border shadow focus:outline-none focus:ring-2 focus:ring-blue-400" />
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex justify-center gap-4 flex-wrap mb-10">
+      <button class="tab-btn bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700">All</button>
+      <button class="tab-btn bg-blue-200 text-blue-900 px-4 py-2 rounded-md font-semibold hover:bg-blue-300">Logo</button>
+    </div>
+
+    <!-- Cards -->
+    <div id="cardsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"></div>
+  </main>
+</div>
+
+<!-- Image Modal -->
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-transparent p-4 max-w-3xl w-auto relative">
+    <img id="modalImage" src="" class="max-h-[90vh] max-w-full object-contain rounded-xl shadow-2xl" alt="Large view" />
+    <button onclick="closeModal()" class="absolute top-2 right-2 text-white text-2xl" aria-label="Close modal">&times;</button>
+  </div>
+</div>
+
+<style>
+  body {
+    font-family: 'Nunito', sans-serif;
+    padding-top: 80px; 
+  }
+  .img-bg {
+    position: relative;
+    overflow: hidden;
+    background-image: 
+      linear-gradient(45deg, #ccc 25%, transparent 25%),
+      linear-gradient(-45deg, #ccc 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #ccc 75%),
+      linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    background-color: #f0f0f0;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 12rem;
+    width: 100%;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+  .img-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 0;
+  }
+  .img-bg img {
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    max-height: 10rem;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+  .img-bg:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const logos = [
+    { title: "ACM Blue Logo", img: "{{ url_for('static', filename='media/blue logo.png') }}", png: "{{ url_for('static', filename='media/blue logo.png') }}", jpg: "{{ url_for('static', filename='media/blue logo.jpg') }}" },
+    { title: "ACM White Logo", img: "{{ url_for('static', filename='media/white logo.png') }}", png: "{{ url_for('static', filename='media/white logo.png') }}", jpg: "{{ url_for('static', filename='media/white logo.jpg') }}" },
+    { title: "College Logo", img: "{{ url_for('static', filename='media/college logo.png') }}", png: "{{ url_for('static', filename='media/college logo.png') }}", jpg: "{{ url_for('static', filename='media/college logo.jpg') }}" },
+    { title: "Tenet Logo", img: "{{ url_for('static', filename='media/TENETlogo.png') }}", png: "{{ url_for('static', filename='media/TENETlogo.png') }}", jpg: "{{ url_for('static', filename='media/TENETlogo.jpg') }}" },
+    { title: "MUN Logo", img: "{{ url_for('static', filename='media/mun logo.png') }}", png: "{{ url_for('static', filename='media/mun logo.png') }}", jpg: "{{ url_for('static', filename='media/mun logo.jpg') }}" }
+  ];
+
+  const container = document.getElementById('cardsContainer');
+  const sidebar = document.getElementById('sidebar');
+  const menuToggle = document.getElementById('menuToggle');
+
+  function createCard({ title, img, png, jpg }) {
+    return `
+      <div class="bg-blue-50 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex flex-col items-center p-5">
+        <div class="img-bg cursor-pointer">
+          <img src="${img}" alt="${title}" class="object-contain mb-4 preview-img" data-full="${img}" />
+        </div>
+        <h3 class="font-bold text-lg text-center mb-2 text-blue-800">${title}</h3>
+        <div class="flex gap-2 flex-wrap justify-center">
+          <a href="${png}" download class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm">Download PNG</a>
+          <a href="${jpg}" download class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm">Download JPG</a>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderCards(filteredLogos) {
+    container.innerHTML = filteredLogos.map(createCard).join('');
+  }
+
+  renderCards(logos);
+
+  // Sidebar toggle button
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    sidebar.classList.toggle('-translate-x-full');
+  });
+
+  // Close sidebar when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+      if (!sidebar.classList.contains('-translate-x-full')) {
+        sidebar.classList.add('-translate-x-full');
+      }
+    }
+  });
+
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('bg-blue-600', 'text-white'));
+      btn.classList.add('bg-blue-600', 'text-white');
+    });
+  });
+
+  // Modal
+  const modal = document.getElementById('imageModal');
+  const modalImage = document.getElementById('modalImage');
+
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target.classList.contains('preview-img')) {
+      modalImage.src = target.dataset.full;
+      modal.classList.remove('hidden');
+    } else if (target === modal) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  function closeModal() {
+    modal.classList.add('hidden');
+    modalImage.src = '';
+  }
+
+  // Search
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('input', () => {
+    const searchTerm = searchInput.value.toLowerCase();
+    const filtered = logos.filter(item => item.title.toLowerCase().includes(searchTerm));
+    renderCards(filtered);
+  });
+});
+</script>
+{% endblock %}
