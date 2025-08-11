@@ -17,7 +17,12 @@ jobs:
         id: vars
         run: |
           msg=$(git log -1 --pretty=%B)
-          echo "commit_msg=$msg" >> $GITHUB_OUTPUT
+          {
+            echo 'commit_msg<<EOF'
+            echo "$msg"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
           if echo "$msg" | grep -Eiq "update[[:space:]]+dependencies|deps"; then
             echo "with_deps=true" >> $GITHUB_OUTPUT
           else
