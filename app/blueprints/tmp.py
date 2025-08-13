@@ -142,8 +142,9 @@ def cloud_interest_form():
     return render_template("tmp/cloud_interest_form.html")
 
 
-@form_bp.route("/tenet-phase1", methods=["GET", "POST"])
+@form_bp.route("/tenet-phase1", methods=["GET"])
 def tenet_phase1():
+    return render_template("tmp/closed_forms_tenet.html") # form closed
     if request.method == "POST":
         origin = request.headers.get("Origin")
 
