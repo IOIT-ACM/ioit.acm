@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Interview Queue</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0a0a0a;
+        background-image: linear-gradient(
+            135deg,
+            rgba(34, 197, 94, 0.2) 0%,
+            rgba(59, 130, 246, 0.15) 50%,
+            rgba(249, 115, 22, 0.2) 100%
+          ),
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        background-attachment: fixed;
+      }
+      .card {
+        background: rgba(40, 40, 52, 0.4);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+      }
+      *::-webkit-scrollbar {
+        display: none;
+      }
+      * {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+  <body class="text-white/90 antialiased">
+    <header
+      class="sticky top-0 z-30 border-b border-white/10 bg-black/50 backdrop-blur-lg"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-24"
+      >
+        <div class="flex items-center">
+          <img
+            src="https://ioit.acm.org/static/img/assets/acm.png"
+            alt="ACM Logo"
+            class="h-12 w-auto mr-4"
+          />
+          <div>
+            <h1 class="md:text-3xl text-xl font-bold">
+              TENET Phase 1 Interviews
+            </h1>
+            <p id="headerCounts" class="text-sm text-white/60 font-medium mt-1">
+              Loading…
+            </p>
+          </div>
+        </div>
+        <div id="header-status" class="text-right"></div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-3 sm:p-6 lg:p-8">
+      <div id="currentContainer" class="mb-8"></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-8">
+          <section id="day1Card" class="card md:p-6 p-3 h-fit">
+            <div
+              class="flex md:flex-row flex-col justify-between mb-6 pb-4 border-b border-white/10 p-2"
+            >
+              <h2 class="text-2xl font-medium">Day 1 (Oct 16, 11:00 am)</h2>
+              <span
+                id="day1Count"
+                class="text-sm font-medium text-white/60"
+              ></span>
+            </div>
+            <div id="day1List" class="space-y-4"></div>
+          </section>
+          <section id="day2Card" class="card md:p-6 p-3 h-fit">
+            <div
+              class="flex md:flex-row flex-col justify-between mb-6 pb-4 border-b border-white/10 p-2"
+            >
+              <h2 class="text-2xl font-medium">Day 2 (Oct 17, 2:00 pm)</h2>
+              <span
+                id="day2Count"
+                class="text-sm font-medium text-white/60"
+              ></span>
+            </div>
+            <div id="day2List" class="space-y-4"></div>
+          </section>
+        </div>
+
+        <aside class="card p-6 space-y-8 h-fit">
+          <div>
+            <div
+              class="flex items-center justify-between mb-4 pb-3 border-b border-white/10"
+            >
+              <h3 class="text-xl font-medium">Interviews</h3>
+            </div>
+            <p>
+              The TENET Phase 1 Interviews are scheduled to begin on October 16,
+              2025, at 11:00 AM.
+            </p>
+          </div>
+
+          <div>
+            <div
+              class="flex items-center justify-between mb-4 pb-3 border-b border-white/10"
+            >
+              <h3 class="text-xl font-medium">Absent</h3>
+              <span
+                id="absentCount"
+                class="text-sm font-medium text-white/60"
+              ></span>
+            </div>
+            <div
+              id="absentList"
+              class="space-y-3 max-h-[30vh] overflow-auto pr-1"
+            ></div>
+          </div>
+
+          <div>
+            <div
+              class="flex items-center justify-between mb-4 pb-3 border-b border-white/10"
+            >
+              <h3 class="text-xl font-medium">Completed</h3>
+              <span
+                id="completedCount"
+                class="text-sm font-medium text-white/60"
+              ></span>
+            </div>
+            <div
+              id="completedList"
+              class="space-y-3 max-h-[30vh] overflow-auto pr-1"
+            ></div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <script>
+      function initials(name) {
+        return (name || "")
+          .split(" ")
+          .map((s) => s[0])
+          .slice(0, 2)
+          .join("")
+          .toUpperCase();
+      }
+
+      function createLargeCard(c) {
+        const wrap = document.createElement("div");
+        wrap.className =
+          "flex items-center gap-4 p-4 bg-black/20 border border-white/10 rounded-2xl transition-all duration-300 hover:bg-black/30 hover:border-white/20";
+        const avatar = document.createElement("div");
+        avatar.className =
+          "w-12 h-12 rounded-lg bg-white/10 flex-shrink-0 flex items-center justify-center font-bold text-base text-white/90";
+        avatar.textContent = initials(c.name);
+        const info = document.createElement("div");
+        info.className = "flex-1 min-w-0";
+        const name = document.createElement("div");
+        name.className = "font-semibold text-white truncate";
+        name.textContent = c.name;
+        const domain = document.createElement("div");
+        domain.className = "text-sm text-white/60 truncate mt-1";
+        domain.textContent = c.domain || "";
+        info.appendChild(name);
+        info.appendChild(domain);
+        const status = document.createElement("div");
+        status.className =
+          "text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap flex items-center gap-1.5";
+        if (c.inCall) {
+          status.className += " bg-green-500/10 text-green-400";
+          status.innerHTML = `<div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div> In call`;
+        } else {
+          status.className += " bg-blue-500/10 text-blue-400";
+          status.textContent = "Waiting";
+        }
+        wrap.appendChild(avatar);
+        wrap.appendChild(info);
+        wrap.appendChild(status);
+        return wrap;
+      }
+
+      function createSmallCard(c) {
+        const wrap = document.createElement("div");
+        wrap.className =
+          "flex items-center gap-3 p-2.5 bg-black/20 border border-white/10 rounded-xl";
+        const avatar = document.createElement("div");
+        avatar.className =
+          "w-10 h-10 rounded-md bg-white/10 flex-shrink-0 flex items-center justify-center font-bold text-sm text-white/90";
+        avatar.textContent = initials(c.name);
+        const info = document.createElement("div");
+        info.className = "flex-1 min-w-0";
+        const name = document.createElement("div");
+        name.className = "font-medium text-sm text-white truncate";
+        name.textContent = c.name;
+        const domain = document.createElement("div");
+        domain.className = "text-xs text-white/60 truncate";
+        domain.textContent = c.domain || "";
+        info.appendChild(name);
+        info.appendChild(domain);
+        wrap.appendChild(avatar);
+        wrap.appendChild(info);
+        return wrap;
+      }
+
+      function createMessageScreen(iconName, title, message) {
+        const screen = document.createElement("div");
+        screen.className = "text-center p-8 text-white/50";
+        screen.innerHTML = `<i data-lucide="${iconName}" class="w-12 h-12 mx-auto mb-4 opacity-40"></i><h3 class="text-lg font-semibold text-white/80">${title}</h3><p class="mt-1 text-sm">${message}</p>`;
+        return screen;
+      }
+
+      function createLargeSkeleton() {
+        const skeleton = document.createElement("div");
+        skeleton.className =
+          "flex items-center gap-4 p-4 bg-black/20 border border-white/10 rounded-2xl animate-pulse";
+        skeleton.innerHTML = `
+            <div class="w-12 h-12 rounded-lg bg-white/10 flex-shrink-0"></div>
+            <div class="flex-1 min-w-0 space-y-2">
+                <div class="h-4 bg-white/10 rounded w-3/4"></div>
+                <div class="h-3 bg-white/10 rounded w-1/2"></div>
+            </div>
+            <div class="h-6 bg-white/10 rounded-full w-20"></div>`;
+        return skeleton;
+      }
+
+      function createSmallSkeleton() {
+        const skeleton = document.createElement("div");
+        skeleton.className =
+          "flex items-center gap-3 p-2.5 bg-black/20 border border-white/10 rounded-xl animate-pulse";
+        skeleton.innerHTML = `
+            <div class="w-10 h-10 rounded-md bg-white/10 flex-shrink-0"></div>
+            <div class="flex-1 min-w-0 space-y-2">
+                <div class="h-3 bg-white/10 rounded w-5/6"></div>
+                <div class="h-3 bg-white/10 rounded w-2/3"></div>
+            </div>`;
+        return skeleton;
+      }
+
+      function renderLoading() {
+        const day1List = document.getElementById("day1List");
+        const day2List = document.getElementById("day2List");
+        const absentList = document.getElementById("absentList");
+        const completedList = document.getElementById("completedList");
+        const headerCounts = document.getElementById("headerCounts");
+        const day1Count = document.getElementById("day1Count");
+        const day2Count = document.getElementById("day2Count");
+        const absentCount = document.getElementById("absentCount");
+        const completedCount = document.getElementById("completedCount");
+
+        headerCounts.textContent = "Loading data…";
+        day1Count.textContent = "…";
+        day2Count.textContent = "…";
+        absentCount.textContent = "…";
+        completedCount.textContent = "…";
+
+        day1List.innerHTML = "";
+        day2List.innerHTML = "";
+        absentList.innerHTML = "";
+        completedList.innerHTML = "";
+
+        for (let i = 0; i < 2; i++) {
+          day1List.appendChild(createLargeSkeleton());
+          day2List.appendChild(createLargeSkeleton());
+          absentList.appendChild(createSmallSkeleton());
+          completedList.appendChild(createSmallSkeleton());
+        }
+      }
+
+      function renderError(error) {
+        const main = document.querySelector("main");
+        const headerCounts = document.getElementById("headerCounts");
+
+        headerCounts.textContent = "Error loading data";
+        main.innerHTML = "";
+
+        const errorCard = document.createElement("div");
+        errorCard.className = "card p-6";
+        const errorMessage = createMessageScreen(
+          "wifi-off",
+          "Failed to Load Data",
+          `Could not retrieve the interview queue. Please check your connection and try again.<br><br><code class="text-xs bg-black/20 p-2 rounded-md border border-white/10">${error.message}</code>`,
+        );
+        errorCard.appendChild(errorMessage);
+        main.appendChild(errorCard);
+        lucide.createIcons();
+      }
+
+      function render(candidates) {
+        const currentContainer = document.getElementById("currentContainer");
+        const day1List = document.getElementById("day1List");
+        const day2List = document.getElementById("day2List");
+        const absentList = document.getElementById("absentList");
+        const completedList = document.getElementById("completedList");
+        const headerCounts = document.getElementById("headerCounts");
+        const day1Count = document.getElementById("day1Count");
+        const day2Count = document.getElementById("day2Count");
+        const absentCount = document.getElementById("absentCount");
+        const completedCount = document.getElementById("completedCount");
+
+        const current = candidates.find((c) => c.inCall === true);
+        const waiting = candidates.filter(
+          (c) => !c.completed && !c.absent && !c.inCall,
+        );
+        const day1Waiting = waiting.filter((c) => c.day === 1);
+        const day2Waiting = waiting.filter((c) => c.day === 2);
+        const absent = candidates.filter((c) => c.absent === true);
+        const completed = candidates.filter((c) => c.completed === true);
+
+        headerCounts.textContent = `Total: ${candidates.length} | Waiting: ${waiting.length} | Completed: ${completed.length} | Absent: ${absent.length}`;
+        day1Count.textContent = `${day1Waiting.length} Candidates`;
+        day2Count.textContent = `${day2Waiting.length} Candidates`;
+        absentCount.textContent = `${absent.length} Candidates`;
+        completedCount.textContent = `${completed.length} Candidates`;
+
+        currentContainer.innerHTML = "";
+        const currentWrapper = document.createElement("div");
+        currentWrapper.className = "card p-6";
+        const currentHeading = document.createElement("h2");
+        currentHeading.className =
+          "text-2xl font-medium mb-6 pb-4 border-b border-white/10";
+        currentHeading.textContent = "Currently Interviewing";
+        currentWrapper.appendChild(currentHeading);
+
+        if (current) {
+          const card = createLargeCard(current);
+          currentWrapper.appendChild(card);
+        } else {
+          const message = createMessageScreen(
+            "user-check",
+            "No one in the call right now",
+            "Next candidate be ready.",
+          );
+          currentWrapper.appendChild(message);
+        }
+        currentContainer.appendChild(currentWrapper);
+
+        day1List.innerHTML = "";
+        if (day1Waiting.length === 0) {
+          day1List.appendChild(
+            createMessageScreen(
+              "calendar-check",
+              "Day 1 Queue Clear",
+              "No candidates are waiting for Day 1.",
+            ),
+          );
+        } else {
+          day1Waiting.forEach((c) => day1List.appendChild(createLargeCard(c)));
+        }
+
+        day2List.innerHTML = "";
+        if (day2Waiting.length === 0) {
+          day2List.appendChild(
+            createMessageScreen(
+              "calendar-check-2",
+              "Day 2 Queue Clear",
+              "No candidates are waiting for Day 2.",
+            ),
+          );
+        } else {
+          day2Waiting.forEach((c) => day2List.appendChild(createLargeCard(c)));
+        }
+
+        absentList.innerHTML = "";
+        if (absent.length === 0) {
+          absentList.appendChild(
+            createMessageScreen("user-x", "No Absences", ""),
+          );
+        } else {
+          absent.forEach((c) => absentList.appendChild(createSmallCard(c)));
+        }
+
+        completedList.innerHTML = "";
+        if (completed.length === 0) {
+          completedList.appendChild(
+            createMessageScreen("list-checks", "No Completions", ""),
+          );
+        } else {
+          completed.forEach((c) =>
+            completedList.appendChild(createSmallCard(c)),
+          );
+        }
+        lucide.createIcons();
+      }
+
+      async function fetchAndRender() {
+        try {
+          const response = await fetch("https://api.ioit.acm.org/rows");
+          if (!response.ok) {
+            throw new Error(
+              `API request failed: ${response.status} ${response.statusText}`,
+            );
+          }
+          const apiData = await response.json();
+
+          const candidates = apiData.map((item, index) => ({
+            id: `c${index + 1}`,
+            name: item.name || "N/A",
+            domain: item.domain || "N/A",
+            inCall: String(item.inCall).toUpperCase() === "TRUE",
+            completed: String(item.completed).toUpperCase() === "TRUE",
+            absent: String(item.absent).toUpperCase() === "TRUE",
+            day: parseInt(item.day) || 1,
+          }));
+
+          render(candidates);
+        } catch (error) {
+          console.error("Failed to fetch or render candidates:", error);
+          renderError(error);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        renderLoading();
+        fetchAndRender();
+      });
+    </script>
+  </body>
+</html>

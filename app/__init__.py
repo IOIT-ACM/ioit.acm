@@ -64,6 +64,7 @@ def create_app():
     from app.blueprints.api import api_bp
     from app.blueprints.tmp import form_bp
     from app.blueprints.media_kit import media_kit_bp
+    from app.blueprints.interview import interviews_bp
 
     limiter.limit("200 per hour")(home_bp)
     limiter.limit("200 per hour")(team_bp)
@@ -99,39 +100,52 @@ def create_app():
     app.register_blueprint(api_bp)
     app.register_blueprint(form_bp)
     app.register_blueprint(media_kit_bp)
+    app.register_blueprint(interviews_bp)
 
     # Error Handlers
     @app.errorhandler(ProgrammingError)
     def handle_programming_error(error):
-        return render_template(
-            "errors/sql_error.html",
-            message="There was an issue with the database operation.",
-            details=str(error),
-        ), 500
+        return (
+            render_template(
+                "errors/sql_error.html",
+                message="There was an issue with the database operation.",
+                details=str(error),
+            ),
+            500,
+        )
 
     @app.errorhandler(ProgrammingError)
     def handle_pending_rollback_error(error):
-        return render_template(
-            "errors/sql_error.html",
-            message="A database error occurred, possibly due to a pending rollback.",
-            details=str(error),
-        ), 500
+        return (
+            render_template(
+                "errors/sql_error.html",
+                message="A database error occurred, possibly due to a pending rollback.",
+                details=str(error),
+            ),
+            500,
+        )
 
     @app.errorhandler(SQLAlchemyError)
     def handle_sqlalchemy_error(error):
-        return render_template(
-            "errors/sql_error.html",
-            message="A database error occurred.",
-            details=str(error),
-        ), 500
+        return (
+            render_template(
+                "errors/sql_error.html",
+                message="A database error occurred.",
+                details=str(error),
+            ),
+            500,
+        )
 
     @app.errorhandler(OperationalError)
     def handle_operational_error(error):
-        return render_template(
-            "errors/sql_error.html",
-            message="A database error occurred.",
-            details=str(error),
-        ), 500
+        return (
+            render_template(
+                "errors/sql_error.html",
+                message="A database error occurred.",
+                details=str(error),
+            ),
+            500,
+        )
 
     @app.errorhandler(404)
     def page_not_found(_):
@@ -159,10 +173,13 @@ def create_app():
 
     @app.errorhandler(Exception)
     def handle_generic_exception(error):
-        return render_template(
-            "errors/general_error.html",
-            message="An unexpected error occurred.",
-            details=str(error),
-        ), 500
+        return (
+            render_template(
+                "errors/general_error.html",
+                message="An unexpected error occurred.",
+                details=str(error),
+            ),
+            500,
+        )
 
     return app
