@@ -158,7 +158,7 @@
         <div class="lg:col-span-2 gap-2">
           <section id="day1Card" class="card md:p-6 p-3 h-fit mb-4">
             <div class="collapsible-header flex items-center justify-between mb-6 pb-4 border-b border-white/10 p-2 cursor-pointer md:flex-row flex-col">
-              <h2 class="text-2xl font-medium">Day 1 (Oct 17)</h2>
+              <h2 class="text-2xl font-medium">Day 1 (Aug 17)</h2>
               <div class="flex items-center gap-4">
                 <span id="day1Count" class="text-sm font-medium text-white/60"></span>
                 <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
@@ -168,7 +168,7 @@
           </section>
           <section id="day2Card" class="card md:p-6 p-3 h-fit mb-4">
             <div class="collapsible-header flex items-center justify-between mb-6 pb-4 border-b border-white/10 p-2 cursor-pointer md:flex-row flex-col">
-              <h2 class="text-2xl font-medium">Day 2 (Oct 18)</h2>
+              <h2 class="text-2xl font-medium">Day 2 (Aug 18)</h2>
               <div class="flex items-center gap-4">
                 <span id="day2Count" class="text-sm font-medium text-white/60"></span>
                 <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
@@ -178,7 +178,7 @@
           </section>
           <section id="day3Card" class="card md:p-6 p-3 h-fit mb-4">
             <div class="collapsible-header flex items-center justify-between mb-6 pb-4 border-b border-white/10 p-2 cursor-pointer md:flex-row flex-col">
-              <h2 class="text-2xl font-medium">Day 3 (Oct 19)</h2>
+              <h2 class="text-2xl font-medium">Day 3 (Aug 19)</h2>
               <div class="flex items-center gap-4">
                 <span id="day3Count" class="text-sm font-medium text-white/60"></span>
                 <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
@@ -188,7 +188,7 @@
           </section>
           <section id="munCard" class="card md:p-6 p-3 h-fit mb-4 hidden">
             <div class="collapsible-header flex items-center justify-between mb-6 pb-4 border-b border-white/10 p-2 cursor-pointer md:flex-row flex-col">
-              <h2 class="text-2xl font-medium">MUN Interviews (Oct 17)</h2>
+              <h2 class="text-2xl font-medium">MUN Interviews (Aug 17)</h2>
               <div class="flex items-center gap-4">
                 <span id="munCount" class="text-sm font-medium text-white/60"></span>
                 <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
@@ -206,7 +206,7 @@
               <h3 class="text-xl font-medium">Interviews</h3>
             </div>
             <p>
-              The TENET Phase 1 Interviews will take place over three days, beginning October 17, 2025.
+              The TENET Phase 1 Interviews will take place over three days, beginning August 17, 2025.
             </p>
             <p class="mt-2">Absent candidates please contact group admin for your interview status.</p>
           </div>
@@ -324,12 +324,12 @@
 
       function getInterviewDate(candidate) {
         if (candidate.domain && candidate.domain.toLowerCase() === 'mun') {
-            return 'Oct 17';
+            return 'Aug 17';
         }
         switch (candidate.day) {
-            case 1: return 'Oct 16';
-            case 2: return 'Oct 17';
-            case 3: return 'Oct 18';
+            case 1: return 'Aug 16';
+            case 2: return 'Aug 17';
+            case 3: return 'Aug 18';
             default: return 'N/A';
         }
       }
