@@ -1,120 +1,78 @@
-import requests, os
+import csv
+import requests
 import time
-import json
+import os
 from flask import Blueprint, render_template
+from dotenv import load_dotenv
 
 membership_bp = Blueprint("membership", __name__, template_folder="../templates")
 
-# Access environment variables
-API_URL = os.getenv("MEMBERSHIP_FORM_API_URL")
-BEARER_TOKEN = os.getenv("MEMBERSHIP_FORM_BEARER_TOKEN")
+load_dotenv()
 
 # In-memory cache
 cache = {"data": None, "timestamp": 0}
-CACHE_EXPIRY = 30000
-DATA_JSON_FILE = "snapshot.json"
+CACHE_EXPIRY = 300  # 5 minutes
+
 
 school_participants = [
-    {
-        "name": "Sakshi Mane",
-        "imageurl": "sakshi-mane.jpeg",
-        "school": "ACM India Summer School 2025",
-    },
-    {
-        "name": "Devang Gandhi",
-        "imageurl": "devang.jpeg",
-        "school": "ACM India Summer School 2025",
-    },
-    {
-        "name": "Chaitali Khachane",
-        "imageurl": "chaitali.jpeg",
-        "school": "ACM India Winter School 2023",
-    },
-    {
-        "name": "Sadgi Pandey",
-        "imageurl": "sadgi.jpeg",
-        "school": "ACM India Winter School 2023",
-    },
-    {
-        "name": "Anjali Shukla",
-        "imageurl": "anjali-shukla.jpeg",
-        "school": "ACM India Summer School 2023",
-    },
-    {
-        "name": "Sana Naqvi",
-        "imageurl": "sana-naqvi.jpeg",
-        "school": "ACM India Summer School on Compilers for AI/ML Programs",
-    },
-    {
-        "name": "Shravani Shewale",
-        "imageurl": "shravani-shewale.jpeg",
-        "school": "ACM India Summer School 2022",
-    },
-    {
-        "name": "Yash Vyavhare",
-        "imageurl": "yash-v.jpeg",
-        "school": "ACM India Summer School 2022",
-    },
-    {
-        "name": "Tanmayee Mali",
-        "imageurl": "tanmayee-mali.jpeg",
-        "school": "ACM India Winter School 2022",
-    },
+    {"name": "Sakshi Mane", "imageurl": "sakshi-mane.jpeg", "school": "ACM India Summer School 2025"},
+    {"name": "Devang Gandhi", "imageurl": "devang.jpeg", "school": "ACM India Summer School 2025"},
+    {"name": "Chaitali Khachane", "imageurl": "chaitali.jpeg", "school": "ACM India Winter School 2023"},
+    {"name": "Sadgi Pandey", "imageurl": "sadgi.jpeg", "school": "ACM India Winter School 2023"},
+    {"name": "Anjali Shukla", "imageurl": "anjali-shukla.jpeg", "school": "ACM India Summer School 2023"},
+    {"name": "Sana Naqvi", "imageurl": "sana-naqvi.jpeg", "school": "ACM India Summer School on Compilers for AI/ML Programs"},
+    {"name": "Shravani Shewale", "imageurl": "shravani-shewale.jpeg", "school": "ACM India Summer School 2022"},
+    {"name": "Yash Vyavhare", "imageurl": "yash-v.jpeg", "school": "ACM India Summer School 2022"},
+    {"name": "Tanmayee Mali", "imageurl": "tanmay-mali.jpeg", "school": "ACM India Winter School 2022"},
 ]
 
 
 def fetch_membership_data():
-    """Fetch membership data from API, cache it, or load from fallback JSON file."""
-    if not API_URL or not isinstance(API_URL, str):
-        raise ValueError("API_URL is not defined or is not a valid string.")
+    """Fetch membership data from Google Sheet with in-memory caching and header normalization."""
+    if cache["data"] and (time.time() - cache["timestamp"] < CACHE_EXPIRY):
+        return cache["data"]
 
-    if not BEARER_TOKEN or not isinstance(BEARER_TOKEN, str):
-        raise ValueError("BEARER_TOKEN is not defined or is not a valid string.")
+    members = []
 
-    headers = {"Authorization": "Bearer " + BEARER_TOKEN}
+    SHEET_URL = os.environ.get("ACM_MEMBERSHIP_SHEET_URL")
 
     try:
-        response = requests.get(API_URL, headers=headers)
-        response.raise_for_status()
-        members = response.json()
-        # Update the cache
+        r = requests.get(SHEET_URL, timeout=10)
+        r.raise_for_status()
+        decoded = r.content.decode("utf-8")
+        reader = csv.DictReader(decoded.splitlines())
+
+        reader.fieldnames = [h.strip() for h in reader.fieldnames]
+
+        for row in reader:
+            row = {k.strip(): v.strip() for k, v in row.items()}
+            members.append({
+                "Membership ID": row.get("Member ID", ""),
+                "Full Name": row.get("Full Name", "").title(),
+                "Expiration Date": row.get("Expiration Date", ""),
+            })
+
         cache["data"] = members
         cache["timestamp"] = time.time()
+
         return members
-    except requests.exceptions.RequestException as e:
-        print("Error fetching data from API: {}".format(e))
 
-        if cache.get("data"):
-            print("Returning cached data...")
-            return cache["data"]
-
-        try:
-            with open(DATA_JSON_FILE, "r") as file:
-                print("Loading data from fallback file...")
-                fallback_data = json.load(file)
-                return fallback_data
-        except (FileNotFoundError, json.JSONDecodeError) as json_error:
-            print("Error loading fallback data: {}".format(json_error))
-            return []
+    except requests.RequestException as e:
+        print("Error fetching Google Sheet:", e)
+        return cache.get("data", [])
 
 
 @membership_bp.route("/membership")
 def team():
-    """Renders the membership team page."""
+    """Renders the static membership team page."""
     return render_template("membership.html", school_participants=school_participants)
 
 
 @membership_bp.route("/membership/status")
 def membership_status():
-    """Renders the membership status page."""
-    if cache["data"] is None or (time.time() - cache["timestamp"] > CACHE_EXPIRY):
-        members = fetch_membership_data()
-    else:
-        members = cache["data"]
+    """Renders the dynamic membership status page from Google Sheet."""
+    members = fetch_membership_data()
 
-    # Sort members by full name
-    members = sorted(
-        members, key=lambda m: "{} {}".format(m["First Name"], m["Last Name"])
-    )
+    members = sorted(members, key=lambda m: m.get("Full Name", ""))
 
     return render_template("membership_status.html", members=members)
