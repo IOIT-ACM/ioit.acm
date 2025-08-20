@@ -47,7 +47,7 @@ def fetch_membership_data():
         for row in reader:
             row = {k.strip(): v.strip() for k, v in row.items()}
             members.append({
-                "Membership ID": row.get("Member ID", ""),
+                "Membership ID": row.get("Membership ID", ""),
                 "Full Name": row.get("Full Name", "").title(),
                 "Expiration Date": row.get("Expiration Date", ""),
             })
