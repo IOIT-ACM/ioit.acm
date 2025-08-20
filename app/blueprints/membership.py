@@ -11,7 +11,7 @@ load_dotenv()
 
 # In-memory cache
 cache = {"data": None, "timestamp": 0}
-CACHE_EXPIRY = 300  # 5 minutes
+CACHE_EXPIRY = 86400  # 1 day
 
 
 school_participants = [
