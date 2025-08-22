@@ -4,10 +4,10 @@ team_data = {
             "name": "Aditya Godse",
             "title": "Chair",
             "image": "static/img/team/2025/aditya-godse.jpeg",
-            "linktree": "https://linktr.ee/adimail",
+            "linktree": "",
             "github": "https://github.com/adimail",
-            "linkedin": "https://www.linkedin.com/in/adimail2404",
-            "instagram": "https://www.instagram.com/adityagodse381/",
+            "linkedin": "",
+            "instagram": "",
             "domain": "core",
         },
         {
