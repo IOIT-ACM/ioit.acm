@@ -1156,7 +1156,7 @@
             const occupiedLevels = {};
             const sortedEvents = [...events].sort((a, b) => {
                 if (a.start.getTime() !== b.start.getTime()) return a.start - b.start;
-                return (b.end - b.start) - (a.end - a.start);
+                return (b.end - a.start) - (a.end - a.start);
             });
 
             sortedEvents.forEach(event => {
@@ -1186,23 +1186,35 @@
                 }
             });
 
-            const renderedEvents = new Set();
+            const renderedSegments = new Set();
             for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
                 const currentDate = new Date(year, month, day);
                 const dayCell = dayCells[day - 1];
                 if (!dayCell) continue;
 
-                const eventsStartingToday = sortedEvents.filter(e => new Date(e.start).toDateString() === currentDate.toDateString());
-
-                eventsStartingToday.forEach(event => {
-                    if (renderedEvents.has(event.id) || event.start.getMonth() !== month) return;
-
-                    const dayOfWeek = currentDate.getDay();
-                    const eventEndDateInMonth = event.end > lastDayOfMonth ? lastDayOfMonth : event.end;
-                    const eventDuration = (eventEndDateInMonth - event.start) / (1000 * 60 * 60 * 24) + 1;
+                const eventsToRender = sortedEvents.filter(e => {
+                    const eventStart = new Date(e.start); eventStart.setHours(0,0,0,0);
+                    const eventEnd = new Date(e.end); eventEnd.setHours(0,0,0,0);
                     
-                    const remainingDaysInWeek = 7 - dayOfWeek;
-                    const span = Math.min(remainingDaysInWeek, eventDuration);
+                    if (currentDate < eventStart || currentDate > eventEnd) return false;
+
+                    if (currentDate.getTime() === eventStart.getTime()) return true;
+                    if (currentDate.getDay() === 0) return true;
+                    if (currentDate.getDate() === 1) return true;
+                    
+                    return false;
+                });
+
+                eventsToRender.forEach(event => {
+                    const weekIdentifier = moment(currentDate).startOf('week').format('YYYY-WW');
+                    const segmentId = `${event.id}-${weekIdentifier}`;
+                    if (renderedSegments.has(segmentId)) return;
+
+                    const endOfWeek = moment(currentDate).endOf('week').toDate();
+                    const eventEnd = new Date(event.end);
+                    const segmentEndDate = eventEnd < endOfWeek ? eventEnd : endOfWeek;
+                    
+                    const span = moment(segmentEndDate).diff(moment(currentDate), 'days') + 1;
 
                     const eventEl = createEventElement(event);
                     const eventsWrapper = dayCell.querySelector('.flex-grow');
@@ -1214,8 +1226,14 @@
                     eventEl.style.zIndex = 10;
                     
                     eventsWrapper.appendChild(eventEl);
-                    renderedEvents.add(event.id);
+                    renderedSegments.add(segmentId);
                 });
+            }
+
+            for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
+                const currentDate = new Date(year, month, day);
+                const dayCell = dayCells[day - 1];
+                if (!dayCell) continue;
 
                 const dateKey = currentDate.toISOString().split('T')[0];
                 const maxLevel = occupiedLevels[dateKey] ? occupiedLevels[dateKey].length : 0;
