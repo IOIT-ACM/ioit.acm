@@ -1,442 +1,273 @@
 {% extends "base.html" %}
 {% block title %}IOIT ACM Media Kit{% endblock %}
 {% block head %}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Montserrat:wght@400;500;600;700&display=swap"
-          rel="stylesheet">
-    <style>
-        :root{
-            --logo-img-h:4.5rem;
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Montserrat:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+<style>
+    :root {
+        --logo-img-h: 4.5rem;
+    }
+
+    @media (min-width:768px) {
+        :root {
+            --logo-img-h: 7.5rem;
         }
-        @media (min-width:768px){
-            :root{--logo-img-h:7.5rem;}
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        .bg-hero-gradient::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, rgba(1, 2, 4, 0.8) 0%, rgba(1, 2, 4, 0.4) 50%, rgba(1, 2, 4, 0) 100%);
-            z-index: 1;
-        }
-        aside nav a {
-            display: block;
-            padding: 0.5rem 0.75rem;
-            color: #4b5563;
-            transition: all 0.2s ease-in-out;
-            font-weight: 500;
-            border-left: 2px solid transparent;
-        }
-        aside nav a:hover {
-            color: #111827;
-            border-left-color: #d1d5db;
-        }
-        aside nav a.active {
-            color: #4DA2FF;
-            font-weight: 700;
-            border-left-color: #4DA2FF;
-        }
-        .font-montserrat { font-family: 'Montserrat', sans-serif; }
-        .font-lora { font-family: 'Lora', serif; }
-        .color-card { cursor: pointer; }
-        .logo-card {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 1.5rem;
-            padding: 2rem;
-            height: 14rem;
-            transition: background-color 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
-        .logo-card:hover {
-            background-color: #f3f4f6;
-        }
-        .logo-card.dark {
-            background-color: #030F1C;
-        }
-        .logo-card.dark:hover {
-            background-color: #011829;
-        }
-        .logo-card img.equal-img {
-            height: var(--logo-img-h);
-            max-width: 100%;
-            width: auto;
-            object-fit: contain;
-            display: block;
-            margin: 0 auto;
-        }
-        .logo-card::after{
-            content: "Click to download";
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            color: white;
-            background: rgba(0,0,0,0.45);
-            opacity: 0;
-            transform: translateY(6px);
-            transition: opacity .18s ease, transform .18s ease;
-            pointer-events: none;
-            font-size: 0.95rem;
-            letter-spacing: .2px;
-        }
-        .logo-card:hover::after{
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .bg-hero-gradient::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(1, 2, 4, 0.8) 0%, rgba(1, 2, 4, 0.4) 50%, rgba(1, 2, 4, 0) 100%);
+        z-index: 1;
+    }
+
+    aside nav a {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        color: #4b5563;
+        transition: all 0.2s ease-in-out;
+        font-weight: 500;
+        border-left: 2px solid transparent;
+    }
+
+    aside nav a:hover {
+        color: #111827;
+        border-left-color: #d1d5db;
+    }
+
+    aside nav a.active {
+        color: #4DA2FF;
+        font-weight: 700;
+        border-left-color: #4DA2FF;
+    }
+
+    .font-montserrat {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .font-lora {
+        font-family: 'Lora', serif;
+    }
+
+    .color-card {
+        cursor: pointer;
+    }
+
+    .logo-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 1.5rem;
+        padding: 2rem;
+        height: 14rem;
+        transition: background-color 0.2s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .logo-card:hover {
+        background-color: #f3f4f6;
+    }
+
+    .logo-card.dark {
+        background-color: #030F1C;
+    }
+
+    .logo-card.dark:hover {
+        background-color: #011829;
+    }
+
+    .logo-card img.equal-img {
+        height: var(--logo-img-h);
+        max-width: 100%;
+        width: auto;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .logo-card::after {
+        content: "Click to download";
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        color: white;
+        background: rgba(0, 0, 0, 0.45);
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity .18s ease, transform .18s ease;
+        pointer-events: none;
+        font-size: 0.95rem;
+        letter-spacing: .2px;
+    }
+
+    .logo-card:hover::after {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
 {% endblock %}
 {% block content %}
-    <div class="p-4 md:p-6 lg:p-8 mt-20">
-        <section class="relative w-full h-[50vh] min-h-[400px] max-h-[600px] flex items-center p-8 md:p-16 lg:p-24 rounded-3xl overflow-hidden bg-hero-gradient">
-            <img src="static/mediakit/abstract-background.jpeg"
-                 alt="Abstract background"
-                 class="absolute select-none inset-0 w-full h-full object-cover -z-10">
-            <div class="relative z-10 max-w-screen-xl mx-auto text-left w-full">
-                <h1 class="text-6xl md:text-7xl lg:text-8xl font-medium text-white">Brand Kits</h1>
-                <p class="mt-6 text-lg md:text-xl text-gray-300 max-w-lg">The official brand assets for IOIT ACM student chapter.</p>
-            </div>
-        </section>
-        <main class="mt-16 lg:mt-24 max-w-screen-xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-12 lg:gap-16">
-                <aside class="lg:col-span-3 mb-12 lg:mb-0">
-                    <nav class="sticky top-20">
-                        <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider px-3">ACM Student Chapter</h3>
-                        <ul class="mt-2 mb-6 space-y-1">
-                            <li>
-                                <a href="#acm-logos">Logos</a>
-                            </li>
-                            <li>
-                                <a href="#acm-colors">Colors</a>
-                            </li>
-                            <li>
-                                <a href="#acm-typeface">Typeface</a>
-                            </li>
-                        </ul>
-                        <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider px-3">IOIT TENET</h3>
-                        <ul class="mt-2 mb-6 space-y-1">
-                            <li>
-                                <a href="#tenet-logos">Logos</a>
-                            </li>
-                            <li>
-                                <a href="#tenet-colors">Colors</a>
-                            </li>
-                            <li>
-                                <a href="#tenet-typeface">Typeface</a>
-                            </li>
-                        </ul>
-                        <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider px-3">IOIT MUN</h3>
-                        <ul class="mt-2 space-y-1">
-                            <li>
-                                <a href="#mun-logos">Logos</a>
-                            </li>
-                            <li>
-                                <a href="#mun-colors">Colors</a>
-                            </li>
-                            <li>
-                                <a href="#mun-typeface">Typeface</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </aside>
-                <div class="lg:col-span-9 space-y-24 md:space-y-32">
-                    <section id="acm-logos">
-                        <h2 class="text-5xl font-medium">Logo</h2>
-                        <p class="mt-4 text-lg text-gray-800">Official logos for the IOIT ACM Student Chapter.</p>
-                        <a href="static/mediakit/mediakit.zip"
-                           download="IOIT-ACM-mediakit.zip"
-                           class="inline-flex items-center gap-3 px-5 py-3 mt-8 bg-brand-button hover:bg-opacity-80 rounded-full text-white transition-colors font-medium">
-                            Download logo pack
-                            <svg width="12"
-                                 height="12"
-                                 viewBox="0 0 12 12"
-                                 fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1 11L11 1M11 1H3.4M11 1V8.6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
+<div class="p-4 md:p-6 lg:p-8 mt-20">
+    <section
+        class="relative w-full h-[50vh] min-h-[400px] max-h-[600px] flex items-center p-8 md:p-16 lg:p-24 rounded-3xl overflow-hidden bg-hero-gradient">
+        <img src="{{ url_for('static', filename='mediakit/abstract-background.jpeg') }}" alt="Abstract background"
+            class="absolute select-none inset-0 w-full h-full object-cover -z-10">
+        <div class="relative z-10 max-w-screen-xl mx-auto text-left w-full">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-medium text-white">Brand Kits</h1>
+            <p class="mt-6 text-lg md:text-xl text-gray-300 max-w-lg">The official brand assets for IOIT ACM student
+                chapter.</p>
+        </div>
+    </section>
+    <main class="mt-16 lg:mt-24 max-w-screen-xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 lg:gap-16">
+            <aside class="lg:col-span-3 mb-12 lg:mb-0">
+                <nav class="sticky top-20">
+                    {% for brand, data in brand_kits.items() %}
+                    <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider px-3">{{ data.name }}</h3>
+                    <ul class="mt-2 mb-6 space-y-1">
+                        <li><a href="#{{ brand }}-logos">Logos</a></li>
+                        <li><a href="#{{ brand }}-colors">Colors</a></li>
+                        <li><a href="#{{ brand }}-typeface">Typeface</a></li>
+                    </ul>
+                    {% endfor %}
+                </nav>
+            </aside>
+            <div class="lg:col-span-9 space-y-24 md:space-y-32">
+                {% for brand, data in brand_kits.items() %}
+                <section id="{{ brand }}-logos">
+                    <h2 class="text-5xl font-medium">{{ data.title }}</h2>
+                    <p class="mt-4 text-lg text-gray-800">Official logos for {{ data.name }}.</p>
+                    {% if data.download_link %}
+                    <a href="{{ url_for('static', filename=data.download_link.split('static/')[1]) }}"
+                        download="IOIT-ACM-mediakit.zip"
+                        class="inline-flex items-center gap-3 px-5 py-3 mt-8 bg-blue-600 hover:bg-blue-700 rounded-full text-white transition-colors font-medium">
+                        Download logo pack
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 11L11 1M11 1H3.4M11 1V8.6" stroke="white" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                    {% endif %}
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {% for logo in data.logos %}
+                        <a href="{{ url_for('static', filename=logo.src.split('static/')[1]) }}"
+                            download="{{ logo.download }}" class="logo-card {{ logo.class }}">
+                            <img src="{{ url_for('static', filename=logo.src.split('static/')[1]) }}"
+                                alt="{{ logo.alt }}" class="equal-img">
                         </a>
-                        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <a href="static/mediakit/logo-acm-blue.png"
-                               download="acm-logo-dark.png"
-                               class="logo-card bg-white">
-                                <img src="static/mediakit/logo-acm-blue.png"
-                                     alt="ACM Logo Dark"
-                                     class="equal-img">
-                            </a>
-                            <a href="static/mediakit/logo-acm-white.png"
-                               download="acm-logo-white.png"
-                               class="logo-card dark">
-                                <img src="static/mediakit/logo-acm-white.png"
-                                     alt="ACM Logo White"
-                                     class="equal-img">
-                            </a>
-                            <a href="static/mediakit/college-logo-full.png"
-                               download="college-logo-full.png"
-                               class="logo-card bg-white">
-                                <img src="static/mediakit/college-logo-full.png"
-                                     alt="College Logo Full"
-                                     class="equal-img">
-                            </a>
-                            <a href="static/mediakit/college-logo-half.png"
-                               download="college-logo-half.png"
-                               class="logo-card bg-white">
-                                <img src="static/mediakit/college-logo-half.png"
-                                     alt="College Logo Half"
-                                     class="equal-img">
-                            </a>
+                        {% endfor %}
+                    </div>
+                </section>
+                <section id="{{ brand }}-colors">
+                    <h2 class="text-5xl font-medium">{{ data.title }}: Colors</h2>
+                    <p class="mt-4 text-lg text-gray-800">Click on a card to copy the HEX code.</p>
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {% for color in data.colors %}
+                        <div class="color-card rounded-3xl p-8 {{ color.class }}" style="{{ color.style }}"
+                            data-hex="{{ color.hex }}">
+                            <p class="font-medium">{{ color.name }}</p>
+                            <p class="hex-code mt-4 text-sm leading-relaxed">HEX: {{ color.hex }}</p>
                         </div>
-                    </section>
-                    <section id="acm-colors">
-                        <h2 class="text-5xl font-medium">ACM: Colors</h2>
-                        <p class="mt-4 text-lg text-gray-800">Click on a card to copy the HEX code.</p>
-                        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="color-card md:col-span-2 bg-brand-sea rounded-3xl p-8 text-white"
-                                 data-hex="#4DA2FF">
-                                <p class="font-medium">Sea</p>
-                                <p class="hex-code mt-4 text-sm leading-relaxed">HEX: #4DA2FF</p>
-                            </div>
-                            <div class="color-card bg-brand-ocean rounded-3xl p-8 text-white"
-                                 data-hex="#011829">
-                                <p class="font-medium">Ocean</p>
-                                <p class="hex-code mt-4 text-sm leading-relaxed">HEX: #011829</p>
-                            </div>
-                            <div class="color-card bg-brand-aqua rounded-3xl p-8 text-black"
-                                 data-hex="#C0E6FF">
-                                <p class="font-medium">Aqua</p>
-                                <p class="hex-code mt-4 text-sm leading-relaxed">HEX: #C0E6FF</p>
-                            </div>
-                        </div>
-                    </section>
-                    <section id="acm-typeface">
-                        <h2 class="text-5xl font-medium">ACM: Typeface</h2>
-                        <p class="mt-4 text-lg text-gray-800 max-w-2xl">The primary typeface for all ACM brand communications is Inter.</p>
-                        <div class="mt-8 relative rounded-3xl p-8 md:p-12 min-h-[300px] flex flex-col justify-between overflow-hidden">
-                            <img src="static/mediakit/abstract-background.jpeg"
-                                 alt="Abstract background"
-                                 class="absolute inset-0 w-full h-full object-cover -z-10">
-                            <div class="absolute inset-0 bg-black/50 -z-10"></div>
-                            <h3 class="text-4xl font-medium text-white max-w-sm">Inter</h3>
-                            <p class="text-lg text-gray-300 max-w-xs">
-                                Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
-                            </p>
-                        </div>
-                    </section>
-                    <section id="tenet-logos">
-                        <h2 class="text-5xl font-medium">TENET'25</h2>
-                        <p class="mt-4 text-lg text-gray-800">Official logos for IOIT TENET.</p>
-                        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <a href="static/mediakit/tenet-logo-blue.png"
-                               download="tenet-logo-blue.png"
-                               class="logo-card bg-white">
-                                <img src="static/mediakit/tenet-logo-blue.png"
-                                     alt="TENET Logo Blue"
-                                     class="equal-img">
-                            </a>
-                            <a href="static/mediakit/tenet-white-logo.png"
-                               download="tenet-white-logo.png"
-                               class="logo-card dark">
-                                <img src="static/mediakit/tenet-white-logo.png"
-                                     alt="TENET Logo White"
-                                     class="equal-img">
-                            </a>
-                            <a href="static/mediakit/tenet-icon-blue.png"
-                               download="tenet-icon-blue.png"
-                               class="logo-card bg-white">
-                                <img src="static/mediakit/tenet-icon-blue.png"
-                                     alt="TENET Icon Blue"
-                                     class="equal-img">
-                            </a>
-                            <a href="static/mediakit/tenet-icon-white.png"
-                               download="tenet-icon-white.png"
-                               class="logo-card dark">
-                                <img src="static/mediakit/tenet-icon-white.png"
-                                     alt="TENET Icon White"
-                                     class="equal-img">
-                            </a>
-                        </div>
-                    </section>
-                    <section id="tenet-colors">
-                        <h2 class="text-5xl font-medium">TENET: Colors</h2>
-                        <p class="mt-4 text-lg text-gray-800">Click on a card to copy the HEX code.</p>
-                        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="color-card md:col-span-2 bg-[#0A192F] rounded-3xl p-8 text-white"
-                                 data-hex="#0A192F">
-                                <p class="font-medium">Midnight Blue</p>
-                                <p class="hex-code mt-4 text-sm leading-relaxed">HEX: #0A192F</p>
-                            </div>
-                            <div class="color-card bg-[#64FFDA] rounded-3xl p-8 text-black"
-                                 data-hex="#64FFDA">
-                                <p class="font-medium">Cyber Mint</p>
-                                <p class="hex-code mt-4 text-sm leading-relaxed">HEX: #64FFDA</p>
-                            </div>
-                            <div class="color-card bg-[#CCD6F6] rounded-3xl p-8 text-black"
-                                 data-hex="#CCD6F6">
-                                <p class="font-medium">Light Slate</p>
-                                <p class="hex-code mt-4 text-sm leading-relaxed">HEX: #CCD6F6</p>
-                            </div>
-                        </div>
-                    </section>
-                    <section id="tenet-typeface">
-                        <h2 class="text-5xl font-medium">TENET: Typeface</h2>
-                        <p class="mt-4 text-lg text-gray-800 max-w-2xl">
-                            The primary typeface for all TENET brand communications is Montserrat.
+                        {% endfor %}
+                    </div>
+                </section>
+                <section id="{{ brand }}-typeface">
+                    <h2 class="text-5xl font-medium">{{ data.title }}: Typeface</h2>
+                    <p class="mt-4 text-lg text-gray-800 max-w-2xl">
+                        The primary typeface for all {{ data.name }} brand communications is {{ data.typeface.name }}.
+                    </p>
+                    <div
+                        class="mt-8 relative rounded-3xl p-8 md:p-12 min-h-[300px] flex flex-col justify-between overflow-hidden {{ data.typeface.class }}">
+                        <img src="{{ url_for('static', filename='mediakit/abstract-background.jpeg') }}"
+                            alt="Abstract background" class="absolute inset-0 w-full h-full object-cover -z-10">
+                        <div class="absolute inset-0 bg-black/50 -z-10"></div>
+                        <h3 class="text-4xl font-medium text-white max-w-sm">{{ data.typeface.name }}</h3>
+                        <p class="text-lg text-gray-300 max-w-xs">
+                            {{ data.typeface.sample_text }}
                         </p>
-                        <div class="mt-8 relative rounded-3xl p-8 md:p-12 min-h-[300px] flex flex-col justify-between overflow-hidden font-montserrat">
-                            <img src="static/mediakit/abstract-background.jpeg"
-                                 alt="Abstract background"
-                                 class="absolute inset-0 w-full h-full object-cover -z-10">
-                            <div class="absolute inset-0 bg-black/50 -z-10"></div>
-                            <h3 class="text-4xl font-medium text-white max-w-sm">Montserrat</h3>
-                            <p class="text-lg text-gray-300 max-w-xs">
-                                Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
-                            </p>
-                        </div>
-                    </section>
-                    <section id="mun-logos">
-                        <h2 class="text-5xl font-medium">IOIT MUN'25</h2>
-                        <p class="mt-4 text-lg text-gray-800">Official logos for IOIT MUN.</p>
-                        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <a href="static/mediakit/mun-logo-blue.png"
-                               download="mun-logo-blue.png"
-                               class="logo-card bg-white">
-                                <img src="static/mediakit/mun-logo-blue.png"
-                                     alt="MUN Logo Blue"
-                                     class="equal-img">
-                            </a>
-                            <a href="static/mediakit/mun-logo-white.png"
-                               download="mun-logo-white.png"
-                               class="logo-card dark">
-                                <img src="static/mediakit/mun-logo-white.png"
-                                     alt="MUN Logo White"
-                                     class="equal-img">
-                            </a>
-                            <a href="static/mediakit/mun-icon-blue.png"
-                               download="mun-icon-blue.png"
-                               class="logo-card bg-white">
-                                <img src="static/mediakit/mun-icon-blue.png"
-                                     alt="MUN Icon Blue"
-                                     class="equal-img">
-                            </a>
-                            <a href="static/mediakit/mun-icon-white.png"
-                               download="mun-icon-white.png"
-                               class="logo-card dark">
-                                <img src="static/mediakit/mun-icon-white.png"
-                                     alt="MUN Icon White"
-                                     class="equal-img">
-                            </a>
-                        </div>
-                    </section>
-                    <section id="mun-colors">
-                        <h2 class="text-5xl font-medium">MUN: Colors</h2>
-                        <p class="mt-4 text-lg text-gray-800">Click on a card to copy the HEX code.</p>
-                        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="color-card md:col-span-2 bg-[#00205B] rounded-3xl p-8 text-white"
-                                 data-hex="#00205B">
-                                <p class="font-medium">Diplomatic Blue</p>
-                                <p class="hex-code mt-4 text-sm leading-relaxed">HEX: #00205B</p>
-                            </div>
-                            <div class="color-card bg-[#D4AF37] rounded-3xl p-8 text-black"
-                                 data-hex="#D4AF37">
-                                <p class="font-medium">Prestige Gold</p>
-                                <p class="hex-code mt-4 text-sm leading-relaxed">HEX: #D4AF37</p>
-                            </div>
-                            <div class="color-card bg-[#F5F5F5] rounded-3xl p-8 text-black"
-                                 data-hex="#F5F5F5">
-                                <p class="font-medium">Parchment</p>
-                                <p class="hex-code mt-4 text-sm leading-relaxed">HEX: #F5F5F5</p>
-                            </div>
-                        </div>
-                    </section>
-                    <section id="mun-typeface">
-                        <h2 class="text-5xl font-medium">MUN: Typeface</h2>
-                        <p class="mt-4 text-lg text-gray-800 max-w-2xl">The primary typeface for all MUN brand communications is Lora.</p>
-                        <div class="mt-8 relative rounded-3xl p-8 md:p-12 min-h-[300px] flex flex-col justify-between overflow-hidden font-lora">
-                            <img src="static/mediakit/abstract-background.jpeg"
-                                 alt="Abstract background"
-                                 class="absolute inset-0 w-full h-full object-cover -z-10">
-                            <div class="absolute inset-0 bg-black/50 -z-10"></div>
-                            <h3 class="text-4xl font-medium text-white max-w-sm">Lora</h3>
-                            <p class="text-lg text-gray-300 max-w-xs">
-                                Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
-                            </p>
-                        </div>
-                    </section>
-                </div>
+                    </div>
+                </section>
+                {% endfor %}
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
+</div>
 
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const sections = [...document.querySelectorAll('main section[id]')];
-            const navLinks = document.querySelectorAll('aside nav a');
-            const navOffset = 200;
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sections = [...document.querySelectorAll('main section[id]')];
+        const navLinks = document.querySelectorAll('aside nav a');
+        const navOffset = 200;
 
-            const onScroll = () => {
-                const scrollPos = window.scrollY + navOffset;
+        const onScroll = () => {
+            const scrollPos = window.scrollY + navOffset;
 
-                let activeSection = null;
-                for (const section of sections) {
-                    if (section.offsetTop <= scrollPos) {
-                        activeSection = section;
+            let activeSection = null;
+            for (const section of sections) {
+                if (section.offsetTop <= scrollPos) {
+                    activeSection = section;
+                } else {
+                    break;
+                }
+            }
+
+            const activeId = activeSection ? activeSection.id : null;
+
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`);
+            });
+
+            if (history.replaceState) {
+                const newHash = activeId ? `#${activeId}` : '';
+                const currentHash = window.location.hash;
+                if (newHash !== currentHash) {
+                    if (newHash) {
+                        history.replaceState(null, null, newHash);
                     } else {
-                        break;
+                        history.replaceState(null, null, window.location.pathname + window.location.search);
                     }
                 }
+            }
+        };
 
-                const activeId = activeSection ? activeSection.id : null;
+        window.addEventListener('scroll', onScroll);
+        onScroll();
 
-                navLinks.forEach(link => {
-                    link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`);
-                });
+        document.querySelectorAll('.color-card').forEach(card => {
+            const hexElement = card.querySelector('.hex-code');
+            if (!hexElement) return;
 
-                if (history.replaceState) {
-                    const newHash = activeId ? `#${activeId}` : '';
-                    const currentHash = window.location.hash;
-                    if (newHash !== currentHash) {
-                        if (newHash) {
-                            history.replaceState(null, null, newHash);
-                        } else {
-                            history.replaceState(null, null, window.location.pathname + window.location.search);
-                        }
-                    }
-                }
-            };
-
-            window.addEventListener('scroll', onScroll);
-            onScroll();
-
-            document.querySelectorAll('.color-card').forEach(card => {
-                const hexElement = card.querySelector('.hex-code');
-                if (!hexElement) return;
-
-                const originalText = hexElement.innerHTML;
-                card.addEventListener('click', () => {
-                    const hex = card.dataset.hex;
-                    navigator.clipboard.writeText(hex).then(() => {
-                        hexElement.textContent = 'Copied!';
-                        setTimeout(() => {
-                            hexElement.innerHTML = originalText;
-                        }, 1500);
-                    }).catch(err => {
-                        console.error('Failed to copy: ', err);
-                        hexElement.textContent = 'Failed to copy';
-                         setTimeout(() => {
-                            hexElement.innerHTML = originalText;
-                        }, 1500);
-                    });
+            const originalText = hexElement.innerHTML;
+            card.addEventListener('click', () => {
+                const hex = card.dataset.hex;
+                navigator.clipboard.writeText(hex).then(() => {
+                    hexElement.textContent = 'Copied!';
+                    setTimeout(() => {
+                        hexElement.innerHTML = originalText;
+                    }, 1500);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    hexElement.textContent = 'Failed to copy';
+                    setTimeout(() => {
+                        hexElement.innerHTML = originalText;
+                    }, 1500);
                 });
             });
         });
-    </script>
+    });
+</script>
 {% endblock %}
