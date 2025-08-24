@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, url_for
+from collections import OrderedDict
 
 media_kit_bp = Blueprint('media_kit', __name__, template_folder='../templates', static_folder='../static')
 
-BRAND_KITS = {
-    'acm': {
+BRAND_KITS = OrderedDict([
+    ('acm', {
         'name': 'ACM Student Chapter',
         'title': 'Logo',
         'download_link': 'static/mediakit/mediakit.zip',
@@ -23,8 +24,8 @@ BRAND_KITS = {
             'sample_text': 'Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz',
             'class': ''
         }
-    },
-    'tenet': {
+    }),
+    ('tenet', {
         'name': 'IOIT TENET',
         'title': 'TENET\'25',
         'logos': [
@@ -43,8 +44,8 @@ BRAND_KITS = {
             'sample_text': 'Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz',
             'class': 'font-montserrat'
         }
-    },
-    'mun': {
+    }),
+    ('mun', {
         'name': 'IOIT MUN',
         'title': 'IOIT MUN\'25',
         'logos': [
@@ -69,8 +70,8 @@ BRAND_KITS = {
             'sample_text': 'Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz',
             'class': 'font-lora'
         }
-    }
-}
+    })
+])
 
 @media_kit_bp.route('/mediakit')
 def media_kit():
