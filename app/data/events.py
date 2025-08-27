@@ -1,4 +1,22 @@
 events = [
+     {
+    "name": "Bit By Query - Vol 2",
+    "description": "Bit By Query 2025 returned with its second edition, a thrilling two-hour SQL showdown! 54 participants tackled 100 carefully curated problems, ranging from beginner-friendly to expert-level challenges, testing their prowess in database management and query optimization.",
+    "date": "August 26, 2025",
+    "moredetails": "#",
+    "image_url": "/static/img/gallery/bit-by-query/2.jpeg",
+    "instagram_link": "",
+    "facebook_link": "",
+    "topics":
+        [
+        "Following the success of the first edition in January 2025.",
+        "54 participants battled through 2 hours of intense problem-solving.",
+        "100 SQL challenges were spread across Easy, Medium, and Hard levels.",
+        "Key topics included JOINS, INSERT, UPDATE, WHERE, COUNT, and GROUP BY.",
+        "Participants demonstrated mastery in crafting and optimizing SQL queries.",
+        "The event highlighted real-world SQL problem-solving skills."
+    ]
+    },
     {
         "name": "Build on Sui: Move 101 Workshop",
         "description": "The Sui Move Workshop was an exciting, hands-on introduction to the Sui blockchain and the Move programming language. Held over a full day, the workshop welcomed students and developers eager to explore the world of Web3. With live coding, interactive Q&As, and real-time deployment, the event offered an excellent entry point into Sui development.",
@@ -31,9 +49,6 @@ events = [
             "25 participants competed over 2 hours of intense problem-solving.",
             "100 SQL problems were designed across Easy, Medium, and Hard levels.",
             "Topics included JOINS, INSERT, UPDATE, WHERE, COUNT, and GROUP BY.",
-            "Easy problems focused on arrays, patterns, and strings.",
-            "Medium problems tested hashmaps and advanced SQL operations.",
-            "Hard problems explored tree traversals and aggregate functions.",
             "Participants showcased their skills in crafting and optimizing SQL queries.",
             "The event emphasized real-world problem-solving through SQL.",
         ],
