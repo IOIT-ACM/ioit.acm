@@ -3,7 +3,7 @@ events = [
     "name": "Bit By Query - Vol 2",
     "description": "Bit By Query 2025 returned with its second edition, a thrilling two-hour SQL showdown! 54 participants tackled 100 carefully curated problems, ranging from beginner-friendly to expert-level challenges, testing their prowess in database management and query optimization.",
     "date": "August 26, 2025",
-    "moredetails": "#",
+    "moredetails": "/leaderboard/bitbyquery_aug2025",
     "image_url": "/static/img/gallery/bit-by-query/2.jpeg",
     "instagram_link": "",
     "facebook_link": "",

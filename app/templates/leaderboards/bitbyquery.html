@@ -1,21 +1,20 @@
-{% extends "competitions/base.html" %} {% block title %}Bit By Query Virtual
-Contest JAN 2025 | Leaderboard{% endblock %} {% block content %}
+{% extends "competitions/base.html" %}
+{% block title %}{{ title }} | Leaderboard{% endblock %}
+{% block content %}
 
 <div class="container mx-auto px-4 md:px-8 mt-10 mb-20">
   <h1 class="text-4xl font-bold text-center text-blue-600 mt-8">
-    <a href="/events/Bit%20By%20Query%20-%20Vol%201">
-      Bit By Query Vol 1 <i class="fas fa-arrow-up-right-from-square" style="font-size: 22px;"></i>
+    <a href="{{ event_link }}">
+      {{ title }} <i class="fas fa-arrow-up-right-from-square" style="font-size: 22px;"></i>
     </a>
   </h1>
-  <h2 class="text-2xl font-semibold text-center text-blue-500 mt-3">24 January 25</h2>
+  <h2 class="text-2xl font-semibold text-center text-blue-500 mt-3">{{ date }}</h2>
 
   <hr class="border-t-1 border-gray-500 my-10 mx-auto" />
 
   <div id="leaderboardTableContainer">
     <div class="overflow-x-auto w-full">
-      <table
-        class="w-full table-auto border-collapse rounded-lg overflow-hidden shadow-md"
-      >
+      <table class="w-full table-auto border-collapse rounded-lg overflow-hidden shadow-md">
         <thead class="mb-10">
           <tr class="bg-gray-200 text-sm font-semibold text-gray-900 text-left">
             <th class="px-6 py-3">Rank</th>
@@ -29,31 +28,18 @@ Contest JAN 2025 | Leaderboard{% endblock %} {% block content %}
           {% for user in leaderboard %}
           <tr
             class="transition-colors ease-in-out duration-150 {% if loop.index is even %}bg-gray-50 hover:bg-gray-100{% else %}bg-white hover:bg-gray-50{% endif %} rounded-md"
-            data-name="{{ user.name|lower }}"
-            data-username="{{ user.username|lower }}"
-          >
-            <td class="px-6 py-4 text-sm font-medium text-gray-900">
-              {{ loop.index }}
-            </td>
+            data-name="{{ user.name|lower }}" data-username="{{ user.username|lower }}">
+            <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ loop.index }}</td>
             <td class="px-6 py-4 text-sm text-gray-900">
               <div class="flex items-center gap-3">
-                <img
-                  src="https://robohash.org/{{ user.username }}.png"
-                  alt="{{ user.username }} profile picture"
-                  class="w-10 h-10 rounded-full border border-gray-300 aspect-square"
-                />
+                <img src="https://robohash.org/{{ user.username }}.png" alt="{{ user.username }} profile picture"
+                  class="w-10 h-10 rounded-full border border-gray-300 aspect-square" />
                 <span class="truncate font-medium">{{ user.name }}</span>
               </div>
             </td>
-            <td class="truncate px-6 py-4 text-sm text-gray-600">
-              {{ user.username }}
-            </td>
-            <td class="truncate px-6 py-4 text-sm text-gray-600">
-              {{ user.problems_solved }}
-            </td>
-            <td class="truncate px-6 py-4 text-sm text-gray-600">
-              {{ user.score }}
-            </td>
+            <td class="truncate px-6 py-4 text-sm text-gray-600">{{ user.username }}</td>
+            <td class="truncate px-6 py-4 text-sm text-gray-600">{{ user.problems_solved }}</td>
+            <td class="truncate px-6 py-4 text-sm text-gray-600">{{ user.score }}</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -64,8 +50,8 @@ Contest JAN 2025 | Leaderboard{% endblock %} {% block content %}
       Total Participants: {{ leaderboard|length }}
     </div>
   </div>
-  <hr class="border-t-2 border-gray-500 my-6" />
 
+  <hr class="border-t-2 border-gray-500 my-6" />
   {% include "competitions/avaliable-leaderboards.html" %}
 </div>
 
