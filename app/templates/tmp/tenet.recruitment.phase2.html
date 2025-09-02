@@ -1,0 +1,1603 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TENET'25 Recruitment Form</title>
+    <meta
+      name="description"
+      content="TENET'25 Recruitment Form by AISSMS IOIT ACM Student Chapter. Join the core team behind TENET and help shape one of the most impactful tech fests on campus."
+    />
+    <meta
+      name="keywords"
+      content="TENET, TENET'25, ACM, recruitment, tech fest, student chapter, leadership, innovation, AISSMS IOIT, event planning"
+    />
+    <meta name="author" content="AISSMS IOIT ACM Student Chapter" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="theme-color" content="#000A14" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="AISSMS IOIT ACM" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="TENET'25 Recruitment Form" />
+    <meta
+      property="og:description"
+      content="Apply now to be a part of the team organizing TENET'25 — the annual technical festival by AISSMS IOIT ACM Student Chapter."
+    />
+    <meta
+      property="og:url"
+      content="https://ioit.acm.org/tenet25-recruitment"
+    />
+    <meta property="og:image" content="/static/tenet25-og-image.png" />
+    <meta property="og:site_name" content="AISSMS IOIT ACM" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TENET'25 Recruitment Form" />
+    <meta
+      name="twitter:description"
+      content="Join the organizing team of TENET'25 and make an impact. Apply now!"
+    />
+    <meta name="twitter:image" content="/static/tenet25-og-image.png" />
+    <meta name="twitter:site" content="@IOITACM" />
+    <meta name="twitter:creator" content="@IOITACM" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/static/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+    <link rel="shortcut icon" href="/static/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/static/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="/static/site.webmanifest" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --bg-color: #0a0a0a;
+        --text-color: #ffffff;
+        --primary-color: #f97316;
+        --secondary-color: #d4d4d4;
+        --accent-color: #f97316;
+        --text-primary-btn: #ffffff;
+        --text-secondary-btn: #ffffff;
+      }
+      * {
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+      }
+      *::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        background: transparent !important;
+      }
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-size: 16px;
+      }
+      @media (min-width: 768px) {
+        body {
+          font-size: 18px;
+        }
+      }
+      .bg-gradient-primary {
+        background: var(--bg-color);
+      }
+      p {
+        color: var(--text-color);
+        opacity: 0.9;
+        font-size: 0.95rem;
+      }
+      @media (min-width: 768px) {
+        p {
+          font-size: 1rem;
+        }
+      }
+      .fixed.top-0.left-0.w-full {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+      #progressBar {
+        background-color: var(--primary-color);
+      }
+      #questionContent input[type="text"],
+      #questionContent textarea {
+        background-color: rgba(236, 239, 241, 0.1);
+        color: var(--text-color);
+        border-radius: 8px;
+        padding: 0.8rem;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+      @media (min-width: 768px) {
+        #questionContent input[type="text"],
+        #questionContent textarea {
+          padding: 1rem;
+          font-size: 1.125rem;
+        }
+      }
+      #questionContent input[type="text"]::placeholder,
+      #questionContent textarea::placeholder {
+        color: rgba(236, 239, 241, 0.5);
+        opacity: 1;
+      }
+      .input-focus:focus {
+        outline: none;
+        border-color: var(--primary-color);
+      }
+      .animated-fill-button {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        padding: 0.6rem 1.2rem;
+        border: 1px solid var(--text-color);
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-color);
+        background-color: transparent;
+        text-decoration: none;
+        transition: color 0.4s ease;
+        margin: 3px;
+      }
+      @media (min-width: 768px) {
+        .animated-fill-button {
+          padding: 10px 20px;
+          font-size: 18px;
+        }
+      }
+      .animated-fill-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--bg-color);
+        border-radius: 50px;
+        z-index: -2;
+      }
+      .animated-fill-button::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -100%;
+        width: 100%;
+        height: 100%;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+        z-index: -1;
+        transition: all 0.4s ease;
+      }
+      .animated-fill-button:hover {
+        color: var(--text-primary-btn);
+      }
+      .animated-fill-button:hover::after {
+        bottom: 0;
+        border-radius: 0;
+      }
+      #prevBtn,
+      #nextBtn,
+      #restartBtn {
+        border-radius: 8px;
+        padding: 0.6rem 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        font-size: 0.85rem;
+      }
+      @media (min-width: 768px) {
+        #prevBtn,
+        #nextBtn,
+        #restartBtn {
+          padding: 0.75rem 1.5rem;
+          font-size: 1rem;
+        }
+      }
+      #prevBtn {
+        background-color: transparent;
+        color: var(--secondary-color);
+        border-color: var(--secondary-color);
+      }
+      #prevBtn:hover:not(:disabled) {
+        background-color: var(--secondary-color);
+        color: var(--text-secondary-btn);
+      }
+      #nextBtn,
+      #restartBtn {
+        background-color: var(--primary-color);
+        color: var(--text-primary-btn);
+        border-color: var(--primary-color);
+      }
+      #nextBtn:hover:not(:disabled),
+      #restartBtn:hover:not(:disabled) {
+        filter: brightness(1.15);
+      }
+      #questionContent .space-y-4 > button {
+        background-color: rgba(236, 239, 241, 0.1);
+        color: var(--text-color);
+        border: 2px solid rgba(236, 239, 241, 0.3);
+        border-radius: 8px;
+        padding: 0.8rem;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+      @media (min-width: 768px) {
+        #questionContent .space-y-4 > button {
+          padding: 1rem;
+          font-size: 1rem;
+        }
+      }
+      #questionContent .space-y-4 > button:hover {
+        border-color: var(--secondary-color);
+        background-color: rgba(64, 196, 255, 0.2);
+      }
+      #questionContent .space-y-4 > button.bg-opacity-40.border-opacity-100 {
+        border-color: var(--primary-color);
+        background-color: rgba(124, 77, 255, 0.3);
+      }
+      .rating-item {
+        background-color: rgba(236, 239, 241, 0.1);
+        color: var(--text-color);
+        border: 2px solid rgba(236, 239, 241, 0.3);
+        transition: all 0.2s ease;
+        font-size: 0.9rem;
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+      @media (min-width: 768px) {
+        .rating-item {
+          font-size: 1rem;
+          width: 3rem;
+          height: 3rem;
+        }
+      }
+      .rating-item:hover {
+        border-color: var(--secondary-color);
+        background-color: rgba(64, 196, 255, 0.2);
+      }
+      .rating-item.bg-opacity-40.border-opacity-100 {
+        background-color: var(--primary-color);
+        color: var(--text-primary-btn);
+        border-color: var(--primary-color);
+      }
+      #questionContent .grid > button {
+        border-width: 4px;
+        border-color: rgba(236, 239, 241, 0.3);
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+      #questionContent .grid > button:hover {
+        border-color: var(--secondary-color);
+      }
+      #questionContent .grid > button.border-opacity-100 {
+        border-color: var(--primary-color);
+      }
+      #questionContent .grid > button .bg-green-500 {
+        background-color: var(--accent-color);
+      }
+      #questionContent .grid > button .absolute.inset-0 {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      #questionContent .grid > button:hover .absolute.inset-0 {
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+      .fade-enter {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      .fade-enter-active {
+        opacity: 1;
+        transform: translateY(0);
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+      .fade-leave {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .fade-leave-active {
+        opacity: 0;
+        transform: translateY(-20px);
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+      .progress-bar {
+        transition: width 0.6s ease;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 4px;
+      }
+      #welcomeContent,
+      #welcomeVideo {
+        transition:
+          transform 0.7s ease-in-out,
+          opacity 0.7s ease-in-out;
+      }
+      .slide-out-left {
+        transform: translateX(-120%);
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-primary min-h-screen overflow-y-auto">
+    <div class="fixed top-0 left-0 w-full h-1 bg-black bg-opacity-20 z-50">
+      <div
+        id="progressBar"
+        class="h-full bg-white progress-bar"
+        style="width: 0%"
+      ></div>
+    </div>
+    <header
+      class="fixed z-50 flex gap-4 w-screen justify-between p-2 md:p-4 bg-[#0a0a0a] md:bg-transparent"
+    >
+      <img
+        src="/static/form-assets/acm.png"
+        alt="ACM Logo"
+        class="md:h-12 h-8 w-auto"
+      />
+      <img
+        src="/static/form-assets/tenet-white-logo.webp"
+        alt="Tenet Logo"
+        class="md:h-12 h-8 w-auto"
+      />
+    </header>
+
+    <div
+      id="formContainer"
+      class="min-h-screen flex items-center justify-center p-4"
+    >
+      <div
+        id="welcomeScreen"
+        class="text-white max-w-5xl mx-auto w-full flex flex-col md:flex-row items-center gap-8 md:gap-12"
+      >
+        <div
+          id="welcomeContent"
+          class="text-center md:text-left w-full md:w-1/2"
+        >
+          <canvas
+            id="hero-canvas"
+            class="absolute inset-0 w-full h-full z-20 pointer-events-none"
+          ></canvas>
+
+          <div class="mb-8">
+            <h1 class="text-3xl md:text-6xl font-bold mb-4">
+              Ready to Lead TENET'25?
+            </h1>
+            <p class="text-sm md:text-base opacity-90 mb-8">
+              This is your opportunity to gain hands-on experience in strategy,
+              management, and execution. From launching our first hackathon to
+              securing major sponsorships, you won't just be a volunteer, you'll
+              be a core part of the engine that drives TENET'25.
+            </p>
+          </div>
+          <button
+            class="animated-fill-button text-lg font-semibold transition-all duration-300"
+          >
+            <a href="https://ioittenet.com/" target="_blank"> TENET'24 </a>
+          </button>
+          <button
+            id="startBtn"
+            class="animated-fill-button text-lg font-semibold transition-all duration-300"
+          >
+            Start Application →
+          </button>
+        </div>
+        <div id="welcomeVideo" class="w-full md:w-1/2">
+          <video
+            id="heroVideo"
+            autoplay
+            loop
+            muted
+            playsinline
+            class="rounded-lg w-full h-auto shadow-2xl shadow-orange-500/40 aspect-video object-cover cursor-pointer"
+          >
+            <source src="/static/form-assets/tenet.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div
+        id="questionScreen"
+        class="hidden text-white max-w-2xl mx-auto w-full"
+      >
+        <div class="mt-14 mb-8">
+          <h2
+            id="questionTitle"
+            class="text-xl md:text-4xl font-bold md:mb-4 mb-2"
+          ></h2>
+          <p id="questionDescription" class="text-sm md:text-lg opacity-90"></p>
+        </div>
+
+        <div id="questionContent" class="mb-8"></div>
+
+        <div class="flex justify-between items-center">
+          <button
+            id="prevBtn"
+            class="bg-white bg-opacity-20 text-white px-6 py-3 rounded-lg font-semibold btn-hover transition-all duration-300 opacity-50 cursor-not-allowed"
+            disabled
+          >
+            ← Previous
+          </button>
+
+          <button
+            id="nextBtn"
+            class="bg-white text-gray-800 px-6 py-3 rounded-lg font-semibold btn-hover transition-all duration-300 opacity-50 cursor-not-allowed"
+            disabled
+          >
+            Next →
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="thankYouScreen"
+        class="hidden text-center text-white max-w-2xl mx-auto"
+      >
+        <div class="mb-8">
+          <h1 class="text-3xl md:text-6xl font-bold mb-4">Thank You!</h1>
+          <p id="thankYouMessage" class="text-sm md:text-xl opacity-90 mb-8">
+            Your application has been successfully submitted. We'll be in touch
+            soon!
+          </p>
+        </div>
+
+        <div class="mb-8 text-sm md:text-lg opacity-90 space-y-2">
+          <p>If you want to reach out, you can connect with:</p>
+          <ul class="list-none pl-5 font-semibold">
+            <li>
+              <a
+                href="https://wa.me/917248945402?text=Hey!%20I%20am%20interested%20to%20be%20part%20of%20IOIT%20TENET%202024.%20Can%20you%20please%20help%20me%20understand%E2%80%A6"
+                class="underline hover:text-orange-400 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Aditya Godse: 7248945402
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://wa.me/917276362624?text=Hey!%20I%20am%20interested%20to%20be%20part%20of%20IOIT%20TENET%202024.%20Can%20you%20please%20help%20me%20understand%E2%80%A6"
+                class="underline hover:text-orange-400 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Vipul Barmukh: 7276362624
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mb-10">
+          <p class="mb-4 text-sm md:text-lg opacity-90">
+            For more updates, follow us on:
+          </p>
+          <div class="flex justify-center items-center space-x-6">
+            <a
+              href="https://www.instagram.com/ioit_tenet"
+              target="_blank"
+              class="flex items-center space-x-2 hover:text-orange-400 transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path
+                  d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                ></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <span>Tenet</span>
+            </a>
+            <a
+              href="https://www.instagram.com/ioit__acm"
+              target="_blank"
+              class="flex items-center space-x-2 hover:text-orange-400 transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path
+                  d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                ></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <span>ACM</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="flex gap-4 justify-center md:flex-row flex-col">
+          <a
+            href="https://ioittenet.com/"
+            target="_blank"
+            class="animated-fill-button text-lg font-semibold transition-all duration-300"
+          >
+            Visit Tenet's Website
+          </a>
+
+          <button
+            id="restartBtn"
+            class="bg-white text-gray-800 px-8 py-4 rounded-lg text-lg font-semibold btn-hover transition-all duration-300"
+          >
+            Submit Another Application
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const formConfig = {
+        questions: [
+          {
+            id: "name",
+            type: "text",
+            title: "Let's start with your name",
+            description: "What should we call you?",
+            placeholder: "Enter your First and Last Name",
+            required: true,
+          },
+          {
+            id: "branch",
+            type: "multiple_choice",
+            title: "Which branch are you from?",
+            description: "Select your academic branch.",
+            options: [
+              { value: "ai_ds", label: "AI & DS" },
+              { value: "cs", label: "Computer Science" },
+              { value: "it", label: "Information Technology" },
+              { value: "electrical", label: "Electrical" },
+              { value: "instrumentation", label: "Instrumentation" },
+              { value: "entc", label: "Electronics & Telecommunication" },
+            ],
+            required: true,
+          },
+          {
+            id: "year",
+            type: "rating",
+            title: "Current Academic Year?",
+            scale: 4,
+            required: true,
+          },
+          {
+            id: "mobile_number",
+            type: "text",
+            title: "What's your mobile number?",
+            description:
+              "We'll use this for important updates and coordination through WhatsApp.",
+            placeholder: "Enter your 10-digit mobile number...",
+            required: true,
+          },
+          {
+            id: "tenet24",
+            type: "multiple_choice",
+            title: "Were you a part of the TENET'24 organizing team?",
+            description: "This helps us understand your prior experience with our fest.",
+            options: [
+              { value: "yes", label: "YES" },
+              { value: "no", label: "NO" },
+            ],
+            required: true,
+          },
+          {
+            id: "position",
+            type: "multiple_choice",
+            title: "Which Phase 2 position are you applying for?",
+            description: "Choose the role where you can make the biggest impact.",
+            options: [
+              { value: "decor_head", label: "Decor Head" },
+              { value: "decor_team", label: "Decor Team" },
+              { value: "event_management_head", label: "Event Management Head" },
+              { value: "event_management_team", label: "Event Management Team" },
+              { value: "venue_logistics_head", label: "Venue & Logistics Head" },
+              { value: "anchoring", label: "Anchoring Team" },
+              { value: "technical_head", label: "Technical Head" },
+              { value: "technical_team", label: "Tech Team" },
+              { value: "food_catering_head", label: "Food & Catering Head" },
+              { value: "material_acquisition_lead", label: "Material Acquisition Lead" },
+            ],
+            required: true,
+          },
+          {
+            id: "decor_head_budget",
+            type: "textarea",
+            title: "With a budget of ₹5,000, suggest innovative decor ideas for the techfest along with their estimated costs.",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "decor_head",
+          },
+          {
+            id: "decor_head_constraints",
+            type: "textarea",
+            title: "How would you balance aesthetics with budget constraints if given less funds than you expected?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "decor_head",
+          },
+          {
+            id: "decor_head_conflict",
+            type: "textarea",
+            title: "If team members strongly disagree on a design, how would you resolve it while meeting deadlines?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "decor_head",
+          },
+          {
+            id: "decor_head_experience",
+            type: "textarea",
+            title: "Have you worked on any past decoration projects? Share a few details about it.",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "decor_head",
+          },
+          {
+            id: "decor_team_inspiration",
+            type: "textarea",
+            title: "What inspires your design ideas?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "decor_team",
+          },
+          {
+            id: "decor_team_styles",
+            type: "textarea",
+            title: "What styles or themes do you find most exciting to work with for tech and formal events?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "decor_team",
+          },
+          {
+            id: "decor_team_mun",
+            type: "textarea",
+            title: "How would you make the campus visually appealing yet professional for an MUN?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "decor_team",
+          },
+          {
+            id: "decor_team_experience",
+            type: "textarea",
+            title: "Have you worked on any past decoration projects? Share a few details about it.",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "decor_team",
+          },
+          {
+            id: "em_head_coordination",
+            type: "textarea",
+            title: "What’s your approach to coordinating multiple teams (tech, decor, logistics) under pressure?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "event_management_head",
+          },
+          {
+            id: "em_head_cancellation",
+            type: "textarea",
+            title: "If a key speaker cancels an hour before their session, what steps would you take?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "event_management_head",
+          },
+          {
+            id: "em_head_structure",
+            type: "textarea",
+            title: "How would you structure responsibilities to ensure no overlap or confusion between teams?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "event_management_head",
+          },
+          {
+            id: "em_head_pressure",
+            type: "textarea",
+            title: "Give an example of a high-pressure event you have managed before. What went wrong, and how did you fix it?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "event_management_head",
+          },
+          {
+            id: "em_team_experience",
+            type: "textarea",
+            title: "Have you previously helped in planning or executing college events?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "event_management_team",
+          },
+          {
+            id: "em_team_prioritize",
+            type: "textarea",
+            title: "How would you prioritize tasks when handling multiple parallel events?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "event_management_team",
+          },
+          {
+            id: "vl_head_factors",
+            type: "textarea",
+            title: "What are key factors to consider when allocating spaces for different event activities?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "venue_logistics_head",
+          },
+          {
+            id: "vl_head_change",
+            type: "textarea",
+            title: "If a last-minute venue change is required, what’s your immediate checklist?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "venue_logistics_head",
+          },
+          {
+            id: "vl_head_movement",
+            type: "textarea",
+            title: "How would you ensure smooth movement of participants, materials, and equipment without congestion?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "venue_logistics_head",
+          },
+          {
+            id: "anchoring_experience",
+            type: "textarea",
+            title: "Have you anchored or hosted events before? What was the scale?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "anchoring",
+          },
+          {
+            id: "anchoring_engagement",
+            type: "textarea",
+            title: "How would you keep a hackathon audience engaged during breaks or long sessions?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "anchoring",
+          },
+          {
+            id: "anchoring_improvise",
+            type: "textarea",
+            title: "Are you comfortable improvising if a schedule is delayed?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "anchoring",
+          },
+          {
+            id: "tech_head_systems",
+            type: "textarea",
+            title: "Have you worked with PA systems, audio/video setups, or internet troubleshooting before?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "technical_head",
+          },
+          {
+            id: "tech_head_gsuite",
+            type: "textarea",
+            title: "Are you familiar with Google Workspace tools (Docs, Sheets, Forms, Slides)?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "technical_head",
+          },
+          {
+            id: "tech_head_glitches",
+            type: "textarea",
+            title: "How would you handle last-minute technical glitches during a live session?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "technical_head",
+          },
+          {
+            id: "tech_head_comfort",
+            type: "textarea",
+            title: "What is your comfort level with setting up projectors, microphones, or live-stream equipment?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "technical_head",
+          },
+          {
+            id: "tech_head_responsibilities",
+            type: "textarea",
+            title: "How would you divide responsibilities between your team to ensure round-the-clock coverage during events?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "technical_head",
+          },
+          {
+            id: "tech_team_systems",
+            type: "textarea",
+            title: "Have you worked with PA systems, audio/video setups, or internet troubleshooting before?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "technical_team",
+          },
+          {
+            id: "tech_team_gsuite",
+            type: "textarea",
+            title: "Are you familiar with Google Workspace tools (Docs, Sheets, Forms, Slides)?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "technical_team",
+          },
+          {
+            id: "tech_team_glitches",
+            type: "textarea",
+            title: "How would you handle last-minute technical glitches during a live session?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "technical_team",
+          },
+          {
+            id: "tech_team_comfort",
+            type: "textarea",
+            title: "What is your comfort level with setting up projectors, microphones, or live-stream equipment?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "technical_team",
+          },
+          {
+            id: "fc_head_estimation",
+            type: "textarea",
+            title: "How would you estimate food quantity for 200+ participants without wastage?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "food_catering_head",
+          },
+          {
+            id: "fc_head_menus",
+            type: "textarea",
+            title: "What factors would you consider when planning menus for long events like Hackathons and formal ones like MUNs?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "food_catering_head",
+          },
+          {
+            id: "fc_head_contingency",
+            type: "textarea",
+            title: "If a food vendor backs out at the last minute, what is your contingency plan?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "food_catering_head",
+          },
+          {
+            id: "ma_lead_sourcing",
+            type: "textarea",
+            title: "How do you plan to source materials efficiently within budget and time limits?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "material_acquisition_lead",
+          },
+          {
+            id: "ma_lead_negotiations",
+            type: "textarea",
+            title: "Have you managed vendor negotiations or purchase orders before?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "material_acquisition_lead",
+          },
+          {
+            id: "ma_lead_fallback",
+            type: "textarea",
+            title: "If an essential item becomes unavailable two days before the event, what’s your fallback strategy?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "material_acquisition_lead",
+          },
+          {
+            id: "ma_lead_inventory",
+            type: "textarea",
+            title: "What’s your approach to ensuring no excess or shortage of materials?",
+            placeholder: "Your answer here...",
+            required: true,
+            condition: (answers) => answers.position === "material_acquisition_lead",
+          },
+          {
+            id: "reason",
+            type: "textarea",
+            title: "Why do you want to join the TENET'25 team?",
+            description: "Tell us about your motivation and what you hope to contribute to your chosen role.",
+            placeholder: "Your reasons here...",
+            required: true,
+          },
+        ],
+      };
+
+      let currentQuestionIndex = 0;
+      let answers = {};
+      let isTransitioning = false;
+      const STORAGE_KEY = "tenet25_form_data";
+      const SUBMISSION_STATUS_KEY = "tenet25_form_submitted";
+      const SUBMISSION_DATA_KEY = "tenet25_submission_data";
+
+      const welcomeScreen = document.getElementById("welcomeScreen");
+      const welcomeContent = document.getElementById("welcomeContent");
+      const welcomeVideo = document.getElementById("welcomeVideo");
+      const questionScreen = document.getElementById("questionScreen");
+      const thankYouScreen = document.getElementById("thankYouScreen");
+      const progressBar = document.getElementById("progressBar");
+      const startBtn = document.getElementById("startBtn");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const restartBtn = document.getElementById("restartBtn");
+      const questionTitleElement = document.getElementById("questionTitle");
+      const questionDescriptionElement = document.getElementById(
+        "questionDescription",
+      );
+      const heroVideo = document.getElementById("heroVideo");
+
+      if (heroVideo) {
+        heroVideo.addEventListener("click", () => {
+          heroVideo.muted = !heroVideo.muted;
+        });
+      }
+
+      function init() {
+        loadFormData();
+        checkSubmissionStatus();
+        startBtn.addEventListener("click", startForm);
+        prevBtn.addEventListener("click", goToPrevious);
+        nextBtn.addEventListener("click", goToNext);
+        restartBtn.addEventListener("click", restartForm);
+      }
+
+      function loadFormData() {
+        const savedData = localStorage.getItem(STORAGE_KEY);
+        if (savedData) {
+          answers = JSON.parse(savedData);
+        }
+      }
+
+      function saveFormData() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
+      }
+
+      function updateThankYouScreen(name, position) {
+        const thankYouMessage = document.getElementById("thankYouMessage");
+        if (thankYouMessage) {
+          thankYouMessage.textContent = `${name}, your application for the ${position} has successfully submitted.`;
+        }
+      }
+
+      function checkSubmissionStatus() {
+        const submitted =
+          localStorage.getItem(SUBMISSION_STATUS_KEY) === "true";
+        if (submitted) {
+          const submissionDataString =
+            localStorage.getItem(SUBMISSION_DATA_KEY);
+          if (submissionDataString) {
+            const submissionData = JSON.parse(submissionDataString);
+            updateThankYouScreen(submissionData.name, submissionData.position);
+          }
+          welcomeScreen.classList.add("hidden");
+          questionScreen.classList.add("hidden");
+          thankYouScreen.classList.remove("hidden");
+        }
+      }
+
+      function startForm() {
+        if (isTransitioning) return;
+
+        if (localStorage.getItem(SUBMISSION_STATUS_KEY) === "true") {
+          alert(
+            "You have already submitted your application, do you want to submit another one?",
+          );
+        }
+        heroVideo.muted = true;
+
+        isTransitioning = true;
+        welcomeContent.classList.add("slide-out-left");
+        welcomeVideo.classList.add("slide-out-left");
+
+        setTimeout(() => {
+          welcomeScreen.classList.add("hidden");
+          questionScreen.classList.remove("hidden");
+          questionScreen.classList.add("fade-enter", "fade-enter-active");
+
+          setTimeout(() => {
+            questionScreen.classList.remove("fade-enter", "fade-enter-active");
+            isTransitioning = false;
+          }, 400);
+
+          const firstVisibleIndex = findNextVisibleQuestionIndex(-1);
+          if (firstVisibleIndex !== -1) {
+            showQuestion(firstVisibleIndex);
+          } else {
+            console.error("No visible questions found to start the form!");
+          }
+        }, 700);
+      }
+
+      function isQuestionVisible(question, currentAnswers) {
+        if (!question) return false;
+        if (question.condition) {
+          return question.condition(currentAnswers);
+        }
+        return true;
+      }
+
+      function findNextVisibleQuestionIndex(startIndex) {
+        for (let i = startIndex + 1; i < formConfig.questions.length; i++) {
+          if (isQuestionVisible(formConfig.questions[i], answers)) {
+            return i;
+          }
+        }
+        return -1;
+      }
+
+      function findPrevVisibleQuestionIndex(startIndex) {
+        for (let i = startIndex - 1; i >= 0; i--) {
+          if (isQuestionVisible(formConfig.questions[i], answers)) {
+            return i;
+          }
+        }
+        return -1;
+      }
+
+      function showQuestion(index) {
+        if (index < 0 || index >= formConfig.questions.length) return;
+
+        currentQuestionIndex = index;
+        const question = formConfig.questions[index];
+
+        const visibleQuestions = formConfig.questions.filter((q) =>
+          isQuestionVisible(q, answers),
+        );
+        const currentVisibleIndex = visibleQuestions.findIndex(
+          (q) => q.id === question.id,
+        );
+        const progress =
+          ((currentVisibleIndex + 1) / visibleQuestions.length) * 100;
+        progressBar.style.width = `${progress}%`;
+
+        questionTitleElement.innerHTML = question.title;
+        questionDescriptionElement.textContent = question.description;
+
+        const contentContainer = document.getElementById("questionContent");
+        contentContainer.innerHTML = "";
+
+        switch (question.type) {
+          case "text":
+            renderTextInput(contentContainer, question);
+            break;
+          case "textarea":
+            renderTextarea(contentContainer, question);
+            break;
+          case "multiple_choice":
+            renderMultipleChoice(contentContainer, question);
+            break;
+          case "rating":
+            renderRating(contentContainer, question);
+            break;
+          case "picture_choice":
+            renderPictureChoice(contentContainer, question);
+            break;
+        }
+
+        updateNavigationButtons();
+
+        const firstInput = contentContainer.querySelector("input, textarea");
+        if (firstInput) {
+          setTimeout(() => firstInput.focus(), 100);
+        }
+      }
+
+      function renderTextInput(container, question) {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className =
+          "w-full p-4 text-lg bg-white bg-opacity-20 text-white placeholder-white placeholder-opacity-70 rounded-lg border border-white border-opacity-30 focus:border-white focus:outline-none input-focus transition-all duration-300";
+        input.placeholder = question.placeholder || "";
+        input.value = answers[question.id] || "";
+
+        input.addEventListener("input", (e) => {
+          answers[question.id] = e.target.value;
+          saveFormData();
+          updateNavigationButtons();
+        });
+
+        input.addEventListener("keypress", (e) => {
+          if (e.key === "Enter" && canGoNext()) {
+            goToNext();
+          }
+        });
+
+        container.appendChild(input);
+      }
+
+      function renderTextarea(container, question) {
+        const textarea = document.createElement("textarea");
+        textarea.className =
+          "w-full p-4 text-lg bg-white bg-opacity-20 text-white placeholder-white placeholder-opacity-70 rounded-lg border border-white border-opacity-30 focus:border-white focus:outline-none input-focus transition-all duration-300 resize-none";
+        textarea.placeholder = question.placeholder || "";
+        textarea.value = answers[question.id] || "";
+        textarea.rows = 4;
+
+        textarea.addEventListener("input", (e) => {
+          answers[question.id] = e.target.value;
+          saveFormData();
+          updateNavigationButtons();
+        });
+
+        container.appendChild(textarea);
+      }
+
+      function renderMultipleChoice(container, question) {
+        const optionsContainer = document.createElement("div");
+        optionsContainer.className = "grid grid-cols-1 md:grid-cols-2 gap-4";
+
+        question.options.forEach((option) => {
+          const button = document.createElement("button");
+          button.className =
+            "w-full md:p-4 p-3 text-left bg-white bg-opacity-20 text-white rounded-lg border border-white border-opacity-30 hover:bg-opacity-30 btn-hover transition-all duration-300 flex items-center space-x-3";
+
+          const isSelected = answers[question.id] === option.value;
+          if (isSelected) {
+            button.classList.add("bg-opacity-40", "border-opacity-100");
+          }
+
+          button.innerHTML = `
+                    <span class="text-sm md:text-lg font-medium">${option.label}</span>
+                `;
+
+          button.addEventListener("click", () => {
+            const oldAnswer = answers[question.id];
+            answers[question.id] = option.value;
+
+            if (question.id === "position" && oldAnswer !== option.value) {
+              formConfig.questions.forEach((q) => {
+                if (q.condition && q.id.endsWith("_question")) {
+                  delete answers[q.id];
+                }
+              });
+            }
+
+            saveFormData();
+
+            optionsContainer.querySelectorAll("button").forEach((btn) => {
+              btn.classList.remove("bg-opacity-40", "border-opacity-100");
+            });
+            button.classList.add("bg-opacity-40", "border-opacity-100");
+
+            updateNavigationButtons();
+
+            setTimeout(() => {
+              if (canGoNext()) goToNext();
+            }, 500);
+          });
+
+          optionsContainer.appendChild(button);
+        });
+
+        container.appendChild(optionsContainer);
+      }
+
+      function renderRating(container, question) {
+        const ratingContainer = document.createElement("div");
+        ratingContainer.className = "flex justify-center space-x-4";
+
+        for (let i = 1; i <= question.scale; i++) {
+          const ratingItem = document.createElement("button");
+          ratingItem.className =
+            "w-16 h-16 bg-white bg-opacity-20 text-white rounded-full border border-white border-opacity-30 hover:bg-opacity-40 rating-item flex items-center justify-center text-sm md:text-xl font-bold";
+          ratingItem.textContent = i;
+
+          const isSelected = answers[question.id] === i;
+          if (isSelected) {
+            ratingItem.classList.add("bg-opacity-40", "border-opacity-100");
+          }
+
+          ratingItem.addEventListener("click", () => {
+            answers[question.id] = i;
+            saveFormData();
+
+            ratingContainer.querySelectorAll("button").forEach((btn) => {
+              btn.classList.remove("bg-opacity-40", "border-opacity-100");
+            });
+            ratingItem.classList.add("bg-opacity-40", "border-opacity-100");
+
+            updateNavigationButtons();
+
+            setTimeout(() => {
+              if (canGoNext()) goToNext();
+            }, 500);
+          });
+
+          ratingContainer.appendChild(ratingItem);
+        }
+
+        container.appendChild(ratingContainer);
+      }
+
+      function renderPictureChoice(container, question) {
+        const picturesContainer = document.createElement("div");
+        picturesContainer.className = "grid grid-cols-2 gap-4";
+
+        question.options.forEach((option) => {
+          const pictureButton = document.createElement("button");
+          pictureButton.className =
+            "relative group overflow-hidden rounded-lg border-4 border-white border-opacity-30 hover:border-opacity-100 btn-hover transition-all duration-300";
+
+          const isSelected = answers[question.id] === option.value;
+          if (isSelected) {
+            pictureButton.classList.add("border-opacity-100");
+          }
+
+          pictureButton.innerHTML = `
+                    <img src="${option.image}" alt="${
+                      option.label
+                    }" class="w-full md:h-40 h-32 object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-20 transition-all duration-300"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3 text-white font-semibold text-sm">
+                        ${option.label}
+                    </div>
+                    ${
+                      isSelected
+                        ? '<div class="absolute top-2 right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center"><div class="w-3 h-3 bg-green-500 rounded-full"></div></div>'
+                        : ""
+                    }
+                `;
+
+          pictureButton.addEventListener("click", () => {
+            const oldAnswer = answers[question.id];
+            answers[question.id] = option.value;
+
+            if (question.id === "position" && oldAnswer !== option.value) {
+              formConfig.questions.forEach((q) => {
+                if (q.condition && q.id.endsWith("_question")) {
+                  delete answers[q.id];
+                }
+              });
+            }
+            saveFormData();
+
+            picturesContainer.querySelectorAll("button").forEach((btn) => {
+              btn.classList.remove("border-opacity-100");
+              const checkmark = btn.querySelector(".absolute.top-2.right-2");
+              if (checkmark) checkmark.remove();
+            });
+            pictureButton.classList.add("border-opacity-100");
+
+            const checkmark = document.createElement("div");
+            checkmark.className =
+              "absolute top-2 right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center";
+            checkmark.innerHTML =
+              '<div class="w-3 h-3 bg-green-500 rounded-full"></div>';
+            pictureButton.appendChild(checkmark);
+
+            updateNavigationButtons();
+
+            setTimeout(() => {
+              if (canGoNext()) goToNext();
+            }, 500);
+          });
+
+          picturesContainer.appendChild(pictureButton);
+        });
+
+        container.appendChild(picturesContainer);
+      }
+
+      function goToPrevious() {
+        if (isTransitioning) return;
+
+        const prevVisibleIndex =
+          findPrevVisibleQuestionIndex(currentQuestionIndex);
+
+        if (prevVisibleIndex !== -1) {
+          transitionQuestion(() => showQuestion(prevVisibleIndex));
+        }
+      }
+
+      function goToNext() {
+        if (isTransitioning || !canGoNext()) return;
+
+        const nextVisibleIndex =
+          findNextVisibleQuestionIndex(currentQuestionIndex);
+
+        if (nextVisibleIndex !== -1) {
+          transitionQuestion(() => showQuestion(nextVisibleIndex));
+        } else {
+          submitForm(answers);
+        }
+      }
+
+      function canGoNext() {
+        const question = formConfig.questions[currentQuestionIndex];
+        const answer = answers[question.id];
+
+        if (!question.required) return true;
+
+        return answer !== undefined && answer !== null && answer !== "";
+      }
+
+      function updateNavigationButtons() {
+        const hasPrev =
+          findPrevVisibleQuestionIndex(currentQuestionIndex) !== -1;
+        if (hasPrev) {
+          prevBtn.disabled = false;
+          prevBtn.classList.remove("opacity-50", "cursor-not-allowed");
+        } else {
+          prevBtn.disabled = true;
+          prevBtn.classList.add("opacity-50", "cursor-not-allowed");
+        }
+
+        const canProceed = canGoNext();
+        const hasNext =
+          findNextVisibleQuestionIndex(currentQuestionIndex) !== -1;
+
+        if (canProceed) {
+          nextBtn.disabled = false;
+          nextBtn.classList.remove("opacity-50", "cursor-not-allowed");
+          nextBtn.textContent = hasNext ? "Next →" : "Submit Application";
+        } else {
+          nextBtn.disabled = true;
+          nextBtn.classList.add("opacity-50", "cursor-not-allowed");
+          nextBtn.textContent = "Next →";
+        }
+      }
+
+      function transitionToScreen(fromScreen, toScreen, callback) {
+        if (isTransitioning) return;
+
+        isTransitioning = true;
+
+        fromScreen.classList.add("fade-leave", "fade-leave-active");
+
+        setTimeout(() => {
+          fromScreen.classList.add("hidden");
+          fromScreen.classList.remove("fade-leave", "fade-leave-active");
+
+          toScreen.classList.remove("hidden");
+          toScreen.classList.add("fade-enter", "fade-enter-active");
+
+          setTimeout(() => {
+            toScreen.classList.remove("fade-enter", "fade-enter-active");
+            isTransitioning = false;
+            if (callback) callback();
+          }, 400);
+        }, 400);
+      }
+
+      function transitionQuestion(callback) {
+        if (isTransitioning) return;
+
+        isTransitioning = true;
+        const content = document.getElementById("questionContent");
+        const title = document.getElementById("questionTitle");
+        const desc = document.getElementById("questionDescription");
+
+        [content, title, desc].forEach((el) =>
+          el.classList.add("fade-leave", "fade-leave-active"),
+        );
+
+        setTimeout(() => {
+          [content, title, desc].forEach((el) =>
+            el.classList.remove("fade-leave", "fade-leave-active"),
+          );
+
+          if (callback) callback();
+
+          [content, title, desc].forEach((el) =>
+            el.classList.add("fade-enter", "fade-enter-active"),
+          );
+
+          setTimeout(() => {
+            [content, title, desc].forEach((el) =>
+              el.classList.remove("fade-enter", "fade-enter-active"),
+            );
+            isTransitioning = false;
+          }, 400);
+        }, 400);
+      }
+
+      function restartForm() {
+        currentQuestionIndex = 0;
+        answers = {};
+        progressBar.style.width = "0%";
+
+        transitionToScreen(thankYouScreen, welcomeScreen, () => {
+          welcomeContent.classList.remove("slide-out-left");
+          welcomeVideo.classList.remove("slide-out-left");
+        });
+      }
+
+      async function submitForm(formData) {
+        nextBtn.disabled = true;
+        nextBtn.textContent = "Submitting...";
+        nextBtn.classList.add("opacity-70", "cursor-not-allowed");
+
+        try {
+          const response = await fetch("/tenet-phase2", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+              errorData.error || `HTTP error! status: ${response.status}`,
+            );
+          }
+
+          const applicantName = formData.name || "Applicant";
+          const positionValue = formData.position;
+          const positionQuestion = formConfig.questions.find(
+            (q) => q.id === "position",
+          );
+          const positionOption = positionQuestion.options.find(
+            (o) => o.value === positionValue,
+          );
+          const positionLabel = positionOption
+            ? positionOption.label
+            : "a position";
+
+          const submissionData = {
+            name: applicantName,
+            position: positionLabel,
+          };
+          localStorage.setItem(
+            SUBMISSION_DATA_KEY,
+            JSON.stringify(submissionData),
+          );
+          localStorage.setItem(SUBMISSION_STATUS_KEY, "true");
+          localStorage.removeItem(STORAGE_KEY);
+
+          updateThankYouScreen(applicantName, positionLabel);
+          transitionToScreen(questionScreen, thankYouScreen, () => {
+            progressBar.style.width = "100%";
+          });
+        } catch (error) {
+          console.error("Form submission failed:", error);
+          alert(
+            "Sorry, there was an error submitting your application. Please check your connection and try again. Details: " +
+              error.message,
+          );
+
+          nextBtn.disabled = false;
+          nextBtn.textContent = "Submit Application";
+          nextBtn.classList.remove("opacity-70", "cursor-not-allowed");
+        }
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (isTransitioning) return;
+
+        if (e.key === "ArrowLeft" && !prevBtn.disabled) {
+          goToPrevious();
+        } else if (e.key === "ArrowRight" && !nextBtn.disabled) {
+          goToNext();
+        }
+      });
+
+      init();
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const canvas = document.getElementById("hero-canvas");
+        const target = document.getElementById("startBtn");
+
+        if (!canvas || !target) return;
+
+        const ctx = canvas.getContext("2d");
+
+        const updateCanvasSize = () => {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        };
+
+        window.addEventListener("resize", updateCanvasSize);
+        updateCanvasSize();
+
+        let mouse = { x: null, y: null, isIdle: true };
+        let idleTimeout;
+
+        window.addEventListener("mousemove", (e) => {
+          mouse.x = e.clientX;
+          mouse.y = e.clientY;
+          mouse.isIdle = false;
+
+          clearTimeout(idleTimeout);
+          idleTimeout = setTimeout(() => {
+            mouse.isIdle = true;
+          }, 2000);
+        });
+
+        window.addEventListener("mouseout", () => {
+          mouse.isIdle = true;
+        });
+
+        const drawArrow = () => {
+          if (!mouse.x || !mouse.y || mouse.isIdle) return;
+
+          const rect = target.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+
+          const dist = Math.hypot(cx - mouse.x, cy - mouse.y);
+
+          if (dist < 100) return;
+
+          const x0 = mouse.x;
+          const y0 = mouse.y;
+
+          const angle = Math.atan2(cy - y0, cx - x0);
+
+          const x1 = cx - Math.cos(angle) * (rect.width / 2 + 15);
+          const y1 = cy - Math.sin(angle) * (rect.height / 2 + 15);
+
+          const midX = (x0 + x1) / 2;
+          const midY = (y0 + y1) / 2;
+          const offset = Math.min(150, dist * 0.3);
+          const t = Math.max(-1, Math.min(1, (y0 - y1) / 200));
+          const controlX = midX + Math.sin(angle) * offset * t;
+          const controlY = midY - Math.cos(angle) * offset * t;
+
+          const opacity = Math.min(0.8, (dist - 100) / 500);
+
+          ctx.strokeStyle = `rgba(255, 193, 7, ${opacity})`;
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([8, 5]);
+
+          ctx.beginPath();
+          ctx.moveTo(x0, y0);
+          ctx.quadraticCurveTo(controlX, controlY, x1, y1);
+          ctx.stroke();
+
+          const headAngle = Math.atan2(y1 - controlY, x1 - controlX);
+          const headLength = 10;
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(
+            x1 - headLength * Math.cos(headAngle - Math.PI / 6),
+            y1 - headLength * Math.sin(headAngle - Math.PI / 6),
+          );
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(
+            x1 - headLength * Math.cos(headAngle + Math.PI / 6),
+            y1 - headLength * Math.sin(headAngle + Math.PI / 6),
+          );
+          ctx.stroke();
+        };
+
+        const animate = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          drawArrow();
+          requestAnimationFrame(animate);
+        };
+
+        animate();
+      });
+    </script>
+  </body>
+</html>
