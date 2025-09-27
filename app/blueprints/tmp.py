@@ -263,3 +263,63 @@ def tenet_phase2():
         return response
 
     return render_template("tmp/tenet.recruitment.phase2.html")
+
+@form_bp.route("/tenet-phase3", methods=["GET", "POST"])
+def tenet_phase3():
+    if request.method == "POST":
+        origin = request.headers.get("Origin")
+
+        allowed_origins = ["https://ioit.acm.org"]
+
+        if not origin or origin not in allowed_origins:
+            return make_response(
+                jsonify({"error": "Unrestricted"}), 403
+            )
+
+        data = request.get_json()
+        if not data:
+            return make_response(jsonify({"error": "No data received"}), 400)
+
+        API_URL = os.getenv("TENET_FORM_API_URL")
+        BEARER_TOKEN = os.getenv("TENET_FORM_BEARER_TOKEN")
+
+        if not API_URL or not BEARER_TOKEN:
+            return make_response(
+                jsonify({"error": "Server is not configured to handle this request."}),
+                500,
+            )
+
+        utc_now = datetime.utcnow()
+        ist_now = utc_now + timedelta(hours=5, minutes=30)
+        data["timestamp"] = ist_now.strftime("%Y-%m-%d %H:%M:%S")
+
+        headers = {
+            "Authorization": "Bearer {}".format(BEARER_TOKEN),
+            "Content-Type": "application/json",
+        }
+
+        try:
+            sheetdb_response = requests.post(
+                API_URL, json={"data": [data]}, headers=headers
+            )
+            sheetdb_response.raise_for_status()
+
+            response = make_response(
+                jsonify({"success": True, "message": "Data submitted successfully"}),
+                200,
+            )
+        except requests.exceptions.RequestException as e:
+            response = make_response(
+                jsonify(
+                    {
+                        "error": "Failed to send data to the external service",
+                        "details": str(e),
+                    }
+                ),
+                502,
+            )
+
+        response.headers["Access-Control-Allow-Origin"] = origin
+        return response
+
+    return render_template("tmp/tenet.recruitment.phase3.html")
