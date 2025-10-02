@@ -266,6 +266,7 @@ def tenet_phase2():
 
 @form_bp.route("/tenet-phase3", methods=["GET", "POST"])
 def tenet_phase3():
+    return render_template("tmp/closed_forms_tenet.html") # form closed
     if request.method == "POST":
         origin = request.headers.get("Origin")
 
