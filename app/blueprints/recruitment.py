@@ -32,9 +32,10 @@ def load_questions_config():
 
 @recruitment_bp.route("/recruitment", methods=["GET"])
 def acm_recruitment_form():
-    return render_template("closed.html") # form closed
+    # return render_template("closed.html") # form closed
     questions_config = load_questions_config()
-    return render_template("acm.recruitment.html", questions_config=questions_config)
+    return render_template("acm.volunteers.html", questions_config=questions_config)
+    # return render_template("acm.recruitment.html", questions_config=questions_config)
 
 
 # Table format:
@@ -43,7 +44,10 @@ def acm_recruitment_form():
 
 @recruitment_bp.route("/recruitment", methods=["POST"])
 def handle_acm_recruitment():
-    return jsonify({"error": "This form is no longer accepting submissions."}), 403 # form closed
+    # return (
+    #     jsonify({"error": "This form is no longer accepting submissions."}),
+    #     403,
+    # )  # form closed
 
     try:
         data = request.get_json()
@@ -83,7 +87,10 @@ def handle_acm_recruitment():
 
         mobile_no = data.get("mobile")
         if not re.match(r"^[0-9]{10}$", mobile_no):
-            return jsonify({"error": "Please enter a valid 10-digit mobile number."}), 400
+            return (
+                jsonify({"error": "Please enter a valid 10-digit mobile number."}),
+                400,
+            )
 
         ist_now = datetime.utcnow() + timedelta(hours=5, minutes=30)
         data["date"] = ist_now.isoformat()

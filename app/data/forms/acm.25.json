@@ -22,6 +22,29 @@
       "placeholder": "https://instagram.com/username or https://youtube.com/channel/yourchannel"
     }
   ],
+  "media_team": [
+    {
+      "id": "mh_q1",
+      "label": "Are you skilled in creating posters, editing videos, or photography? Mention which one(s) you're best at.",
+      "type": "textarea"
+    },
+    {
+      "id": "mh_q2",
+      "label": "How do you ensure that your tasks or creative deliverables are completed on time?",
+      "type": "textarea"
+    },
+    {
+      "id": "mh_q3",
+      "label": "In your opinion, what makes you stand out for this position?",
+      "type": "textarea"
+    },
+    {
+      "id": "mh_q4",
+      "label": "Can you share a link to a portfolio or examples of your media work?",
+      "type": "text",
+      "placeholder": "https://instagram.com/username or https://youtube.com/channel/yourchannel"
+    }
+  ],
   "web_team": [
     {
       "id": "wt_q1",
@@ -49,7 +72,7 @@
         "Google Suite (Sheets, Docs, Slides, etc.)",
         "Microsoft Office (Word, Excel, PowerPoint, etc.)",
         "AI Tools (ChatGPT, etc.)",
-        "Autocrat"
+        "Autocrat and bulk mailing applications"
       ]
     },
     {

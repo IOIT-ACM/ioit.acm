@@ -1,0 +1,644 @@
+{% extends "forms/base.html" %}
+{% block title %}ACM FY/SY Volunteer Recruitment Form{% endblock %}
+{% block content %}
+    <div class="max-w-6xl mx-auto md:p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="w-full flex justify-center mt-10 md:mt-10 p-2">
+                <div class="w-1/2 md:mt-20 h-fit sticky top-32">
+                    <div class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl animate-rotate">
+                    </div>
+                    <div class="aspect-square overflow-hidden bg-white w-full h-auto transform rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400">
+                        <img class="-rotate-45 z-50"
+                             src="{{ url_for('static', filename='og-image.png') }}"
+                             alt="about-image" />
+                    </div>
+                </div>
+            </div>
+            <form id="acmForm" class="p-5 md:p-0 space-y-6">
+                <div id="step-0" class="form-step p-4 md:p-6">
+                    <div class="text-gray-700">
+                        <h1 class="text-2xl md:text-3xl font-bold text-blue-600 mb-4 text-center">Hey!</h1>
+                        <p class="text-lg mb-4">
+                            Thank you for taking interest in applying for the AISSMS IOIT ACM
+                            Student Chapter Committee! This is a great opportunity for First and Second Year students to get involved, learn new skills, and contribute to our vibrant community.
+                        </p>
+                        <p class="text-lg mb-4">
+                            Joining our committee is a fantastic opportunity to contribute,
+                            lead, and shape the activities of the ACM Student Chapter. We value
+                            dedication, teamwork, and a passion for technology and community
+                            building.
+                        </p>
+                        <p class="text-lg mb-6">
+                            We're excited to learn more about you through this application.
+                            Please proceed by clicking the button below.
+                        </p>
+                        <p id="already-submitted-msg"
+                           class="text-center text-blue-600 text-lg font-semibold hidden">
+                            You have already submitted the application form.
+                        </p>
+                        <div id="step-0-buttons" class="flex items-center gap-4 mt-4">
+                            <!-- Will be dynamically updated by JS -->
+                        </div>
+                    </div>
+                </div>
+                <div id="step-1" class="form-step hidden">
+                    <p class="text-lg font-semibold text-gray-700 mb-6">Step 1: General Information</p>
+                    <hr class="border-t-2 border-gray-500 my-6" />
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-semibold mb-2 mt-10">Full Name</label>
+                        <input type="text"
+                               name="fullName"
+                               placeholder="Enter full name"
+                               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-semibold mb-2 mt-10">Branch</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {% for b in ['CS','IT','AI&DS','ENTC','ELEC','INSTRU'] %}
+                                <label class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0">
+                                    <input type="radio"
+                                           name="branch"
+                                           value="{{ b }}"
+                                           class="accent-blue-500 focus:outline-none mr-3" />
+                                    <span class="text-gray-800 font-medium">{{ b }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2 mt-10">Year</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {% for y in ['First Year','Second year','Third Year','Final Year']
+                                %}
+                                <label class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0">
+                                    <input type="radio"
+                                           name="year"
+                                           value="{{ y }}"
+                                           class="accent-blue-500 focus:outline-none mr-3" />
+                                    <span class="text-gray-800 font-medium">{{ y }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2 mt-10">Mobile Number</label>
+                        <input type="tel"
+                               name="mobile"
+                               placeholder="Enter mobile number"
+                               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               pattern="[0-9]{10}"
+                               title="Please enter a 10-digit mobile number" />
+                    </div>
+                    <button type="button"
+                            onclick="nextStep()"
+                            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
+                        Next
+                    </button>
+                </div>
+                <div id="step-2" class="form-step hidden">
+                    <p class="text-lg font-semibold text-gray-700 mb-6">Step 2: Choose Your Desired Position</p>
+                    <hr class="border-t-2 border-gray-500 my-6" />
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                        {% set committee_roles = [ {'value': 'media_team', 'text': 'Media
+                                                    Team'}, {'value': 'doc_team', 'text': 'Doc Team'},{'value':
+                                                    'event_management_team', 'text': 'Event Management Team'} ] %}
+                            {% for
+                                role in committee_roles %}
+                                <label class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0">
+                                    <input type="radio"
+                                           name="roleType"
+                                           value="{{ role.value }}"
+                                           onchange="renderRoleSpecificFields()"
+                                           class="accent-blue-500 focus:outline-none mr-3" />
+                                    <span class="text-gray-800 font-medium">{{ role.text }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                        <div class="flex justify-between">
+                            <button type="button"
+                                    onclick="prevStep()"
+                                    class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition">
+                                Back
+                            </button>
+                            <button type="button"
+                                    onclick="nextStep()"
+                                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                    <div id="step-3" class="form-step hidden space-y-6">
+                        <p class="text-lg font-semibold text-gray-700 mb-2">Step 3: Experience & Role-Specific Questions</p>
+                        <hr class="border-t-2 border-gray-500 my-4" />
+                        {% for role_value, questions in questions_config.items() %}
+                            <div id="{{ role_value }}-fields" class="role-section hidden space-y-4">
+                                <p class="text-md font-semibold text-gray-600 mb-2">
+                                    For {{ (committee_roles) | selectattr('value', 'equalto',
+                                     role_value) | map(attribute='text') | first |
+                                    default(role_value.replace('_', ' ')|title) }}:
+                                </p>
+                                {% for question in questions %}
+                                    <div>
+                                        <label class="block text-gray-700 font-semibold mb-2">{{ question.label }}</label>
+                                        {% if question.type == 'textarea' %}
+                                            <textarea
+              name="{{ question.id }}"
+              rows="3"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              {%
+              if
+              question.placeholder
+              %}placeholder="{{ question.placeholder }}"
+              {%
+              endif
+              %}
+            ></textarea>
+                                        {% elif question.type == 'text' %}
+                                            <input
+                                                type="text"
+                                                name="{{ question.id }}"
+                                                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                                                {%
+                                                if
+                                                question.placeholder
+                                                %}placeholder="{{ question.placeholder }}"
+                                                {%
+                                                endif
+                                                %}
+                                                />
+                                            {% elif question.type == 'multichoice' %}
+                                                <div class="grid grid-cols-1 gap-4">
+                                                    {% for option in question.options %}
+                                                        <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0">
+                                                            <input type="checkbox"
+                                                                   name="{{ question.id }}"
+                                                                   value="{{ option }}"
+                                                                   class="accent-blue-500 focus:outline-none mr-3" />
+                                                            <span class="text-gray-800 font-medium">{{ option }}</span>
+                                                        </label>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            <div class="space-y-4 mt-6 pt-4 border-t border-gray-300">
+                                <label class="block text-gray-700 font-semibold mb-2 mt-6">
+                                    Anything else you want us to know about you? (Optional)
+                                </label>
+                                <textarea name="experience"
+                                          rows="3"
+                                          placeholder="Briefly describe any previous roles, projects, or activities."
+                                          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                                <label class="block text-gray-700 font-semibold mb-2 mt-6">
+                                    What knowledge do you have about the AISSMS IOIT ACM Student Chapter
+                                    and what attracted you to the post for which you are applying?
+                                </label>
+                                <textarea name="whyApply"
+                                          rows="3"
+                                          placeholder="Explain your motivation and what you hope to contribute."
+                                          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                            </div>
+                            <div class="flex justify-between pt-4">
+                                <button type="button"
+                                        onclick="prevStep()"
+                                        class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition">
+                                    Back
+                                </button>
+                                <div class="relative">
+                                    <button type="submit"
+                                            id="submitBtn"
+                                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
+                                        Submit Application
+                                    </button>
+                                    <div id="spinner"
+                                         class="hidden absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 rounded-lg">
+                                        <svg class="animate-spin h-6 w-6 text-blue-500"
+                                             xmlns="http://www.w3.org/2000/svg"
+                                             fill="none"
+                                             viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <p id="formMsg" class="text-center text-lg font-semibold mt-4"></p>
+                        </div>
+                        <div id="step-9" class="form-step hidden p-4 md:p-6">
+                            <h1 class="text-2xl md:text-3xl font-bold text-blue-600 mb-4">Thank You for Your Submission!</h1>
+                            <p class="text-lg mb-4">
+                                We appreciate your interest in joining the AISSMS IOIT ACM Student
+                                Chapter. Your application has been received successfully.
+                            </p>
+                            <p class="text-lg mb-6">Our team will review your application and get in touch with you soon.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <script>
+  let currentStep = 0,
+    formMemory = {};
+
+  const roleSpecificQuestionKeys = {
+    media_team: ["mh_q1", "mh_q2", "mh_q3", "mh_q4"],
+    web_team: ["wt_q1", "wt_q2", "wt_q3"],
+    doc_team: ["dt_q1", "dt_q2", "dt_q3"],
+    tech_team: ["tt_q1", "tt_q2", "tt_q3"],
+    event_management_team: ["em_q1", "em_q2", "em_q3"],
+  };
+
+  function saveFormData() {
+    const f = document.getElementById("acmForm");
+    formMemory = {};
+    f.querySelectorAll(
+      'input[type="text"],input[type="tel"],textarea,select',
+    ).forEach((e) => {
+      if (!e.disabled && e.value.trim()) {
+        formMemory[e.name] = e.value;
+      }
+    });
+    f.querySelectorAll('input[type="radio"]:checked').forEach((e) => {
+      formMemory[e.name] = e.value;
+    });
+
+    const multichoiceFields = new Set();
+    document
+      .querySelectorAll('input[type="checkbox"]')
+      .forEach((cb) => multichoiceFields.add(cb.name));
+
+    multichoiceFields.forEach((name) => {
+      const checkedValues = Array.from(
+        f.querySelectorAll(`input[name="${name}"]:checked`),
+      ).map((cb) => cb.value);
+      if (checkedValues.length > 0) {
+        formMemory[name] = checkedValues.join(", ");
+      }
+    });
+
+    formMemory.currentStep = currentStep;
+  }
+
+  function loadFormData() {
+    if (!Object.keys(formMemory).length) return;
+    const f = document.getElementById("acmForm");
+    Object.keys(formMemory).forEach((n) => {
+      if (n === "currentStep") return;
+      const elements = f.querySelectorAll(`[name="${n}"]`);
+      if (elements.length > 0) {
+        const elType = elements[0].type;
+        if (elType === "radio") {
+          const r = f.querySelector(`[name="${n}"][value="${formMemory[n]}"]`);
+          if (r) {
+            r.checked = true;
+            updateRadioStyling(r);
+          }
+        } else if (elType === "checkbox") {
+          const values = formMemory[n].split(", ");
+          elements.forEach((cb) => {
+            if (values.includes(cb.value)) {
+              cb.checked = true;
+              const label = cb.closest("label");
+              if (label) {
+                label.classList.add("bg-blue-100", "border-blue-500");
+                label.classList.remove("border-gray-300");
+              }
+            }
+          });
+        } else {
+          elements[0].value = formMemory[n];
+        }
+      }
+    });
+    renderRoleSpecificFields();
+  }
+
+  function updateRadioStyling(r) {
+    document.querySelectorAll(`input[name="${r.name}"]`).forEach((e) => {
+      const l = e.closest(".radio-option");
+      if (l) {
+        l.classList.remove("bg-blue-100", "border-blue-500");
+        l.classList.add("border-gray-300");
+      }
+    });
+    const s = r.closest(".radio-option");
+    if (s) {
+      s.classList.remove("border-gray-300");
+      s.classList.add("bg-blue-100", "border-blue-500");
+    }
+  }
+
+  function goToStep(s, isLoading = false) {
+    document
+      .querySelectorAll(".form-step")
+      .forEach((d) => d.classList.add("hidden"));
+    const stepEl = document.getElementById(`step-${s}`);
+    if (stepEl) stepEl.classList.remove("hidden");
+    currentStep = s;
+    if (!isLoading) saveFormData();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function nextStep() {
+    if (currentStep === 0) {
+      goToStep(1);
+    } else if (currentStep < 3) {
+      if (validateStep(currentStep)) {
+        goToStep(currentStep + 1);
+        if (currentStep === 2) renderRoleSpecificFields();
+      }
+    }
+  }
+
+  function prevStep() {
+    if (currentStep > 0) {
+      goToStep(currentStep - 1);
+      if (currentStep === 2) renderRoleSpecificFields();
+    }
+  }
+
+  function renderRoleSpecificFields() {
+    const selectedRoleRadio = document.querySelector(
+      'input[name="roleType"]:checked',
+    );
+    document.querySelectorAll(".role-section").forEach((section) => {
+      section.classList.add("hidden");
+      section
+        .querySelectorAll("textarea, input, select")
+        .forEach((el) => (el.disabled = true));
+    });
+
+    if (selectedRoleRadio) {
+      const roleValue = selectedRoleRadio.value;
+      const container = document.getElementById(`${roleValue}-fields`);
+      if (container) {
+        container.classList.remove("hidden");
+        container
+          .querySelectorAll("textarea, input, select")
+          .forEach((el) => (el.disabled = false));
+      }
+    }
+  }
+
+  function validateStep(n) {
+    const stepElement = document.getElementById(`step-${n}`);
+    const formElement = document.getElementById("acmForm");
+    const formData = new FormData(formElement);
+
+    let fieldsToValidate = [];
+    if (n === 1) {
+      fieldsToValidate = ["fullName", "branch", "year", "mobile"];
+    } else if (n === 2) {
+      fieldsToValidate = ["roleType"];
+    } else if (n === 3) {
+      fieldsToValidate = ["whyApply"];
+      const selectedRoleType = formData.get("roleType");
+      if (selectedRoleType && roleSpecificQuestionKeys[selectedRoleType]) {
+        fieldsToValidate = fieldsToValidate.concat(
+          roleSpecificQuestionKeys[selectedRoleType],
+        );
+      }
+    }
+
+    let isValid = true;
+    let firstInvalidField = null;
+
+    stepElement
+      .querySelectorAll(".border-red-500")
+      .forEach((el) => el.classList.remove("border-red-500"));
+    stepElement.querySelectorAll(".error-msg").forEach((el) => el.remove());
+
+    for (const fieldName of fieldsToValidate) {
+      const elements = formElement.querySelectorAll(
+        `[name="${fieldName}"]:not([disabled])`,
+      );
+      if (!elements.length) continue;
+
+      let hasValue = false;
+      if (elements[0].type === "radio" || elements[0].type === "checkbox") {
+        hasValue = [...elements].some((r) => r.checked);
+      } else {
+        hasValue = elements[0].value.trim() !== "";
+      }
+
+      if (!hasValue) {
+        isValid = false;
+        elements.forEach((el) => {
+          const parent = el.closest(".radio-option") || el.closest("div");
+          el.classList.add("border-red-500");
+          if (parent && !parent.querySelector(".error-msg")) {
+            const msg = document.createElement("p");
+            msg.className = "text-sm text-red-500 mt-1 error-msg";
+            msg.innerText = "This field is required.";
+            if (el.type === "radio" || el.type === "checkbox") {
+              const group = el.closest("div.gap-4") || el.closest("div.mb-6");
+              if (group && !group.querySelector(".error-msg")) {
+                group.appendChild(msg);
+              }
+            } else {
+              parent.appendChild(msg);
+            }
+          }
+        });
+        if (!firstInvalidField) firstInvalidField = elements[0];
+      } else if (fieldName === "mobile") {
+        const mobileInput = elements[0];
+        const mobileValue = mobileInput.value.trim();
+        const mobileRegex = /^[0-9]{10}$/;
+        if (!mobileRegex.test(mobileValue)) {
+          isValid = false;
+          const parent = mobileInput.closest("div");
+          mobileInput.classList.add("border-red-500");
+          if (parent && !parent.querySelector(".error-msg")) {
+            const msg = document.createElement("p");
+            msg.className = "text-sm text-red-500 mt-1 error-msg";
+            msg.innerText = "Please enter a valid 10-digit mobile number.";
+            parent.appendChild(msg);
+          }
+          if (!firstInvalidField) firstInvalidField = mobileInput;
+        }
+      }
+    }
+
+    if (!isValid && firstInvalidField) {
+      firstInvalidField.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    return isValid;
+  }
+
+  function handleRadioSelection() {
+    document.querySelectorAll('input[type="radio"]').forEach((r) => {
+      r.addEventListener("change", function () {
+        updateRadioStyling(this);
+        if (this.name === "roleType") {
+          renderRoleSpecificFields();
+        }
+        saveFormData();
+      });
+    });
+    document.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
+      cb.addEventListener("change", function () {
+        const label = this.closest("label");
+        if (this.checked) {
+          label.classList.add("bg-blue-100", "border-blue-500");
+          label.classList.remove("border-gray-300");
+        } else {
+          label.classList.remove("bg-blue-100", "border-blue-500");
+          label.classList.add("border-gray-300");
+        }
+        saveFormData();
+      });
+    });
+  }
+
+  function setupAutoSave() {
+    const stored = localStorage.getItem("acmCommitteeFormData");
+    if (stored) formMemory = JSON.parse(stored);
+
+    setInterval(() => {
+      saveFormData();
+      localStorage.setItem("acmCommitteeFormData", JSON.stringify(formMemory));
+    }, 5000);
+
+    document.querySelectorAll("input,select,textarea").forEach((e) => {
+      e.addEventListener("input", () => {
+        saveFormData();
+        localStorage.setItem(
+          "acmCommitteeFormData",
+          JSON.stringify(formMemory),
+        );
+      });
+      e.addEventListener("change", () => {
+        saveFormData();
+        localStorage.setItem(
+          "acmCommitteeFormData",
+          JSON.stringify(formMemory),
+        );
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    setupAutoSave();
+    loadFormData();
+
+    if (!formMemory.currentStep && formMemory.currentStep !== 0) {
+      goToStep(0, true);
+    }
+
+    const alreadySubmitted =
+      localStorage.getItem("acmVolunteerFormSubmitted") === "true";
+    const btns = document.getElementById("step-0-buttons");
+
+    if (alreadySubmitted) {
+      document
+        .getElementById("already-submitted-msg")
+        .classList.remove("hidden");
+      btns.innerHTML = `
+        <a href="/" class="w-full bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg text-center">
+          Home
+        </a>
+        <button type="button" onclick="localStorage.removeItem('acmVolunteerFormSubmitted'); localStorage.removeItem('acmCommitteeFormData'); formMemory={}; goToStep(1);" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
+          Submit Again
+        </button>`;
+    } else {
+      btns.innerHTML = `
+        <button type="button" onclick="nextStep()" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
+          Begin Application
+        </button>`;
+    }
+
+    renderRoleSpecificFields();
+    handleRadioSelection();
+
+    document.querySelectorAll("input,select,textarea").forEach((e) => {
+      e.addEventListener("input", () => {
+        e.classList.remove("border-red-500");
+        const parent = e.closest(".radio-option") || e.closest("div");
+        const errorMsg = parent?.querySelector(".error-msg");
+        if (errorMsg) errorMsg.remove();
+
+        if (e.type === "radio" || e.type === "checkbox") {
+          const group = e.closest("div.gap-4") || e.closest("div.mb-6");
+          const groupMsg = group?.querySelector(".error-msg");
+          if (groupMsg) groupMsg.remove();
+        }
+      });
+    });
+
+    document.getElementById("acmForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!validateStep(3)) return;
+
+      saveFormData();
+      let dataToSubmit = { ...formMemory };
+
+      const selectedRole = dataToSubmit.roleType;
+      const allPossibleQuestionKeys = new Set();
+      Object.values(roleSpecificQuestionKeys).forEach((keys) =>
+        keys.forEach((key) => allPossibleQuestionKeys.add(key)),
+      );
+
+      const baseFields = new Set([
+        "fullName",
+        "branch",
+        "year",
+        "mobile",
+        "roleType",
+        "experience",
+        "whyApply",
+      ]);
+
+      let allowedKeys = new Set([...baseFields]);
+      if (selectedRole && roleSpecificQuestionKeys[selectedRole]) {
+        roleSpecificQuestionKeys[selectedRole].forEach((key) =>
+          allowedKeys.add(key),
+        );
+      }
+
+      const finalDataToSubmit = {};
+      for (const key in dataToSubmit) {
+        if (allowedKeys.has(key)) {
+          finalDataToSubmit[key] = dataToSubmit[key];
+        }
+      }
+
+      const submitBtn = document.getElementById("submitBtn");
+      const spinner = document.getElementById("spinner");
+      const msgBox = document.getElementById("formMsg");
+
+      submitBtn.disabled = true;
+      spinner.classList.remove("hidden");
+      msgBox.innerText = "";
+
+      try {
+        const res = await fetch(
+          "{{ url_for('recruitment.handle_acm_recruitment') }}",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(finalDataToSubmit),
+          },
+        );
+
+        localStorage.setItem("acmVolunteerFormSubmitted", "true");
+        goToStep(9);
+      } catch (err) {
+        console.error("Submission error:", err);
+        msgBox.className =
+          "text-center text-lg font-semibold mt-4 text-red-600";
+        msgBox.innerText = "An unexpected error occurred: " + err.message;
+      } finally {
+        submitBtn.disabled = false;
+        spinner.classList.add("hidden");
+      }
+    });
+
+    window.addEventListener("beforeunload", () => {
+      saveFormData();
+      localStorage.setItem("acmCommitteeFormData", JSON.stringify(formMemory));
+    });
+  });
+            </script>
+        {% endblock %}

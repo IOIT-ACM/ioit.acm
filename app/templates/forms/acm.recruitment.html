@@ -1,195 +1,148 @@
-{% extends "forms/base.html" %} {% block title %} ACM Committee Recruitment Form
-{% endblock %} {% block content %}
-<div class="max-w-6xl mx-auto md:p-6">
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    <div class="w-full flex justify-center mt-10 md:mt-10 p-2">
-      <div class="w-1/2 md:mt-20 h-fit sticky top-32">
-        <div
-          class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl animate-rotate"
-        ></div>
-        <div
-          class="aspect-square overflow-hidden bg-white w-full h-auto transform rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400"
-        >
-          <img
-            class="-rotate-45 z-50"
-            src="{{ url_for('static', filename='og-image.png') }}"
-            alt="about-image"
-          />
-        </div>
-      </div>
-    </div>
-    <form id="acmForm" class="p-5 md:p-0 space-y-6">
-      <div id="step-0" class="form-step p-4 md:p-6">
-        <div class="text-gray-700">
-          <h1
-            class="text-2xl md:text-3xl font-bold text-blue-600 mb-4 text-center"
-          >
-            Hey!
-          </h1>
-          <p class="text-lg mb-4">
-            Thank you for taking interest in applying for the AISSMS IOIT ACM Student
-            Chapter Committee! We are delighted to see your enthusiasm.
-          </p>
-          <p class="text-lg mb-4">
-            Joining our committee is a fantastic opportunity to contribute,
-            lead, and shape the activities of the ACM Student Chapter. We value
-            dedication, teamwork, and a passion for technology and community
-            building.
-          </p>
-          <p class="text-lg mb-6">
-            We're excited to learn more about you through this application.
-            Please proceed by clicking the button below.
-          </p>
-          <p
-            id="already-submitted-msg"
-            class="text-center text-blue-600 text-lg font-semibold hidden"
-          >
-            You have already submitted the application form.
-          </p>
-          <div id="step-0-buttons" class="flex items-center gap-4 mt-4">
-            <!-- Will be dynamically updated by JS -->
-          </div>
-        </div>
-      </div>
-      <div id="step-1" class="form-step hidden">
-        <p class="text-lg font-semibold text-gray-700 mb-6">
-          Step 1: General Information
-        </p>
-        <hr class="border-t-2 border-gray-500 my-6" />
-        <div class="mb-4">
-          <label class="block text-gray-700 font-semibold mb-2 mt-10"
-            >Full Name</label
-          >
-          <input
-            type="text"
-            name="fullName"
-            placeholder="Enter full name"
-            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        <div class="mb-4">
-          <label class="block text-gray-700 font-semibold mb-2 mt-10"
-            >Branch</label
-          >
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {% for b in ['CS','IT','AI&DS','ENTC','ELEC','INSTRU'] %}
-            <label
-              class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
-            >
-              <input
-                type="radio"
-                name="branch"
-                value="{{ b }}"
-                class="accent-blue-500 focus:outline-none mr-3"
-              />
-              <span class="text-gray-800 font-medium">{{ b }}</span>
-            </label>
-            {% endfor %}
-          </div>
-        </div>
-        <div class="mb-6">
-          <label class="block text-gray-700 font-semibold mb-2 mt-10"
-            >Year</label
-          >
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {% for y in ['First Year','Second year','Third Year','Final Year']
-            %}
-            <label
-              class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
-            >
-              <input
-                type="radio"
-                name="year"
-                value="{{ y }}"
-                class="accent-blue-500 focus:outline-none mr-3"
-              />
-              <span class="text-gray-800 font-medium">{{ y }}</span>
-            </label>
-            {% endfor %}
-          </div>
-        </div>
-        <div class="mb-6">
-          <label class="block text-gray-700 font-semibold mb-2 mt-10"
-            >Mobile Number</label
-          >
-          <input
-            type="tel"
-            name="mobile"
-            placeholder="Enter mobile number"
-            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            pattern="[0-9]{10}"
-            title="Please enter a 10-digit mobile number"
-          />
-        </div>
-        <button
-          type="button"
-          onclick="nextStep()"
-          class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition"
-        >
-          Next
-        </button>
-      </div>
-      <div id="step-2" class="form-step hidden">
-        <p class="text-lg font-semibold text-gray-700 mb-6">
-          Step 2: Choose Your Desired Position
-        </p>
-        <hr class="border-t-2 border-gray-500 my-6" />
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          {% set committee_roles = [ {'value': 'media_head', 'text': 'Media
-          Team'}, {'value': 'web_team', 'text': 'Web Team'}, {'value':
-          'doc_team', 'text': 'Doc Team'}, {'value': 'tech_team', 'text': 'Tech
-          Team'}, {'value': 'event_management_team', 'text': 'Event Management
-          Team'} ] %} {% for role in committee_roles %}
-          <label
-            class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
-          >
-            <input
-              type="radio"
-              name="roleType"
-              value="{{ role.value }}"
-              onchange="renderRoleSpecificFields()"
-              class="accent-blue-500 focus:outline-none mr-3"
-            />
-            <span class="text-gray-800 font-medium">{{ role.text }}</span>
-          </label>
-          {% endfor %}
-        </div>
-        <div class="flex justify-between">
-          <button
-            type="button"
-            onclick="prevStep()"
-            class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition"
-          >
-            Back
-          </button>
-          <button
-            type="button"
-            onclick="nextStep()"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition"
-          >
-            Next
-          </button>
-        </div>
-      </div>
-      <div id="step-3" class="form-step hidden space-y-6">
-        <p class="text-lg font-semibold text-gray-700 mb-2">
-          Step 3: Experience & Role-Specific Questions
-        </p>
-        <hr class="border-t-2 border-gray-500 my-4" />
-        {% for role_value, questions in questions_config.items() %}
-        <div id="{{ role_value }}-fields" class="role-section hidden space-y-4">
-          <p class="text-md font-semibold text-gray-600 mb-2">
-            For {{ (committee_roles) | selectattr('value', 'equalto',
-            role_value) | map(attribute='text') | first |
-            default(role_value.replace('_', ' ')|title) }}:
-          </p>
-          {% for question in questions %}
-          <div>
-            <label class="block text-gray-700 font-semibold mb-2"
-              >{{ question.label }}</label
-            >
-            {% if question.type == 'textarea' %}
-            <textarea
+{% extends "forms/base.html" %}
+{% block title %}ACM Committee Recruitment Form{% endblock %}
+{% block content %}
+    <div class="max-w-6xl mx-auto md:p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="w-full flex justify-center mt-10 md:mt-10 p-2">
+                <div class="w-1/2 md:mt-20 h-fit sticky top-32">
+                    <div class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl animate-rotate">
+                    </div>
+                    <div class="aspect-square overflow-hidden bg-white w-full h-auto transform rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400">
+                        <img class="-rotate-45 z-50"
+                             src="{{ url_for('static', filename='og-image.png') }}"
+                             alt="about-image" />
+                    </div>
+                </div>
+            </div>
+            <form id="acmForm" class="p-5 md:p-0 space-y-6">
+                <div id="step-0" class="form-step p-4 md:p-6">
+                    <div class="text-gray-700">
+                        <h1 class="text-2xl md:text-3xl font-bold text-blue-600 mb-4 text-center">Hey!</h1>
+                        <p class="text-lg mb-4">
+                            Thank you for taking interest in applying for the AISSMS IOIT ACM Student
+                            Chapter Committee! We are delighted to see your enthusiasm.
+                        </p>
+                        <p class="text-lg mb-4">
+                            Joining our committee is a fantastic opportunity to contribute,
+                            lead, and shape the activities of the ACM Student Chapter. We value
+                            dedication, teamwork, and a passion for technology and community
+                            building.
+                        </p>
+                        <p class="text-lg mb-6">
+                            We're excited to learn more about you through this application.
+                            Please proceed by clicking the button below.
+                        </p>
+                        <p id="already-submitted-msg"
+                           class="text-center text-blue-600 text-lg font-semibold hidden">
+                            You have already submitted the application form.
+                        </p>
+                        <div id="step-0-buttons" class="flex items-center gap-4 mt-4">
+                            <!-- Will be dynamically updated by JS -->
+                        </div>
+                    </div>
+                </div>
+                <div id="step-1" class="form-step hidden">
+                    <p class="text-lg font-semibold text-gray-700 mb-6">Step 1: General Information</p>
+                    <hr class="border-t-2 border-gray-500 my-6" />
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-semibold mb-2 mt-10">Full Name</label>
+                        <input type="text"
+                               name="fullName"
+                               placeholder="Enter full name"
+                               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-semibold mb-2 mt-10">Branch</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {% for b in ['CS','IT','AI&DS','ENTC','ELEC','INSTRU'] %}
+                                <label class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0">
+                                    <input type="radio"
+                                           name="branch"
+                                           value="{{ b }}"
+                                           class="accent-blue-500 focus:outline-none mr-3" />
+                                    <span class="text-gray-800 font-medium">{{ b }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2 mt-10">Year</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {% for y in ['First Year','Second year','Third Year','Final Year']
+                                %}
+                                <label class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0">
+                                    <input type="radio"
+                                           name="year"
+                                           value="{{ y }}"
+                                           class="accent-blue-500 focus:outline-none mr-3" />
+                                    <span class="text-gray-800 font-medium">{{ y }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2 mt-10">Mobile Number</label>
+                        <input type="tel"
+                               name="mobile"
+                               placeholder="Enter mobile number"
+                               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               pattern="[0-9]{10}"
+                               title="Please enter a 10-digit mobile number" />
+                    </div>
+                    <button type="button"
+                            onclick="nextStep()"
+                            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
+                        Next
+                    </button>
+                </div>
+                <div id="step-2" class="form-step hidden">
+                    <p class="text-lg font-semibold text-gray-700 mb-6">Step 2: Choose Your Desired Position</p>
+                    <hr class="border-t-2 border-gray-500 my-6" />
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                        {% set committee_roles = [ {'value': 'media_head', 'text': 'Media
+                                                    Team'}, {'value': 'web_team', 'text': 'Web Team'}, {'value':
+                                                        'doc_team', 'text': 'Doc Team'}, {'value': 'tech_team', 'text': 'Tech
+                                                            Team'}, {'value': 'event_management_team', 'text': 'Event Management
+                                                            Team'} ] %}
+                                    {% for role in committee_roles %}
+                                        <label class="radio-option w-full flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0">
+                                            <input type="radio"
+                                                   name="roleType"
+                                                   value="{{ role.value }}"
+                                                   onchange="renderRoleSpecificFields()"
+                                                   class="accent-blue-500 focus:outline-none mr-3" />
+                                            <span class="text-gray-800 font-medium">{{ role.text }}</span>
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                                <div class="flex justify-between">
+                                    <button type="button"
+                                            onclick="prevStep()"
+                                            class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition">
+                                        Back
+                                    </button>
+                                    <button type="button"
+                                            onclick="nextStep()"
+                                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
+                                        Next
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="step-3" class="form-step hidden space-y-6">
+                                <p class="text-lg font-semibold text-gray-700 mb-2">Step 3: Experience & Role-Specific Questions</p>
+                                <hr class="border-t-2 border-gray-500 my-4" />
+                                {% for role_value, questions in questions_config.items() %}
+                                    <div id="{{ role_value }}-fields" class="role-section hidden space-y-4">
+                                        <p class="text-md font-semibold text-gray-600 mb-2">
+                                            For {{ (committee_roles) | selectattr('value', 'equalto',
+                                             role_value) | map(attribute='text') | first |
+                                            default(role_value.replace('_', ' ')|title) }}:
+                                        </p>
+                                        {% for question in questions %}
+                                            <div>
+                                                <label class="block text-gray-700 font-semibold mb-2">{{ question.label }}</label>
+                                                {% if question.type == 'textarea' %}
+                                                    <textarea
               name="{{ question.id }}"
               rows="3"
               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
@@ -201,136 +154,102 @@
               endif
               %}
             ></textarea>
-            {% elif question.type == 'text' %}
-            <input
-              type="text"
-              name="{{ question.id }}"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-              {%
-              if
-              question.placeholder
-              %}placeholder="{{ question.placeholder }}"
-              {%
-              endif
-              %}
-            />
-            {% elif question.type == 'multichoice' %}
-            <div class="grid grid-cols-1 gap-4">
-              {% for option in question.options %}
-              <label
-                class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0"
-              >
-                <input
-                  type="checkbox"
-                  name="{{ question.id }}"
-                  value="{{ option }}"
-                  class="accent-blue-500 focus:outline-none mr-3"
-                />
-                <span class="text-gray-800 font-medium">{{ option }}</span>
-              </label>
-              {% endfor %}
-            </div>
-            {% endif %}
-          </div>
-          {% endfor %}
-        </div>
-        {% endfor %}
-        <div class="space-y-4 mt-6 pt-4 border-t border-gray-300">
-          <label class="block text-gray-700 font-semibold mb-2 mt-6"
-            >Anything else you want us to know about you? (Optional)</label
-          >
-          <textarea
-            name="experience"
-            rows="3"
-            placeholder="Briefly describe any previous roles, projects, or activities."
-            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          ></textarea>
-          <label class="block text-gray-700 font-semibold mb-2 mt-6">
-            What knowledge do you have about the AISSMS IOIT ACM Student Chapter and
-            what attracted you to the post for which you are applying?
-          </label>
-          <textarea
-            name="whyApply"
-            rows="3"
-            placeholder="Explain your motivation and what you hope to contribute."
-            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          ></textarea>
-        </div>
-        <div class="flex justify-between pt-4">
-          <button
-            type="button"
-            onclick="prevStep()"
-            class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition"
-          >
-            Back
-          </button>
-          <div class="relative">
-            <button
-              type="submit"
-              id="submitBtn"
-              class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition"
-            >
-              Submit Application
-            </button>
-            <div
-              id="spinner"
-              class="hidden absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 rounded-lg"
-            >
-              <svg
-                class="animate-spin h-6 w-6 text-blue-500"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                />
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v8z"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
-        <p id="formMsg" class="text-center text-lg font-semibold mt-4"></p>
-      </div>
-      <div id="step-9" class="form-step hidden p-4 md:p-6">
-        <h1 class="text-2xl md:text-3xl font-bold text-blue-600 mb-4">
-          Thank You for Your Submission!
-        </h1>
-        <p class="text-lg mb-4">
-          We appreciate your interest in joining the AISSMS IOIT ACM Student Chapter.
-          Your application has been received successfully.
-        </p>
-        <p class="text-lg mb-6">
-          Our team will review your application and get in touch with you soon.
-        </p>
-        <div class="mt-10 flex flex-col items-center">
-          <a
-        href="https://chat.whatsapp.com/BjRmd2Y3nDL9Bj09YhgBcA"
-        target="_blank"
-        rel="noopener"
-        class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 w-full rounded-lg shadow transition text-center"
-          >
-        👉 Join our WhatsApp Group for Updates!
-          </a>
-
-          <p class="mt-6 text-md text-red-600 font-semibold mb-4 text-center">
-        <span class="font-bold">Note:</span> It is <u>mandatory</u> to join the WhatsApp group in order to appear for the interviews and receive further updates.
-          </p>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-<script>
+                                                {% elif question.type == 'text' %}
+                                                    <input
+                                                        type="text"
+                                                        name="{{ question.id }}"
+                                                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                                                        {%
+                                                        if
+                                                        question.placeholder
+                                                        %}placeholder="{{ question.placeholder }}"
+                                                        {%
+                                                        endif
+                                                        %}
+                                                        />
+                                                    {% elif question.type == 'multichoice' %}
+                                                        <div class="grid grid-cols-1 gap-4">
+                                                            {% for option in question.options %}
+                                                                <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer transition focus-within:ring-0">
+                                                                    <input type="checkbox"
+                                                                           name="{{ question.id }}"
+                                                                           value="{{ option }}"
+                                                                           class="accent-blue-500 focus:outline-none mr-3" />
+                                                                    <span class="text-gray-800 font-medium">{{ option }}</span>
+                                                                </label>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                    <div class="space-y-4 mt-6 pt-4 border-t border-gray-300">
+                                        <label class="block text-gray-700 font-semibold mb-2 mt-6">
+                                            Anything else you want us to know about you? (Optional)
+                                        </label>
+                                        <textarea name="experience"
+                                                  rows="3"
+                                                  placeholder="Briefly describe any previous roles, projects, or activities."
+                                                  class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                                        <label class="block text-gray-700 font-semibold mb-2 mt-6">
+                                            What knowledge do you have about the AISSMS IOIT ACM Student Chapter and
+                                            what attracted you to the post for which you are applying?
+                                        </label>
+                                        <textarea name="whyApply"
+                                                  rows="3"
+                                                  placeholder="Explain your motivation and what you hope to contribute."
+                                                  class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                                    </div>
+                                    <div class="flex justify-between pt-4">
+                                        <button type="button"
+                                                onclick="prevStep()"
+                                                class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition">
+                                            Back
+                                        </button>
+                                        <div class="relative">
+                                            <button type="submit"
+                                                    id="submitBtn"
+                                                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
+                                                Submit Application
+                                            </button>
+                                            <div id="spinner"
+                                                 class="hidden absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 rounded-lg">
+                                                <svg class="animate-spin h-6 w-6 text-blue-500"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     fill="none"
+                                                     viewBox="0 0 24 24">
+                                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p id="formMsg" class="text-center text-lg font-semibold mt-4"></p>
+                                </div>
+                                <div id="step-9" class="form-step hidden p-4 md:p-6">
+                                    <h1 class="text-2xl md:text-3xl font-bold text-blue-600 mb-4">Thank You for Your Submission!</h1>
+                                    <p class="text-lg mb-4">
+                                        We appreciate your interest in joining the AISSMS IOIT ACM Student Chapter.
+                                        Your application has been received successfully.
+                                    </p>
+                                    <p class="text-lg mb-6">Our team will review your application and get in touch with you soon.</p>
+                                    <div class="mt-10 flex flex-col items-center">
+                                        <a href="https://chat.whatsapp.com/BjRmd2Y3nDL9Bj09YhgBcA"
+                                           target="_blank"
+                                           rel="noopener"
+                                           class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 w-full rounded-lg shadow transition text-center">
+                                            👉 Join our WhatsApp Group for Updates!
+                                        </a>
+                                        <p class="mt-6 text-md text-red-600 font-semibold mb-4 text-center">
+                                            <span class="font-bold">Note:</span> It is <u>mandatory</u> to join the WhatsApp group in order to appear for the interviews and receive further updates.
+                                        </p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <script>
   let currentStep = 0,
     formMemory = {};
 
@@ -733,5 +652,5 @@
       localStorage.setItem('acmCommitteeFormData', JSON.stringify(formMemory));
     });
   });
-</script>
-{% endblock %}
+                    </script>
+                {% endblock %}
