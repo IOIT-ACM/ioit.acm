@@ -1,94 +1,62 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}AISSMS IOIT ACM{% endblock %}</title>
-
-    <!-- SEO Metadata -->
-    <meta
-      name="description"
-      content="{% block description %}AISSMS IOIT ACM Student Chapter - Innovating technology education and research. Join us to explore events, workshops, and networking opportunities in the world of computing.{% endblock %}"
-    />
-    <meta
-      name="keywords"
-      content="ACM, computing, technology, research, student chapter, events, workshops, education, networking"
-    />
-    <meta name="author" content="AISSMS IOIT ACM Student Chapter" />
-    <meta name="robots" content="index, follow" />
-    <meta name="language" content="English" />
-    <meta name="theme-color" content="#007BFF" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="AISSMS IOIT ACM" />
-    <meta name="mobile-web-app-capable" content="yes" />
-
-    <!-- Open Graph (OG) Tags -->
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:title"
-      content="{% block og_title %}AISSMS IOIT ACM Student Chapter{% endblock %}"
-    />
-    <meta
-      property="og:description"
-      content="{% block og_description %}Join the AISSMS IOIT ACM Student Chapter to explore computing, innovation, and networking. Participate in events, workshops, and research collaborations.{% endblock %}"
-    />
-    <meta property="og:url" content="https://ioit.acm.org/" />
-    <meta
-      property="og:image"
-      content="{% block og_image %}{{ url_for('static', filename='og-image.png') }}{% endblock %}"
-    />
-    <meta property="og:site_name" content="AISSMS IOIT ACM" />
-    <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter Card Metadata -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="{% block twitter_title %}AISSMS IOIT ACM Student Chapter{% endblock %}"
-    />
-    <meta
-      name="twitter:description"
-      content="{% block twitter_description %}Explore the world of computing with the AISSMS IOIT ACM Student Chapter. Join us for events, workshops, and networking opportunities.{% endblock %}"
-    />
-    <meta
-      name="twitter:image"
-      content="{% block twitter_image %}{{ url_for('static', filename='og-image.png') }}{% endblock %}"
-    />
-    <meta name="twitter:site" content="@IOITACM" />
-    <meta name="twitter:creator" content="@IOITACM" />
-
-    <!-- Favicon Configuration -->
-    <link
-      rel="icon"
-      type="image/png"
-      href="{{ url_for('static', filename='favicon-96x96.png') }}"
-      sizes="96x96"
-    />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="{{ url_for('static', filename='favicon.svg') }}"
-    />
-    <link
-      rel="shortcut icon"
-      href="{{ url_for('static', filename='favicon.ico') }}"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="{{ url_for('static', filename='apple-touch-icon.png') }}"
-    />
-    <link
-      rel="manifest"
-      href="{{ url_for('static', filename='site.webmanifest') }}"
-    />
-
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-Y6Z6G51Z27"
-    ></script>
-    <script>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            {% block title %}AISSMS IOIT ACM{% endblock %}
+        </title>
+        <!-- SEO Metadata -->
+        <meta name="description"
+              content="{% block description %}AISSMS IOIT ACM Student Chapter - Innovating technology education and research. Join us to explore events, workshops, and networking opportunities in the world of computing.{% endblock %}" />
+        <meta name="keywords"
+              content="ACM, computing, technology, research, student chapter, events, workshops, education, networking" />
+        <meta name="author" content="AISSMS IOIT ACM Student Chapter" />
+        <meta name="robots" content="index, follow" />
+        <meta name="language" content="English" />
+        <meta name="theme-color" content="#007BFF" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="AISSMS IOIT ACM" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <!-- Open Graph (OG) Tags -->
+        <meta property="og:type" content="website" />
+        <meta property="og:title"
+              content="{% block og_title %}AISSMS IOIT ACM Student Chapter{% endblock %}" />
+        <meta property="og:description"
+              content="{% block og_description %}Join the AISSMS IOIT ACM Student Chapter to explore computing, innovation, and networking. Participate in events, workshops, and research collaborations.{% endblock %}" />
+        <meta property="og:url" content="https://ioit.acm.org/" />
+        <meta property="og:image"
+              content="{% block og_image %}{{ url_for('static', filename='og-image.png') }}{% endblock %}" />
+        <meta property="og:site_name" content="AISSMS IOIT ACM" />
+        <meta property="og:locale" content="en_US" />
+        <!-- Twitter Card Metadata -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title"
+              content="{% block twitter_title %}AISSMS IOIT ACM Student Chapter{% endblock %}" />
+        <meta name="twitter:description"
+              content="{% block twitter_description %}Explore the world of computing with the AISSMS IOIT ACM Student Chapter. Join us for events, workshops, and networking opportunities.{% endblock %}" />
+        <meta name="twitter:image"
+              content="{% block twitter_image %}{{ url_for('static', filename='og-image.png') }}{% endblock %}" />
+        <meta name="twitter:site" content="@IOITACM" />
+        <meta name="twitter:creator" content="@IOITACM" />
+        <!-- Favicon Configuration -->
+        <link rel="icon"
+              type="image/png"
+              href="{{ url_for('static', filename='favicon-96x96.png') }}"
+              sizes="96x96" />
+        <link rel="icon"
+              type="image/svg+xml"
+              href="{{ url_for('static', filename='favicon.svg') }}" />
+        <link rel="shortcut icon"
+              href="{{ url_for('static', filename='favicon.ico') }}" />
+        <link rel="apple-touch-icon"
+              sizes="180x180"
+              href="{{ url_for('static', filename='apple-touch-icon.png') }}" />
+        <link rel="manifest"
+              href="{{ url_for('static', filename='site.webmanifest') }}" />
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y6Z6G51Z27"></script>
+        <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
@@ -96,215 +64,193 @@
       gtag("js", new Date());
 
       gtag("config", "G-Y6Z6G51Z27");
-    </script>
-
-    <!-- Stylesheets -->
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/tailwind.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/styles.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
-      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-
-    <!-- Scripts -->
-    <script src="https://unpkg.com/htmx.org@1.9.2" defer></script>
-
-    <!--import maps-->
-    <script type="importmap">
+        </script>
+        <!-- Stylesheets -->
+        <link rel="stylesheet"
+              href="{{ url_for('static', filename='css/tailwind.css') }}" />
+        <link rel="stylesheet"
+              href="{{ url_for('static', filename='css/styles.css') }}" />
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+              integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer" />
+        <!-- Scripts -->
+        <script src="https://unpkg.com/htmx.org@1.9.2" defer></script>
+        <!--import maps-->
+        <script type="importmap">
       {
         "imports": {
           "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js",
           "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/"
         }
       }
-    </script>
-
-    {% block head %}
-    <!-- Additional head content can be injected here -->
-    {% endblock %}
-  </head>
-  <body class="bg-gray-100 text-gray-800">
-    <div class="fixed top-4 left-0 w-full flex justify-center z-[9999]">
-      <div class="bg-white rounded-full shadow-2xl border border-gray-200 px-6 py-2 backdrop-blur-sm bg-opacity-90 max-w-max">
-        <div class="flex items-center justify-center space-x-4 sm:space-x-6">
-          <!-- Logo -->
-          <div class="flex items-center">
-            <img
-              src="{{ url_for('static', filename='img/assets/acm.png') }}"
-              alt="AISSMS IOIT ACM Logo"
-              class="w-auto h-8 mr-2"
-            />
-          </div>
-          
-          <!-- Navigation Links -->
-          {% set nav_items = [
-            {'link': '/', 'text': 'Home', 'icon': 'fa-home'},
-            {'link': '/team', 'text': 'Team', 'icon': 'fa-users'},
-            {'link': '/events', 'text': 'Events', 'icon': 'fa-calendar'},
-            {'link': '/gallery', 'text': 'Gallery', 'icon': 'fa-images'},
-            {'link': '/about', 'text': 'About', 'icon': 'fa-info-circle'}
-          ] %}
-          
-          {% for item in nav_items %}
-          <div class="group relative">
-            <a
-              href="{{ item.link }}"
-              class="flex flex-col items-center text-gray-700 hover:text-blue-600 transition"
-              style="text-decoration: none;"
-            >
-              <i class="fas {{ item.icon }} text-lg mb-1"></i>
-              <span class="text-xs">{{ item.text }}</span>
-              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full {{ 'w-full' if request.path == item.link else '' }}"></span>
-            </a>
-          </div>
-          {% endfor %}
+        </script>
+        {% block head %}<!-- Additional head content can be injected here -->{% endblock %}
+    </head>
+    <body class="bg-gray-100 text-gray-800">
+        <div class="fixed top-4 left-0 w-full flex justify-center z-[9999]">
+            <div class="bg-white rounded-full shadow-2xl border border-gray-200 px-6 py-2 backdrop-blur-sm bg-opacity-90 max-w-max">
+                <div class="flex items-center justify-center space-x-4 sm:space-x-6">
+                    <!-- Logo -->
+                    <div class="flex items-center">
+                        <img src="{{ url_for('static', filename='img/assets/acm.png') }}"
+                             alt="AISSMS IOIT ACM Logo"
+                             class="w-auto h-8 mr-2" />
+                    </div>
+                    <!-- Navigation Links -->
+                    {% set nav_items = [
+                        {
+                            "link": "/",
+                            "text": "Home",
+                            "icon": "fa-home"
+                        },
+                        {
+                            "link": "/team",
+                            "text": "Team",
+                            "icon": "fa-users"
+                        },
+                        {
+                            "link": "/events",
+                            "text": "Events",
+                            "icon": "fa-calendar"
+                        },
+                        {
+                            "link": "/gallery",
+                            "text": "Gallery",
+                            "icon": "fa-images"
+                        },
+                        {
+                            "link": "/about",
+                            "text": "About",
+                            "icon": "fa-info-circle"
+                        }
+                    ] %}
+                    {% for item in nav_items %}
+                        <div class="group relative">
+                            <a href="{{ item.link }}"
+                               class="flex flex-col items-center text-gray-700 hover:text-blue-600 transition"
+                               style="text-decoration: none">
+                                <i class="fas {{ item.icon }} text-lg mb-1"></i>
+                                <span class="text-xs">{{ item.text }}</span>
+                                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full {{ 'w-full' if request.path == item.link else '' }}"></span>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Content -->
-    <main class="m-0 min-h-screen">
-      {% block content %}
-      <!-- Default content will be replaced here -->
-      {% endblock %}
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-300">
-      <!-- Main Content -->
-      <div
-        class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8 py-12"
-      >
-        <!-- AISSMS IOIT ACM Section -->
-        <div class="md:col-span-2">
-          <img
-            src="{{ url_for('static', filename='img/assets/acm.png') }}"
-            alt="AISSMS IOIT ACM Logo"
-            class="h-16 mb-4"
-          />
-          <p class="text-sm leading-relaxed">
-            AISSMS IOIT ACM Student Chapter is a part of ACM, the world's largest
-            educational and scientific computing society. Dedicated to fostering
-            a community of innovation, collaboration, and excellence in
-            technology.
-          </p>
-        </div>
-
-        <!-- ACM Section -->
-        <div class="md:col-span-2">
-          <img
-            src="{{ url_for('static', filename='img/assets/acm-logo.png') }}"
-            alt="ACM Logo"
-            class="h-16 mb-4"
-          />
-          <p class="text-sm leading-relaxed">
-            ACM is the global leader in advancing computing as a science and
-            profession. Our mission is to increase the impact and visibility of
-            ACM activities worldwide.
-          </p>
-          <a
-            href="https://dl.acm.org/"
-            target="_blank"
-            class="inline-block mt-4 text-blue-400 hover:text-blue-500 underline transition"
-            >Explore ACM Digital Library</a
-          >
-        </div>
-
-        <!-- Quick Links -->
-        <div class="md:col-span-1 md:text-right">
-          <h3 class="text-lg font-bold mb-4">Quick Links</h3>
-          <ul class="space-y-2">
-            <li>
-              <a href="/" class="hover:text-white transition">Home</a>
-            </li>
-            <li>
-              <a href="/team" class="hover:text-white transition">Team</a>
-            </li>
-            <li>
-              <a href="/events" class="hover:text-white transition">Events</a>
-            </li>
-            <li>
-              <a href="/gallery" class="hover:text-white transition">Gallery</a>
-            </li>
-            <li>
-              <a href="/mediakit" class="hover:text-white transition">Media Kit</a>
-            </li>
-            <li>
-              <a href="/membership" class="hover:text-white transition">Memberships</a>
-            </li>
-            <li>
-              <a href="/about" class="hover:text-white transition">About</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Social Links Section -->
-      <div
-        class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-5 md:gap-0 p-6"
-      >
-        <!-- Social Links on the Left -->
-        <div class="flex space-x-6">
-          <a
-            href="https://m.facebook.com/ioit.acm/"
-            class="hover:text-white transition"
-            aria-label="Facebook"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i class="fab fa-facebook text-2xl"></i>
-          </a>
-          <a
-            href="https://www.instagram.com/ioit__acm"
-            class="hover:text-white transition"
-            aria-label="Instagram"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i class="fab fa-instagram text-2xl"></i>
-          </a>
-          <a
-            href="https://www.linkedin.com/company/ioit-acm/"
-            class="hover:text-white transition"
-            aria-label="LinkedIn"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i class="fab fa-linkedin text-2xl"></i>
-          </a>
-          <a
-            href="https://x.com/IOIT_ACM"
-            class="hover:text-white transition"
-            aria-label="Twitter"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i class="fab fa-twitter text-2xl"></i>
-          </a>
-        </div>
-      </div>
-
-      <!-- Bottom Section -->
-      <div class="border-t border-gray-700 py-6">
-        <div class="w-full">
-          <!-- Credits -->
-          <div class="text-center text-sm">
-            <p>© AISSMS IOIT ACM Student Chapter, <span id="footer-year"></span></p>
-          </div>
-        </div>
-      </div>
-      <script>
-        document.getElementById('footer-year').textContent = new Date().getFullYear();
-      </script>
-    </footer>
-  </body>
+        <!-- Content -->
+        <main class="m-0 min-h-screen">
+            {% block content %}<!-- Default content will be replaced here -->{% endblock %}
+        </main>
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-gray-300">
+            <!-- Main Content -->
+            <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8 py-12">
+                <!-- AISSMS IOIT ACM Section -->
+                <div class="md:col-span-2">
+                    <img src="{{ url_for('static', filename='img/assets/acm.png') }}"
+                         alt="AISSMS IOIT ACM Logo"
+                         class="h-16 mb-4" />
+                    <p class="text-sm leading-relaxed">
+                        AISSMS IOIT ACM Student Chapter is a part of ACM, the world's largest
+                        educational and scientific computing society. Dedicated to fostering
+                        a community of innovation, collaboration, and excellence in
+                        technology.
+                    </p>
+                </div>
+                <!-- ACM Section -->
+                <div class="md:col-span-2">
+                    <img src="{{ url_for('static', filename='img/assets/acm-logo.png') }}"
+                         alt="ACM Logo"
+                         class="h-16 mb-4" />
+                    <p class="text-sm leading-relaxed">
+                        ACM is the global leader in advancing computing as a science and
+                        profession. Our mission is to increase the impact and visibility of
+                        ACM activities worldwide.
+                    </p>
+                    <a href="https://dl.acm.org/"
+                       target="_blank"
+                       class="inline-block mt-4 text-blue-400 hover:text-blue-500 underline transition">Explore ACM Digital Library</a>
+                </div>
+                <!-- Quick Links -->
+                <div class="md:col-span-1 md:text-right">
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="/" class="hover:text-white transition">Home</a>
+                        </li>
+                        <li>
+                            <a href="/team" class="hover:text-white transition">Team</a>
+                        </li>
+                        <li>
+                            <a href="/events" class="hover:text-white transition">Events</a>
+                        </li>
+                        <li>
+                            <a href="/gallery" class="hover:text-white transition">Gallery</a>
+                        </li>
+                        <li>
+                            <a href="/mediakit" class="hover:text-white transition">Media Kit</a>
+                        </li>
+                        <li>
+                            <a href="/membership" class="hover:text-white transition">Memberships</a>
+                        </li>
+                        <li>
+                            <a href="/recruitment" class="hover:text-white transition">Recruitment</a>
+                        </li>
+                        <li>
+                            <a href="/about" class="hover:text-white transition">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Social Links Section -->
+            <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-5 md:gap-0 p-6">
+                <!-- Social Links on the Left -->
+                <div class="flex space-x-6">
+                    <a href="https://m.facebook.com/ioit.acm/"
+                       class="hover:text-white transition"
+                       aria-label="Facebook"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="fab fa-facebook text-2xl"></i>
+                    </a>
+                    <a href="https://www.instagram.com/ioit__acm"
+                       class="hover:text-white transition"
+                       aria-label="Instagram"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="fab fa-instagram text-2xl"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/company/ioit-acm/"
+                       class="hover:text-white transition"
+                       aria-label="LinkedIn"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
+                    <a href="https://x.com/IOIT_ACM"
+                       class="hover:text-white transition"
+                       aria-label="Twitter"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="fab fa-twitter text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Bottom Section -->
+            <div class="border-t border-gray-700 py-6">
+                <div class="w-full">
+                    <!-- Credits -->
+                    <div class="text-center text-sm">
+                        <p>
+                            © AISSMS IOIT ACM Student Chapter, <span id="footer-year"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+        </footer>
+    </body>
 </html>
