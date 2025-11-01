@@ -100,7 +100,7 @@
                     <hr class="border-t-2 border-gray-500 my-6" />
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                         {% set committee_roles = [ {'value': 'media_team', 'text': 'Media
-                                                    Team'}, {'value': 'doc_team', 'text': 'Doc Team'},{'value':
+                                                    Team'},  {'value': 'tech_team', 'text': 'Technial Team'}, {'value': 'doc_team', 'text': 'Doc Team'},{'value':
                                                     'event_management_team', 'text': 'Event Management Team'} ] %}
                             {% for
                                 role in committee_roles %}
@@ -243,9 +243,8 @@
 
   const roleSpecificQuestionKeys = {
     media_team: ["mh_q1", "mh_q2", "mh_q3", "mh_q4"],
-    web_team: ["wt_q1", "wt_q2", "wt_q3"],
-    doc_team: ["dt_q1", "dt_q2", "dt_q3"],
     tech_team: ["tt_q1", "tt_q2", "tt_q3"],
+    doc_team: ["dt_q1", "dt_q2", "dt_q3"],
     event_management_team: ["em_q1", "em_q2", "em_q3"],
   };
 
