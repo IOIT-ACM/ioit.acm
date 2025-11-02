@@ -1,559 +1,524 @@
-{% extends "base.html" %} {% block title %}AISSMS IOIT ACM Student Chapter{% endblock
-%} {% block content %}
-
-<div
-  class="relative min-h-screen h-auto flex pt-12 md:pt-0 items-center justify-center text-center bg-cover bg-center parallax"
-  style="background-image: url('{{ url_for('static', filename='img/assets/desktop-bg.jpg') }}');">
-  <!-- Overlay with gradient -->
-  <div style="
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.9),
-        rgba(0, 0, 0, 0.79),
-        rgba(0, 0, 0, 0.75)
-      );
-      width: 100%;
-      height: 100%;
-    "></div>
-
-  <!-- Content -->
-  <div class="relative z-10 px-6 md:px-8 py-4 w-full gsap-reveal">
-    <!-- ACM Logo -->
-    <div class="md:mb-8 mb-4 parallax-scroll">
-      <img id="zoomImage" src="{{ url_for('static', filename='img/assets/acm.png') }}" alt="ACM Logo"
-        class="h-32 md:h-40 mx-auto animate-grow-shrink" />
-    </div>
-
-    <h1 class="text-2xl md:text-6xl font-bold text-white mb-4 hidden md:block parallax-scroll-2">
-      AISSMS IOIT ACM STUDENT CHAPTER
-    </h1>
-    <p class="text-sm md:text-xl text-gray-300 max-w-3xl mx-auto parallax-scroll-3">
-      AISSMS IOIT ACM Student Chapter is an auxiliary organization of ACM. We are one
-      of the most reputed and distinguished technical chapters working with
-      vision and determination since its inception in 2019.
-    </p>
-
-    <!-- Rhombus Links (Ensure they stay inside on small screens) -->
-    <div class="md:flex justify-center gap-8 flex-wrap mt-8 hidden">
-      <a href="/events" class="w-40 h-40 relative group">
-        <div
-          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm rotate-on-scroll">
-        </div>
-        <div class="absolute inset-0 flex flex-col items-center justify-center">
-          <img src="{{ url_for('static', filename='img/assets/events-icon.svg') }}" alt="Events Icon"
-            class="w-12 h-12 mb-2 text-blue-400" />
-          <h2 class="text-blue-400 font-semibold text-base">Events at ACM</h2>
-          <p class="text-gray-300 text-sm">
-            Activities and <br />
-            sessions
-          </p>
-        </div>
-      </a>
-
-      <a href="/competitions" class="w-40 h-40 relative group">
-        <div
-          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm rotate-on-scroll">
-        </div>
-        <div class="absolute inset-0 flex flex-col items-center justify-center">
-          <img src="{{ url_for('static', filename='img/assets/contests.svg') }}" alt="Contests"
-            class="w-12 h-12 mb-2 text-blue-400" />
-          <h2 class="text-blue-400 font-semibold text-base">Competitions</h2>
-          <p class="text-gray-300 text-sm">DSA, ML, DBMS <br />and more</p>
-        </div>
-      </a>
-
-      <a href="/calendar" class="w-40 h-40 relative group">
-        <div
-          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm rotate-on-scroll">
-        </div>
-        <div class="absolute inset-0 flex flex-col items-center justify-center">
-          <img src="{{ url_for('static', filename='img/assets/calendar-icon.svg') }}" alt="Calendar Icon"
-            class="w-12 h-12 mb-2 text-blue-400" />
-          <h2 class="text-blue-400 font-semibold text-base">Calendar</h2>
-          <p class="text-gray-300 text-sm">Chapter Calendar</p>
-        </div>
-      </a>
-
-      <a href="/gallery" class="w-40 h-40 relative group">
-        <div
-          class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm rotate-on-scroll">
-        </div>
-        <div class="absolute inset-0 flex flex-col items-center justify-center">
-          <img src="{{ url_for('static', filename='img/assets/gallery.svg') }}" alt="Social Icon"
-            class="w-12 h-12 mb-2 text-blue-400" />
-          <h2 class="text-blue-400 font-semibold text-base">Gallery</h2>
-          <p class="text-gray-300 text-sm">View glimpses</p>
-        </div>
-      </a>
-    </div>
-
-    <div class="text-sm align-center flex flex-col gap-3 px-4 md:hidden mt-5">
-      <a href="/join"
-        class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:no-underline backdrop-blur-sm">
-        Become a member
-      </a>
-      <a href="/membership/status"
-        class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:no-underline backdrop-blur-sm">
-        Check membership status
-      </a>
-    </div>
-
-    <!-- Mobile Menu -->
-    <div class="block md:hidden px-4 py-2 text-left text-white mt-5">
-      <div class="space-y-2">
-        <a href="/competitions"
-          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline">
-          <img src="{{ url_for('static', filename='img/assets/contests.svg') }}" alt="Events Icon"
-            class="w-8 h-8 mr-4" />
-          <div>
-            <h2 class="text-blue-400 font-semibold text-sm">Competitions</h2>
-            <p class="text-gray-300 text-xs">DSA, ML, DBMS and more</p>
-          </div>
-        </a>
-        <a href="/calendar"
-          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline">
-          <img src="{{ url_for('static', filename='img/assets/calendar-icon.svg') }}" alt="Calendar Icon"
-            class="w-8 h-8 mr-4" />
-          <div>
-            <h2 class="text-blue-400 font-semibold text-sm">Calendar</h2>
-            <p class="text-gray-300 text-xs">Chapter Calendar</p>
-          </div>
-        </a>
-        <a href="/events"
-          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline">
-          <img src="{{ url_for('static', filename='img/assets/events-icon.svg') }}" alt="Events Icon"
-            class="w-8 h-8 mr-4" />
-          <div>
-            <h2 class="text-blue-400 font-semibold text-sm">Events at ACM</h2>
-            <p class="text-gray-300 text-xs">
-              Activities, sessions and workshops
-            </p>
-          </div>
-        </a>
-        <a href="https://www.ioittenet.com/"
-          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline">
-          <img src="{{ url_for('static', filename='img/assets/tenet-logo.svg') }}" alt="Tenet Icon"
-            class="w-8 h-8 mr-4" />
-          <div>
-            <h2 class="text-blue-400 font-semibold text-sm">Flagship Events</h2>
-            <p class="text-gray-300 text-xs">TENET & IOIT MUN</p>
-          </div>
-        </a>
-        <a href="/gallery"
-          class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline">
-          <img src="{{ url_for('static', filename='img/assets/gallery.svg') }}" alt="Gallery Icon"
-            class="w-8 h-8 mr-4" />
-          <div>
-            <h2 class="text-blue-400 font-semibold text-sm">Gallery</h2>
-            <p class="text-gray-300 text-xs">View glimpses</p>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Button -->
-  <div class="absolute text-base bottom-4 right-4 align-center md:flex flex-col gap-3 hidden gsap-reveal">
-    <a href="/join"
-      class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:no-underline">
-      Become a member
-    </a>
-    <a href="/membership/status"
-      class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:no-underline">
-      Check membership status
-    </a>
-  </div>
-</div>
-
-<section class="bg-gradient-to-r from-blue-800 to-blue-600 md:py-5 py-3 flex items-center justify-center">
-  <div class="marquee w-full">
-    <div class="marquee-content-slow text-xl md:text-3xl font-bold text-white">
-      {% for _ in range(97) %}
-      People&nbsp;&nbsp;&nbsp;&nbsp;Passion&nbsp;&nbsp;&nbsp;&nbsp;Professionalism&nbsp;&nbsp;&nbsp;&nbsp;
-      {% endfor %}
-    </div>
-  </div>
-</section>
-
-<div class="mx-auto max-w-7xl px-6">
-  <section class="md:py-16 py-10">
-    <div class="grid grid-cols-1 md:grid-cols-3 md:gap-12 gap-8 gsap-reveal">
-      <!-- People Section -->
-      <div class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl">
-        <h3 class="md:text-3xl text-xl font-semibold mb-4 text-blue-800">
-          People
-        </h3>
-        <p class="text-gray-700 text-center md:text-base text-sm">
-          The heart of our chapter lies in the people and students coming
-          together to innovate, collaborate, and grow. Building a community of
-          like-minded individuals fosters learning and long-lasting
-          relationships.
-        </p>
-      </div>
-
-      <!-- Passion Section -->
-      <div class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl">
-        <h3 class="md:text-3xl text-xl font-semibold mb-4 text-blue-800">
-          Passion
-        </h3>
-        <p class="text-gray-700 text-center md:text-base text-sm">
-          Passion is the driving force. Our members bring an infectious
-          enthusiasm for technology and a love for learning that fuels
-          innovation, pushing the boundaries of what's possible in the tech
-          world.
-        </p>
-      </div>
-
-      <!-- Professionalism Section -->
-      <div class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl">
-        <h3 class="md:text-3xl text-xl font-semibold mb-4 text-blue-800">
-          Professionalism
-        </h3>
-        <p class="text-gray-700 text-center md:text-base text-sm">
-          Professionalism ensures quality and impact. By respecting deadlines,
-          collaborating effectively, and communicating clearly, we ensure our
-          initiatives meet the highest standards.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="mt-10">
-    <div class="max-w-4xl mx-auto text-center">
-      <h1 class="text-3xl md:text-4xl font-bold mb-4">
-        We are the
-        <span class="bg-yellow-300 text-black font-semibold">largest computer science community</span>
-        at AISSMS IOIT
-      </h1>
-      <p class="text-lg md:text-xl mb-6">
-        The ACM Student Chapter at AISSMS IOIT, Pune, is the largest computer
-        science student organization in our college, fostering a community of
-        tech enthusiasts. We welcome students of all backgrounds, interests, and
-        skill levels to join us in sharing a passion for technology.
-      </p>
-      <div class="flex justify-center space-x-6 mt-6">
-        <a href="https://m.facebook.com/ioit.acm/" class="hover:text-blue-500 transition" aria-label="Facebook"
-          target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-facebook fa-2x"></i>
-        </a>
-        <a href="https://www.instagram.com/ioit__acm" class="hover:text-pink-500 transition" aria-label="Instagram"
-          target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-instagram fa-2x"></i>
-        </a>
-        <a href="https://www.linkedin.com/company/ioit-acm/" class="hover:text-blue-700 transition"
-          aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-linkedin fa-2x"></i>
-        </a>
-        <a href="https://x.com/IOIT_ACM" class="hover:text-blue-400 transition" aria-label="Twitter" target="_blank"
-          rel="noopener noreferrer">
-          <i class="fab fa-twitter fa-2x"></i>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <div class="grid container gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 cursor-pointer">
-    <!-- IOIT TENET 2024 -->
-    <div
-      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
-      <div class="flex flex-col items-center">
-        <div class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
-          <!-- Image -->
-          <img src="https://ioit.acm.org/tenet/gallery/24/drone/12.jpeg" alt="IOIT TENET 2024"
-            class="h-full w-full object-cover absolute" loading="lazy" />
-          <!-- Video -->
-          <video data-src="/static/vid/tenet24.mp4" muted loop
-            class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video"></video>
-        </div>
-        <div class="text-center">
-          <a href="https://ioittenet.com/"
-            class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT TENET 2024</a>
-          <p class="text-gray-800 mt-2">
-            AISSMS IOIT ACM student chapter hosted the first edition of TENET in year
-            2024. TENET 2024 is a multi-faceted event hosted by the AISSMS IOIT ACM
-            Student Chapter, featuring thrilling experiences in technology,
-            entrepreneurship, global diplomacy, and e-sports.
-          </p>
-          <a href="https://ioittenet.com/"
-            class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
-            More &rarr;</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- IOIT MUN 2023 -->
-    <div
-      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
-      <div class="flex flex-col items-center">
-        <div class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
-          <!-- Image -->
-          <img src="https://ioit.acm.org/tenet/gallery/24/mun-closing/15.jpeg" alt="IOIT MUN 2023"
-            class="h-full w-full object-cover absolute" loading="lazy" />
-          <!-- Video -->
-          <video data-src="/static/vid/mun23.mp4" muted loop
-            class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video"></video>
-        </div>
-        <div class="text-center">
-          <a href="https://www.ioitmun.com/"
-            class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT MUN 2023</a>
-          <p class="text-gray-800 mt-2">
-            Model United Nations (MUN) is a simulation of the United Nations
-            where students role-play as diplomats representing countries or
-            organizations. IOIT MUN 2023 was the first edition hosted by ACM
-            student chapter with 5 commitees and more than 75+ delegates.
-          </p>
-          <a href="https://www.ioitmun.com/"
-            class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
-            More &rarr;</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- IOIT MUN 2024 -->
-    <div
-      class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
-      <div class="flex flex-col items-center">
-        <div class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
-          <!-- Image -->
-          <img src="https://ioit.acm.org/tenet/mun/2024/9.jpeg" alt="IOIT MUN 2024"
-            class="h-full w-full object-cover absolute" loading="lazy" />
-          <!-- Video -->
-          <video data-src="/static/vid/mun24.mp4" muted loop
-            class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video"></video>
-        </div>
-        <div class="text-center">
-          <a href="https://www.ioitmun.com/"
-            class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT MUN 2024</a>
-          <p class="text-gray-800 mt-2">
-            Second edition of IOIT MUN was hosted in October 2024 by AISSMS IOIT ACM
-            student chapter. MUN conferences feature committees addressing
-            diverse global issues, from the General Assembly to specialized
-            bodies like the Security Council.
-          </p>
-          <a href="https://www.ioitmun.com/"
-            class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
-            More &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="my-20">
-    <div class="bg-white shadow-xl rounded-xl overflow-hidden flex flex-col sm:flex-row items-stretch">
-      <!-- Canvas Container -->
-      <div style="
-          flex: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #e8e8e8;
-          min-height: 300px;
-        ">
-        <canvas id="page-surface" style="max-width: 100%; max-height: 100%"></canvas>
-      </div>
-
-      <!-- Text Content -->
-      <div class="sm:w-2/3 py-8 px-6 sm:px-12">
-        <!-- Title -->
-        <h2 class="md:text-3xl text-2xl font-semibold text-gray-800 mb-4">
-          National Achievement of Outstanding Community Service
-        </h2>
-        <p class="md:text-xl text-lg text-gray-600 mb-6">
-          Awarded to AISSMS IOIT ACM Student Chapter for reporting the highest number
-          of activities in the ACM India Student Chapter Awards 2023
-        </p>
-
-        <p class="md:text-base tetx-xs text-gray-700 text-justify leading-relaxed mb-4">
-          The AISSMS IOIT ACM Student Chapter has been recognized for its exceptional
-          contribution to the community. By reporting the highest number of
-          activities, the chapter has demonstrated commitment to growth,
-          service, and innovation in the field of technology and community
-          engagement.
-        </p>
-
-        <div class="text-center text-sm font-medium text-gray-600">
-          <span>ACM India Student Chapter Awards 2023</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!--latest stories section-->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-20">
-    <h1 class="text-3xl md:text-4xl font-bold mb-6 md:col-span-2">
-      Latest Stories
-    </h1>
-    <div class="overflow-hidden w-full">
-      {% if stories|length > 0 %}
-      <div class="md:w-full h-72 max-h-4xl overflow-hidden rounded-xl border">
-        <img src="{{ url_for('static', filename='img/stories/' + stories[0].imageURL) }}" alt="{{ stories[0].title }}"
-          class="h-full w-full object-cover bg-gray-500 hover:scale-105 transition-all" />
-      </div>
-      <div class="py-6">
-        <span class="text-gray-800 text-sm uppercase font-semibold tracking-wide block mb-2">
-          {{ stories[0].category }}
-        </span>
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">
-          {{ stories[0].title }}
-        </h2>
-        <p class="text-gray-600 mb-4 line-clamp-3">
-          {{ stories[0].description }}
-        </p>
-        <p class="text-gray-800 text-sm mb-2">{{ stories[0].date }}</p>
-        <a href="{{ stories[0].link }}"
-          class="text-blue-800 hover:text-blue-700 font-medium underline transition duration-300">Read More on our
-          blog</a>
-      </div>
-      {% endif %}
-    </div>
-
-    <div class="grid grid-cols-1 gap-8">
-      {% for story in stories %} {% if loop.index > 1 %}
-      <div class="grid md:grid-cols-2 grid-cols-1 gap-0">
-        <div class="md:w-64 w-full h-40 md:h-32 min-h-32 bg-gray-300 overflow-hidden rounded-lg shadow-xl">
-          <img src="{{ url_for('static', filename='img/stories/' + story.imageURL) }}" alt="{{ story.title }}"
-            class="h-full w-full md:hover:scale-105 object-cover transition-all duration-300" loading="lazy" />
-        </div>
-        <div>
-          <p class="text-gray-800 text-sm mt-2 md:mt-0">{{ story.date }}</p>
-          <span class="text-gray-800 text-sm uppercase font-semibold block mb-1">
-            {{ story.category }}
-          </span>
-          <a href="{{ story.link }}"
-            class="text-lg font-bold text-blue-600 hover:text-blue-700 transition duration-300">
-            {{ story.title }}
-          </a>
-          <p class="text-gray-800 text-sm mb-2 line-clamp-2">
-            {{ story.description }}
-          </p>
-        </div>
-      </div>
-      {% endif %} {% endfor %}
-    </div>
-  </div>
-
-  <div class="my-20">
-    <div id="students-section">
-      <div class="flex justify-between md:items-center mb-6 gap-3 md:gap-0 flex-col md:flex-row w-full">
-        <h2 class="text-3xl font-semibold text-gray-800">Students Section</h2>
-      </div>
-
-      <div class="h-fit flex flex-col sm:flex-row items-stretch">
-        <div class="w-full flex justify-center">
-          <div class="w-2/3 md:mt-10 relative h-fit sticky top-0 flex justify-center items-center">
-            <div
-              class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl animate-rotate">
+{% extends "base.html" %}
+{% block title %}
+    AISSMS IOIT ACM Student Chapter
+{% endblock
+%}
+{% block content %}
+    <div class="relative min-h-screen h-auto flex pt-12 md:pt-0 items-center justify-center text-center bg-cover bg-center parallax"
+         style="background-image: url('{{ url_for('static', filename='img/assets/desktop-bg.jpg') }}')">
+        <!-- Overlay with gradient -->
+        <div style="position: absolute;
+                    inset: 0;
+                    background: linear-gradient( to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.79), rgba(0, 0, 0, 0.75) );
+                    width: 100%;
+                    height: 100%"></div>
+        <!-- Content -->
+        <div class="relative z-10 px-6 md:px-8 py-4 w-full gsap-reveal">
+            <!-- ACM Logo -->
+            <div class="md:mb-8 mb-4 parallax-scroll">
+                <img id="zoomImage"
+                     src="{{ url_for('static', filename='img/assets/acm.png') }}"
+                     alt="ACM Logo"
+                     class="h-32 md:h-40 mx-auto animate-grow-shrink" />
             </div>
-            <div
-              class="aspect-square overflow-hidden bg-white w-7/12 h-auto transform rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400">
-              <img class="-rotate-45 z-50" src="{{ url_for('static', filename='og-image.png') }}" alt="about-image" />
+            <h1 class="text-2xl md:text-6xl font-bold text-white mb-4 hidden md:block parallax-scroll-2">
+                AISSMS IOIT ACM STUDENT CHAPTER
+            </h1>
+            <p class="text-sm md:text-xl text-gray-300 max-w-3xl mx-auto parallax-scroll-3">
+                AISSMS IOIT ACM Student Chapter is an auxiliary organization of ACM. We are one
+                of the most reputed and distinguished technical chapters working with
+                vision and determination since its inception in 2019.
+            </p>
+            <!-- Rhombus Links (Ensure they stay inside on small screens) -->
+            <div class="md:flex justify-center gap-8 flex-wrap mt-8 hidden">
+                <a href="/events" class="w-40 h-40 relative group">
+                    <div class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm rotate-on-scroll">
+                    </div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                        <img src="{{ url_for('static', filename='img/assets/events-icon.svg') }}"
+                             alt="Events Icon"
+                             class="w-12 h-12 mb-2 text-blue-400" />
+                        <h2 class="text-blue-400 font-semibold text-base">Events at ACM</h2>
+                        <p class="text-gray-300 text-sm">
+                            Activities and
+                            <br />
+                            sessions
+                        </p>
+                    </div>
+                </a>
+                <a href="/competitions" class="w-40 h-40 relative group">
+                    <div class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm rotate-on-scroll">
+                    </div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                        <img src="{{ url_for('static', filename='img/assets/contests.svg') }}"
+                             alt="Contests"
+                             class="w-12 h-12 mb-2 text-blue-400" />
+                        <h2 class="text-blue-400 font-semibold text-base">Competitions</h2>
+                        <p class="text-gray-300 text-sm">
+                            DSA, ML, DBMS
+                            <br />
+                            and more
+                        </p>
+                    </div>
+                </a>
+                <a href="/calendar" class="w-40 h-40 relative group">
+                    <div class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm rotate-on-scroll">
+                    </div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                        <img src="{{ url_for('static', filename='img/assets/calendar-icon.svg') }}"
+                             alt="Calendar Icon"
+                             class="w-12 h-12 mb-2 text-blue-400" />
+                        <h2 class="text-blue-400 font-semibold text-base">Calendar</h2>
+                        <p class="text-gray-300 text-sm">Chapter Calendar</p>
+                    </div>
+                </a>
+                <a href="/gallery" class="w-40 h-40 relative group">
+                    <div class="absolute inset-0 bg-white/10 transform rotate-45 group-hover:bg-white/20 transition-all duration-300 border border-white/20 backdrop-blur-sm rotate-on-scroll">
+                    </div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                        <img src="{{ url_for('static', filename='img/assets/gallery.svg') }}"
+                             alt="Social Icon"
+                             class="w-12 h-12 mb-2 text-blue-400" />
+                        <h2 class="text-blue-400 font-semibold text-base">Gallery</h2>
+                        <p class="text-gray-300 text-sm">View glimpses</p>
+                    </div>
+                </a>
             </div>
-          </div>
+            <div class="text-sm align-center flex flex-col gap-3 px-4 md:hidden mt-5">
+                <a href="/join"
+                   class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:no-underline backdrop-blur-sm">
+                    Become a member
+                </a>
+                <a href="/membership/status"
+                   class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:no-underline backdrop-blur-sm">
+                    Check membership status
+                </a>
+            </div>
+            <!-- Mobile Menu -->
+            <div class="block md:hidden px-4 py-2 text-left text-white mt-5">
+                <div class="space-y-2">
+                    <a href="/competitions"
+                       class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline">
+                        <img src="{{ url_for('static', filename='img/assets/contests.svg') }}"
+                             alt="Events Icon"
+                             class="w-8 h-8 mr-4" />
+                        <div>
+                            <h2 class="text-blue-400 font-semibold text-sm">Competitions</h2>
+                            <p class="text-gray-300 text-xs">DSA, ML, DBMS and more</p>
+                        </div>
+                    </a>
+                    <a href="/calendar"
+                       class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline">
+                        <img src="{{ url_for('static', filename='img/assets/calendar-icon.svg') }}"
+                             alt="Calendar Icon"
+                             class="w-8 h-8 mr-4" />
+                        <div>
+                            <h2 class="text-blue-400 font-semibold text-sm">Calendar</h2>
+                            <p class="text-gray-300 text-xs">Chapter Calendar</p>
+                        </div>
+                    </a>
+                    <a href="/events"
+                       class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline">
+                        <img src="{{ url_for('static', filename='img/assets/events-icon.svg') }}"
+                             alt="Events Icon"
+                             class="w-8 h-8 mr-4" />
+                        <div>
+                            <h2 class="text-blue-400 font-semibold text-sm">Events at ACM</h2>
+                            <p class="text-gray-300 text-xs">Activities, sessions and workshops</p>
+                        </div>
+                    </a>
+                    <a href="https://www.ioittenet.com/"
+                       class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline">
+                        <img src="{{ url_for('static', filename='img/assets/tenet-logo.svg') }}"
+                             alt="Tenet Icon"
+                             class="w-8 h-8 mr-4" />
+                        <div>
+                            <h2 class="text-blue-400 font-semibold text-sm">Flagship Events</h2>
+                            <p class="text-gray-300 text-xs">TENET & IOIT MUN</p>
+                        </div>
+                    </a>
+                    <a href="/gallery"
+                       class="flex items-center bg-white/10 rounded-lg p-2 hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm hover:no-underline">
+                        <img src="{{ url_for('static', filename='img/assets/gallery.svg') }}"
+                             alt="Gallery Icon"
+                             class="w-8 h-8 mr-4" />
+                        <div>
+                            <h2 class="text-blue-400 font-semibold text-sm">Gallery</h2>
+                            <p class="text-gray-300 text-xs">View glimpses</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
-
-        <!-- Text Content -->
-        <div class="py-8 text-lg">
-          <p class="text-gray-700 mb-4">
-            We value your
-            <span class="font-semibold text-green-500">feedback</span>! You can
-            share your thoughts and suggestions for
-            <span class="font-semibold">ACM events</span>, suggest new events
-            that you would like to see, and recommend
-            <span class="font-semibold">speakers</span> you'd like us to reach
-            out to for future speaker sessions.
-          </p>
-
-          <p class="text-gray-700 mb-4">
-            If you have ideas for
-            <span class="font-semibold">workshops</span> or events that you
-            would like to see in the future, feel free to share them with us.
-            Your input helps us create better experiences for everyone in the
-            <span class="font-semibold">ACM community</span>!
-          </p>
-
-          <div class="flex gap-3">
-            <a href="/feedback"
-              class="bg-green-400 w-fit hover:bg-green-500 text-gray-900 text-xs md:text-lg px-4 py-2 rounded-lg shadow-md hover:no-underline backdrop-blur-sm flex gap-2 items-center">
-              Feedback Form
-              <i class="fas fa-arrow-up-right-from-square"></i>
+        <!-- Button -->
+        <div class="absolute text-base bottom-4 right-4 align-center md:flex flex-col gap-3 hidden gsap-reveal">
+            <a href="/join"
+               class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:no-underline">
+                Become a member
             </a>
-            <a href="/feedback?type=suggestions"
-              class="bg-blue-400 w-fit hover:bg-blue-500 text-gray-900 text-xs md:text-lg px-4 py-2 rounded-lg shadow-md hover:no-underline backdrop-blur-sm flex gap-2 items-center">
-              Suggest Events
-              <i class="fas fa-arrow-up-right-from-square"></i>
+            <a href="/membership/status"
+               class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:no-underline">
+                Check membership status
             </a>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-
-  <div class="my-20">
-    <div id="past-events-section">
-      <div class="flex justify-between md:items-center mb-6 gap-3 md:gap-0 flex-col md:flex-row w-full">
-        <h2 class="text-3xl font-semibold text-gray-800">Recent Events</h2>
-        <a href="/events" class="text-blue-800 hover:text-blue-700 text-sm">View All Events & Activities</a>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {% for event in events %}
-        <div class="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200">
-          <div class="p-4">
-            <a href="{{ url_for('events.event_detail', event_slug=event.name) }}" class="hover:underline text-blue-600">
-              {{ event.name }}
-            </a>
-            <p class="text-gray-600 mt-2 line-clamp-3">
-              {{ event.description }}
-            </p>
-            <p class="text-gray-500 mt-4 text-sm font-medium">
-              📅 {{ event.date }}
-            </p>
-          </div>
+    <section class="bg-gradient-to-r from-blue-800 to-blue-600 md:py-5 py-3 flex items-center justify-center">
+        <div class="marquee w-full">
+            <div class="marquee-content-slow text-xl md:text-3xl font-bold text-white">
+                {% for _ in range(97) %}
+                    People&nbsp;&nbsp;&nbsp;&nbsp;Passion&nbsp;&nbsp;&nbsp;&nbsp;Professionalism&nbsp;&nbsp;&nbsp;&nbsp;
+                {% endfor %}
+            </div>
         </div>
-        {% endfor %}
-      </div>
+    </section>
+    <div class="mx-auto max-w-7xl px-6">
+        <section class="md:py-16 py-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 md:gap-12 gap-8 gsap-reveal">
+                <!-- People Section -->
+                <div class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl">
+                    <h3 class="md:text-3xl text-xl font-semibold mb-4 text-blue-800">People</h3>
+                    <p class="text-gray-700 text-center md:text-base text-sm">
+                        The heart of our chapter lies in the people and students coming
+                        together to innovate, collaborate, and grow. Building a community of
+                        like-minded individuals fosters learning and long-lasting
+                        relationships.
+                    </p>
+                </div>
+                <!-- Passion Section -->
+                <div class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl">
+                    <h3 class="md:text-3xl text-xl font-semibold mb-4 text-blue-800">Passion</h3>
+                    <p class="text-gray-700 text-center md:text-base text-sm">
+                        Passion is the driving force. Our members bring an infectious
+                        enthusiasm for technology and a love for learning that fuels
+                        innovation, pushing the boundaries of what's possible in the tech
+                        world.
+                    </p>
+                </div>
+                <!-- Professionalism Section -->
+                <div class="flex flex-col items-center bg-white md:p-8 p-4 rounded-lg shadow-xl">
+                    <h3 class="md:text-3xl text-xl font-semibold mb-4 text-blue-800">Professionalism</h3>
+                    <p class="text-gray-700 text-center md:text-base text-sm">
+                        Professionalism ensures quality and impact. By respecting deadlines,
+                        collaborating effectively, and communicating clearly, we ensure our
+                        initiatives meet the highest standards.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section class="mt-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-3xl md:text-4xl font-bold mb-4">
+                    We are the
+                    <span class="bg-yellow-300 text-black font-semibold">largest computer science community</span>
+                    at AISSMS IOIT
+                </h1>
+                <p class="text-lg md:text-xl mb-6">
+                    The ACM Student Chapter at AISSMS IOIT, Pune, is the largest computer
+                    science student organization in our college, fostering a community of
+                    tech enthusiasts. We welcome students of all backgrounds, interests, and
+                    skill levels to join us in sharing a passion for technology.
+                </p>
+                <div class="flex justify-center space-x-6 mt-6">
+                    <a href="https://m.facebook.com/ioit.acm/"
+                       class="hover:text-blue-500 transition"
+                       aria-label="Facebook"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="fab fa-facebook fa-2x"></i>
+                    </a>
+                    <a href="https://www.instagram.com/ioit__acm"
+                       class="hover:text-pink-500 transition"
+                       aria-label="Instagram"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="fab fa-instagram fa-2x"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/company/ioit-acm/"
+                       class="hover:text-blue-700 transition"
+                       aria-label="LinkedIn"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="fab fa-linkedin fa-2x"></i>
+                    </a>
+                    <a href="https://x.com/IOIT_ACM"
+                       class="hover:text-blue-400 transition"
+                       aria-label="Twitter"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="fab fa-twitter fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <div class="grid container gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 cursor-pointer">
+            <!-- IOIT TENET 2024 -->
+            <div class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
+                <div class="flex flex-col items-center">
+                    <div class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
+                        <!-- Image -->
+                        <img src="https://ioit.acm.org/tenet/gallery/24/drone/12.jpeg"
+                             alt="IOIT TENET 2024"
+                             class="h-full w-full object-cover absolute"
+                             loading="lazy" />
+                        <!-- Video -->
+                        <video data-src="/static/vid/tenet24.mp4"
+                               muted
+                               loop
+                               class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
+                        </video>
+                    </div>
+                    <div class="text-center">
+                        <a href="https://ioittenet.com/"
+                           class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT TENET 2024</a>
+                        <p class="text-gray-800 mt-2">
+                            AISSMS IOIT ACM student chapter hosted the first edition of TENET in year
+                            2024. TENET 2024 is a multi-faceted event hosted by the AISSMS IOIT ACM
+                            Student Chapter, featuring thrilling experiences in technology,
+                            entrepreneurship, global diplomacy, and e-sports.
+                        </p>
+                        <a href="https://ioittenet.com/"
+                           class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
+                        More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+            <!-- IOIT MUN 2023 -->
+            <div class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
+                <div class="flex flex-col items-center">
+                    <div class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
+                        <!-- Image -->
+                        <img src="https://ioit.acm.org/tenet/gallery/24/mun-closing/15.jpeg"
+                             alt="IOIT MUN 2023"
+                             class="h-full w-full object-cover absolute"
+                             loading="lazy" />
+                        <!-- Video -->
+                        <video data-src="/static/vid/mun23.mp4"
+                               muted
+                               loop
+                               class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
+                        </video>
+                    </div>
+                    <div class="text-center">
+                        <a href="https://www.ioitmun.com/"
+                           class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT MUN 2023</a>
+                        <p class="text-gray-800 mt-2">
+                            Model United Nations (MUN) is a simulation of the United Nations
+                            where students role-play as diplomats representing countries or
+                            organizations. IOIT MUN 2023 was the first edition hosted by ACM
+                            student chapter with 5 commitees and more than 75+ delegates.
+                        </p>
+                        <a href="https://www.ioitmun.com/"
+                           class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
+                        More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+            <!-- IOIT MUN 2024 -->
+            <div class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
+                <div class="flex flex-col items-center">
+                    <div class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
+                        <!-- Image -->
+                        <img src="https://ioit.acm.org/tenet/mun/2024/9.jpeg"
+                             alt="IOIT MUN 2024"
+                             class="h-full w-full object-cover absolute"
+                             loading="lazy" />
+                        <!-- Video -->
+                        <video data-src="/static/vid/mun24.mp4"
+                               muted
+                               loop
+                               class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
+                        </video>
+                    </div>
+                    <div class="text-center">
+                        <a href="https://www.ioitmun.com/"
+                           class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT MUN 2024</a>
+                        <p class="text-gray-800 mt-2">
+                            Second edition of IOIT MUN was hosted in October 2024 by AISSMS IOIT ACM
+                            student chapter. MUN conferences feature committees addressing
+                            diverse global issues, from the General Assembly to specialized
+                            bodies like the Security Council.
+                        </p>
+                        <a href="https://www.ioitmun.com/"
+                           class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
+                        More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="my-20">
+            <div class="bg-white shadow-xl rounded-xl overflow-hidden flex flex-col sm:flex-row items-stretch">
+                <!-- Canvas Container -->
+                <div style="flex: 1;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background: #e8e8e8;
+                            min-height: 300px">
+                    <canvas id="page-surface" style="max-width: 100%; max-height: 100%"></canvas>
+                </div>
+                <!-- Text Content -->
+                <div class="sm:w-2/3 py-8 px-6 sm:px-12">
+                    <!-- Title -->
+                    <h2 class="md:text-3xl text-2xl font-semibold text-gray-800 mb-4">
+                        National Achievement of Outstanding Community Service
+                    </h2>
+                    <p class="md:text-xl text-lg text-gray-600 mb-6">
+                        Awarded to AISSMS IOIT ACM Student Chapter for reporting the highest number
+                        of activities in the ACM India Student Chapter Awards 2023
+                    </p>
+                    <p class="md:text-base tetx-xs text-gray-700 text-justify leading-relaxed mb-4">
+                        The AISSMS IOIT ACM Student Chapter has been recognized for its exceptional
+                        contribution to the community. By reporting the highest number of
+                        activities, the chapter has demonstrated commitment to growth,
+                        service, and innovation in the field of technology and community
+                        engagement.
+                    </p>
+                    <div class="text-center text-sm font-medium text-gray-600">
+                        <span>ACM India Student Chapter Awards 2023</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--latest stories section-->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-20">
+            <h1 class="text-3xl md:text-4xl font-bold mb-6 md:col-span-2">Latest Stories</h1>
+            <div class="overflow-hidden w-full">
+                {% if stories|length > 0 %}
+                    <div class="md:w-full h-72 max-h-4xl overflow-hidden rounded-xl border">
+                        <img src="{{ url_for('static', filename='img/stories/' + stories[0].imageURL) }}"
+                             alt="{{ stories[0].title }}"
+                             class="h-full w-full object-cover bg-gray-500 hover:scale-105 transition-all" />
+                    </div>
+                    <div class="py-6">
+                        <span class="text-gray-800 text-sm uppercase font-semibold tracking-wide block mb-2">{{ stories[0].category }}</span>
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ stories[0].title }}</h2>
+                        <p class="text-gray-600 mb-4 line-clamp-3">{{ stories[0].description }}</p>
+                        <p class="text-gray-800 text-sm mb-2">{{ stories[0].date }}</p>
+                        <a href="{{ stories[0].link }}"
+                           class="text-blue-800 hover:text-blue-700 font-medium underline transition duration-300">Read More on our
+                        blog</a>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="grid grid-cols-1 gap-8">
+                {% for story in stories %}
+                    {% if loop.index > 1 %}
+                        <div class="grid md:grid-cols-2 grid-cols-1 gap-0">
+                            <div class="md:w-64 w-full h-40 md:h-32 min-h-32 bg-gray-300 overflow-hidden rounded-lg shadow-xl">
+                                <img src="{{ url_for('static', filename='img/stories/' + story.imageURL) }}"
+                                     alt="{{ story.title }}"
+                                     class="h-full w-full md:hover:scale-105 object-cover transition-all duration-300"
+                                     loading="lazy" />
+                            </div>
+                            <div>
+                                <p class="text-gray-800 text-sm mt-2 md:mt-0">{{ story.date }}</p>
+                                <span class="text-gray-800 text-sm uppercase font-semibold block mb-1">{{ story.category }}</span>
+                                <a href="{{ story.link }}"
+                                   class="text-lg font-bold text-blue-600 hover:text-blue-700 transition duration-300">
+                                    {{ story.title }}
+                                </a>
+                                <p class="text-gray-800 text-sm mb-2 line-clamp-2">{{ story.description }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="my-20">
+            <div id="students-section">
+                <div class="flex justify-between md:items-center mb-6 gap-3 md:gap-0 flex-col md:flex-row w-full">
+                    <h2 class="text-3xl font-semibold text-gray-800">Students Section</h2>
+                </div>
+                <div class="h-fit flex flex-col sm:flex-row items-stretch">
+                    <div class="w-full flex justify-center">
+                        <div class="w-2/3 md:mt-10 relative h-fit sticky top-0 flex justify-center items-center">
+                            <div class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl animate-rotate">
+                            </div>
+                            <div class="aspect-square overflow-hidden bg-white w-7/12 h-auto transform rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400">
+                                <img class="-rotate-45 z-50"
+                                     src="{{ url_for('static', filename='og-image.png') }}"
+                                     alt="about-image" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Text Content -->
+                    <div class="py-8 text-lg">
+                        <p class="text-gray-700 mb-4">
+                            We value your
+                            <span class="font-semibold text-green-500">feedback</span>! You can
+                            share your thoughts and suggestions for
+                            <span class="font-semibold">ACM events</span>, suggest new events
+                            that you would like to see, and recommend
+                            <span class="font-semibold">speakers</span> you'd like us to reach
+                            out to for future speaker sessions.
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            If you have ideas for
+                            <span class="font-semibold">workshops</span> or events that you
+                            would like to see in the future, feel free to share them with us.
+                            Your input helps us create better experiences for everyone in the
+                            <span class="font-semibold">ACM community</span>!
+                        </p>
+                        <div class="flex gap-3">
+                            <a href="/feedback"
+                               class="bg-green-400 w-fit hover:bg-green-500 text-gray-900 text-xs md:text-lg px-4 py-2 rounded-lg shadow-md hover:no-underline backdrop-blur-sm flex gap-2 items-center">
+                                Feedback Form
+                                <i class="fas fa-arrow-up-right-from-square"></i>
+                            </a>
+                            <a href="/feedback?type=suggestions"
+                               class="bg-blue-400 w-fit hover:bg-blue-500 text-gray-900 text-xs md:text-lg px-4 py-2 rounded-lg shadow-md hover:no-underline backdrop-blur-sm flex gap-2 items-center">
+                                Suggest Events
+                                <i class="fas fa-arrow-up-right-from-square"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="my-20">
+            <div id="past-events-section">
+                <div class="flex justify-between md:items-center mb-6 gap-3 md:gap-0 flex-col md:flex-row w-full">
+                    <h2 class="text-3xl font-semibold text-gray-800">Recent Events</h2>
+                    <a href="/events" class="text-blue-800 hover:text-blue-700 text-sm">View All Events & Activities</a>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for event in events %}
+                        <div class="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200">
+                            <div class="p-4">
+                                <a href="{{ url_for('events.event_detail', event_slug=event.name) }}"
+                                   class="hover:underline text-blue-600">{{ event.name }}</a>
+                                <p class="text-gray-600 mt-2 line-clamp-3">{{ event.description }}</p>
+                                <p class="text-gray-500 mt-4 text-sm font-medium">📅 {{ event.date }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% include "competitions/avaliable-contests.html" %}
     </div>
-  </div>
-
-  {% include "competitions/avaliable-contests.html" %}
-</div>
-
-<div
-  class="bg-gradient-to-r from-blue-800 to-blue-600 py-8 px-6 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg">
-  <h2 class="text-2xl md:text-4xl font-bold mb-6 md:mb-0">
-    Become a part of such awesomeness
-  </h2>
-  <a href="/join"
-    class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline">
-    Join AISSMS IOIT ACM
-  </a>
-</div>
-
-<div>
-  <div class="image-marquee-container">
-    <div class="image-marquee-content md:h-48 h-32">
-      {% for _ in range(15) %} {% for image in images %}
-      <img src="{{ image }}" alt="Event Image" class="bg-gray-300" />
-      {% endfor %} {% endfor %}
+    {% include "components/pre-footer.html" %}
+    <div>
+        <div class="image-marquee-container">
+            <div class="image-marquee-content md:h-48 h-32">
+                {% for _ in range(15) %}
+                    {% for image in images %}<img src="{{ image }}" alt="Event Image" class="bg-gray-300" />{% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="image-marquee-container">
+            <div class="image-marquee-content md:h-48 h-32">
+                {% for _ in range(15) %}
+                    {% for image in images_2 %}<img src="{{ image }}" alt="Event Image" class="bg-gray-300" />{% endfor %}
+                {% endfor %}
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="image-marquee-container">
-    <div class="image-marquee-content md:h-48 h-32">
-      {% for _ in range(15) %} {% for image in images_2 %}
-      <img src="{{ image }}" alt="Event Image" class="bg-gray-300" />
-      {% endfor %} {% endfor %}
-    </div>
-  </div>
-</div>
-
-<!-- {% include "recruitment_modal.html" %} -->
-
-<script defer src="/static/js/utils.js"></script>
-<script type="module" defer src="/static/js/award-three.js"></script>
-<script type="module" defer src="/static/js/interactive-cubes.js"></script>
-<script>
+    <!-- {% include "recruitment_modal.html" %} -->
+    <script defer src="/static/js/utils.js"></script>
+    <script type="module" defer src="/static/js/award-three.js"></script>
+    <script type="module" defer src="/static/js/interactive-cubes.js"></script>
+    <script>
   document.addEventListener("scroll", function () {
     const scrollY = window.scrollY;
 
@@ -593,9 +558,9 @@
       });
     });
   });
-</script>
-<!-- Add service worker -->
-<script>
+    </script>
+    <!-- Add service worker -->
+    <script>
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker
       .register("/static/sw.js")
@@ -609,7 +574,5 @@
         console.error("Service Worker registration failed:", error);
       });
   }
-</script>
-
-
+    </script>
 {% endblock %}

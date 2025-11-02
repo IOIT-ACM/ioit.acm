@@ -1,183 +1,121 @@
-{% extends "base.html" %} {% block title %}Gallery - ACM at AISSMS IOIT{%
-endblock %} {% block og_title %}Gallery - AISSMS IOIT ACM Student Chapter{% endblock %}
-{% block og_description %}Explore our team gallery and get to know the faces
-behind the AISSMS IOIT ACM Student Chapter.{% endblock %} {% block og_image %}{{
-url_for('static', filename='img/gallery/team.jpeg') }}{% endblock %} {% block
-twitter_image %}{{ url_for('static', filename='img/gallery/team.jpeg') }}{%
-endblock %} {% block content %}
-
-<script src="{{ url_for('static', filename='gallery/lightgallery.bundle.js') }}"></script>
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='gallery/lightgallery-bundle.css') }}"
-/>
-
-<div
-  class="relative bg-cover bg-center h-[50vh] md:h-[80vh]"
-  style="background-image: url('{{ url_for('static', filename='img/gallery/team.jpeg') }}')"
->
-  <div
-    class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black bg-opacity-60 grid place-items-center text-white px-4"
-  >
-    <div class="max-w-3xl text-center space-y-6">
-      <h1 class="text-3xl md:text-6xl font-extrabold leading-tight">Gallery</h1>
-    </div>
-  </div>
-</div>
-
-<section
-  class="bg-gradient-to-r from-blue-800 to-blue-600 md:py-5 py-3 flex items-center justify-center"
->
-  <div class="marquee w-full">
-    <div class="marquee-content-slow text-xl md:text-3xl font-bold text-white">
-      {% for _ in range(97) %}
-      People&nbsp;&nbsp;&nbsp;&nbsp;Passion&nbsp;&nbsp;&nbsp;&nbsp;Professionalism&nbsp;&nbsp;&nbsp;&nbsp;
-      {% endfor %}
-    </div>
-  </div>
-</section>
-
-<div class="container mx-auto p-6 my-8 max-w-7xl">
-  <div class="grid md:gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-    <!-- Bit by Bit -->
-    <a href="#collection" class="p-6 group overflow-hidden hover:no-underline">
-      <div>
-        <div class="flex justify-between items-center mb-4">
-          <h3
-            class="text-2xl font-semibold text-blue-600 group-hover:text-blue-900 transition-all"
-          >
-            Bit by Bit
-          </h3>
-          <i
-            class="fas fa-arrow-right text-blue-600 group-hover:-rotate-45 group-hover:scale-110 transition-all"
-          ></i>
-        </div>
-        <div class="overflow-hidden rounded-xl mb-6 border">
-          <img
-            src="{{ url_for('static', filename='img/gallery/bbb.jpeg') }}"
-            alt="Bit by Bit"
-            class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
-          />
-        </div>
-        <p class="text-gray-600">
-          Coding competition hosted by ACM IOIT every month
-        </p>
-      </div>
-    </a>
-
-    <!-- TENET 2024 -->
-    <a
-      href="https://www.ioittenet.com/24"
-      class="p-6 group overflow-hidden hover:no-underline"
-      target="_blank"
-    >
-      <div>
-        <div class="flex justify-between items-center mb-4">
-          <h3
-            class="text-2xl font-semibold text-blue-600 group-hover:text-blue-900 transition-all"
-          >
-            TENET 2024 Gallery
-          </h3>
-          <i
-            class="fas fa-arrow-right text-blue-600 group-hover:-rotate-45 group-hover:scale-110 transition-all"
-          ></i>
-        </div>
-        <div class="overflow-hidden rounded-xl mb-6 border">
-          <img
-            src="{{ url_for('static', filename='img/gallery/tenet-2024/denofcode.jpeg') }}"
-            alt="Awareness Drive"
-            class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
-          />
-        </div>
-        <p class="text-gray-600">
-          Flagship event organised bt AISSMS IOIT ACM Student chapter 2024
-        </p>
-      </div>
-    </a>
-
-    <!-- Speaker Sessions -->
-    <a href="#collection" class="p-6 group overflow-hidden hover:no-underline">
-      <div>
-        <div class="flex justify-between items-center mb-4">
-          <h3
-            class="text-2xl font-semibold text-blue-600 group-hover:text-blue-900 transition-all"
-          >
-            Speaker Sessions
-          </h3>
-          <i
-            class="fas fa-arrow-right text-blue-600 group-hover:-rotate-45 group-hover:scale-110 transition-all"
-          ></i>
-        </div>
-        <div class="overflow-hidden rounded-xl mb-6 border">
-          <img
-            src="{{ url_for('static', filename='img/gallery/events.jpeg') }}"
-            alt="Speaker Sessions"
-            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-          />
-        </div>
-        <p class="text-gray-600">Speaker sessions hosted by ACM</p>
-      </div>
-    </a>
-  </div>
-</div>
-
-<section
-  class="grid grid-cols-1 md:grid-cols-2 min-h-[50vh] max-w-7xl mx-auto mt-20"
->
-  <div class="flex flex-col justify-center p-8 h-full">
-    <h1 class="text-4xl font-bold text-gray-800 mb-4">
-      Outstanding Community Service Award
-    </h1>
-    <p class="text-gray-600 mb-6">
-      The AISSMS IOIT ACM Student Chapter has been recognized for its exceptional
-      contribution to the community. Here are some glimpses from the
-      achievement.
-    </p>
-  </div>
-
-  <div class="h-full">
-    <img
-      src="{{ url_for('static', filename='img/gallery/award-2024/5.jpeg') }}"
-      alt="Outstanding Community Service Award"
-      class="w-full h-full object-cover"
-    />
-  </div>
-</section>
-
-<section id="collection" class="container max-w-7xl mx-auto mb-32 px-4">
-  <h1 class="text-4xl font-bold text-gray-800 mb-4 pt-20">Collection</h1>
-  <hr class="border-gray-500 mb-8 mx-auto w-20 py-3" />
-
-  <div id="gallery" class="gallery-columns py-2 my-2">
-    {% for image in collections %}
-    <div
-      class="mb-2 md:mb-4 flex shadow-md rounded-lg flex-col overflow-hidden"
-    >
-      <img
-        src="{{ url_for('static', filename='img/gallery/' + image.name) }}"
-        alt="{{ image.desc }}"
-        class="w-full h-auto transition-transform duration-300 cursor-pointer hover:scale-110"
-      />
-    </div>
-    {% endfor %}
-  </div>
-</section>
-
-<div
-  class="bg-gradient-to-r mt-20 from-blue-800 to-blue-600 py-8 px-6 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg"
->
-  <h2 class="text-2xl md:text-4xl font-bold mb-6 md:mb-0">
-    Become a part of such awesomeness
-  </h2>
-  <a
-    href="/join"
-    class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
-  >
-    Join AISSMS IOIT ACM
-  </a>
-</div>
-
-<script type="text/javascript">
+{% extends "base.html" %}
+{% block title %}
+    Gallery - ACM at AISSMS IOIT{%
+    endblock %}
+    {% block og_title %}Gallery - AISSMS IOIT ACM Student Chapter{% endblock %}
+    {% block og_description %}
+        Explore our team gallery and get to know the faces
+        behind the AISSMS IOIT ACM Student Chapter.
+    {% endblock %}
+    {% block og_image %}{{ url_for('static', filename='img/gallery/team.jpeg') }}{% endblock %}
+    {% block
+        twitter_image %}
+        {{ url_for('static', filename='img/gallery/team.jpeg') }}{%
+        endblock %}
+        {% block content %}
+            <script src="{{ url_for('static', filename='gallery/lightgallery.bundle.js') }}"></script>
+            <link rel="stylesheet"
+                  href="{{ url_for('static', filename='gallery/lightgallery-bundle.css') }}" />
+            <div class="relative bg-cover bg-center h-[50vh] md:h-[80vh]"
+                 style="background-image: url('{{ url_for('static', filename='img/gallery/team.jpeg') }}')">
+                <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black bg-opacity-60 grid place-items-center text-white px-4">
+                    <div class="max-w-3xl text-center space-y-6">
+                        <h1 class="text-3xl md:text-6xl font-extrabold leading-tight">Gallery</h1>
+                    </div>
+                </div>
+            </div>
+            <section class="bg-gradient-to-r from-blue-800 to-blue-600 md:py-5 py-3 flex items-center justify-center">
+                <div class="marquee w-full">
+                    <div class="marquee-content-slow text-xl md:text-3xl font-bold text-white">
+                        {% for _ in range(97) %}
+                            People&nbsp;&nbsp;&nbsp;&nbsp;Passion&nbsp;&nbsp;&nbsp;&nbsp;Professionalism&nbsp;&nbsp;&nbsp;&nbsp;
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+            <div class="container mx-auto p-6 my-8 max-w-7xl">
+                <div class="grid md:gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                    <!-- Bit by Bit -->
+                    <a href="#collection"
+                       class="p-6 group overflow-hidden hover:no-underline">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-2xl font-semibold text-blue-600 group-hover:text-blue-900 transition-all">Bit by Bit</h3>
+                                <i class="fas fa-arrow-right text-blue-600 group-hover:-rotate-45 group-hover:scale-110 transition-all"></i>
+                            </div>
+                            <div class="overflow-hidden rounded-xl mb-6 border">
+                                <img src="{{ url_for('static', filename='img/gallery/bbb.jpeg') }}"
+                                     alt="Bit by Bit"
+                                     class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110" />
+                            </div>
+                            <p class="text-gray-600">Coding competition hosted by ACM IOIT every month</p>
+                        </div>
+                    </a>
+                    <!-- TENET 2024 -->
+                    <a href="https://www.ioittenet.com/24"
+                       class="p-6 group overflow-hidden hover:no-underline"
+                       target="_blank">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-2xl font-semibold text-blue-600 group-hover:text-blue-900 transition-all">TENET 2024 Gallery</h3>
+                                <i class="fas fa-arrow-right text-blue-600 group-hover:-rotate-45 group-hover:scale-110 transition-all"></i>
+                            </div>
+                            <div class="overflow-hidden rounded-xl mb-6 border">
+                                <img src="{{ url_for('static', filename='img/gallery/tenet-2024/denofcode.jpeg') }}"
+                                     alt="Awareness Drive"
+                                     class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110" />
+                            </div>
+                            <p class="text-gray-600">Flagship event organised bt AISSMS IOIT ACM Student chapter 2024</p>
+                        </div>
+                    </a>
+                    <!-- Speaker Sessions -->
+                    <a href="#collection"
+                       class="p-6 group overflow-hidden hover:no-underline">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-2xl font-semibold text-blue-600 group-hover:text-blue-900 transition-all">Speaker Sessions</h3>
+                                <i class="fas fa-arrow-right text-blue-600 group-hover:-rotate-45 group-hover:scale-110 transition-all"></i>
+                            </div>
+                            <div class="overflow-hidden rounded-xl mb-6 border">
+                                <img src="{{ url_for('static', filename='img/gallery/events.jpeg') }}"
+                                     alt="Speaker Sessions"
+                                     class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" />
+                            </div>
+                            <p class="text-gray-600">Speaker sessions hosted by ACM</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <section class="grid grid-cols-1 md:grid-cols-2 min-h-[50vh] max-w-7xl mx-auto mt-20">
+                <div class="flex flex-col justify-center p-8 h-full">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Outstanding Community Service Award</h1>
+                    <p class="text-gray-600 mb-6">
+                        The AISSMS IOIT ACM Student Chapter has been recognized for its exceptional
+                        contribution to the community. Here are some glimpses from the
+                        achievement.
+                    </p>
+                </div>
+                <div class="h-full">
+                    <img src="{{ url_for('static', filename='img/gallery/award-2024/5.jpeg') }}"
+                         alt="Outstanding Community Service Award"
+                         class="w-full h-full object-cover" />
+                </div>
+            </section>
+            <section id="collection" class="container max-w-7xl mx-auto mb-32 px-4">
+                <h1 class="text-4xl font-bold text-gray-800 mb-4 pt-20">Collection</h1>
+                <hr class="border-gray-500 mb-8 mx-auto w-20 py-3" />
+                <div id="gallery" class="gallery-columns py-2 my-2">
+                    {% for image in collections %}
+                        <div class="mb-2 md:mb-4 flex shadow-md rounded-lg flex-col overflow-hidden">
+                            <img src="{{ url_for('static', filename='img/gallery/' + image.name) }}"
+                                 alt="{{ image.desc }}"
+                                 class="w-full h-auto transition-transform duration-300 cursor-pointer hover:scale-110" />
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% include "components/pre-footer.html" %}
+            <script type="text/javascript">
   document.addEventListener("DOMContentLoaded", () => {
     const galleryContainer = document.getElementById("gallery");
     const nav = document.querySelector("nav");
@@ -218,6 +156,5 @@ endblock %} {% block content %}
       });
     }
   });
-</script>
-
-{% endblock %}
+            </script>
+        {% endblock %}

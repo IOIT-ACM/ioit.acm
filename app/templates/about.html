@@ -1,404 +1,238 @@
-{% extends "base.html" %} {% block title %}About Us - AISSMS IOIT ACM{% endblock %} {%
-block og_title %}About AISSMS IOIT ACM Student Chapter{% endblock %} {% block
-og_description %}Discover the vision, mission, and goals of the AISSMS IOIT ACM Student
-Chapter. Learn how we strive to create a community fostering innovation,
-collaboration, and professional growth.{% endblock %} {% block og_image %}{{
-url_for('static', filename='img/team/team.jpeg') }}{% endblock %} {% block
-twitter_image %}{{ url_for('static', filename='img/assets/about_us.jpeg') }}{%
-endblock %} {% block twitter_title %}About Us - AISSMS IOIT ACM{% endblock %} {% block
-twitter_description %}Learn more about the AISSMS IOIT ACM Student Chapter and our
-dedication to creating a thriving community for learning, collaboration, and
-growth.{% endblock %} {% block content %}
-
-<section
-  class="mt-32 grid grid-cols-1 md:grid-cols-2 mx-auto max-w-6xl p-8 mb-8"
->
-  <div class="flex justify-center mb-10">
-    <div class="w-2/3 md:mt-20 relative h-fit sticky top-32">
-      <div
-        id="rotate"
-        class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl"
-      ></div>
-      <div
-        class="aspect-square overflow-hidden bg-blue-500 w-full h-auto transform -rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400"
-      >
-        <video
-          id="about-video"
-          src="{{ url_for('static', filename='img/about/clip.mp4') }}"
-          alt="About Us Image"
-          class="object-cover h-full w-full cursor-pointer"
-          muted
-          autoplay
-          loop
-          playsinline
-        ></video>
-      </div>
-      <div
-        class="aspect-square absolute md:bottom-3 bottom-2 md:right-2 right-1 bg-blue-500 w-1/3 h-auto transform rotate-45 border border-white rounded-xl backdrop-blur-sm backdrop-opacity-80 bg-opacity-60 animate-rotate"
-      ></div>
-    </div>
-  </div>
-  <div class="flex flex-col gap-10 z-50">
-    <div class="gsap-reveal">
-      <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
-        What is ACM?
-      </h2>
-      <hr class="border-t-2 border-gray-500 my-6" />
-      <p class="text-gray-600 text-sm md:text-lg mb-6">
-        As a proud student chapter of the international
-        <a href="https://www.acm.org/" class="text-blue-600 hover:underline"
-          >Association for Computing Machinery (ACM)</a
-        >, the AISSMS IOIT ACM Student Chapter is a vibrant and inclusive
-        community at AISSMS Institute of Information Technology. As one of the
-        premier technology-focused organizations in the region, we welcome
-        students from all disciplines and skill levels to collaborate, innovate,
-        and share our passion for technology.
-        <br />
-        <br />
-        Through a diverse range of initiatives, including flagship events like
-        <a href="https://ioittenet.com/" class="text-blue-600 hover:underline"
-          >TENET 2024</a
-        >,
-        <a href="https://www.ioitmun.com/" class="text-blue-600 hover:underline"
-          >IOIT MUN</a
-        >, Tech SIGs, and our monthly coding contest Bit by Bit, we aim to
-        inspire and engage students in cutting-edge domains such as artificial
-        intelligence, cybersecurity, virtual reality, web and mobile
-        development, and more. With workshops, speaker panels, hackathons, and
-        competitions, our chapter fosters learning, creativity, and leadership,
-        creating opportunities for all to thrive in the ever-evolving tech
-        landscape.
-        <br />
-        <br />
-        Explore our
-        <a href="/gallery" class="text-blue-600 hover:underline">gallery</a> to
-        see highlights from our ACM events.
-      </p>
-    </div>
-    <div class="text-sm md:text-lg gsap-reveal">
-      <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
-        What we do?
-      </h2>
-      <hr class="border-t-2 border-gray-500 my-6" />
-      <p class="text-gray-600 mb-6">
-        An ACM Student Chapter, affiliated with the
-        <a href="https://www.acm.org/" class="text-blue-600 hover:underline"
-          >Association for Computing Machinery (ACM)</a
-        >, primarily focuses on providing a platform for computer science
-        students to network, learn, and develop their skills through organizing
-        technical talks, workshops, coding competitions, and other events,
-        essentially acting as a hub for connecting students with industry
-        professionals and fostering a vibrant computing community within their
-        university.
-      </p>
-      <section class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">
-          Key Functions of an ACM Student Chapter
-        </h2>
-        <ul class="list-none list-inside text-gray-700 space-y-2">
-          <li>
-            <strong>Educational events:</strong> Hosting guest lectures,
-            seminars, and workshops on current trends in computing by industry
-            experts.
-          </li>
-          <li>
-            <strong>Competitions:</strong> Organizing coding competitions and
-            hackathons to encourage problem-solving and practical application of
-            skills.
-          </li>
-          <li>
-            <strong>Mentorship opportunities:</strong> Connecting students with
-            experienced professionals for guidance and career advice.
-          </li>
-          <li>
-            <strong>Networking events:</strong> Facilitating interaction among
-            students, faculty, and industry professionals through social
-            gatherings and meetups.
-          </li>
-          <li>
-            <strong>Community outreach:</strong> Participating in local tech
-            events, volunteering activities, and promoting computer science
-            education.
-          </li>
-          <li>
-            <strong>Professional development:</strong> Providing resources for
-            career preparation like resume workshops and interview skills
-            training.
-          </li>
-        </ul>
-      </section>
-    </div>
-    <div class="gsap-reveal">
-      <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
-        Achievements
-      </h2>
-      <hr class="border-t-2 border-gray-500 my-6" />
-      <div
-        style="
-          flex: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          height: 300px;
-        "
-      >
-        <canvas
-          id="page-surface"
-          style="max-width: 100%; max-height: 100%"
-        ></canvas>
-      </div>
-
-      <a
-        href="https://www.acm.org/articles/acm-india-bulletins/2024/2023-student-chapter-awards"
-        class="text-base md:text-lg text-center md:text-left font-bold md:mb-4 mb-3 text-blue-600 hover:underline"
-      >
-        National Achievement of Outstanding Community Service
-      </a>
-      <p class="text-gray-600 text-sm md:text-lg mb-6">
-        The AISSMS IOIT ACM Student Chapter has been recognized for its exceptional
-        contribution to the community. By reporting the highest number of
-        activities, the chapter has demonstrated commitment to growth, service,
-        and innovation in the field of technology and community engagement.
-      </p>
-    </div>
-    <div class="gsap-reveal">
-      <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
-        How do I get involved?
-      </h2>
-      <hr class="border-t-2 border-gray-500 my-6" />
-      <p class="text-gray-600 text-sm md:text-lg mb-6">
-        No matter what your background or interest is, we would love to have you
-        at our events and activities! To keep up with what’s happening, we
-        recommend joining via our
-        <a href="/join" class="text-blue-600 hover:underline">
-          membership portal
-        </a>
-        . We will keep you up to date with everything ACM
-        <br />
-        <br />
-        Here’s our social media, where you can see what we’re up to:
-      </p>
-      <div class="mt-8 flex gap-6 md:justify-start justify-center">
-        <a
-          href="https://facebook.com/ioitacm"
-          class="text-gray-700 hover:text-blue-600 text-3xl"
-          aria-label="Facebook"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i class="fab fa-facebook"></i>
-        </a>
-        <a
-          href="https://twitter.com/ioit_acm"
-          class="text-gray-700 hover:text-blue-400 text-3xl"
-          aria-label="Twitter"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i class="fab fa-twitter"></i>
-        </a>
-        <a
-          href="https://linkedin.com/company/ioit-acm"
-          class="text-gray-700 hover:text-blue-800 text-3xl"
-          aria-label="LinkedIn"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i class="fab fa-linkedin"></i>
-        </a>
-        <a
-          href="https://instagram.com/ioit__acm"
-          class="text-gray-700 hover:text-pink-600 text-3xl"
-          aria-label="Instagram"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a
-          href="https://github.com/ioit-acm"
-          class="text-gray-700 hover:text-black text-3xl"
-          aria-label="GitHub"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i class="fab fa-github"></i>
-        </a>
-      </div>
-    </div>
-    <div class="gsap-reveal">
-      <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
-        Sponsorships and collaborations
-      </h2>
-      <hr class="border-t-2 border-gray-500 my-6" />
-      <p class="text-gray-600 text-sm md:text-lg mb-6">
-        For sponsorship inquiries, please contact Vipul Barmukh, Vice Chair at
-        AISSMS IOIT ACM Student chapter, at
-        <a href="tel:7276362624" class="text-blue-600 hover:underline">
-          7276362624
-        </a>
-        or email us at
-        <a
-          href="mailto:acm.studentbranch@aissmsioit.org"
-          class="text-blue-600 hover:underline"
-        >
-          acm.studentbranch@aissmsioit.org </a
-        >. We look forward to collaborating with you!
-      </p>
-    </div>
-    <div class="text-sm md:text-lg gsap-reveal">
-      <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">
-        Credits
-      </h2>
-      <hr class="border-t-2 border-gray-500 my-6" />
-      <p class="text-gray-600 text-sm md:text-lg mb-6">
-        This site is a collaborative effort of the IOIT ACM Web Team:
-        <a
-          href="https://github.com/adimail"
-          class="text-blue-600 hover:underline"
-          >Aditya</a
-        >,
-        <a
-          href="https://github.com/swarooppatilx"
-          class="text-blue-600 hover:underline"
-          >Swaroop</a
-        >,
-        <a
-          href="https://github.com/aayushmusale"
-          class="text-blue-600 hover:underline"
-          >Aayush</a
-        >,
-        <a
-          href="https://github.com/renarin-kholin"
-          class="text-blue-600 hover:underline"
-          >Sarvesh</a
-        >
-        &
-        <a
-          href="https://github.com/osinsomkuwar-27"
-          class="text-blue-600 hover:underline"
-          >Osin</a
-        >.
-      </p>
-      <strong>Tech Stack:</strong>
-      <ul class="list-none pl-5">
-        <li>
-          <a
-            href="https://flask.palletsprojects.com/"
-            class="text-blue-600 hover:underline"
-            >Flask</a
-          >
-          – A lightweight Python web framework used to create robust and
-          scalable web applications.
-        </li>
-        <li>
-          <a
-            href="https://tailwindcss.com/"
-            class="text-blue-600 hover:underline"
-            >TailwindCSS</a
-          >
-          – A utility-first CSS framework that provides pre-defined classes to
-          build modern, responsive designs quickly.
-        </li>
-        <li>
-          <a href="https://threejs.org/" class="text-blue-600 hover:underline"
-            >ThreeJS</a
-          >
-          – A JavaScript library that makes it easy to create and display 3D
-          graphics in the browser using WebGL.
-        </li>
-        <li>
-          <a
-            href="https://www.khronos.org/webgl/"
-            class="text-blue-600 hover:underline"
-            >WebGL</a
-          >
-          – A web standard for rendering interactive 2D and 3D graphics within
-          any compatible browser, without needing plugins.
-        </li>
-        <li>
-          <a href="https://htmx.org/" class="text-blue-600 hover:underline"
-            >HTMX</a
-          >
-          – htmx is a lightweight JavaScript library that allows you to build
-          modern web applications with minimal JavaScript by enabling HTML to
-          handle much of the dynamic behavior.
-        </li>
-        <li>
-          <a
-            href="https://www.lightgalleryjs.com/"
-            class="text-blue-600 hover:underline"
-            >LightGallery</a
-          >
-          – A lightweight, modular JavaScript plugin for creating image and
-          video lightbox galleries.
-        </li>
-        <li>
-          <a
-            href="https://github.com/adimail/web-minifier"
-            class="text-blue-600 hover:underline"
-            >adimail/web-minifier</a
-          >
-          – Perl script build by our team for JS and CSS minification. This
-          script minifies JavaScript and CSS files by removing comments,
-          unnecessary whitespace, and optimizing values.
-        </li>
-      </ul>
-      <img
-        src="/static/img/assets/lighthouse.jpeg"
-        alt="IOIT TENET 2024"
-        class="h-auto w-full rounded-3xl mt-8"
-        loading="lazy"
-      />
-    </div>
-  </div>
-</section>
-
-<div class="mt-12 mx-auto max-w-6xl p-8">
-  <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold mb-10">
-    Leadership
-  </h2>
-  <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-8">
-    {% for member in leadership %}
-
-    <div class="text-center gsap-reveal">
-      <div
-        class="w-24 h-24 rounded-full border border-gray-300 mx-auto bg-cover bg-center"
-        style="background-image: url('{{ member.image }}');"
-      ></div>
-      <p class="mt-4 text-gray-900">{{ member.name }}</p>
-      <p class="text-gray-600">{{ member.title }}</p>
-    </div>
-
-    {% endfor %}
-  </div>
-</div>
-
-<div
-  class="bg-gradient-to-r mt-20 from-blue-800 to-blue-600 py-8 px-6 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg gap-6"
->
-  <h2 class="text-2xl md:text-4xl font-bold mb-6 md:mb-0">
-    Join our community and grow with us
-  </h2>
-  <div class="max-md:text-sm flex flex-row gap-4">
-    <a
-      href="/join"
-      class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline"
-    >
-      Join AISSMS IOIT ACM
-    </a>
-    <a
-      href="/feedback"
-      class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md hover:no-underline flex items-center gap-2 transition-transform transform hover:scale-105"
-    >
-      Feedback Form
-      <i class="fas fa-arrow-up-right-from-square"></i>
-    </a>
-  </div>
-</div>
-
-<script type="module" src="/static/js/award-three.js"></script>
-<script>
+{% extends "base.html" %}
+{% block title %}About Us - AISSMS IOIT ACM{% endblock %}
+{%
+block og_title %}About AISSMS IOIT ACM Student Chapter
+{% endblock %}
+{% block
+    og_description %}
+    Discover the vision, mission, and goals of the AISSMS IOIT ACM Student
+    Chapter. Learn how we strive to create a community fostering innovation,
+    collaboration, and professional growth.
+{% endblock %}
+{% block og_image %}{{ url_for('static', filename='img/team/team.jpeg') }}{% endblock %}
+{% block
+    twitter_image %}
+    {{ url_for('static', filename='img/assets/about_us.jpeg') }}{%
+    endblock %}
+    {% block twitter_title %}About Us - AISSMS IOIT ACM{% endblock %}
+    {% block
+        twitter_description %}
+        Learn more about the AISSMS IOIT ACM Student Chapter and our
+        dedication to creating a thriving community for learning, collaboration, and
+        growth.
+    {% endblock %}
+    {% block content %}
+        <section class="mt-32 grid grid-cols-1 md:grid-cols-2 mx-auto max-w-6xl p-8 mb-8">
+            <div class="flex justify-center mb-10">
+                <div class="w-2/3 md:mt-20 relative h-fit sticky top-32">
+                    <div id="rotate"
+                         class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl">
+                    </div>
+                    <div class="aspect-square overflow-hidden bg-blue-500 w-full h-auto transform -rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400">
+                        <video id="about-video"
+                               src="{{ url_for('static', filename='img/about/clip.mp4') }}"
+                               alt="About Us Image"
+                               class="object-cover h-full w-full cursor-pointer"
+                               muted
+                               autoplay
+                               loop
+                               playsinline>
+                        </video>
+                    </div>
+                    <div class="aspect-square absolute md:bottom-3 bottom-2 md:right-2 right-1 bg-blue-500 w-1/3 h-auto transform rotate-45 border border-white rounded-xl backdrop-blur-sm backdrop-opacity-80 bg-opacity-60 animate-rotate">
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col gap-10 z-50">
+                <div class="gsap-reveal">
+                    <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">What is ACM?</h2>
+                    <hr class="border-t-2 border-gray-500 my-6" />
+                    <p class="text-gray-600 text-sm md:text-lg mb-6">
+                        As a proud student chapter of the international
+                        <a href="https://www.acm.org/" class="text-blue-600 hover:underline">Association for Computing Machinery (ACM)</a>, the AISSMS IOIT ACM Student Chapter is a vibrant and inclusive
+                        community at AISSMS Institute of Information Technology. As one of the
+                        premier technology-focused organizations in the region, we welcome
+                        students from all disciplines and skill levels to collaborate, innovate,
+                        and share our passion for technology.
+                        <br />
+                        <br />
+                        Through a diverse range of initiatives, including flagship events like
+                        <a href="https://ioittenet.com/" class="text-blue-600 hover:underline">TENET</a>,
+                        <a href="https://www.ioitmun.com/" class="text-blue-600 hover:underline">IOIT MUN</a>, Tech SIGs, and our monthly coding contest Bit by Bit, we aim to
+                        inspire and engage students in cutting-edge domains such as artificial
+                        intelligence, cybersecurity, virtual reality, web and mobile
+                        development, and more. With workshops, speaker panels, hackathons, and
+                        competitions, our chapter fosters learning, creativity, and leadership,
+                        creating opportunities for all to thrive in the ever-evolving tech
+                        landscape.
+                        <br />
+                        <br />
+                        Explore our
+                        <a href="/gallery" class="text-blue-600 hover:underline">gallery</a> to
+                        see highlights from our ACM events.
+                    </p>
+                </div>
+                <div class="text-sm md:text-lg gsap-reveal">
+                    <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">What we do?</h2>
+                    <hr class="border-t-2 border-gray-500 my-6" />
+                    <p class="text-gray-600 mb-6">
+                        An ACM Student Chapter, affiliated with the
+                        <a href="https://www.acm.org/" class="text-blue-600 hover:underline">Association for Computing Machinery (ACM)</a>, primarily focuses on providing a platform for computer science
+                        students to network, learn, and develop their skills through organizing
+                        technical talks, workshops, coding competitions, and other events,
+                        essentially acting as a hub for connecting students with industry
+                        professionals and fostering a vibrant computing community within their
+                        university.
+                    </p>
+                    <section class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Key Functions of an ACM Student Chapter</h2>
+                        <ul class="list-none list-inside text-gray-700 space-y-2">
+                            <li>
+                                <strong>Educational events:</strong> Hosting guest lectures,
+                                seminars, and workshops on current trends in computing by industry
+                                experts.
+                            </li>
+                            <li>
+                                <strong>Competitions:</strong> Organizing coding competitions and
+                                hackathons to encourage problem-solving and practical application of
+                                skills.
+                            </li>
+                            <li>
+                                <strong>Mentorship opportunities:</strong> Connecting students with
+                                experienced professionals for guidance and career advice.
+                            </li>
+                            <li>
+                                <strong>Networking events:</strong> Facilitating interaction among
+                                students, faculty, and industry professionals through social
+                                gatherings and meetups.
+                            </li>
+                            <li>
+                                <strong>Community outreach:</strong> Participating in local tech
+                                events, volunteering activities, and promoting computer science
+                                education.
+                            </li>
+                            <li>
+                                <strong>Professional development:</strong> Providing resources for
+                                career preparation like resume workshops and interview skills
+                                training.
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+                <div class="gsap-reveal">
+                    <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">Achievements</h2>
+                    <hr class="border-t-2 border-gray-500 my-6" />
+                    <div style="flex: 1;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                height: 300px">
+                        <canvas id="page-surface" style="max-width: 100%; max-height: 100%"></canvas>
+                    </div>
+                    <a href="https://www.acm.org/articles/acm-india-bulletins/2024/2023-student-chapter-awards"
+                       class="text-base md:text-lg text-center md:text-left font-bold md:mb-4 mb-3 text-blue-600 hover:underline">
+                        National Achievement of Outstanding Community Service
+                    </a>
+                    <p class="text-gray-600 text-sm md:text-lg mb-6">
+                        The AISSMS IOIT ACM Student Chapter has been recognized for its exceptional
+                        contribution to the community. By reporting the highest number of
+                        activities, the chapter has demonstrated commitment to growth, service,
+                        and innovation in the field of technology and community engagement.
+                    </p>
+                </div>
+                <div class="gsap-reveal">
+                    <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">How do I get involved?</h2>
+                    <hr class="border-t-2 border-gray-500 my-6" />
+                    <p class="text-gray-600 text-sm md:text-lg mb-6">
+                        No matter what your background or interest is, we would love to have you
+                        at our events and activities! To keep up with what’s happening, we
+                        recommend joining via our
+                        <a href="/join" class="text-blue-600 hover:underline">membership portal</a>
+                        . We will keep you up to date with everything ACM
+                        <br />
+                        <br />
+                        Here’s our social media, where you can see what we’re up to:
+                    </p>
+                    <div class="mt-8 flex gap-6 md:justify-start justify-center">
+                        <a href="https://facebook.com/ioitacm"
+                           class="text-gray-700 hover:text-blue-600 text-3xl"
+                           aria-label="Facebook"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://twitter.com/ioit_acm"
+                           class="text-gray-700 hover:text-blue-400 text-3xl"
+                           aria-label="Twitter"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://linkedin.com/company/ioit-acm"
+                           class="text-gray-700 hover:text-blue-800 text-3xl"
+                           aria-label="LinkedIn"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://instagram.com/ioit__acm"
+                           class="text-gray-700 hover:text-pink-600 text-3xl"
+                           aria-label="Instagram"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://github.com/ioit-acm"
+                           class="text-gray-700 hover:text-black text-3xl"
+                           aria-label="GitHub"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="gsap-reveal">
+                    <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold">Sponsorships and collaborations</h2>
+                    <hr class="border-t-2 border-gray-500 my-6" />
+                    <p class="text-gray-600 text-sm md:text-lg mb-6">
+                        For sponsorship inquiries, please contact Vipul Barmukh, Vice Chair at
+                        AISSMS IOIT ACM Student chapter, at
+                        <a href="tel:7276362624" class="text-blue-600 hover:underline">7276362624</a>
+                        or email us at
+                        <a href="mailto:acm.studentbranch@aissmsioit.org"
+                           class="text-blue-600 hover:underline">acm.studentbranch@aissmsioit.org</a>. We look forward to collaborating with you!
+                    </p>
+                </div>
+            </section>
+            <div class="mt-12 mx-auto max-w-6xl p-8">
+                <h2 class="text-3xl md:text-4xl text-center md:text-left font-bold mb-10">Leadership</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-8">
+                    {% for member in leadership %}
+                        <div class="text-center gsap-reveal">
+                            <div class="w-24 h-24 rounded-full border border-gray-300 mx-auto bg-cover bg-center"
+                                 style="background-image: url('{{ member.image }}')"></div>
+                            <p class="mt-4 text-gray-900">{{ member.name }}</p>
+                            <p class="text-gray-600">{{ member.title }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="bg-gradient-to-r mt-20 from-blue-800 to-blue-600 py-8 px-6 text-center flex flex-col md:flex-row items-center justify-between text-white shadow-lg gap-6">
+                <h2 class="text-2xl md:text-4xl font-bold mb-6 md:mb-0">Join our community and grow with us</h2>
+                <div class="max-md:text-sm flex flex-row gap-4">
+                    <a href="/join"
+                       class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:no-underline">
+                        Join AISSMS IOIT ACM
+                    </a>
+                    <a href="/feedback"
+                       class="bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md hover:no-underline flex items-center gap-2 transition-transform transform hover:scale-105">
+                        Feedback Form
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+            <script type="module" src="/static/js/award-three.js"></script>
+            <script>
   const video = document.getElementById("about-video");
 
   video.addEventListener("click", () => {
@@ -417,6 +251,5 @@ growth.{% endblock %} {% block content %}
 
     rotatingDiv.style.transform = `rotate(${rotationDegree}deg)`;
   });
-</script>
-
-{% endblock %}
+            </script>
+        {% endblock %}
