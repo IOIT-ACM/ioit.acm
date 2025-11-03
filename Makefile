@@ -1,5 +1,5 @@
 run:
-	@. venv/bin/activate && flask run
+	@. venv/bin/activate && flask run --host=0.0.0.0 --port=5000
 
 ui:
 	npx tailwindcss -i ./app/static/css/input.css -o ./app/static/css/tailwind.css --watch --minify
