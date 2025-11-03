@@ -1083,13 +1083,14 @@ endblock %} {% block head %}
   function downloadCollage() {
     const isJpeg = document.querySelector(".format-toggle").checked;
     const format = isJpeg ? "jpeg" : "png";
+    const quality = isJpeg ? 0.92 : 1.0;
 
-    const targetWidth = 4000;
+    const targetWidth = 2048;
     const multiplier = targetWidth / canvas.width;
 
     const dataURL = canvas.toDataURL({
       format: format,
-      quality: 1.0,
+      quality: quality,
       multiplier: multiplier,
     });
 
@@ -1100,7 +1101,6 @@ endblock %} {% block head %}
     link.click();
     document.body.removeChild(link);
   }
-
   function setupMobileNav() {
     const mainPanel = document.getElementById("mobile-main-panel");
     const panels = document.querySelectorAll(
