@@ -1,7 +1,10 @@
-{% extends "apps/base.html" %} {% block title %}IOIT ACM Collage Maker{%
-endblock %} {% block head %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
-<style>
+{% extends "apps/base.html" %}
+{% block title %}
+    IOIT ACM Collage Maker{%
+    endblock %}
+    {% block head %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+        <style>
   .glass-surface {
     background-color: rgba(40, 40, 52, 0.4);
     backdrop-filter: blur(24px);
@@ -24,7 +27,7 @@ endblock %} {% block head %}
   }
   ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
+    border-radius: 0;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.3);
@@ -36,14 +39,14 @@ endblock %} {% block head %}
     height: 16px;
     background: #3b82f6;
     cursor: pointer;
-    border-radius: 50%;
+    border-radius: 0;
   }
   input[type="range"]::-moz-range-thumb {
     width: 16px;
     height: 16px;
     background: #3b82f6;
     cursor: pointer;
-    border-radius: 50%;
+    border-radius: 0;
   }
   @media (max-width: 767px) {
     .main-content {
@@ -68,597 +71,321 @@ endblock %} {% block head %}
       padding: 0.5rem;
     }
   }
-</style>
-{% endblock %} {% block content %}
-<div class="p-0 sm:p-6 lg:p-8 h-full">
-  <div
-    class="container max-w-7xl mx-auto glass-surface rounded-none sm:rounded-[24px] shadow-2xl overflow-hidden flex flex-col h-full"
-  >
-    <header
-      class="flex items-center gap-3 p-4 border-b border-[rgba(255,255,255,0.1)] bg-[rgba(0,0,0,0.5)] backdrop-blur-sm flex-shrink-0"
-    >
-      <a
-        href="{{ url_for('apps.index') }}"
-        class="flex items-center gap-2 text-white hover:text-blue-300"
-      >
-        <i data-lucide="arrow-left" class="w-5 h-5"></i>
-      </a>
-      <img
-        src="https://ioit.acm.org/static/favicon.svg"
-        alt="IOIT ACM Logo"
-        class="w-8 h-8"
-      />
-      <h1 class="text-lg font-semibold text-white">IOIT ACM Collage Maker</h1>
-    </header>
-
-    <div
-      class="top-toolbar hidden md:flex items-center gap-x-6 gap-y-4 p-4 border-b border-[rgba(255,255,255,0.1)] bg-[rgba(0,0,0,0.5)] backdrop-blur-sm flex-wrap"
-    >
-      <div class="flex items-center gap-3">
-        <label
-          for="upload"
-          class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer bg-blue-600 text-white hover:bg-blue-500 shadow-lg"
-        >
-          <i data-lucide="upload" class="w-4 h-4"></i>
-          <span>Upload</span>
-        </label>
-        <input
-          type="file"
-          id="upload"
-          accept="image/*"
-          multiple
-          class="hidden"
-        />
-      </div>
-      <div class="flex items-center gap-2 flex-1 min-w-[200px]">
-        <i data-lucide="type" class="w-4 h-4 text-gray-400"></i>
-        <textarea
-          class="caption-input w-full bg-transparent border border-gray-600 rounded-lg px-3 py-1.5 text-sm placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"
-          rows="1"
-          placeholder="Add a caption..."
-        ></textarea>
-      </div>
-
-      <div class="flex items-center gap-3 flex-wrap">
-        <span class="text-sm font-medium text-[rgba(255,255,255,0.6)]"
-          >Layout:</span
-        >
-        <div class="layout-options flex items-center gap-2 flex-wrap">
-          <div>
-            <input
-              type="radio"
-              id="layout-none"
-              name="layout"
-              value=""
-              class="hidden peer"
-              checked
-            /><label
-              for="layout-none"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >None</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="layout-single"
-              name="layout"
-              value="single"
-              class="hidden peer"
-            /><label
-              for="layout-single"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >1</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="layout-two-vertical"
-              name="layout"
-              value="two-vertical"
-              class="hidden peer"
-            /><label
-              for="layout-two-vertical"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >2</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="layout-three-left"
-              name="layout"
-              value="three-left"
-              class="hidden peer"
-            /><label
-              for="layout-three-left"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >3</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="layout-four-grid"
-              name="layout"
-              value="four-grid"
-              class="hidden peer"
-            /><label
-              for="layout-four-grid"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >4</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="layout-five-grid"
-              name="layout"
-              value="five-grid"
-              class="hidden peer"
-            /><label
-              for="layout-five-grid"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >5</label
-            >
-          </div>
+        </style>
+    {% endblock %}
+    {% block content %}
+        <div id="initial-view"
+             class="flex flex-col justify-center items-center h-full text-center p-4">
+            <label for="upload"
+                   class="flex flex-col items-center justify-center p-8 rounded-none border-2 border-dashed border-gray-600 hover:border-blue-500 hover:bg-gray-800/50 transition-all cursor-pointer">
+                <i data-lucide="upload-cloud" class="w-16 h-16 mb-4 text-gray-400"></i>
+                <span class="text-xl font-semibold text-white">Upload Images</span>
+                <span class="text-sm text-gray-400 mt-1">Click or drag files here</span>
+            </label>
+            <p class="mt-4 text-gray-400">Maximum 5 images.</p>
+            <p class="mt-2 text-gray-400">Press 'Delete' on your keyboard to remove a selected image.</p>
         </div>
-      </div>
-
-      <div class="flex items-center gap-3 flex-wrap">
-        <span class="text-sm font-medium text-[rgba(255,255,255,0.6)]"
-          >Ratio:</span
-        >
-        <div class="ratio-options flex items-center gap-2 flex-wrap">
-          <div>
-            <input
-              type="radio"
-              id="ratio-1-1"
-              name="ratio"
-              value="1:1"
-              class="hidden peer"
-              checked
-            /><label
-              for="ratio-1-1"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >1:1</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="ratio-4-3"
-              name="ratio"
-              value="4:3"
-              class="hidden peer"
-            /><label
-              for="ratio-4-3"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >4:3</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="ratio-16-9"
-              name="ratio"
-              value="16:9"
-              class="hidden peer"
-            /><label
-              for="ratio-16-9"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >16:9</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="ratio-3-4"
-              name="ratio"
-              value="3:4"
-              class="hidden peer"
-            /><label
-              for="ratio-3-4"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >3:4</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="ratio-9-16"
-              name="ratio"
-              value="9:16"
-              class="hidden peer"
-            /><label
-              for="ratio-9-16"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >9:16</label
-            >
-          </div>
+        <div id="main-app" class="hidden h-full w-full">
+            <div class="w-full h-full glass-surface rounded-none shadow-2xl overflow-hidden flex flex-col">
+                <header class="flex items-center gap-3 p-4 border-b border-[rgba(255,255,255,0.1)] bg-[rgba(0,0,0,0.5)] backdrop-blur-sm flex-shrink-0">
+                    <a href="{{ url_for("apps.index") }}"
+                       class="flex items-center gap-2 text-white hover:text-blue-300">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    </a>
+                    <img src="https://ioit.acm.org/static/favicon.svg"
+                         alt="IOIT ACM Logo"
+                         class="w-8 h-8" />
+                    <h1 class="text-lg font-semibold text-white">IOIT ACM Collage Maker</h1>
+                </header>
+                <div class="top-toolbar hidden md:flex items-center gap-x-6 gap-y-4 p-4 border-b border-[rgba(255,255,255,0.1)] bg-[rgba(0,0,0,0.5)] backdrop-blur-sm flex-wrap">
+                    <div class="flex items-center gap-3">
+                        <label for="upload"
+                               class="flex items-center gap-2 px-4 py-2 rounded-none text-sm font-medium transition-all duration-200 cursor-pointer bg-blue-600 text-white hover:bg-blue-500 shadow-lg">
+                            <i data-lucide="upload" class="w-4 h-4"></i>
+                            <span>New Collage</span>
+                        </label>
+                        <input type="file" id="upload" accept="image/*" multiple class="hidden" />
+                    </div>
+                    <div class="flex items-center gap-2 flex-1 min-w-[200px]">
+                        <i data-lucide="type" class="w-4 h-4 text-gray-400"></i>
+                        <textarea class="caption-input w-full bg-transparent border border-gray-600 rounded-none px-3 py-1.5 text-sm placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"
+                                  rows="1"
+                                  placeholder="Add a caption..."></textarea>
+                    </div>
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <span class="text-sm font-medium text-[rgba(255,255,255,0.6)]">Ratio:</span>
+                        <div class="ratio-options flex items-center gap-2 flex-wrap">
+                            <div>
+                                <input type="radio"
+                                       id="ratio-1-1"
+                                       name="ratio"
+                                       value="1:1"
+                                       class="hidden peer"
+                                       checked />
+                                <label for="ratio-1-1"
+                                       class="block cursor-pointer rounded-none px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white">
+                                    1:1
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio"
+                                       id="ratio-4-3"
+                                       name="ratio"
+                                       value="4:3"
+                                       class="hidden peer" />
+                                <label for="ratio-4-3"
+                                       class="block cursor-pointer rounded-none px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white">
+                                    4:3
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio"
+                                       id="ratio-16-9"
+                                       name="ratio"
+                                       value="16:9"
+                                       class="hidden peer" />
+                                <label for="ratio-16-9"
+                                       class="block cursor-pointer rounded-none px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white">
+                                    16:9
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio"
+                                       id="ratio-3-4"
+                                       name="ratio"
+                                       value="3:4"
+                                       class="hidden peer" />
+                                <label for="ratio-3-4"
+                                       class="block cursor-pointer rounded-none px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white">
+                                    3:4
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio"
+                                       id="ratio-9-16"
+                                       name="ratio"
+                                       value="9:16"
+                                       class="hidden peer" />
+                                <label for="ratio-9-16"
+                                       class="block cursor-pointer rounded-none px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white">
+                                    9:16
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="clear-canvas-btn glass-element flex items-center gap-2 px-4 py-2 rounded-none text-sm font-medium transition-all duration-200 ml-auto">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        <span>Clear</span>
+                    </button>
+                </div>
+                <div class="main-content flex-1 flex flex-col md:flex-row gap-4 sm:gap-6 p-2 sm:p-6 min-h-0">
+                    <div class="sidebar w-full md:w-48 flex-shrink-0 flex flex-col min-h-0">
+                        <h3 class="text-base font-medium text-[rgba(255,255,255,0.9)] px-2 mb-3 flex-shrink-0">Uploaded Images</h3>
+                        <div class="thumbnails flex-1 flex flex-row md:flex-col gap-3 overflow-x-auto md:overflow-y-auto pb-2"
+                             id="thumbnails"></div>
+                    </div>
+                    <div class="canvas-wrapper flex-1 flex justify-center items-center bg-[rgba(0,0,0,0.2)] rounded-none p-2 sm:p-4 min-h-0">
+                        <canvas id="canvas"></canvas>
+                    </div>
+                </div>
+                <div class="bottom-bar hidden md:flex items-center gap-3 sm:gap-4 p-4 border-t border-[rgba(255,255,255,0.1)] bg-[rgba(0,0,0,0.2)] flex-wrap">
+                    <button class="delete-btn glass-element flex items-center gap-2 px-4 py-2 rounded-none text-sm font-medium transition-all duration-200">
+                        <i data-lucide="x-circle" class="w-4 h-4"></i>
+                        <span>Delete Selected</span>
+                    </button>
+                    <div class="flex items-center gap-3 text-sm font-medium">
+                        <label class="text-[rgba(255,255,255,0.6)]">Gap:</label>
+                        <input type="range"
+                               min="0"
+                               max="50"
+                               value="4"
+                               class="gap-slider w-24 h-2 bg-gray-700 rounded-none appearance-none cursor-pointer" />
+                    </div>
+                    <div class="flex items-center gap-3 text-sm font-medium">
+                        <label class="text-[rgba(255,255,255,0.6)]">Padding:</label>
+                        <input type="range"
+                               min="0"
+                               max="50"
+                               value="10"
+                               class="padding-slider w-24 h-2 bg-gray-700 rounded-none appearance-none cursor-pointer" />
+                    </div>
+                    <div class="flex items-center gap-3 text-sm font-medium">
+                        <label class="text-[rgba(255,255,255,0.6)]">Font Size:</label>
+                        <input type="range"
+                               min="12"
+                               max="72"
+                               value="24"
+                               class="font-size-slider w-24 h-2 bg-gray-700 rounded-none appearance-none cursor-pointer" />
+                    </div>
+                    <div class="export-options flex items-center gap-3 ml-auto">
+                        <span class="format-label text-sm font-medium text-[rgba(255,255,255,0.6)]">PNG</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="format-toggle sr-only peer" />
+                            <div class="w-11 h-6 bg-gray-600 rounded-none peer peer-focus:ring-2 peer-focus:ring-blue-500 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-none after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
+                            </div>
+                        </label>
+                        <span class="format-label text-sm font-medium text-[rgba(255,255,255,0.6)]">JPEG</span>
+                        <button class="export-btn flex items-center gap-2 px-4 py-2 rounded-none text-sm font-medium transition-all duration-200 bg-green-600 text-white hover:bg-green-500 shadow-lg">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            <span>Download</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="mobile-bottom-bar"
+                     class="md:hidden flex flex-col border-t border-[rgba(255,255,255,0.1)] bg-[rgba(40,40,52,0.9)] backdrop-blur-md flex-shrink-0">
+                    <div id="mobile-main-panel" class="flex justify-around items-center p-2">
+                        <label for="upload"
+                               class="flex flex-col items-center gap-1 text-xs p-1 rounded-none cursor-pointer">
+                            <i data-lucide="upload" class="w-5 h-5"></i> Upload
+                        </label>
+                        <button data-target="mobile-ratio-panel"
+                                class="mobile-panel-trigger flex flex-col items-center gap-1 text-xs p-1 rounded-none">
+                            <i data-lucide="crop" class="w-5 h-5"></i> Ratio
+                        </button>
+                        <button data-target="mobile-settings-panel"
+                                class="mobile-panel-trigger flex flex-col items-center gap-1 text-xs p-1 rounded-none">
+                            <i data-lucide="sliders-horizontal" class="w-5 h-5"></i> Adjust
+                        </button>
+                        <button class="export-btn flex flex-col items-center gap-1 text-xs p-1 rounded-none text-green-400">
+                            <i data-lucide="download" class="w-5 h-5"></i> Download
+                        </button>
+                    </div>
+                    <div id="mobile-ratio-panel" class="hidden p-3 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <button class="mobile-back-btn p-1">
+                                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                            </button>
+                            <h4 class="font-semibold text-sm">Aspect Ratio</h4>
+                            <div class="w-6"></div>
+                        </div>
+                        <div class="ratio-options flex flex-wrap justify-center gap-2">
+                            <div>
+                                <input type="radio"
+                                       id="mobile-ratio-1-1"
+                                       name="ratio"
+                                       value="1:1"
+                                       class="hidden peer"
+                                       checked />
+                                <label for="mobile-ratio-1-1"
+                                       class="block cursor-pointer rounded-none px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white">
+                                    1:1
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio"
+                                       id="mobile-ratio-4-3"
+                                       name="ratio"
+                                       value="4:3"
+                                       class="hidden peer" />
+                                <label for="mobile-ratio-4-3"
+                                       class="block cursor-pointer rounded-none px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white">
+                                    4:3
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio"
+                                       id="mobile-ratio-16-9"
+                                       name="ratio"
+                                       value="16:9"
+                                       class="hidden peer" />
+                                <label for="mobile-ratio-16-9"
+                                       class="block cursor-pointer rounded-none px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white">
+                                    16:9
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio"
+                                       id="mobile-ratio-3-4"
+                                       name="ratio"
+                                       value="3:4"
+                                       class="hidden peer" />
+                                <label for="mobile-ratio-3-4"
+                                       class="block cursor-pointer rounded-none px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white">
+                                    3:4
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio"
+                                       id="mobile-ratio-9-16"
+                                       name="ratio"
+                                       value="9:16"
+                                       class="hidden peer" />
+                                <label for="mobile-ratio-9-16"
+                                       class="block cursor-pointer rounded-none px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white">
+                                    9:16
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="mobile-settings-panel" class="hidden p-3 space-y-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <button class="mobile-back-btn p-1">
+                                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                            </button>
+                            <h4 class="font-semibold text-sm">Adjustments</h4>
+                            <div class="w-6"></div>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm">
+                            <label class="w-12 text-[rgba(255,255,255,0.6)]">Caption:</label>
+                            <textarea class="caption-input flex-1 bg-transparent border border-gray-600 rounded-none px-2 py-1 text-sm placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"
+                                      rows="2"
+                                      placeholder="Add a caption..."></textarea>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm">
+                            <label class="w-12 text-[rgba(255,255,255,0.6)]">Gap:</label>
+                            <input type="range"
+                                   min="0"
+                                   max="50"
+                                   value="4"
+                                   class="gap-slider flex-1 h-2 bg-gray-700 rounded-none appearance-none cursor-pointer" />
+                        </div>
+                        <div class="flex items-center gap-3 text-sm">
+                            <label class="w-12 text-[rgba(255,255,255,0.6)]">Padding:</label>
+                            <input type="range"
+                                   min="0"
+                                   max="50"
+                                   value="10"
+                                   class="padding-slider flex-1 h-2 bg-gray-700 rounded-none appearance-none cursor-pointer" />
+                        </div>
+                        <div class="flex items-center gap-3 text-sm">
+                            <label class="w-12 text-[rgba(255,255,255,0.6)]">Font Size:</label>
+                            <input type="range"
+                                   min="12"
+                                   max="72"
+                                   value="24"
+                                   class="font-size-slider flex-1 h-2 bg-gray-700 rounded-none appearance-none cursor-pointer" />
+                        </div>
+                        <div class="flex items-center gap-3 text-sm">
+                            <label class="w-12 text-[rgba(255,255,255,0.6)]">Canvas:</label>
+                            <button class="clear-canvas-btn glass-element flex items-center gap-1 px-2 py-1 rounded-none text-xs ml-auto">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i> Clear All
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm">
+                            <label class="w-12 text-[rgba(255,255,255,0.6)]">Image:</label>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="delete-btn glass-element flex items-center gap-1 px-2 py-1 rounded-none text-xs">
+                                    <i data-lucide="x-circle" class="w-4 h-4"></i> Delete Selected
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm">
+                            <label class="w-12 text-[rgba(255,255,255,0.6)]">Format:</label>
+                            <span class="format-label text-sm font-medium text-[rgba(255,255,255,0.6)]">PNG</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="format-toggle sr-only peer" />
+                                <div class="w-11 h-6 bg-gray-600 rounded-none peer peer-focus:ring-2 peer-focus:ring-blue-500 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-none after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
+                                </div>
+                            </label>
+                            <span class="format-label text-sm font-medium text-[rgba(255,255,255,0.6)]">JPEG</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <button
-        class="clear-canvas-btn glass-element flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ml-auto"
-      >
-        <i data-lucide="trash-2" class="w-4 h-4"></i>
-        <span>Clear</span>
-      </button>
-    </div>
-
-    <div
-      class="main-content flex-1 flex flex-col md:flex-row gap-4 sm:gap-6 p-2 sm:p-6 min-h-0"
-    >
-      <div class="sidebar w-full md:w-48 flex-shrink-0 flex flex-col min-h-0">
-        <h3
-          class="text-base font-medium text-[rgba(255,255,255,0.9)] px-2 mb-3 flex-shrink-0"
-        >
-          Uploaded Images
-        </h3>
-        <div
-          class="thumbnails flex-1 flex flex-row md:flex-col gap-3 overflow-x-auto md:overflow-y-auto pb-2"
-          id="thumbnails"
-        ></div>
-      </div>
-      <div
-        class="canvas-wrapper flex-1 flex justify-center items-center bg-[rgba(0,0,0,0.2)] rounded-2xl p-2 sm:p-4 min-h-0"
-      >
-        <canvas id="canvas"></canvas>
-      </div>
-    </div>
-
-    <div
-      class="bottom-bar hidden md:flex items-center gap-3 sm:gap-4 p-4 border-t border-[rgba(255,255,255,0.1)] bg-[rgba(0,0,0,0.2)] flex-wrap"
-    >
-      <button
-        class="delete-btn glass-element flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"
-      >
-        <i data-lucide="x-circle" class="w-4 h-4"></i>
-        <span>Delete Selected</span>
-      </button>
-      <div class="flex items-center gap-3 text-sm font-medium">
-        <label class="text-[rgba(255,255,255,0.6)]">Gap:</label>
-        <input
-          type="range"
-          min="0"
-          max="50"
-          value="4"
-          class="gap-slider w-24 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-        />
-      </div>
-      <div class="flex items-center gap-3 text-sm font-medium">
-        <label class="text-[rgba(255,255,255,0.6)]">Padding:</label>
-        <input
-          type="range"
-          min="0"
-          max="50"
-          value="10"
-          class="padding-slider w-24 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-        />
-      </div>
-      <div class="flex items-center gap-3 text-sm font-medium">
-        <label class="text-[rgba(255,255,255,0.6)]">Font Size:</label>
-        <input
-          type="range"
-          min="12"
-          max="72"
-          value="24"
-          class="font-size-slider w-24 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-        />
-      </div>
-      <div class="export-options flex items-center gap-3 ml-auto">
-        <span
-          class="format-label text-sm font-medium text-[rgba(255,255,255,0.6)]"
-          >PNG</span
-        >
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" class="format-toggle sr-only peer" />
-          <div
-            class="w-11 h-6 bg-gray-600 rounded-full peer peer-focus:ring-2 peer-focus:ring-blue-500 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"
-          ></div>
-        </label>
-        <span
-          class="format-label text-sm font-medium text-[rgba(255,255,255,0.6)]"
-          >JPEG</span
-        >
-        <button
-          class="export-btn flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-green-600 text-white hover:bg-green-500 shadow-lg"
-        >
-          <i data-lucide="download" class="w-4 h-4"></i>
-          <span>Download</span>
-        </button>
-      </div>
-    </div>
-
-    <div
-      id="mobile-bottom-bar"
-      class="md:hidden flex flex-col border-t border-[rgba(255,255,255,0.1)] bg-[rgba(40,40,52,0.9)] backdrop-blur-md flex-shrink-0"
-    >
-      <div id="mobile-main-panel" class="flex justify-around items-center p-2">
-        <label
-          for="upload"
-          class="flex flex-col items-center gap-1 text-xs p-1 rounded-lg cursor-pointer"
-          ><i data-lucide="upload" class="w-5 h-5"></i> Upload</label
-        >
-        <button
-          data-target="mobile-layout-panel"
-          class="mobile-panel-trigger flex flex-col items-center gap-1 text-xs p-1 rounded-lg"
-        >
-          <i data-lucide="layout-grid" class="w-5 h-5"></i> Layout
-        </button>
-        <button
-          data-target="mobile-ratio-panel"
-          class="mobile-panel-trigger flex flex-col items-center gap-1 text-xs p-1 rounded-lg"
-        >
-          <i data-lucide="crop" class="w-5 h-5"></i> Ratio
-        </button>
-        <button
-          data-target="mobile-settings-panel"
-          class="mobile-panel-trigger flex flex-col items-center gap-1 text-xs p-1 rounded-lg"
-        >
-          <i data-lucide="sliders-horizontal" class="w-5 h-5"></i> Adjust
-        </button>
-        <button
-          class="export-btn flex flex-col items-center gap-1 text-xs p-1 rounded-lg text-green-400"
-        >
-          <i data-lucide="download" class="w-5 h-5"></i> Download
-        </button>
-      </div>
-      <div id="mobile-layout-panel" class="hidden p-3 space-y-2">
-        <div class="flex justify-between items-center">
-          <button class="mobile-back-btn p-1">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i>
-          </button>
-          <h4 class="font-semibold text-sm">Layout</h4>
-          <div class="w-6"></div>
-        </div>
-        <div class="layout-options flex flex-wrap justify-center gap-2">
-          <div>
-            <input
-              type="radio"
-              id="mobile-layout-none"
-              name="layout"
-              value=""
-              class="hidden peer"
-              checked
-            /><label
-              for="mobile-layout-none"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >None</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="mobile-layout-single"
-              name="layout"
-              value="single"
-              class="hidden peer"
-            /><label
-              for="mobile-layout-single"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >1</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="mobile-layout-two-vertical"
-              name="layout"
-              value="two-vertical"
-              class="hidden peer"
-            /><label
-              for="mobile-layout-two-vertical"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >2</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="mobile-layout-three-left"
-              name="layout"
-              value="three-left"
-              class="hidden peer"
-            /><label
-              for="mobile-layout-three-left"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >3</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="mobile-layout-four-grid"
-              name="layout"
-              value="four-grid"
-              class="hidden peer"
-            /><label
-              for="mobile-layout-four-grid"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >4</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="mobile-layout-five-grid"
-              name="layout"
-              value="five-grid"
-              class="hidden peer"
-            /><label
-              for="mobile-layout-five-grid"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >5</label
-            >
-          </div>
-        </div>
-      </div>
-      <div id="mobile-ratio-panel" class="hidden p-3 space-y-2">
-        <div class="flex justify-between items-center">
-          <button class="mobile-back-btn p-1">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i>
-          </button>
-          <h4 class="font-semibold text-sm">Aspect Ratio</h4>
-          <div class="w-6"></div>
-        </div>
-        <div class="ratio-options flex flex-wrap justify-center gap-2">
-          <div>
-            <input
-              type="radio"
-              id="mobile-ratio-1-1"
-              name="ratio"
-              value="1:1"
-              class="hidden peer"
-              checked
-            /><label
-              for="mobile-ratio-1-1"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >1:1</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="mobile-ratio-4-3"
-              name="ratio"
-              value="4:3"
-              class="hidden peer"
-            /><label
-              for="mobile-ratio-4-3"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >4:3</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="mobile-ratio-16-9"
-              name="ratio"
-              value="16:9"
-              class="hidden peer"
-            /><label
-              for="mobile-ratio-16-9"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >16:9</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="mobile-ratio-3-4"
-              name="ratio"
-              value="3:4"
-              class="hidden peer"
-            /><label
-              for="mobile-ratio-3-4"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >3:4</label
-            >
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="mobile-ratio-9-16"
-              name="ratio"
-              value="9:16"
-              class="hidden peer"
-            /><label
-              for="mobile-ratio-9-16"
-              class="block cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition-colors bg-[rgba(0,0,0,0.2)] hover:bg-[rgba(0,0,0,0.3)] peer-checked:bg-blue-600 peer-checked:text-white"
-              >9:16</label
-            >
-          </div>
-        </div>
-      </div>
-      <div id="mobile-settings-panel" class="hidden p-3 space-y-4">
-        <div class="flex justify-between items-center mb-2">
-          <button class="mobile-back-btn p-1">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i>
-          </button>
-          <h4 class="font-semibold text-sm">Adjustments</h4>
-          <div class="w-6"></div>
-        </div>
-        <div class="flex items-center gap-3 text-sm">
-          <label class="w-12 text-[rgba(255,255,255,0.6)]">Caption:</label
-          ><textarea
-            class="caption-input flex-1 bg-transparent border border-gray-600 rounded-lg px-2 py-1 text-sm placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"
-            rows="2"
-            placeholder="Add a caption..."
-          ></textarea>
-        </div>
-        <div class="flex items-center gap-3 text-sm">
-          <label class="w-12 text-[rgba(255,255,255,0.6)]">Gap:</label
-          ><input
-            type="range"
-            min="0"
-            max="50"
-            value="4"
-            class="gap-slider flex-1 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-          />
-        </div>
-        <div class="flex items-center gap-3 text-sm">
-          <label class="w-12 text-[rgba(255,255,255,0.6)]">Padding:</label
-          ><input
-            type="range"
-            min="0"
-            max="50"
-            value="10"
-            class="padding-slider flex-1 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-          />
-        </div>
-        <div class="flex items-center gap-3 text-sm">
-          <label class="w-12 text-[rgba(255,255,255,0.6)]">Font Size:</label
-          ><input
-            type="range"
-            min="12"
-            max="72"
-            value="24"
-            class="font-size-slider flex-1 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-          />
-        </div>
-        <div class="flex items-center gap-3 text-sm">
-          <label class="w-12 text-[rgba(255,255,255,0.6)]">Canvas:</label
-          ><button
-            class="clear-canvas-btn glass-element flex items-center gap-1 px-2 py-1 rounded-full text-xs ml-auto"
-          >
-            <i data-lucide="trash-2" class="w-4 h-4"></i> Clear All
-          </button>
-        </div>
-        <div class="flex items-center gap-3 text-sm">
-          <label class="w-12 text-[rgba(255,255,255,0.6)]">Image:</label>
-          <div class="flex flex-wrap gap-2">
-            <button
-              class="delete-btn glass-element flex items-center gap-1 px-2 py-1 rounded-full text-xs"
-            >
-              <i data-lucide="x-circle" class="w-4 h-4"></i> Delete Selected
-            </button>
-          </div>
-        </div>
-        <div class="flex items-center gap-3 text-sm">
-          <label class="w-12 text-[rgba(255,255,255,0.6)]">Format:</label
-          ><span
-            class="format-label text-sm font-medium text-[rgba(255,255,255,0.6)]"
-            >PNG</span
-          ><label class="relative inline-flex items-center cursor-pointer"
-            ><input type="checkbox" class="format-toggle sr-only peer" />
-            <div
-              class="w-11 h-6 bg-gray-600 rounded-full peer peer-focus:ring-2 peer-focus:ring-blue-500 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"
-            ></div></label
-          ><span
-            class="format-label text-sm font-medium text-[rgba(255,255,255,0.6)]"
-            >JPEG</span
-          >
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
+        <script>
   let canvas;
+  let isCanvasInitialized = false;
   let currentLayout = null;
   let frames = [];
   let aspectRatio = [1, 1];
@@ -691,51 +418,100 @@ endblock %} {% block head %}
     const canvasEl = document.getElementById("canvas");
     canvas = new fabric.Canvas(canvasEl, {
       backgroundColor: "#FFFFFF",
+      preserveObjectStacking: true,
     });
 
     canvas.on("object:moving", handlePan);
     canvas.on("mouse:wheel", handleZoom);
-    updateCanvasSize();
+    window.addEventListener("resize", updateCanvasSize);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", () => {
+        setTimeout(updateCanvasSize, 150);
+      });
+    }
   }
 
   function addOrUpdateHeaderOverlay() {
-    const availableWidth = canvas.width - collagePadding * 2;
-    if (availableWidth <= 0) {
-      if (headerObject) headerObject.visible = false;
-      return;
-    }
+    return new Promise((resolve) => {
+        const availableWidth = canvas.width - collagePadding * 2;
+        if (availableWidth <= 0) {
+            if (headerObject) {
+                headerObject.visible = false;
+                headerObject.setCoords();
+            }
+            return resolve();
+        }
 
-    if (headerObject) {
-      headerObject.set({
-        left: collagePadding,
-        top: collagePadding,
-        visible: true,
-      });
-      headerObject.scaleToWidth(availableWidth);
-    } else if (HEADER_IMAGE_URL) {
-      fabric.Image.fromURL(
-        HEADER_IMAGE_URL,
-        (img) => {
-          img.set({
-            left: collagePadding,
-            top: collagePadding,
-            originX: "left",
-            originY: "top",
-            selectable: false,
-            evented: false,
-            isHeaderOverlay: true,
-          });
-          img.scaleToWidth(availableWidth);
-          headerObject = img;
-          canvas.add(headerObject);
-          headerObject.moveTo(999);
-        },
-        { crossOrigin: "anonymous" },
-      );
-    }
+        if (headerObject) {
+            headerObject.set({
+                left: collagePadding,
+                top: collagePadding,
+                visible: true,
+            });
+            headerObject.scaleToWidth(availableWidth);
+            headerObject.setCoords();
+            return resolve();
+        }
+
+        if (HEADER_IMAGE_URL) {
+            fabric.Image.fromURL(
+                HEADER_IMAGE_URL,
+                (img) => {
+                    img.set({
+                        left: collagePadding,
+                        top: collagePadding,
+                        originX: "left",
+                        originY: "top",
+                        selectable: false,
+                        evented: false,
+                        isHeaderOverlay: true,
+                    });
+                    img.scaleToWidth(availableWidth);
+                    headerObject = img;
+                    canvas.add(headerObject);
+                    headerObject.moveTo(999);
+                    resolve();
+                },
+                { crossOrigin: "anonymous" }
+            );
+        } else {
+            resolve();
+        }
+    });
+  }
+
+  function redrawCanvasContent() {
+    if (!canvas) return;
+    addOrUpdateHeaderOverlay().then(() => {
+        addOrUpdateTextObject(document.querySelector(".caption-input").value);
+        if (currentLayout) {
+            applyLayout(currentLayout, true);
+        } else {
+            canvas.renderAll();
+        }
+    });
   }
 
   function updateCanvasSize() {
+    if (!canvas) return;
+
+    canvas.getObjects('image').forEach(img => {
+        if (img.isHeaderOverlay || typeof img.frameIndex === 'undefined') return;
+        const frame = frames[img.frameIndex];
+        if (!frame) return;
+
+        const defaultScale = Math.max(frame.w / img.width, frame.h / img.height);
+        const zoomMultiplier = img.scaleX / defaultScale;
+
+        const defaultCenterX = frame.x + frame.w / 2;
+        const defaultCenterY = frame.y + frame.h / 2;
+
+        const panRatioX = (img.left - defaultCenterX) / frame.w;
+        const panRatioY = (img.top - defaultCenterY) / frame.h;
+
+        img.userState = { zoomMultiplier, panRatioX, panRatioY };
+    });
+
     const wrapper = document.querySelector(".canvas-wrapper");
     const { clientWidth, clientHeight } = wrapper;
 
@@ -745,10 +521,7 @@ endblock %} {% block head %}
 
     let newWidth, newHeight;
 
-    if (
-      canvasOuterWidth / canvasOuterHeight >
-      aspectRatio[0] / aspectRatio[1]
-    ) {
+    if (canvasOuterWidth / canvasOuterHeight > aspectRatio[0] / aspectRatio[1]) {
       newHeight = canvasOuterHeight;
       newWidth = newHeight * (aspectRatio[0] / aspectRatio[1]);
     } else {
@@ -762,13 +535,7 @@ endblock %} {% block head %}
     canvas.setWidth(newWidth);
     canvas.setHeight(newHeight);
 
-    addOrUpdateHeaderOverlay();
-    addOrUpdateTextObject(document.querySelector(".caption-input").value);
-
-    if (currentLayout) {
-      applyLayout(currentLayout, true);
-    }
-    canvas.renderAll();
+    redrawCanvasContent();
   }
 
   function getLayoutFrames(layoutName) {
@@ -795,12 +562,7 @@ endblock %} {% block head %}
         const fw = (w - g) / 2;
         return [
           { x: collagePadding, y: contentY, w: fw, h: contentHeight },
-          {
-            x: collagePadding + fw + g,
-            y: contentY,
-            w: fw,
-            h: contentHeight,
-          },
+          { x: collagePadding + fw + g, y: contentY, w: fw, h: contentHeight },
         ];
       }
       case "three-left": {
@@ -809,12 +571,7 @@ endblock %} {% block head %}
         return [
           { x: collagePadding, y: contentY, w: fw1, h: contentHeight },
           { x: collagePadding + fw1 + g, y: contentY, w: fw1, h: fh2 },
-          {
-            x: collagePadding + fw1 + g,
-            y: contentY + fh2 + g,
-            w: fw1,
-            h: fh2,
-          },
+          { x: collagePadding + fw1 + g, y: contentY + fh2 + g, w: fw1, h: fh2 },
         ];
       }
       case "four-grid": {
@@ -824,12 +581,7 @@ endblock %} {% block head %}
           { x: collagePadding, y: contentY, w: fw, h: fh },
           { x: collagePadding + fw + g, y: contentY, w: fw, h: fh },
           { x: collagePadding, y: contentY + fh + g, w: fw, h: fh },
-          {
-            x: collagePadding + fw + g,
-            y: contentY + fh + g,
-            w: fw,
-            h: fh,
-          },
+          { x: collagePadding + fw + g, y: contentY + fh + g, w: fw, h: fh },
         ];
       }
       case "five-grid": {
@@ -838,25 +590,10 @@ endblock %} {% block head %}
         const fw2 = (w - g) / 2;
         return [
           { x: collagePadding, y: contentY, w: fw1, h: fh1 },
-          {
-            x: collagePadding + fw1 + g,
-            y: contentY,
-            w: fw1,
-            h: fh1,
-          },
-          {
-            x: collagePadding + 2 * (fw1 + g),
-            y: contentY,
-            w: fw1,
-            h: fh1,
-          },
+          { x: collagePadding + fw1 + g, y: contentY, w: fw1, h: fh1 },
+          { x: collagePadding + 2 * (fw1 + g), y: contentY, w: fw1, h: fh1 },
           { x: collagePadding, y: contentY + fh1 + g, w: fw2, h: fh1 },
-          {
-            x: collagePadding + fw2 + g,
-            y: contentY + fh1 + g,
-            w: fw2,
-            h: fh1,
-          },
+          { x: collagePadding + fw2 + g, y: contentY + fh1 + g, w: fw2, h: fh1 },
         ];
       }
       default:
@@ -867,7 +604,6 @@ endblock %} {% block head %}
   function applyLayout(layoutName, keepImages = false) {
     currentLayout = layoutName;
 
-    const oldFrames = [...frames];
     const existingImages = keepImages
       ? canvas.getObjects("image").filter((obj) => !obj.isHeaderOverlay)
       : [];
@@ -878,14 +614,14 @@ endblock %} {% block head %}
 
     frames = getLayoutFrames(layoutName);
 
-    frames.forEach((frame) => {
+    frames.forEach((frame, index) => {
       const rect = new fabric.Rect({
         left: frame.x,
         top: frame.y,
         width: frame.w,
         height: frame.h,
         fill: "transparent",
-        stroke: "#000000",
+        stroke: "rgba(0,0,0,0.1)",
         strokeWidth: 1,
         selectable: false,
         evented: false,
@@ -895,47 +631,26 @@ endblock %} {% block head %}
     });
 
     existingImages.forEach((img) => {
-      const oldFrame = oldFrames[img.frameIndex];
-      const newFrame = frames[img.frameIndex];
-
-      if (oldFrame && newFrame) {
-        const oldDefaultScale = Math.max(
-          oldFrame.w / img.width,
-          oldFrame.h / img.height,
-        );
-        const zoomMultiplier = img.scaleX / oldDefaultScale;
-
-        const panXRatio =
-          (img.left - (oldFrame.x + oldFrame.w / 2)) / oldFrame.w;
-        const panYRatio =
-          (img.top - (oldFrame.y + oldFrame.h / 2)) / oldFrame.h;
-
-        positionImageInFrame(img, img.frameIndex, {
-          zoomMultiplier,
-          panXRatio,
-          panYRatio,
-        });
-      }
+        if (typeof img.frameIndex !== 'undefined') {
+            positionImageInFrame(img, img.frameIndex, img.userState);
+        }
     });
-    canvas
-      .getObjects()
-      .filter((o) => o.isFrameRect)
-      .forEach((rect) => rect.moveTo(998));
-    if (headerObject) headerObject.moveTo(999);
-    if (textObject) textObject.moveTo(998);
+
     canvas.renderAll();
   }
 
   function positionImageInFrame(image, frameIndex, state = {}) {
     const frame = frames[frameIndex];
-    const defaultScale = Math.max(
-      frame.w / image.width,
-      frame.h / image.height,
-    );
+    if (!frame) return;
 
+    const defaultScale = Math.max(frame.w / image.width, frame.h / image.height);
     const scale = defaultScale * (state.zoomMultiplier || 1);
-    const left = frame.x + frame.w / 2 + (state.panXRatio || 0) * frame.w;
-    const top = frame.y + frame.h / 2 + (state.panYRatio || 0) * frame.h;
+
+    const defaultCenterX = frame.x + frame.w / 2;
+    const defaultCenterY = frame.y + frame.h / 2;
+
+    const left = defaultCenterX + (state.panRatioX || 0) * frame.w;
+    const top = defaultCenterY + (state.panRatioY || 0) * frame.h;
 
     image.set({
       originX: "center",
@@ -960,37 +675,20 @@ endblock %} {% block head %}
     fabric.Image.fromURL(
       imgSrc,
       (img) => {
-        img.selectable = true;
-        if (frames.length > 0) {
-          const usedFrames = new Set(
-            canvas
-              .getObjects("image")
-              .filter((obj) => !obj.isHeaderOverlay)
-              .map((obj) => obj.frameIndex),
-          );
-          let frameIdx = frames.findIndex((_, i) => !usedFrames.has(i));
-          if (frameIdx !== -1) {
-            img.frameIndex = frameIdx;
-            positionImageInFrame(img, frameIdx);
-            canvas.add(img);
-          }
-        } else {
-          img.scaleToWidth(canvas.width * 0.5);
-          img.set({
-            left: canvas.width / 2,
-            top: canvas.height / 2,
-            originX: "center",
-            originY: "center",
-          });
+        img.selectable = false;
+        img.evented = false;
+
+        const usedFrames = new Set(
+          canvas.getObjects("image").filter(obj => !obj.isHeaderOverlay).map(obj => obj.frameIndex)
+        );
+        let frameIdx = frames.findIndex((_, i) => !usedFrames.has(i));
+
+        if (frameIdx !== -1) {
+          img.frameIndex = frameIdx;
+          positionImageInFrame(img, frameIdx);
           canvas.add(img);
+          canvas.renderAll();
         }
-        canvas
-          .getObjects()
-          .filter((o) => o.isFrameRect)
-          .forEach((rect) => rect.moveTo(998));
-        if (headerObject) headerObject.moveTo(999);
-        if (textObject) textObject.moveTo(998);
-        canvas.renderAll();
       },
       { crossOrigin: "anonymous" },
     );
@@ -998,7 +696,7 @@ endblock %} {% block head %}
 
   function handlePan(e) {
     const img = e.target;
-    if (img.frameIndex === undefined) return;
+    if (typeof img.frameIndex === 'undefined') return;
 
     const frame = frames[img.frameIndex];
     const imgWidth = img.getScaledWidth();
@@ -1018,7 +716,7 @@ endblock %} {% block head %}
   function handleZoom(opt) {
     const e = opt.e;
     const target = canvas.findTarget(e);
-    if (!target || target.frameIndex === undefined) return;
+    if (!target || typeof target.frameIndex === 'undefined') return;
     e.preventDefault();
     e.stopPropagation();
 
@@ -1034,13 +732,14 @@ endblock %} {% block head %}
   }
 
   function addOrUpdateTextObject(text) {
+    if (!canvas) return;
     const availableWidth = canvas.width - collagePadding * 2;
-    if (availableWidth <= 0) return;
+    if (availableWidth <= 0) {
+        if (textObject) textObject.visible = false;
+        return;
+    }
 
-    const topPos =
-      collagePadding +
-      (headerObject ? headerObject.getScaledHeight() : 0) +
-      imageGap;
+    const topPos = collagePadding + (headerObject && headerObject.visible ? headerObject.getScaledHeight() : 0) + imageGap;
 
     if (text.trim() === "") {
       if (textObject) {
@@ -1048,22 +747,22 @@ endblock %} {% block head %}
         textObject = null;
       }
     } else {
-      const currentFontSize = parseInt(
-        document.querySelector(".font-size-slider").value,
-        10,
-      );
+      const currentFontSize = parseInt(document.querySelector(".font-size-slider").value, 10);
       if (textObject) {
         textObject.set({
-          text: text,
-          width: availableWidth,
-          top: topPos,
-          left: collagePadding,
-          fontSize: currentFontSize,
+            text: text,
+            width: availableWidth,
+            top: topPos,
+            fontSize: currentFontSize,
+            left: collagePadding + availableWidth / 2,
+            visible: true
         });
+        textObject.setCoords();
       } else {
         textObject = new fabric.Textbox(text, {
-          left: collagePadding,
+          left: collagePadding + availableWidth / 2,
           top: topPos,
+          originX: 'center',
           width: availableWidth,
           fontSize: currentFontSize,
           fill: "#000000",
@@ -1074,25 +773,16 @@ endblock %} {% block head %}
         canvas.add(textObject);
       }
     }
-    if (currentLayout) {
-      applyLayout(currentLayout, true);
-    }
-    canvas.requestRenderAll();
   }
 
   function downloadCollage() {
     const isJpeg = document.querySelector(".format-toggle").checked;
     const format = isJpeg ? "jpeg" : "png";
     const quality = isJpeg ? 0.92 : 1.0;
-
     const targetWidth = 2048;
     const multiplier = targetWidth / canvas.width;
 
-    const dataURL = canvas.toDataURL({
-      format: format,
-      quality: quality,
-      multiplier: multiplier,
-    });
+    const dataURL = canvas.toDataURL({ format, quality, multiplier });
 
     const link = document.createElement("a");
     link.download = `collage-${Date.now()}.${format}`;
@@ -1101,11 +791,10 @@ endblock %} {% block head %}
     link.click();
     document.body.removeChild(link);
   }
+
   function setupMobileNav() {
     const mainPanel = document.getElementById("mobile-main-panel");
-    const panels = document.querySelectorAll(
-      "#mobile-bottom-bar > div:not(#mobile-main-panel)",
-    );
+    const panels = document.querySelectorAll("#mobile-bottom-bar > div:not(#mobile-main-panel)");
     const triggers = document.querySelectorAll(".mobile-panel-trigger");
     const backBtns = document.querySelectorAll(".mobile-back-btn");
 
@@ -1120,73 +809,94 @@ endblock %} {% block head %}
       setTimeout(updateCanvasSize, 150);
     };
 
-    triggers.forEach((trigger) => {
-      trigger.addEventListener("click", () => {
-        const targetPanelId = trigger.dataset.target;
-        showPanel(targetPanelId);
-      });
-    });
-
-    backBtns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        showPanel(null);
-      });
-    });
+    triggers.forEach((trigger) => trigger.addEventListener("click", () => showPanel(trigger.dataset.target)));
+    backBtns.forEach((btn) => btn.addEventListener("click", () => showPanel(null)));
   }
 
-  function setupEventListeners() {
-    document.getElementById("upload").addEventListener("change", function (e) {
+  async function handleFileUpload(e) {
       const files = Array.from(e.target.files).slice(0, 5);
-
-      if (files.length > 0 && !currentLayout) {
-        let autoLayout = "single";
-        if (files.length === 2) autoLayout = "two-vertical";
-        else if (files.length === 3) autoLayout = "three-left";
-        else if (files.length === 4) autoLayout = "four-grid";
-        else if (files.length >= 5) autoLayout = "five-grid";
-        document
-          .querySelectorAll(`input[name="layout"][value="${autoLayout}"]`)
-          .forEach((el) => (el.checked = true));
-        applyLayout(autoLayout);
+      if (files.length === 0) {
+          e.target.value = "";
+          return;
       }
+
+      if (!isCanvasInitialized) {
+          document.getElementById('initial-view').classList.add('hidden');
+          document.getElementById('main-app').classList.remove('hidden');
+          initCanvas();
+          setupCanvasEventListeners();
+          isCanvasInitialized = true;
+      }
+
+      canvas.clear();
+      headerObject = null;
+      textObject = null;
+      canvas.backgroundColor = "#FFFFFF";
+      document.getElementById("thumbnails").innerHTML = "";
+      frames = [];
+
+      let autoLayout = "single";
+      if (files.length === 2) autoLayout = "two-vertical";
+      else if (files.length === 3) autoLayout = "three-left";
+      else if (files.length === 4) autoLayout = "four-grid";
+      else if (files.length >= 5) autoLayout = "five-grid";
+
+      updateCanvasSize();
+      applyLayout(autoLayout);
 
       files.forEach((file) => {
         const reader = new FileReader();
         reader.onload = (event) => {
+          const imgSrc = event.target.result;
           const thumb = document.createElement("img");
-          thumb.src = event.target.result;
-          thumb.className =
-            "thumbnail md:w-full h-20 md:h-auto rounded-xl border-2 border-transparent hover:border-blue-500 cursor-pointer object-cover transition-all flex-shrink-0";
-          thumb.addEventListener("click", () =>
-            addImageToCanvas(event.target.result),
-          );
+          thumb.src = imgSrc;
+          thumb.className = "thumbnail md:w-full h-20 md:h-auto rounded-none border-2 border-transparent hover:border-blue-500 cursor-pointer object-cover transition-all flex-shrink-0";
           document.getElementById("thumbnails").appendChild(thumb);
-          addImageToCanvas(event.target.result);
+          addImageToCanvas(imgSrc);
         };
         reader.readAsDataURL(file);
       });
-      this.value = "";
-    });
+      e.target.value = "";
+  }
 
-    document.querySelectorAll(".layout-options").forEach((container) => {
-      container.addEventListener("change", (e) => {
-        if (e.target.name === "layout") {
-          applyLayout(e.target.value, true);
-          document
-            .querySelectorAll(`input[name="layout"][value="${e.target.value}"]`)
-            .forEach((el) => (el.checked = true));
+  function setupCanvasEventListeners() {
+    canvas.on('mouse:down', function(options) {
+        if (options.target) return;
+
+        const pointer = canvas.getPointer(options.e);
+        let clickedImage = null;
+
+        const images = canvas.getObjects('image').filter(obj => !obj.isHeaderOverlay);
+        for (let i = images.length - 1; i >= 0; i--) {
+            const img = images[i];
+            const frame = frames[img.frameIndex];
+            if (frame && pointer.x >= frame.x && pointer.x <= frame.x + frame.w && pointer.y >= frame.y && pointer.y <= frame.y + frame.h) {
+                clickedImage = img;
+                break;
+            }
         }
-      });
+
+        if (clickedImage) {
+            clickedImage.set({ evented: true });
+            canvas.setActiveObject(clickedImage);
+            images.forEach(img => { if (img !== clickedImage) img.set({ evented: false }); });
+        } else {
+            canvas.discardActiveObject();
+            images.forEach(img => img.set({ evented: false }));
+        }
+        canvas.renderAll();
     });
+  }
+
+  function setupEventListeners() {
+    document.getElementById("upload").addEventListener("change", handleFileUpload);
 
     document.querySelectorAll(".ratio-options").forEach((container) => {
       container.addEventListener("change", (e) => {
         if (e.target.name === "ratio") {
           aspectRatio = e.target.value.split(":").map(Number);
           updateCanvasSize();
-          document
-            .querySelectorAll(`input[name="ratio"][value="${e.target.value}"]`)
-            .forEach((el) => (el.checked = true));
+          document.querySelectorAll(`input[name="ratio"][value="${e.target.value}"]`).forEach((el) => (el.checked = true));
         }
       });
     });
@@ -1194,47 +904,32 @@ endblock %} {% block head %}
     document.querySelectorAll(".gap-slider").forEach((slider) => {
       slider.addEventListener("input", (e) => {
         imageGap = parseInt(e.target.value, 10);
-        document
-          .querySelectorAll(".gap-slider")
-          .forEach((s) => (s.value = imageGap));
-        if (currentLayout) applyLayout(currentLayout, true);
+        document.querySelectorAll(".gap-slider").forEach((s) => (s.value = imageGap));
+        redrawCanvasContent();
       });
     });
 
     document.querySelectorAll(".padding-slider").forEach((slider) => {
       slider.addEventListener("input", (e) => {
         collagePadding = parseInt(e.target.value, 10);
-        document
-          .querySelectorAll(".padding-slider")
-          .forEach((s) => (s.value = collagePadding));
-        addOrUpdateHeaderOverlay();
-        addOrUpdateTextObject(document.querySelector(".caption-input").value);
-        if (currentLayout) applyLayout(currentLayout, true);
-        canvas.renderAll();
+        document.querySelectorAll(".padding-slider").forEach((s) => (s.value = collagePadding));
+        redrawCanvasContent();
       });
     });
 
     document.querySelectorAll(".font-size-slider").forEach((slider) => {
       slider.addEventListener("input", (e) => {
         const newSize = parseInt(e.target.value, 10);
-        document
-          .querySelectorAll(".font-size-slider")
-          .forEach((s) => (s.value = newSize));
-        if (textObject) {
-          textObject.set("fontSize", newSize);
-          if (currentLayout) applyLayout(currentLayout, true);
-          canvas.renderAll();
-        }
+        document.querySelectorAll(".font-size-slider").forEach((s) => (s.value = newSize));
+        redrawCanvasContent();
       });
     });
 
     document.querySelectorAll(".caption-input").forEach((input) => {
       input.addEventListener("input", (e) => {
         const text = e.target.value;
-        document
-          .querySelectorAll(".caption-input")
-          .forEach((el) => (el.value = text));
-        addOrUpdateTextObject(text);
+        document.querySelectorAll(".caption-input").forEach((el) => (el.value = text));
+        redrawCanvasContent();
       });
     });
 
@@ -1247,37 +942,44 @@ endblock %} {% block head %}
 
     document.querySelectorAll(".clear-canvas-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
-        if (confirm("Clear all images and reset canvas?")) {
-          canvas.clear();
-          headerObject = null;
-          textObject = null;
-          document
-            .querySelectorAll(".caption-input")
-            .forEach((el) => (el.value = ""));
-          canvas.backgroundColor = "#FFFFFF";
-          document.getElementById("thumbnails").innerHTML = "";
+        if (confirm("Start a new collage? All current work will be lost.")) {
+          document.getElementById('main-app').classList.add('hidden');
+          document.getElementById('initial-view').classList.remove('hidden');
+
+          if (canvas) {
+            canvas.dispose();
+            canvas = null;
+          }
+          isCanvasInitialized = false;
           currentLayout = null;
           frames = [];
-          document
-            .querySelectorAll('input[name="layout"][value=""]')
-            .forEach((el) => (el.checked = true));
-          addOrUpdateHeaderOverlay();
-          canvas.renderAll();
+          headerObject = null;
+          textObject = null;
+          document.getElementById("thumbnails").innerHTML = "";
+          document.querySelectorAll(".caption-input").forEach((el) => (el.value = ""));
         }
       });
     });
 
-    document.querySelectorAll(".export-btn").forEach((btn) => {
-      btn.addEventListener("click", downloadCollage);
-    });
+    document.querySelectorAll(".export-btn").forEach((btn) => btn.addEventListener("click", downloadCollage));
 
     document.querySelectorAll(".format-toggle").forEach((toggle) => {
       toggle.addEventListener("change", (e) => {
         const isChecked = e.target.checked;
-        document
-          .querySelectorAll(".format-toggle")
-          .forEach((t) => (t.checked = isChecked));
+        document.querySelectorAll(".format-toggle").forEach((t) => (t.checked = isChecked));
       });
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (!isCanvasInitialized) return;
+        if (e.key === 'Delete' || e.key === 'Backspace') {
+            const activeObjects = canvas.getActiveObjects();
+            if (activeObjects.length > 0) {
+                e.preventDefault();
+                canvas.getActiveObjects().forEach((obj) => canvas.remove(obj));
+                canvas.discardActiveObject().renderAll();
+            }
+        }
     });
   }
 
@@ -1286,23 +988,14 @@ endblock %} {% block head %}
     HEADER_IMAGE_URL = await imageToBase64(localHeaderUrl);
 
     if (!HEADER_IMAGE_URL) {
-      alert(
-        'Critical Error: Could not load the header template image. Please ensure "collage_header.png" is in the static folder. The application may not function correctly.',
-      );
+      alert('Critical Error: Could not load the header template image. The application may not function correctly.');
     }
 
-    initCanvas();
     setupEventListeners();
     setupMobileNav();
     lucide.createIcons();
-    window.addEventListener("resize", updateCanvasSize);
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener("resize", () => {
-        setTimeout(updateCanvasSize, 150);
-      });
-    }
   }
 
   document.addEventListener("DOMContentLoaded", main);
-</script>
-{% endblock %}
+        </script>
+    {% endblock %}
