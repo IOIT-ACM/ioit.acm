@@ -11,11 +11,10 @@ def index():
     apps_list = [
         {
             "name": "IOIT ACM Collage Maker",
-            "description": "A simple tool to create collages from your favorite images. Perfect for event summaries and social media posts.",
+            "description": "A simple tool to create collages from ACM Events, used for updating events on ACM INDIA Console.",
             "url": "apps.collage_maker",
             "icon": "image",
         }
-        # You can add more apps to this list in the future
     ]
     return render_template("apps/index.html", apps=apps_list)
 
