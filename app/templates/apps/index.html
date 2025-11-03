@@ -1,0 +1,25 @@
+{% extends "apps/base.html" %}
+{% block title %}Available Apps{% endblock %}
+{%
+block content %}
+<div class="text-center">
+    <h1 class="text-4xl font-bold text-white">IOIT ACM Apps</h1>
+    <p class="text-gray-300 mt-2">A collection of tools and utilities built by our chapter.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for app in apps %}
+        <a href="{{ url_for(app.url) }}"
+           class="block bg-black/20 p-6 rounded-2xl border border-white/10 shadow-lg hover:shadow-xl hover:bg-black/30 transition-all duration-300 no-underline">
+            <div class="flex items-center mb-4">
+                <div class="p-3 bg-blue-500/20 rounded-lg mr-4">
+                    <i data-lucide="{{ app.icon }}" class="text-blue-300 w-8 h-8"></i>
+                </div>
+                <h2 class="text-2xl font-semibold text-white">{{ app.name }}</h2>
+            </div>
+            <p class="text-gray-300">{{ app.description }}</p>
+        </a>
+    {% else %}
+        <p class="text-gray-400 col-span-full text-center">No apps available at the moment. Check back soon!</p>
+    {% endfor %}
+</div>
+{% endblock %}
