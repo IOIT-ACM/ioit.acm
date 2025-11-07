@@ -1,127 +1,117 @@
-{% extends "event_detail_base.html" %} {% block title %}{{ event.name }} - IOIT
-ACM{% endblock %} {% block og_title %}{{ event.name }}{% endblock %} {% block
-og_description %}{{ event.description[:150] }}{% endblock %} {% block og_image
-%} {{ event.image_url if event.image_url else url_for('static',
-filename='img/assets/logo.jpeg') }} {% endblock %} {% block twitter_image %} {{
-event.image_url if event.image_url else url_for('static',
-filename='img/assets/logo.jpeg') }} {% endblock %} {% block twitter_title %}{{
-event.name }}{% endblock %} {% block twitter_description %}{{
-event.description[:150] }}{% endblock %} {% block event_content %}
-
-<div class="grid grid-cols-1 md:grid-cols-3 md:gap-6">
-  <!-- Left Column: Image (spans 1 column) -->
-  <div class="flex justify-center aspect-square">
-    <img
-      src="{{ event.image_url if event.image_url else '/static/img/assets/logo.jpeg' }}"
-      alt="{{ event.name }}"
-      class="w-full h-auto rounded-lg object-cover shadow-lg bg-white border"
-    />
-  </div>
-
-  <!-- Event Details -->
-  <div class="col-span-2 py-10 md:py-0 overflow-y-auto no-scroll-bar">
-    <h1 class="text-3xl font-semibold text-gray-800">{{ event.name }}</h1>
-    <p class="text-gray-700 mt-2 text-lg">{{ event.description }}</p>
-
-    <p class="text-gray-500 mt-2 text-base">{{ event.date }}</p>
-    <hr class="my-6 border-t-2 border-gray-300" />
-
-    <!-- Topics Covered Section -->
-    <div class="mt-6">
-      <h3 class="text-xl font-semibold text-gray-800">Topics Covered</h3>
-      <ul class="list-disc list-inside text-gray-700 mt-4 space-y-2">
-        {% for topic in event.topics %}
-        <li>{{ topic }}</li>
-        {% endfor %}
-      </ul>
+{% extends "event_detail_base.html" %}
+{% block title %}
+    {{ event.name }} - IOIT
+    ACM
+{% endblock %}
+{% block og_title %}{{ event.name }}{% endblock %}
+{% block
+    og_description %}
+    {{ event.description[:150] }}
+{% endblock %}
+{% block og_image
+    %}
+    {{ event.image_url if event.image_url else url_for('static',
+        filename='img/assets/logo.jpeg') }}
+{% endblock %}
+{% block twitter_image %}
+    {{ event.image_url if event.image_url else url_for('static',
+        filename='img/assets/logo.jpeg') }}
+{% endblock %}
+{% block twitter_title %}
+    {{
+    event.name }}
+{% endblock %}
+{% block twitter_description %}
+    {{
+    event.description[:150] }}
+{% endblock %}
+{% block event_content %}
+    <div class="grid grid-cols-1 md:grid-cols-3 md:gap-6">
+        <!-- Left Column: Image (spans 1 column) -->
+        <div class="flex justify-center aspect-square">
+            <img src="{{ event.image_url if event.image_url else '/static/img/assets/logo.jpeg' }}"
+                 alt="{{ event.name }}"
+                 class="w-full h-auto rounded-lg object-cover shadow-lg bg-white border" />
+        </div>
+        <!-- Event Details -->
+        <div class="col-span-2 py-10 md:py-0 overflow-y-auto no-scroll-bar">
+            <h1 class="text-3xl font-semibold text-gray-800">{{ event.name }}</h1>
+            <p class="text-gray-700 mt-2 text-lg">{{ event.description }}</p>
+            <p class="text-gray-500 mt-2 text-base">{{ event.date }}</p>
+            <hr class="my-6 border-t-2 border-gray-300" />
+            <!-- Topics Covered Section -->
+            <div class="mt-6">
+                <h3 class="text-xl font-semibold text-gray-800">Topics Covered</h3>
+                <ul class="list-disc list-inside text-gray-700 mt-4 space-y-2">
+                    {% for topic in event.topics %}<li>{{ topic }}</li>{% endfor %}
+                </ul>
+            </div>
+            <div class="md:text-base text-xs my-5 flex justify-start items-center gap-4 flex-wrap">
+                <button id="sharebutton"
+                        class="px-3 py-2 text-sm bg-blue-500 text-white font-semibold rounded-lg shadow-md flex items-center gap-2 transition-all duration-200 ease-in-out hover:bg-blue-600">
+                    Share Event
+                    <i class="fas fa-share-square"></i>
+                </button>
+                <a href="/feedback?type=eventfeedback&event={{ event.name }}"
+                   class="px-3 py-2 text-sm bg-green-400 hover:bg-green-500 text-gray-900 font-semibold rounded-lg shadow-md flex items-center gap-2 transition-all duration-200 ease-in-out">
+                    Feedback Form
+                    <i class="fas fa-arrow-up-right-from-square"></i>
+                </a>
+                {% if event.moredetails %}
+                    <a href="{{ event.moredetails }}"
+                       target="_blank"
+                       class="px-3 py-2 text-sm bg-blue-600 text-white font-semibold rounded-lg shadow-md flex items-center gap-2 transition-all duration-200 ease-in-out hover:bg-blue-700">
+                        More Details
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                {% endif %}
+            </div>
+            <hr class="my-4 border-t-2 border-gray-300" />
+            <!-- Social Media Links Section -->
+            <div class="mt-6">
+                <h4 class="text-lg font-semibold text-gray-800">Follow Us on Social Media</h4>
+                <div class="flex space-x-6 mt-4">
+                    {% if event.facebook_link %}
+                        <a href="{{ event.facebook_link }}"
+                           target="_blank"
+                           class="text-blue-600 hover:text-blue-800">
+                            <i class="fab fa-facebook-square fa-2x"></i>
+                        </a>
+                    {% else %}
+                        <a href="https://facebook.com/ioitacm"
+                           target="_blank"
+                           class="text-blue-600 hover:text-blue-800">
+                            <i class="fab fa-facebook-square fa-2x"></i>
+                        </a>
+                    {% endif %}
+                    {% if event.instagram_link %}
+                        <a href="{{ event.instagram_link }}"
+                           target="_blank"
+                           class="text-pink-600 hover:text-pink-800">
+                            <i class="fab fa-instagram fa-2x"></i>
+                        </a>
+                    {% else %}
+                        <a href="https://instagram.com/ioit__acm"
+                           target="_blank"
+                           class="text-pink-600 hover:text-pink-800">
+                            <i class="fab fa-instagram fa-2x"></i>
+                        </a>
+                    {% endif %}
+                    <a href="https://linkedin.com/company/ioit-acm"
+                       target="_blank"
+                       class="text-blue-700 hover:text-blue-900">
+                        <i class="fab fa-linkedin fa-2x"></i>
+                    </a>
+                    <a href="https://github.com/ioit-acm"
+                       target="_blank"
+                       class="text-gray-800 hover:text-black">
+                        <i class="fab fa-github fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div
-      class="md:text-base text-xs my-5 flex justify-start items-center gap-4 flex-wrap"
-    >
-      <button
-        id="sharebutton"
-        class="px-3 py-2 text-sm bg-blue-500 text-white font-semibold rounded-lg shadow-md flex items-center gap-2 transition-all duration-200 ease-in-out hover:bg-blue-600"
-      >
-        Share Event
-        <i class="fas fa-share-square"></i>
-      </button>
-
-      <a
-        href="/feedback?type=eventfeedback&event={{ event.name }}"
-        class="px-3 py-2 text-sm bg-green-400 hover:bg-green-500 text-gray-900 font-semibold rounded-lg shadow-md flex items-center gap-2 transition-all duration-200 ease-in-out"
-      >
-        Feedback Form
-        <i class="fas fa-arrow-up-right-from-square"></i>
-      </a>
-
-      {% if event.moredetails %}
-      <a
-        href="{{ event.moredetails }}"
-        target="_blank"
-        class="px-3 py-2 text-sm bg-blue-600 text-white font-semibold rounded-lg shadow-md flex items-center gap-2 transition-all duration-200 ease-in-out hover:bg-blue-700"
-      >
-        More Details
-        <i class="fas fa-info-circle"></i>
-      </a>
-      {% endif %}
-    </div>
-
-    <hr class="my-4 border-t-2 border-gray-300" />
-
-    <!-- Social Media Links Section -->
-    <div class="mt-6">
-      <h4 class="text-lg font-semibold text-gray-800">
-        Follow Us on Social Media
-      </h4>
-      <div class="flex space-x-6 mt-4">
-        {% if event.facebook_link %}
-        <a
-          href="{{ event.facebook_link }}"
-          target="_blank"
-          class="text-blue-600 hover:text-blue-800"
-        >
-          <i class="fab fa-facebook-square fa-2x"></i>
-        </a>
-        {% else %}
-        <a
-          href="https://facebook.com/ioitacm"
-          target="_blank"
-          class="text-blue-600 hover:text-blue-800"
-        >
-          <i class="fab fa-facebook-square fa-2x"></i>
-        </a>
-        {% endif %} {% if event.instagram_link %}
-        <a
-          href="{{ event.instagram_link }}"
-          target="_blank"
-          class="text-pink-600 hover:text-pink-800"
-        >
-          <i class="fab fa-instagram fa-2x"></i>
-        </a>
-        {% else %}
-        <a
-          href="https://instagram.com/ioit__acm"
-          target="_blank"
-          class="text-pink-600 hover:text-pink-800"
-        >
-          <i class="fab fa-instagram fa-2x"></i>
-        </a>
-        {% endif %}
-
-        <a
-          href="https://linkedin.com/company/ioit-acm"
-          target="_blank"
-          class="text-blue-700 hover:text-blue-900"
-        >
-          <i class="fab fa-linkedin fa-2x"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
+    <script>
   // Ensure the Share API is available (e.g., in supported browsers)
   const shareButton = document.getElementById("sharebutton");
 
@@ -143,6 +133,5 @@ event.description[:150] }}{% endblock %} {% block event_content %}
     shareButton.disabled = true; // Disable the button if share API is not available
     console.log("Share API not supported in this browser.");
   }
-</script>
-
+    </script>
 {% endblock %}

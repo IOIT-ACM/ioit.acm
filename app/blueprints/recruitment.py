@@ -32,9 +32,9 @@ def load_questions_config():
 
 @recruitment_bp.route("/recruitment", methods=["GET"])
 def acm_recruitment_form():
-    # return render_template("closed.html") # form closed
-    questions_config = load_questions_config()
-    return render_template("acm.volunteers.html", questions_config=questions_config)
+    return render_template("closed.html")  # form closed
+    # questions_config = load_questions_config()
+    # return render_template("acm.volunteers.html", questions_config=questions_config)
     # return render_template("acm.recruitment.html", questions_config=questions_config)
 
 
@@ -44,10 +44,10 @@ def acm_recruitment_form():
 
 @recruitment_bp.route("/recruitment", methods=["POST"])
 def handle_acm_recruitment():
-    # return (
-    #     jsonify({"error": "This form is no longer accepting submissions."}),
-    #     403,
-    # )  # form closed
+    return (
+        jsonify({"error": "This form is no longer accepting submissions."}),
+        403,
+    )  # form closed
 
     try:
         data = request.get_json()
