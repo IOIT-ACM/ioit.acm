@@ -1,104 +1,141 @@
 <footer class="bg-gray-900 text-gray-300">
-	<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8 py-12">
-		<!-- AISSMS IOIT ACM Section -->
-		<div class="md:col-span-2">
-			<img src="{{ url_for('static', filename='img/assets/acm.png') }}" alt="AISSMS IOIT ACM Logo"
-				class="h-16 mb-4" />
-			<p class="text-sm leading-relaxed">
-				AISSMS IOIT ACM Student Chapter is a part of ACM, the world's largest
-				educational and scientific computing society. Dedicated to fostering
-				a community of innovation, collaboration, and excellence in
-				technology.
-			</p>
-		</div>
-		<!-- ACM Section -->
-		<div class="md:col-span-2">
-			<img src="{{ url_for('static', filename='img/assets/acm-logo.png') }}" alt="ACM Logo" class="h-16 mb-4" />
-			<p class="text-sm leading-relaxed">
-				ACM is the global leader in advancing computing as a science and
-				profession. Our mission is to increase the impact and visibility of
-				ACM activities worldwide.
-			</p>
-			<a href="https://dl.acm.org/" target="_blank"
-				class="inline-block mt-4 text-blue-400 hover:text-blue-500 underline transition">Explore ACM Digital
-				Library</a>
-		</div>
-		<!-- Quick Links -->
-		<div class="md:col-span-1 md:text-right">
-			<h3 class="text-lg font-bold mb-4">Quick Links</h3>
-			<ul class="space-y-2">
-				<li>
-					<a href="/" class="hover:text-white transition">Home</a>
-				</li>
-				<li>
-					<a href="/team" class="hover:text-white transition">Team</a>
-				</li>
-				<li>
-					<a href="/events" class="hover:text-white transition">Events</a>
-				</li>
-				<li>
-					<a href="/gallery" class="hover:text-white transition">Gallery</a>
-				</li>
-				<li>
-					<a href="/mediakit" class="hover:text-white transition">Media Kit</a>
-				</li>
-				<li>
-					<a href="/membership" class="hover:text-white transition">Memberships</a>
-				</li>
-				<!-- <li> -->
-				<!-- 	<a href="/recruitment" class="hover:text-white transition">Recruitment</a> -->
-				<!-- </li> -->
-				<li>
-					<a href="/about" class="hover:text-white transition">About</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<!-- Social Links Section -->
-	<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-5 md:gap-0 p-6">
-		<!-- Social Links on the Left -->
-		<div class="flex space-x-6">
-			<a href="https://m.facebook.com/ioit.acm/" class="hover:text-white transition" aria-label="Facebook"
-				target="_blank" rel="noopener noreferrer">
-				<i class="fab fa-facebook text-2xl"></i>
-			</a>
-			<a href="https://www.instagram.com/ioit__acm" class="hover:text-white transition" aria-label="Instagram"
-				target="_blank" rel="noopener noreferrer">
-				<i class="fab fa-instagram text-2xl"></i>
-			</a>
-			<a href="https://www.linkedin.com/company/ioit-acm/" class="hover:text-white transition"
-				aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-				<i class="fab fa-linkedin text-2xl"></i>
-			</a>
-			<a href="https://x.com/IOIT_ACM" class="hover:text-white transition" aria-label="Twitter" target="_blank"
-				rel="noopener noreferrer">
-				<i class="fab fa-twitter text-2xl"></i>
-			</a>
-			<a href="https://github.com/ioit-acm" class="hover:text-white transition" aria-label="GitHub"
-				target="_blank" rel="noopener noreferrer">
-				<i class="fab fa-github text-2xl"></i>
-			</a>
-		</div>
-	</div>
-	<!-- Bottom Section -->
-	<div class="border-t border-gray-700 py-6">
-		<div class="w-full">
-			<!-- Credits -->
-			<div class="text-center">
-				<p>© AISSMS IOIT ACM Student Chapter, 2025</p>
-			</div>
-			<div class="text-center">
-				<p>
-					Website built by
-					<a target="_blank" class="text-blue-500 hover:underline" href="https://adimail.github.io">Aditya
-						Godse</a>
-					&
-					<a target="_blank" class="text-blue-500 hover:underline"
-						href="https://swarooppatilx.github.io/">Swaroop Patil</a>
-				</p>
-			</div>
-		</div>
-	</div>
-	</div>
-	<script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+  <div
+    class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8 pt-6"
+  >
+    <div class="md:col-span-2">
+      <img
+        src="{{ url_for('static', filename='img/assets/acm.png') }}"
+        alt="AISSMS IOIT ACM Logo"
+        class="h-16 mb-4"
+      />
+      <p class="text-sm leading-relaxed">
+        AISSMS IOIT ACM Student Chapter is a part of ACM, the world's largest
+        educational and scientific computing society. Dedicated to fostering a
+        community of innovation, collaboration, and excellence in technology.
+      </p>
+    </div>
+    <div class="md:col-span-2">
+      <img
+        src="{{ url_for('static', filename='img/assets/acm-logo.png') }}"
+        alt="ACM Logo"
+        class="h-16 mb-4"
+      />
+      <p class="text-sm leading-relaxed">
+        ACM is the global leader in advancing computing as a science and
+        profession. Our mission is to increase the impact and visibility of ACM
+        activities worldwide.
+      </p>
+      <a
+        href="https://dl.acm.org/"
+        target="_blank"
+        class="inline-block mt-4 text-blue-400 hover:text-blue-500 underline transition"
+        >Explore ACM Digital Library</a
+      >
+    </div>
+    <div class="md:col-span-1 md:text-right">
+      <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+      <ul class="space-y-2">
+        <li><a href="/" class="hover:text-white transition">Home</a></li>
+        <li><a href="/team" class="hover:text-white transition">Team</a></li>
+        <li>
+          <a href="/events" class="hover:text-white transition">Events</a>
+        </li>
+        <li>
+          <a href="/gallery" class="hover:text-white transition">Gallery</a>
+        </li>
+        <li>
+          <a href="/mediakit" class="hover:text-white transition">Media Kit</a>
+        </li>
+        <li>
+          <a href="/membership" class="hover:text-white transition"
+            >Memberships</a
+          >
+        </li>
+        <li><a href="/about" class="hover:text-white transition">About</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div
+    class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4"
+  >
+    <p class="text-sm text-center md:text-left">
+      For any queries, reach out at
+      <a
+        href="mailto:acm.studentbranch@aissmsioit.org"
+        class="text-blue-400 hover:text-blue-500 underline transition"
+      >
+        acm.studentbranch@aissmsioit.org
+      </a>
+    </p>
+    <div class="flex space-x-6 justify-center md:justify-end">
+      <a
+        href="https://m.facebook.com/ioit.acm/"
+        class="hover:text-white transition"
+        aria-label="Facebook"
+        target="_blank"
+        rel="noopener noreferrer"
+        ><i class="fab fa-facebook text-2xl"></i
+      ></a>
+      <a
+        href="https://www.instagram.com/ioit__acm"
+        class="hover:text-white transition"
+        aria-label="Instagram"
+        target="_blank"
+        rel="noopener noreferrer"
+        ><i class="fab fa-instagram text-2xl"></i
+      ></a>
+      <a
+        href="https://www.linkedin.com/company/ioit-acm/"
+        class="hover:text-white transition"
+        aria-label="LinkedIn"
+        target="_blank"
+        rel="noopener noreferrer"
+        ><i class="fab fa-linkedin text-2xl"></i
+      ></a>
+      <a
+        href="https://x.com/IOIT_ACM"
+        class="hover:text-white transition"
+        aria-label="Twitter"
+        target="_blank"
+        rel="noopener noreferrer"
+        ><i class="fab fa-twitter text-2xl"></i
+      ></a>
+      <a
+        href="https://github.com/ioit-acm"
+        class="hover:text-white transition"
+        aria-label="GitHub"
+        target="_blank"
+        rel="noopener noreferrer"
+        ><i class="fab fa-github text-2xl"></i
+      ></a>
+    </div>
+  </div>
+
+  <div class="border-t border-gray-700 py-6">
+    <div class="w-full text-center">
+      <p>© AISSMS IOIT ACM Student Chapter, 2025</p>
+      <p>
+        Website built by
+        <a
+          target="_blank"
+          class="text-blue-500 hover:underline"
+          href="https://adimail.github.io"
+          >Aditya Godse</a
+        >
+        &
+        <a
+          target="_blank"
+          class="text-blue-500 hover:underline"
+          href="https://swarooppatilx.github.io/"
+          >Swaroop Patil</a
+        >
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("footer-year").textContent =
+      new Date().getFullYear();
+  </script>
 </footer>
