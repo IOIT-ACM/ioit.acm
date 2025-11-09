@@ -16,7 +16,6 @@
       rel="stylesheet"
     />
     <script src="https://unpkg.com/lucide@latest"></script>
-
     <meta property="og:type" content="website" />
     <meta property="og:title" content="ACM Recruitment Phase 3 Interviews" />
     <meta
@@ -30,7 +29,6 @@
     />
     <meta property="og:site_name" content="AISSMS IOIT ACM" />
     <meta property="og:locale" content="en_US" />
-
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ACM Recruitment Phase 3 Interviews" />
     <meta
@@ -43,27 +41,11 @@
     />
     <meta name="twitter:site" content="@IOITACM" />
     <meta name="twitter:creator" content="@IOITACM" />
-
     <link
       rel="icon"
       type="image/svg+xml"
       href="{{ url_for('static', filename='favicon.svg') }}"
     />
-
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-Y6Z6G51Z27"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "G-Y6Z6G51Z27");
-    </script>
-
     <style>
       body {
         font-family: "Inter", sans-serif;
@@ -78,12 +60,12 @@
         background-attachment: fixed;
       }
       .card {
-        background: rgba(40, 40, 52, 0.4);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 24px;
-        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        background: rgba(40, 40, 52, 0.45);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px -12px rgb(0 0 0 / 0.5);
       }
       *::-webkit-scrollbar {
         display: none;
@@ -93,8 +75,34 @@
         scrollbar-width: none;
       }
       .collapsible-content {
-        transition: all 0.3s ease-in-out;
+        transition: all 0.28s ease-in-out;
         overflow: hidden;
+      }
+      @media (max-width: 640px) {
+        body {
+          font-size: 14px;
+        }
+        header img {
+          height: 40px;
+        }
+        h1 {
+          font-size: 1.05rem !important;
+        }
+        .card {
+          border-radius: 12px;
+        }
+        .collapsible-header h2 {
+          font-size: 1rem;
+        }
+        .text-2xl {
+          font-size: 1.15rem;
+        }
+        .text-xl {
+          font-size: 1rem;
+        }
+        input#searchInput {
+          font-size: 14px;
+        }
       }
     </style>
   </head>
@@ -111,11 +119,14 @@
             alt="ACM Logo"
             class="h-12 w-auto mr-4"
           />
-          <div class="hidden md:block">
-            <h1 class="md:text-3xl text-xl font-bold">
+          <div>
+            <h1 class="text-xl sm:text-2xl md:text-3xl font-bold">
               ACM Recruitment Phase 3 Interviews
             </h1>
-            <p id="headerCounts" class="text-sm text-white/60 font-medium mt-1">
+            <p
+              id="headerCounts"
+              class="hidden md:block text-sm text-white/60 font-medium mt-1"
+            >
               Loading…
             </p>
           </div>
@@ -127,9 +138,7 @@
       <div id="currentContainer" class="mb-8"></div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 gap-2" id="daysContainer">
-          <!-- Day sections will be dynamically inserted here -->
-        </div>
+        <div class="lg:col-span-2 gap-2" id="daysContainer"></div>
 
         <aside class="card p-6 gap-2 h-fit">
           <div>
@@ -204,6 +213,11 @@
             <i data-lucide="x" class="w-6 h-6"></i>
           </button>
         </div>
+        <div
+          class="p-3 text-sm text-white/60 border-b border-white/10 flex items-center justify-end"
+        >
+          <div id="modalDayInfo" class="text-xs text-white/50">(Day 1)</div>
+        </div>
         <div id="searchResults" class="p-4 space-y-3 overflow-y-auto"></div>
       </div>
     </div>
@@ -211,10 +225,17 @@
     <script>
       let allCandidates = [];
 
+      function getFormattedDate(day) {
+        const baseDate = new Date(2025, 10, 10);
+        baseDate.setDate(baseDate.getDate() + (day - 1));
+        const options = { day: "numeric", month: "short", year: "numeric" };
+        return baseDate.toLocaleDateString("en-GB", options);
+      }
+
       function initials(name) {
         return (name || "")
           .split(" ")
-          .map((s) => s[0])
+          .map((s) => s[0] || "")
           .slice(0, 2)
           .join("")
           .toUpperCase();
@@ -224,7 +245,6 @@
         const wrap = document.createElement("div");
         let baseClasses =
           "flex items-center gap-4 p-4 border rounded-2xl transition-all duration-300";
-
         if (c.completed) {
           wrap.className = `${baseClasses} bg-green-500/10 border-green-500/20`;
         } else if (c.absent) {
@@ -246,8 +266,14 @@
         const domain = document.createElement("div");
         domain.className = "text-sm text-white/60 truncate mt-1";
         domain.textContent = c.domain || "";
+
+        const meta = document.createElement("div");
+        meta.className = "text-xs text-white/50 mt-1";
+        meta.textContent = `${getFormattedDate(c.day)} (Day ${c.day})`;
+
         info.appendChild(name);
         info.appendChild(domain);
+        info.appendChild(meta);
 
         const status = document.createElement("div");
         status.className =
@@ -288,7 +314,9 @@
         name.textContent = c.name;
         const domain = document.createElement("div");
         domain.className = "text-xs text-white/60 truncate";
-        domain.textContent = c.domain || "";
+        domain.textContent = `${getFormattedDate(c.day)} (Day ${
+          c.day
+        }) • ${c.domain || ""}`;
         info.appendChild(name);
         info.appendChild(domain);
         wrap.appendChild(avatar);
@@ -299,7 +327,6 @@
       function createSearchCard(c) {
         const wrap = document.createElement("div");
         let baseClasses = "flex items-center gap-3 p-2.5 border rounded-xl";
-
         if (c.completed) {
           wrap.className = `${baseClasses} bg-green-500/10 border-green-500/20`;
         } else if (c.absent) {
@@ -322,18 +349,11 @@
         const details = document.createElement("div");
         details.className =
           "text-xs text-white/60 truncate flex items-center gap-2 mt-1";
-
         const domain = document.createElement("span");
         domain.textContent = c.domain || "";
-
-        const separator = document.createElement("span");
-        separator.textContent = "•";
-
         const date = document.createElement("span");
-        date.textContent = `Day ${c.day}`;
-
+        date.textContent = `${getFormattedDate(c.day)} (Day ${c.day})`;
         details.appendChild(domain);
-        details.appendChild(separator);
         details.appendChild(date);
 
         info.appendChild(name);
@@ -369,7 +389,7 @@
       function renderLoading() {
         const daysContainer = document.getElementById("daysContainer");
         daysContainer.innerHTML = "";
-        for (let i = 0; i < 2; i++) {
+        for (let i = 1; i <= 2; i++) {
           const skeletonCard = document.createElement("div");
           skeletonCard.className = "card md:p-6 p-3 h-fit mb-4 animate-pulse";
           skeletonCard.innerHTML = `
@@ -382,11 +402,13 @@
           daysContainer.appendChild(skeletonCard);
         }
 
-        absentList.innerHTML = "";
-        completedList.innerHTML = "";
+        const absentListEl = document.getElementById("absentList");
+        const completedListEl = document.getElementById("completedList");
+        absentListEl.innerHTML = "";
+        completedListEl.innerHTML = "";
         for (let i = 0; i < 3; i++) {
-          absentList.appendChild(createSmallSkeleton());
-          completedList.appendChild(createSmallSkeleton());
+          absentListEl.appendChild(createSmallSkeleton());
+          completedListEl.appendChild(createSmallSkeleton());
         }
       }
 
@@ -395,12 +417,12 @@
         headerCounts.textContent = "Error loading data";
         main.innerHTML = "";
         const errorCard = document.createElement("div");
-        errorCard.className = "card p-6";
+        errorCard.className = "card p-3 md:p-6";
         errorCard.appendChild(
           createMessageScreen(
             "wifi-off",
             "Failed to Load Data",
-            `Could not retrieve the interview queue. Please check your connection and try again.<br><br><code class="text-xs bg-black/20 p-2 rounded-md border border-white/10">${error.message}</code>`,
+            `${error && error.message ? error.message : "Unknown error"}`,
           ),
         );
         main.appendChild(errorCard);
@@ -427,9 +449,10 @@
         absentCount.textContent = `${absent.length} Candidates`;
         completedCount.textContent = `${completed.length} Candidates`;
 
-        currentContainer.innerHTML = "";
+        const currentContainerEl = document.getElementById("currentContainer");
+        currentContainerEl.innerHTML = "";
         const currentWrapper = document.createElement("div");
-        currentWrapper.className = "card p-6";
+        currentWrapper.className = "card p-3 md:p-6";
         const currentHeading = document.createElement("h2");
         currentHeading.className =
           "text-2xl font-medium mb-6 pb-4 border-b border-white/10";
@@ -446,101 +469,129 @@
             ),
           );
         }
-        currentContainer.appendChild(currentWrapper);
+        currentContainerEl.appendChild(currentWrapper);
 
         const candidatesByDay = candidates.reduce((acc, candidate) => {
-          const day = candidate.day || "Unknown";
-          if (!acc[day]) {
-            acc[day] = [];
-          }
+          const day = candidate.day || 1;
+          if (!acc[day]) acc[day] = [];
           acc[day].push(candidate);
           return acc;
         }, {});
 
-        const sortedDays = Object.keys(candidatesByDay).sort((a, b) => a - b);
+        const sortedDays = Object.keys(candidatesByDay)
+          .map(Number)
+          .sort((a, b) => a - b);
         const daysContainer = document.getElementById("daysContainer");
         daysContainer.innerHTML = "";
 
-        sortedDays.forEach((day) => {
-          const dayCandidates = candidatesByDay[day].sort(
-            (a, b) => getStatusPriority(a) - getStatusPriority(b),
+        if (sortedDays.length === 0) {
+          const noDataCard = document.createElement("div");
+          noDataCard.className = "card p-3 md:p-6";
+          noDataCard.appendChild(
+            createMessageScreen(
+              "calendar-check",
+              "No scheduled candidates",
+              "There are no candidates scheduled.",
+            ),
           );
-          const waitingCount = dayCandidates.filter(
-            (c) => !c.completed && !c.absent && !c.inCall,
-          ).length;
+          daysContainer.appendChild(noDataCard);
+        } else {
+          sortedDays.forEach((day) => {
+            const dayCandidates = candidatesByDay[day] || [];
+            dayCandidates.sort(
+              (a, b) => getStatusPriority(a) - getStatusPriority(b),
+            );
+            const waitingCount = dayCandidates.filter(
+              (c) => !c.completed && !c.absent && !c.inCall,
+            ).length;
 
-          const section = document.createElement("section");
-          section.id = `day${day}Card`;
-          section.className = "card md:p-6 p-3 h-fit mb-4";
-          section.innerHTML = `
+            const section = document.createElement("section");
+            section.id = `day${day}Card`;
+            section.className = "card md:p-6 p-3 h-fit mb-4";
+            section.innerHTML = `
                 <div class="collapsible-header flex items-center justify-between mb-6 pb-4 border-b border-white/10 p-2 cursor-pointer md:flex-row flex-col">
-                    <h2 class="text-2xl font-medium">Day ${day}</h2>
-                    <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-3">
+                      <h2 class="text-2xl font-medium">Date: ${getFormattedDate(
+                        day,
+                      )} <span class="text-sm text-white/60"> (Day ${day})</span></h2>
+                    </div>
+                    <div class="flex items-center gap-4 mt-2 md:mt-0">
                         <span class="text-sm font-medium text-white/60">${waitingCount} Waiting</span>
                         <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                     </div>
                 </div>
                 <div class="collapsible-content space-y-4"></div>
             `;
-          daysContainer.appendChild(section);
+            daysContainer.appendChild(section);
 
-          const listEl = section.querySelector(".collapsible-content");
-          if (dayCandidates.length === 0) {
-            listEl.appendChild(
-              createMessageScreen(
-                "calendar-check",
-                `Queue Clear`,
-                `No candidates scheduled for this day.`,
-              ),
-            );
-          } else {
-            dayCandidates.forEach((c) =>
-              listEl.appendChild(createLargeCard(c)),
-            );
-          }
-
-          section
-            .querySelector(".collapsible-header")
-            .addEventListener("click", () => {
-              const content = section.querySelector(".collapsible-content");
-              const icon = section.querySelector(
-                'i[data-lucide="chevron-down"]',
+            const listEl = section.querySelector(".collapsible-content");
+            if (dayCandidates.length === 0) {
+              listEl.appendChild(
+                createMessageScreen(
+                  "calendar-check",
+                  `Queue Clear`,
+                  `No candidates scheduled for this day.`,
+                ),
               );
-              content.classList.toggle("hidden");
-              icon.classList.toggle("rotate-180");
-            });
-        });
+            } else {
+              dayCandidates.forEach((c) =>
+                listEl.appendChild(createLargeCard(c)),
+              );
+            }
 
-        absentList.innerHTML = "";
+            const headerEl = section.querySelector(".collapsible-header");
+            const iconEl = section.querySelector(
+              'i[data-lucide="chevron-down"]',
+            );
+            headerEl.addEventListener("click", () => {
+              const content = section.querySelector(".collapsible-content");
+              content.classList.toggle("hidden");
+              iconEl.classList.toggle("rotate-180");
+            });
+          });
+        }
+
+        const absentListEl = document.getElementById("absentList");
+        absentListEl.innerHTML = "";
         if (absent.length === 0) {
-          absentList.appendChild(
+          absentListEl.appendChild(
             createMessageScreen("user-x", "No Absences", ""),
           );
         } else {
-          absent.forEach((c) => absentList.appendChild(createSmallCard(c)));
+          absent.forEach((c) => absentListEl.appendChild(createSmallCard(c)));
         }
 
-        completedList.innerHTML = "";
+        const completedListEl = document.getElementById("completedList");
+        completedListEl.innerHTML = "";
         if (completed.length === 0) {
-          completedList.appendChild(
+          completedListEl.appendChild(
             createMessageScreen("list-checks", "No Completions", ""),
           );
         } else {
           completed.forEach((c) =>
-            completedList.appendChild(createSmallCard(c)),
+            completedListEl.appendChild(createSmallCard(c)),
           );
         }
+
+        const modalDayInfo = document.getElementById("modalDayInfo");
+        if (sortedDays.length > 0) {
+          modalDayInfo.textContent = `${sortedDays
+            .map((d) => `(Day ${d})`)
+            .join(" ")}`;
+        } else {
+          modalDayInfo.textContent = "(Day 1)";
+        }
+
         lucide.createIcons();
       }
 
       async function fetchAndRender() {
         try {
           const response = await fetch("https://api.ioit.acm.org/acmp3");
-          if (!response.ok) {
+          if (!response.ok)
             throw new Error(
               `API request failed: ${response.status} ${response.statusText}`,
             );
-          }
           const apiData = await response.json();
           allCandidates = apiData.map((item, index) => ({
             id: `c${index + 1}`,
@@ -550,10 +601,18 @@
             completed: String(item.completed).toUpperCase() === "TRUE",
             absent: String(item.absent).toUpperCase() === "TRUE",
             day: parseInt(item.day) || 1,
+            time: item.time || item.Time || "",
           }));
           render(allCandidates);
         } catch (error) {
-          console.error("Failed to fetch or render candidates:", error);
+          try {
+            const fallback = window.__FALLBACK_CANDIDATES__ || [];
+            if (fallback.length > 0) {
+              allCandidates = fallback;
+              render(allCandidates);
+              return;
+            }
+          } catch (e) {}
           renderError(error);
         }
       }
