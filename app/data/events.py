@@ -1,5 +1,22 @@
 events = [
-     {
+    {
+        "name": "Retrofitting is Expensive: Workshop on Accessibility",
+        "description": "A comprehensive workshop introducing participants to the foundations of accessibility across both physical and digital contexts. The session explored different types of disabilities, the principles of universal design, and how accessibility can be integrated into any product-building process using agile and inclusive thinking.",
+        "date": "November 16, 2025",
+        "moredetails": "",
+        "image_url": "/static/img/gallery/events/accessibility_workshop.jpeg",
+        "instagram_link": "",
+        "facebook_link": "",
+        "topics": [
+            "Understanding various types of disabilities and the barriers they create.",
+            "Learning how accessibility applies to products, spaces, and experiences - not just digital ones.",
+            "Integrating accessibility considerations into every stage of the product-building lifecycle.",
+            "Applying agile principles to continuously improve accessibility in products and services.",
+            "Exploring universal design concepts and how they help create products usable by everyone.",
+            "Clarifying myths and discussing the real-world importance of inclusive design."
+        ]
+    },
+    {
     "name": "Bit By Query - Vol 2",
     "description": "Bit By Query 2025 returned with its second edition, a thrilling two-hour SQL showdown! 54 participants tackled 100 carefully curated problems, ranging from beginner-friendly to expert-level challenges, testing their prowess in database management and query optimization.",
     "date": "August 26, 2025",
