@@ -4,7 +4,7 @@ events = [
         "description": "A comprehensive workshop introducing participants to the foundations of accessibility across both physical and digital contexts. The session explored different types of disabilities, the principles of universal design, and how accessibility can be integrated into any product-building process using agile and inclusive thinking.",
         "date": "November 16, 2025",
         "moredetails": "",
-        "image_url": "",
+        "image_url": "/static/img/gallery/events/accessibility_workshop.jpeg",
         "instagram_link": "",
         "facebook_link": "",
         "topics": [
