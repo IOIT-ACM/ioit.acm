@@ -1,0 +1,253 @@
+{% extends "apps/base.html" %}
+{% block title %}Caption Generator{% endblock %}
+
+{% block head %}
+<style>
+  .glass-surface {
+    background-color: rgba(40, 40, 52, 0.4);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .form-input, .form-select, .form-textarea {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0;
+    padding: 0.75rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.9);
+    transition: all 0.2s ease-in-out;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  }
+  .form-label {
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+  }
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .btn-primary:disabled {
+    background-color: #1e40af;
+  }
+  .btn-primary { background-color: #2563eb; color: white; }
+  .btn-primary:hover:not(:disabled) { background-color: #1d4ed8; }
+  .btn-secondary { background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; }
+  .btn-secondary:hover:not(:disabled) { background-color: rgba(255, 255, 255, 0.15); }
+  .output-card { background-color: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 0; overflow: hidden; }
+  .output-content { white-space: pre-wrap; word-wrap: break-word; font-family: inherit; font-size: 0.875rem; line-height: 1.6; }
+  .context-btn {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+  .context-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  #prompt-container.is-open { pointer-events: auto; }
+  #prompt-container.is-open #prompt-overlay { opacity: 1; }
+  #prompt-drawer {
+    transform: translateX(100%);
+    transition: transform 300ms ease-in-out;
+  }
+  #prompt-container.is-open #prompt-drawer {
+    transform: translateX(0);
+  }
+  #prompt-content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .category-box {
+    display: block;
+    text-align: center;
+    padding: 0.625rem 1rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-size: 0.875rem;
+    width: 100%;
+  }
+  .category-box:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  input[name="post-category"]:checked + .category-box {
+    background-color: #2563eb;
+    border-color: #3b82f6;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-4 sm:p-6 lg:p-8">
+  <header class="flex items-center justify-between mb-6">
+    <a href="{{ url_for("apps.index") }}" class="flex items-center gap-2 text-white hover:text-blue-300 transition-colors">
+      <i data-lucide="arrow-left" class="w-5 h-5"></i>
+      <span class="hidden sm:inline">Back to Apps</span>
+    </a>
+    <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white text-center">Caption Generator</h1>
+    <button id="settings-btn" class="btn btn-secondary p-2">
+      <i data-lucide="settings" class="w-5 h-5"></i>
+    </button>
+  </header>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+    <div class="glass-surface p-6 flex flex-col">
+      <div id="input-form" class="space-y-6 flex-grow">
+        <div>
+          <label for="post-context" class="form-label block mb-2">Post Context</label>
+          <textarea id="post-context" rows="6" class="form-textarea w-full"></textarea>
+        </div>
+        <div>
+          <label class="form-label block mb-2">Category</label>
+          <div class="flex flex-wrap gap-3">
+            <div class="flex-auto">
+              <input type="radio" id="cat-general" name="post-category" value="General Post" class="hidden" checked>
+              <label for="cat-general" class="category-box">General Post</label>
+            </div>
+            <div class="flex-auto">
+              <input type="radio" id="cat-event-ann" name="post-category" value="Event Announcement" class="hidden">
+              <label for="cat-event-ann" class="category-box">Event Announcement</label>
+            </div>
+            <div class="flex-auto">
+              <input type="radio" id="cat-event-glimpse" name="post-category" value="Event Glimpses" class="hidden">
+              <label for="cat-event-glimpse" class="category-box">Event Glimpses</label>
+            </div>
+            <div class="flex-auto">
+              <input type="radio" id="cat-achievement" name="post-category" value="Achievement Post" class="hidden">
+              <label for="cat-achievement" class="category-box">Achievement Post</label>
+            </div>
+            <div class="flex-auto">
+              <input type="radio" id="cat-spotlight" name="post-category" value="Member Spotlight" class="hidden">
+              <label for="cat-spotlight" class="category-box">Member Spotlight</label>
+            </div>
+            <div class="flex-auto">
+              <input type="radio" id="cat-other" name="post-category" value="Other" class="hidden">
+              <label for="cat-other" class="category-box">Other</label>
+            </div>
+          </div>
+        </div>
+        <div id="dynamic-fields-container" class="space-y-4"></div>
+      </div>
+      <div class="mt-6 pt-6 border-t border-white/10">
+        <label class="form-label block mb-3 text-center">Add Optional Fields</label>
+        <div id="context-toolbar" class="flex flex-wrap justify-center gap-2">
+          <button class="btn context-btn" data-field-type="instructions"><i data-lucide="pilcrow" class="w-4 h-4"></i>Instructions</button>
+          <button class="btn context-btn" data-field-type="datetime"><i data-lucide="calendar-clock" class="w-4 h-4"></i>Date & Time</button>
+          <button class="btn context-btn" data-field-type="venue"><i data-lucide="map-pin" class="w-4 h-4"></i>Venue</button>
+          <button class="btn context-btn" data-field-type="registration"><i data-lucide="link" class="w-4 h-4"></i>Reg. Link</button>
+          <button class="btn context-btn" data-field-type="prizes"><i data-lucide="gift" class="w-4 h-4"></i>Prizes</button>
+          <button class="btn context-btn" data-field-type="contact"><i data-lucide="user-plus" class="w-4 h-4"></i>Contact</button>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 mt-8">
+        <button id="generate-btn" class="btn btn-primary w-full text-base">
+          <span id="generate-btn-text">Generate Captions</span>
+          <span id="generate-btn-loading-text" class="hidden">Generating Captions...</span>
+          <i id="loading-spinner" data-lucide="loader-2" class="w-5 h-5 animate-spin hidden"></i>
+        </button>
+
+        <button id="show-prompt-btn" class="btn btn-secondary text-sm flex-shrink-0">
+          <i data-lucide="terminal-square" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">Show Prompt</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="output-container" class="space-y-6 hidden">
+      <div class="output-card">
+        <div class="flex justify-between items-center p-4 bg-[rgba(0,0,0,0.2)]">
+          <h3 class="font-semibold text-lg">LinkedIn</h3>
+          <button class="copy-btn btn btn-secondary btn-sm" data-target="linkedin-output"><i data-lucide="copy" class="w-4 h-4"></i><span>Copy</span></button>
+        </div>
+        <div class="p-4"><div id="linkedin-output" class="output-content"></div></div>
+      </div>
+
+      <div class="output-card">
+        <div class="flex justify-between items-center p-4 bg-[rgba(0,0,0,0.2)]">
+          <h3 class="font-semibold text-lg">Instagram</h3>
+          <button class="copy-btn btn btn-secondary btn-sm" data-target="instagram-output"><i data-lucide="copy" class="w-4 h-4"></i><span>Copy</span></button>
+        </div>
+        <div class="p-4"><div id="instagram-output" class="output-content"></div></div>
+      </div>
+
+      <div class="output-card">
+        <div class="flex justify-between items-center p-4 bg-[rgba(0,0,0,0.2)]">
+          <h3 class="font-semibold text-lg">WhatsApp</h3>
+          <button class="copy-btn btn btn-secondary btn-sm" data-target="whatsapp-output"><i data-lucide="copy" class="w-4 h-4"></i><span>Copy</span></button>
+        </div>
+        <div class="p-4"><div id="whatsapp-output" class="output-content"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="settings-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50">
+  <div class="glass-surface w-full max-w-md p-6 space-y-4 relative">
+    <button id="close-settings-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
+    <h2 class="text-xl font-bold text-white">Settings</h2>
+    <div>
+      <label for="api-key" class="form-label block mb-2">Gemini API Key</label>
+      <input type="password" id="api-key" class="form-input w-full">
+    </div>
+    <div>
+      <label for="model-select" class="form-label block mb-2">Model</label>
+      <select id="model-select" class="form-select w-full">
+        <option value="gemini-2.5-flash">Gemini 2.5 Flash (Recommended)</option>
+        <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+        <option value="gemini-2.5-flash-lite">Gemini 2.5 Flash-Lite</option>
+        <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+        <option value="gemini-2.0-flash-lite">Gemini 2.0 Flash-Lite</option>
+      </select>
+    </div>
+    <div class="flex gap-4">
+      <button id="save-settings-btn" class="btn btn-primary flex-1"><i data-lucide="save" class="w-4 h-4"></i>Save</button>
+      <button id="clear-api-key-btn" class="btn btn-secondary">Clear Key</button>
+    </div>
+    <p class="text-xs text-gray-400">Your API key is stored securely in your browser's local storage.</p>
+  </div>
+</div>
+
+<div id="prompt-container" class="fixed inset-0 z-40 hidden pointer-events-none">
+  <div id="prompt-overlay" class="absolute inset-0 bg-black bg-opacity-60 transition-opacity duration-300 ease-in-out opacity-0"></div>
+  <div id="prompt-drawer" class="absolute top-0 right-0 bottom-0 w-full max-w-lg glass-surface p-6 flex flex-col">
+    <div class="flex justify-between items-center mb-4 flex-shrink-0">
+      <h2 class="text-xl font-bold text-white">Generated Prompt</h2>
+      <div class="flex items-center gap-2">
+        <button id="copy-prompt-btn" class="btn btn-secondary btn-sm">
+          <i data-lucide="copy" class="w-4 h-4"></i>
+          <span>Copy</span>
+        </button>
+        <button id="close-prompt-drawer-btn" class="text-gray-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+    <div class="bg-black/30 p-4 overflow-y-auto flex-grow h-full">
+      <pre id="prompt-content" class="text-sm text-gray-300"></pre>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/apps/captions.js') }}"></script>
+{% endblock %}
