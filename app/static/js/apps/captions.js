@@ -28,11 +28,19 @@ document.addEventListener("DOMContentLoaded", () => {
     closePromptDrawerBtn: document.getElementById("close-prompt-drawer-btn"),
     copyPromptBtn: document.getElementById("copy-prompt-btn"),
     postContext: document.getElementById("post-context"),
+    apiKeyPrompt: document.getElementById("api-key-prompt"),
   };
 
   let contactCount = 0;
   const MAX_CONTACTS = 2;
   let lastGeneratedPrompt = "";
+
+  const checkApiKeyPresence = () => {
+    const apiKey = localStorage.getItem("geminiApiKey");
+    if (elements.apiKeyPrompt) {
+      elements.apiKeyPrompt.classList.toggle("hidden", !!apiKey);
+    }
+  };
 
   const validateInputs = () => {
     if (!elements.generateBtn || !elements.postContext) return;
@@ -99,6 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("geminiModel", elements.modelSelect.value);
       alert("Settings saved successfully.");
       toggleModal(elements.settingsModal, false);
+      checkApiKeyPresence();
     } else alert("Please enter a valid API Key.");
   };
 
@@ -106,6 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem("geminiApiKey");
     if (elements.apiKeyInput) elements.apiKeyInput.value = "";
     alert("API Key cleared.");
+    checkApiKeyPresence();
   };
 
   const toggleModal = (modal, show) => {
@@ -155,8 +165,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return `
           <label class="form-label block mb-2">Contact Person ${contactCount}</label>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input type="text" class="form-input contact-name">
-            <input type="tel" class="form-input contact-mobile">
+            <input type="text" class="form-input contact-name" placeholder="Name">
+            <input type="tel" class="form-input contact-mobile" placeholder="Mobile">
           </div>`;
       default:
         return "";
@@ -243,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
 You are an expert social media content creator and marketing strategist, specializing in crafting engaging and platform-specific content for technology-focused student organization AISSMS IOIT ACM Student Chapter.
 
 // INSTRUCTION
-Based on the provided context, and special instructions, generate three distinct and tailored captions for a social media post. The captions should be for LinkedIn, Instagram, and a WhatsApp message, respectively. Your primary goal is to promote the AISSMS IOIT ACM Student Chapter and its activities, driving engagement and participation.
+Based on the provided context, and special instructions, generate three distinct and tailored captions for a social media post. The captions should be for LinkedIn, Instagram, and a WhatsApp message, respectively. Your primary goal is to promote the AISSMS IOIT ACM Student Chapter and its activities, driving engagement and participation. Generate the LinkedIn caption first, then Instagram, then WhatsApp.
 
 // CONTEXT
 The AISSMS IOIT ACM Student Chapter is a student-run organization at the AISSMS Institute of Information Technology. It focuses on advancing computing as a science and profession. The target audience includes students, faculty, and tech enthusiasts. The tone should be professional yet approachable, informative, and inspiring.
@@ -258,6 +268,62 @@ Do not include any other text, preamble, or explanation in your response. Only o
 
     lastGeneratedPrompt = `${basePrompt}\n${variableSection}`;
     return lastGeneratedPrompt;
+  };
+
+  const displayStreamedResults = (text) => {
+    const captions = { linkedin: "", instagram: "", whatsapp: "" };
+
+    const instaHeader = "**Instagram Caption:**";
+    const whatsappHeader = "**WhatsApp Caption:**";
+    const linkedinHeader = "**LinkedIn Caption:**";
+    const whatsappHeaderAlt = "**WhatsApp Message:**";
+
+    let remainingText = text;
+
+    const instaIndex = remainingText.indexOf(instaHeader);
+    const whatsappIndex =
+      remainingText.indexOf(whatsappHeader) > -1
+        ? remainingText.indexOf(whatsappHeader)
+        : remainingText.indexOf(whatsappHeaderAlt);
+
+    let linkedinText = remainingText;
+    if (instaIndex !== -1) {
+      linkedinText = remainingText.substring(0, instaIndex);
+    } else if (whatsappIndex !== -1) {
+      linkedinText = remainingText.substring(0, whatsappIndex);
+    }
+    captions.linkedin = linkedinText.replace(linkedinHeader, "").trim();
+    elements.linkedinOutput.innerHTML = captions.linkedin.replace(
+      /\n/g,
+      "<br>",
+    );
+
+    if (instaIndex !== -1) {
+      let instagramText = remainingText.substring(instaIndex);
+      if (whatsappIndex !== -1 && whatsappIndex > instaIndex) {
+        instagramText = remainingText.substring(instaIndex, whatsappIndex);
+      }
+      captions.instagram = instagramText.replace(instaHeader, "").trim();
+      elements.instagramOutput.innerHTML = captions.instagram.replace(
+        /\n/g,
+        "<br>",
+      );
+    }
+
+    if (whatsappIndex !== -1) {
+      let whatsappText = remainingText.substring(whatsappIndex);
+      captions.whatsapp = whatsappText
+        .replace(whatsappHeader, "")
+        .replace(whatsappHeaderAlt, "")
+        .trim();
+      const formattedWhatsapp = captions.whatsapp
+        .replace(/\*(.*?)\*/g, "<b>$1</b>")
+        .replace(/_(.*?)_/g, "<i>$1</i>")
+        .replace(/\n/g, "<br>");
+      elements.whatsappOutput.innerHTML = formattedWhatsapp;
+    }
+
+    return captions;
   };
 
   const generateCaptions = async () => {
@@ -275,60 +341,62 @@ Do not include any other text, preamble, or explanation in your response. Only o
     elements.generateBtnText.classList.add("hidden");
     elements.generateBtnLoadingText.classList.remove("hidden");
     elements.loadingSpinner.classList.remove("hidden");
-    elements.outputContainer.classList.add("hidden");
+
+    elements.outputContainer.classList.remove("hidden");
+    elements.linkedinOutput.innerHTML = "";
+    elements.instagramOutput.innerHTML = "";
+    elements.whatsappOutput.innerHTML = "";
+
+    let fullGeneratedText = "";
+    let finalCaptions = {};
 
     try {
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?key=${apiKey}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(requestBody),
         },
       );
-      const data = await response.json();
-      displayResults(data?.candidates?.[0]?.content?.parts?.[0]?.text || "");
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error.message || "API request failed");
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const regex = /"text"\s*:\s*"((?:\\.|[^"\\])*)"/g;
+        let match;
+        while ((match = regex.exec(chunk)) !== null) {
+          const text = match[1]
+            .replace(/\\"/g, '"')
+            .replace(/\\n/g, "\n")
+            .replace(/\\\\/g, "\\");
+          fullGeneratedText += text;
+          finalCaptions = displayStreamedResults(fullGeneratedText);
+        }
+      }
+
+      elements.linkedinOutput.dataset.copyText = finalCaptions.linkedin || "";
+      elements.instagramOutput.dataset.copyText = finalCaptions.instagram || "";
+      elements.whatsappOutput.dataset.copyText = finalCaptions.whatsapp || "";
     } catch (error) {
       alert(`An error occurred: ${error.message}`);
+      elements.outputContainer.classList.add("hidden");
     } finally {
       elements.generateBtnText.classList.remove("hidden");
       elements.generateBtnLoadingText.classList.add("hidden");
       elements.loadingSpinner.classList.add("hidden");
       validateInputs();
     }
-  };
-
-  const displayResults = (text) => {
-    const captions = { linkedin: "", instagram: "", whatsapp: "" };
-    const sections = text.split(
-      /\*\*(LinkedIn Caption|Instagram Caption|WhatsApp (?:Caption|Message)):\*\*/,
-    );
-
-    for (let i = 1; i < sections.length; i += 2) {
-      const header = sections[i];
-      const content = sections[i + 1]?.trim() || "";
-      if (header.includes("LinkedIn")) {
-        captions.linkedin = content;
-      } else if (header.includes("Instagram")) {
-        captions.instagram = content;
-      } else if (header.includes("WhatsApp")) {
-        captions.whatsapp = content;
-      }
-    }
-
-    const formattedWhatsapp = captions.whatsapp
-      .replace(/\*(.*?)\*/g, "<b>$1</b>")
-      .replace(/_(.*?)_/g, "<i>$1</i>");
-
-    elements.linkedinOutput.innerHTML = captions.linkedin;
-    elements.instagramOutput.innerHTML = captions.instagram;
-    elements.whatsappOutput.innerHTML = formattedWhatsapp;
-
-    elements.linkedinOutput.dataset.copyText = captions.linkedin;
-    elements.instagramOutput.dataset.copyText = captions.instagram;
-    elements.whatsappOutput.dataset.copyText = captions.whatsapp;
-
-    elements.outputContainer.classList.remove("hidden");
   };
 
   const copyToClipboard = (event) => {
@@ -397,5 +465,6 @@ Do not include any other text, preamble, or explanation in your response. Only o
 
   loadSettings();
   validateInputs();
+  checkApiKeyPresence();
   if (typeof lucide !== "undefined") lucide.createIcons();
 });

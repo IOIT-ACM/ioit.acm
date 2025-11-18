@@ -50,7 +50,7 @@
   .btn-secondary { background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; }
   .btn-secondary:hover:not(:disabled) { background-color: rgba(255, 255, 255, 0.15); }
   .output-card { background-color: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 0; overflow: hidden; }
-  .output-content { white-space: pre-wrap; word-wrap: break-word; font-family: inherit; font-size: 0.875rem; line-height: 1.6; }
+  .output-content { white-space: pre-wrap; word-wrap: break-word; font-family: inherit; font-size: 0.875rem; line-height: 1.6; min-height: 50px; }
   .context-btn {
     background-color: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -109,6 +109,15 @@
       <i data-lucide="settings" class="w-5 h-5"></i>
     </button>
   </header>
+
+  <div id="api-key-prompt" class="glass-surface p-6 text-center text-white hidden mb-6">
+    <p>
+      enter the gemini api key to continue with this application.
+      <a href="https://aistudio.google.com/app/api-keys" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">
+        Create your own for free of cost here
+      </a>
+    </p>
+  </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
     <div class="glass-surface p-6 flex flex-col">
