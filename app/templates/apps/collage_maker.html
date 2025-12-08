@@ -104,7 +104,11 @@
                             <i data-lucide="upload" class="w-4 h-4"></i>
                             <span>New Collage</span>
                         </label>
-                        <input type="file" id="upload" accept="image/*" multiple class="hidden" />
+                        <input type="file"
+                               id="upload"
+                               accept="image/*,.heic,.heif,.avif,.tiff,.psd,.raw"
+                               multiple
+                               class="hidden" />
                     </div>
                     <div class="flex items-center gap-2 flex-1 min-w-[200px]">
                         <i data-lucide="type" class="w-4 h-4 text-gray-400"></i>
@@ -814,7 +818,9 @@
   }
 
   async function handleFileUpload(e) {
-      const files = Array.from(e.target.files).slice(0, 5);
+      const files = Array.from(e.target.files)
+          .filter(file => !file.type.startsWith('video/') && file.type !== 'image/gif')
+          .slice(0, 5);
       if (files.length === 0) {
           e.target.value = "";
           return;
