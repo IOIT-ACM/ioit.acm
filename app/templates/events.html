@@ -4,432 +4,498 @@
 block og_title %}What Happens at AISSMS IOIT ACM?
 {% endblock %}
 {% block og_description
-    %}
-    Explore exciting events, workshops, and contests organized by AISSMS IOIT ACM to
-    enhance your technical and non-technical skills.
+%}
+Explore exciting events, workshops, and contests organized by AISSMS IOIT ACM to
+enhance your technical and non-technical skills.
 {% endblock %}
 {% block og_image
-    %}
-    {{ url_for('static', filename='img/assets/keyboard-header.jpg') }}
+%}
+{{ url_for('static', filename='img/assets/keyboard-header.jpg') }}
 {% endblock
 %}
 {% block twitter_image %}
-    {{ url_for('static',
-        filename='img/assets/keyboard-header.jpg') }}
+{{ url_for('static',
+filename='img/assets/keyboard-header.jpg') }}
 {% endblock %}
 {% block
-    twitter_title %}
-    Events - AISSMS IOIT ACM
+twitter_title %}
+Events - AISSMS IOIT ACM
 {% endblock %}
 {% block twitter_description
-    %}
-    Join AISSMS IOIT ACM for an enriching experience through engaging events, workshops,
-    and contests that help you grow professionally and academically.
+%}
+Join AISSMS IOIT ACM for an enriching experience through engaging events, workshops,
+and contests that help you grow professionally and academically.
 {% endblock %}
 {% block content %}
-    <div class="relative bg-cover bg-center h-[80vh]"
-         style="background-image: url('{{ url_for('static', filename='img/assets/keyboard-header.jpg') }}')">
-        <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black bg-opacity-60 grid place-items-center text-white px-4">
-            <div class="max-w-3xl text-center space-y-6 gsap-reveal">
-                <h1 class="text-3xl md:text-6xl font-extrabold leading-tight">What Happens at AISSMS IOIT ACM?</h1>
-                <p class="text-xs md:text-xl font-medium leading-relaxed">
-                    AISSMS IOIT ACM is the student chapter organization subsidiary of ACM. It
-                    offers students an exceptional platform to excel in both technical and
-                    non-technical domains. By participating in thought-provoking events,
-                    Special Interest Groups (SIGs), workshops, and prestigious contests,
-                    students can enhance their skills, apply their knowledge, and gain
-                    unparalleled expertise under the guidance of the AISSMS IOIT ACM Student
-                    Chapter.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center w-fit mx-auto justify-center">
-                    <button onclick="scrollToEvents()"
-                            class="bg-blue-400 hover:bg-blue-500 text-xs md:text-sm text-gray-900 justify-center font-semibold px-8 py-3 rounded-lg shadow-md hover:no-underline backdrop-blur-sm flex gap-2 items-center">
-                        Explore Events
-                        <i class="ml-2 fas fa-arrow-down"></i>
-                    </button>
-                    <a href="/feedback"
-                       class="bg-green-400 hover:bg-green-500 justify-center text-xs md:text-sm text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md hover:no-underline backdrop-blur-sm flex gap-2 items-center">
-                        Feedback
-                        <i class="fas fa-arrow-up-right-from-square"></i>
-                    </a>
-                    <a href="/competitions"
-                       class="bg-green-400 hover:bg-green-500 text-xs md:text-sm text-gray-900 justify-center font-semibold px-8 py-3 rounded-lg shadow-md hover:no-underline backdrop-blur-sm flex gap-2 items-center">
-                        Competitions
-                        <i class="fas fa-arrow-up-right-from-square"></i>
-                    </a>
+<div class="relative bg-cover bg-center h-[80vh]"
+    style="background-image: url('{{ url_for('static', filename='img/assets/keyboard-header.jpg') }}')">
+    <div
+        class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black bg-opacity-60 grid place-items-center text-white px-4">
+        <div class="max-w-3xl text-center space-y-6 gsap-reveal">
+            <h1 class="text-3xl md:text-6xl font-extrabold leading-tight">What Happens at AISSMS IOIT ACM?</h1>
+            <p class="text-xs md:text-xl font-medium leading-relaxed">
+                AISSMS IOIT ACM is the student chapter organization subsidiary of ACM. It
+                offers students an exceptional platform to excel in both technical and
+                non-technical domains. By participating in thought-provoking events,
+                Special Interest Groups (SIGs), workshops, and prestigious contests,
+                students can enhance their skills, apply their knowledge, and gain
+                unparalleled expertise under the guidance of the AISSMS IOIT ACM Student
+                Chapter.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center w-fit mx-auto justify-center">
+                <button onclick="scrollToEvents()"
+                    class="bg-blue-400 hover:bg-blue-500 text-xs md:text-sm text-gray-900 justify-center font-semibold px-8 py-3 rounded-lg shadow-md hover:no-underline backdrop-blur-sm flex gap-2 items-center">
+                    Explore Events
+                    <i class="ml-2 fas fa-arrow-down"></i>
+                </button>
+                <a href="/feedback"
+                    class="bg-green-400 hover:bg-green-500 justify-center text-xs md:text-sm text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md hover:no-underline backdrop-blur-sm flex gap-2 items-center">
+                    Feedback
+                    <i class="fas fa-arrow-up-right-from-square"></i>
+                </a>
+                <a href="/competitions"
+                    class="bg-green-400 hover:bg-green-500 text-xs md:text-sm text-gray-900 justify-center font-semibold px-8 py-3 rounded-lg shadow-md hover:no-underline backdrop-blur-sm flex gap-2 items-center">
+                    Competitions
+                    <i class="fas fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="bg-gradient-to-r from-blue-800 to-blue-600 md:py-5 py-3 flex items-center justify-center">
+    <div class="marquee w-full">
+        <div class="marquee-content-slow text-xl md:text-3xl font-bold text-white">
+            {% for _ in range(97) %}
+            People&nbsp;&nbsp;&nbsp;&nbsp;Passion&nbsp;&nbsp;&nbsp;&nbsp;Professionalism&nbsp;&nbsp;&nbsp;&nbsp;
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<div class="mx-auto px-8 max-w-7xl">
+    <div class="mt-12">
+        <h2 class="text-3xl md:4xl font-bold text-center mb-8 text-gray-800">Flagship Events</h2>
+        <div class="grid container gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 cursor-pointer">
+            <!-- IOIT TENET 2025 -->
+            <div
+                class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
+                <div class="flex flex-col items-center">
+                    <div
+                        class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
+                        <!-- Image -->
+                        <img src="https://ioit.acm.org/tenet/25/gallery/img016.webp" alt="IOIT TENET 2025"
+                            class="h-full w-full object-cover absolute" loading="lazy" />
+                        <!-- Video -->
+                        <video data-src="/static/vid/tenet25.mp4" muted loop
+                            class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
+                        </video>
+                    </div>
+                    <div class="text-center">
+                        <a href="https://ioittenet.com/"
+                            class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT TENET
+                            2025</a>
+                        <p class="text-gray-800 mt-2">
+                            Continuing the legacy, the AISSMS IOIT ACM student chapter hosted the second edition of TENET in 2025. TENET 2025 is a multi-faceted event featuring thrilling experiences in technology, entrepreneurship, global diplomacy, and e-sports.
+                        </p>
+                        <a href="https://ioittenet.com/"
+                            class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
+                            More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+            <!-- TENET HACK 2025 -->
+            <div
+                class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
+                <div class="flex flex-col items-center">
+                    <div
+                        class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
+                        <!-- Image -->
+                        <img src="https://ioit.acm.org/tenet/25/gallery/img025.webp" alt="TENET HACK 2025"
+                            class="h-full w-full object-cover absolute" loading="lazy" />
+                        <!-- Video -->
+                        <video data-src="/static/vid/hack25.mp4" muted loop
+                            class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
+                        </video>
+                    </div>
+                    <div class="text-center">
+                        <a href="https://hack.ioittenet.com/"
+                            class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">TENET HACK
+                            2025</a>
+                        <p class="text-gray-800 mt-2">
+                            TENET HACK 2025 was a 12-hour hackathon inspired by The Matrix, where developers and creators
+                            collaborate to push technological boundaries. Hosted by AISSMS IOIT ACM, this event gathers
+                            talented individuals to build innovative solutions.
+                        </p>
+                        <a href="https://hack.ioittenet.com/"
+                            class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
+                            More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+            <!-- IOIT TENET 2024 -->
+            <div
+                class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
+                <div class="flex flex-col items-center">
+                    <div
+                        class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
+                        <!-- Image -->
+                        <img src="https://ioit.acm.org/tenet/gallery/24/drone/12.jpeg" alt="IOIT TENET 2024"
+                            class="h-full w-full object-cover absolute" loading="lazy" />
+                        <!-- Video -->
+                        <video data-src="/static/vid/tenet24.mp4" muted loop
+                            class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
+                        </video>
+                    </div>
+                    <div class="text-center">
+                        <a href="https://ioittenet.com/"
+                            class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT TENET
+                            2024</a>
+                        <p class="text-gray-800 mt-2">
+                            AISSMS IOIT ACM student chapter hosted the first edition of TENET in year
+                            2024. TENET 2024 is a multi-faceted event hosted by the AISSMS IOIT ACM
+                            Student Chapter, featuring thrilling experiences in technology,
+                            entrepreneurship, global diplomacy, and e-sports.
+                        </p>
+                        <a href="https://ioittenet.com/"
+                            class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
+                            More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+            <!-- IOIT MUN 2025 -->
+            <div
+                class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
+                <div class="flex flex-col items-center">
+                    <div
+                        class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
+                        <!-- Image -->
+                        <img src="https://mun.ioittenet.com/img/content/mun.jpg" alt="IOIT MUN 2024"
+                            class="h-full w-full object-cover absolute" loading="lazy" />
+                        <!-- Video -->
+                        <video data-src="/static/vid/mun25.mp4" muted loop
+                            class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
+                        </video>
+                    </div>
+                    <div class="text-center">
+                        <a href="https://mun.ioittenet.com/"
+                            class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT MUN
+                            2025</a>
+                        <p class="text-gray-800 mt-2">
+                            Third edition of IOIT MUN was hosted in October 2025 by AISSMS IOIT ACM
+                            student chapter. MUN conferences feature committees addressing
+                            diverse global issues, from the United Nations Human Rights Council
+                            to specialized bodies like World Trade Organisation.
+                        </p>
+                        <a href="https://mun.ioittenet.com/"
+                            class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
+                            More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+            <!-- IOIT MUN 2024 -->
+            <div
+                class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
+                <div class="flex flex-col items-center">
+                    <div
+                        class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
+                        <!-- Image -->
+                        <img src="https://ioit.acm.org/tenet/mun/2024/9.jpeg" alt="IOIT MUN 2024"
+                            class="h-full w-full object-cover absolute" loading="lazy" />
+                        <!-- Video -->
+                        <video data-src="/static/vid/mun24.mp4" muted loop
+                            class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
+                        </video>
+                    </div>
+                    <div class="text-center">
+                        <a href="https://mun.ioittenet.com/"
+                            class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT MUN
+                            2024</a>
+                        <p class="text-gray-800 mt-2">
+                            Second edition of IOIT MUN was hosted in October 2024 by AISSMS IOIT ACM
+                            student chapter. MUN conferences feature committees addressing
+                            diverse global issues, from the General Assembly to specialized
+                            bodies like the Security Council.
+                        </p>
+                        <a href="https://mun.ioittenet.com/"
+                            class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
+                            More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+            <!-- IOIT MUN 2023 -->
+            <div
+                class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
+                <div class="flex flex-col items-center">
+                    <div
+                        class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
+                        <!-- Image -->
+                        <img src="https://ioit.acm.org/tenet/gallery/24/mun-closing/15.jpeg" alt="IOIT MUN 2023"
+                            class="h-full w-full object-cover absolute" loading="lazy" />
+                        <!-- Video -->
+                        <video data-src="/static/vid/mun23.mp4" muted loop
+                            class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
+                        </video>
+                    </div>
+                    <div class="text-center">
+                        <a href="https://mun.ioittenet.com/"
+                            class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT MUN
+                            2023</a>
+                        <p class="text-gray-800 mt-2">
+                            Model United Nations (MUN) is a simulation of the United Nations
+                            where students role-play as diplomats representing countries or
+                            organizations. IOIT MUN 2023 was the first edition hosted by ACM
+                            student chapter with 5 commitees and more than 75+ delegates.
+                        </p>
+                        <a href="https://mun.ioittenet.com/"
+                            class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
+                            More &rarr;</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <section class="bg-gradient-to-r from-blue-800 to-blue-600 md:py-5 py-3 flex items-center justify-center">
-        <div class="marquee w-full">
-            <div class="marquee-content-slow text-xl md:text-3xl font-bold text-white">
-                {% for _ in range(97) %}
-                    People&nbsp;&nbsp;&nbsp;&nbsp;Passion&nbsp;&nbsp;&nbsp;&nbsp;Professionalism&nbsp;&nbsp;&nbsp;&nbsp;
-                {% endfor %}
+    <div class="grid grid-cols-1 md:grid-cols-2 py-3 mt-10">
+        <div class="grid gap-10">
+            <div class="p-6 bg-blue-100 rounded-lg shadow-lg">
+                <h3 class="text-xl font-semibold text-blue-800">What is TENET?</h3>
+                <p class="text-gray-700 mt-4">
+                    TENET is a multi-faceted event hosted by the AISSMS IOIT ACM Student
+                    Chapter, featuring thrilling experiences in technology,
+                    entrepreneurship, global diplomacy, e-sports, ctf and hackathon. From tech
+                    conferences and workshops to MUN simulations and LAN tournaments, it
+                    offers something for everyone. Join us to connect, learn, and showcase
+                    your skills at AISSMS IOIT, Pune. Where passion meets innovation.
+                </p>
+            </div>
+            <div class="p-6 bg-blue-100 rounded-lg shadow-lg">
+                <h3 class="text-xl font-semibold text-green-800">What is MUN?</h3>
+                <p class="text-gray-700 mt-4">
+                    Model United Nations (MUN) is an educational simulation where
+                    participants role-play as diplomats representing different countries.
+                    It aims to engage students in global issues and diplomatic
+                    negotiation, fostering critical thinking, public speaking, and
+                    collaboration skills. Delegates debate current events, draft
+                    resolutions, and vote on solutions to global challenges, all while
+                    striving for consensus. MUN conferences are a great opportunity for
+                    students to deepen their understanding of international relations and
+                    contribute to global discourse.
+                </p>
             </div>
         </div>
-    </section>
-    <div class="mx-auto px-8 max-w-7xl">
-        <div class="mt-12">
-            <h2 class="text-3xl md:4xl font-bold text-center mb-8 text-gray-800">Flagship Events</h2>
-            <div class="grid container gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 cursor-pointer">
-                <!-- IOIT TENET 2024 -->
-                <div class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
-                    <div class="flex flex-col items-center">
-                        <div class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
-                            <!-- Image -->
-                            <img src="https://ioit.acm.org/tenet/gallery/24/drone/12.jpeg"
-                                 alt="IOIT TENET 2024"
-                                 class="h-full w-full object-cover absolute"
-                                 loading="lazy" />
-                            <!-- Video -->
-                            <video data-src="/static/vid/tenet24.mp4"
-                                   muted
-                                   loop
-                                   class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
-                            </video>
-                        </div>
-                        <div class="text-center">
-                            <a href="https://ioittenet.com/"
-                               class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT TENET 2024</a>
-                            <p class="text-gray-800 mt-2">
-                                AISSMS IOIT ACM student chapter hosted the first edition of TENET in year
-                                2024. TENET 2024 is a multi-faceted event hosted by the AISSMS IOIT ACM
-                                Student Chapter, featuring thrilling experiences in technology,
-                                entrepreneurship, global diplomacy, and e-sports.
-                            </p>
-                            <a href="https://ioittenet.com/"
-                               class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn More &rarr;</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- IOIT MUN 2023 -->
-                <div class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
-                    <div class="flex flex-col items-center">
-                        <div class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
-                            <!-- Image -->
-                            <img src="https://ioit.acm.org/tenet/gallery/24/mun-closing/15.jpeg"
-                                 alt="IOIT MUN 2023"
-                                 class="h-full w-full object-cover absolute"
-                                 loading="lazy" />
-                            <!-- Video -->
-                            <video data-src="/static/vid/mun23.mp4"
-                                   muted
-                                   loop
-                                   class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
-                            </video>
-                        </div>
-                        <div class="text-center">
-                            <a href="https://www.ioitmun.com/"
-                               class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT MUN 2023</a>
-                            <p class="text-gray-800 mt-2">
-                                Model United Nations (MUN) is a simulation of the United Nations
-                                where students role-play as diplomats representing countries or
-                                organizations. IOIT MUN 2023 was the first edition hosted by ACM
-                                student chapter with 5 commitees and more than 75+ delegates.
-                            </p>
-                            <a href="https://www.ioitmun.com/"
-                               class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn More &rarr;</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- IOIT MUN 2024 -->
-                <div class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
-                    <div class="flex flex-col items-center">
-                        <div class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
-                            <!-- Image -->
-                            <img src="https://ioit.acm.org/tenet/mun/2024/9.jpeg"
-                                 alt="IOIT MUN 2024"
-                                 class="h-full w-full object-cover absolute"
-                                 loading="lazy" />
-                            <!-- Video -->
-                            <video data-src="/static/vid/mun24.mp4"
-                                   muted
-                                   loop
-                                   class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
-                            </video>
-                        </div>
-                        <div class="text-center">
-                            <a href="https://www.ioitmun.com/"
-                               class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT MUN 2024</a>
-                            <p class="text-gray-800 mt-2">
-                                Second edition of IOIT MUN was hosted in October 2024 by AISSMS IOIT ACM
-                                student chapter. MUN conferences feature committees addressing
-                                diverse global issues, from the General Assembly to specialized
-                                bodies like the Security Council.
-                            </p>
-                            <a href="https://www.ioitmun.com/"
-                               class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn More &rarr;</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 py-3 mt-10">
-            <div class="grid gap-10">
-                <div class="p-6 bg-blue-100 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-blue-800">What is TENET?</h3>
-                    <p class="text-gray-700 mt-4">
-                        TENET 2024 is a multi-faceted event hosted by the AISSMS IOIT ACM Student
-                        Chapter, featuring thrilling experiences in technology,
-                        entrepreneurship, global diplomacy, and e-sports. From tech
-                        conferences and workshops to MUN simulations and LAN tournaments, it
-                        offers something for everyone. Join us to connect, learn, and showcase
-                        your skills at AISSMS IOIT, Pune—where passion meets innovation.
-                    </p>
-                </div>
-                <div class="p-6 bg-blue-100 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-green-800">What is MUN?</h3>
-                    <p class="text-gray-700 mt-4">
-                        Model United Nations (MUN) is an educational simulation where
-                        participants role-play as diplomats representing different countries.
-                        It aims to engage students in global issues and diplomatic
-                        negotiation, fostering critical thinking, public speaking, and
-                        collaboration skills. Delegates debate current events, draft
-                        resolutions, and vote on solutions to global challenges, all while
-                        striving for consensus. MUN conferences are a great opportunity for
-                        students to deepen their understanding of international relations and
-                        contribute to global discourse.
-                    </p>
-                </div>
-            </div>
             <div class="w-full">
                 <div class="sticky top-32 w-64 h-80 md:mt-0 mt-8 mx-auto rounded-lg mb-4 shadow-lg overflow-hidden relative group cursor-pointer"
-                     id="videoContainer">
-                    <img src="/static/img/events/mun-under-a-min.jpeg"
-                         alt="IOIT TENET 2024"
-                         class="h-full w-full object-cover absolute"
-                         loading="lazy"
-                         id="eventImage" />
+                    id="videoContainer">
+                    <img src="/static/img/events/mun-under-a-min.jpeg" alt="IOIT TENET 2024"
+                        class="h-full w-full object-cover absolute" loading="lazy" id="eventImage" />
                     <video src="/static/img/events/mun-under-a-min.mp4"
-                           class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 mun-video"
-                           id="eventVideo">
+                        class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 mun-video"
+                        id="eventVideo">
                     </video>
                     <!-- Overlay Text -->
                     <div class="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                         id="overlayText">
+                        id="overlayText">
                         <span class="text-white text-lg font-bold">Watch Video</span>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="bg-gray-100 py-16">
-            <div class="max-w-5xl mx-auto text-center">
-                <h1 class="text-3xl font-bold text-blue-600">Special Interest Groups (SIGs)</h1>
-                <p class="text-gray-700 mt-4 text-lg">
-                    The AISSMS IOIT ACM Student Chapter organizes Special Interest Groups (SIGs) to
-                    foster collaboration and learning in various domains. SIGs provide a
-                    platform for students to explore, innovate, and overcome challenges
-                    together while delving into technical and non-technical areas.
-                </p>
-            </div>
-            <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8">
-                <!-- Technical SIG -->
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <img src="{{ url_for('static', filename='img/events/sig-tech.jpeg') }}"
-                         alt="Technical SIG"
-                         class="w-full h-64 object-cover rounded-t-lg" />
-                    <div class="mt-4">
-                        <h2 class="text-2xl font-semibold text-blue-500">Technical SIG</h2>
-                        <p class="text-gray-700 mt-3">
-                            Focused on enhancing technical expertise, the Technical SIG conducts
-                            seminars, hands-on sessions, and discussions on projects involving
-                            cutting-edge technologies such as Artificial Intelligence,
-                            Blockchain, and Web Development.
-                        </p>
-                        <ul class="mt-4 text-gray-600 list-disc list-inside">
-                            <li>Workshops on upcoming technologies</li>
-                            <li>Collaborative projects</li>
-                            <li>Problem-solving sessions</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Entrepreneurship SIG -->
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <img src="{{ url_for('static', filename='img/events/sig-ent.jpeg') }}"
-                         alt="Entrepreneurship SIG"
-                         class="w-full h-64 object-cover rounded-t-lg" />
-                    <div class="mt-4">
-                        <h2 class="text-2xl font-semibold text-green-500">Entrepreneurship SIG</h2>
-                        <p class="text-gray-700 mt-3">
-                            Geared towards fostering entrepreneurial skills, the
-                            Entrepreneurship SIG hosts sessions on startup building, ideation,
-                            and problem-solving in real-world scenarios. It also includes guest
-                            lectures by successful entrepreneurs.
-                        </p>
-                        <ul class="mt-4 text-gray-600 list-disc list-inside">
-                            <li>Startup ideation workshops</li>
-                            <li>Networking opportunities</li>
-                            <li>Case studies and success stories</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!--Web3 Week-->
-            <iframe src="https://lu.ma/embed/event/evt-eyIcvvevetjpntr/simple"
-                    width="900"
-                    height="450"
-                    frameborder="0"
-                    style="border: 1px solid #bfcbda88;
-                           border-radius: 4px"
-                    allowfullscreen=""
-                    aria-hidden="false"
-                    tabindex="0"
-                    class="mx-auto my-10 w-full md:w-[900px] h-[450px] md:h-[500px] rounded-lg"></iframe>
-        </div>
-        <div class="min-h-screen" id="events">
-            <div class="bg-gray-100 items-center flex md:flex-row flex-col w-full justify-between sticky top-0 pt-20 mb-5 border-b-2 border-gray-500">
-                <h1 class="md:text-3xl text-2xl pb-2 md:pb-2 font-bold text-center">All Events</h1>
-                <p id="no-results-message"
-                   class="text-center py-5 md:py-0 text-gray-500 hidden">
-                    No results for the query "<span id="user-query"></span>"
-                </p>
-                <div class="mb-2 text-center">
-                    <input type="text"
-                           id="search-bar"
-                           placeholder="Search by keywords..."
-                           maxlength="10"
-                           class="p-2 border border-gray-300 rounded-md" />
-                    <p id="search-stats"
-                       class="text-center text-xs text-sm text-gray-500 md:mt-3 mt-2">
-                        Showing <span id="matching-count"></span> of
-                        <span id="total-count"></span> results
-                    </p>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-2 mt-16"
-                 id="events-container">
-                {% for event in events %}
-                    <div id="event-{{ loop.index }}"
-                         class="event-card bg-white shadow-md rounded-lg overflow-hidden border border-gray-200">
-                        <div class="p-4">
-                            <a id="event-link-{{ loop.index }}"
-                               href="{{ url_for('events.event_detail', event_slug=event.name) }}"
-                               class="hover:underline text-blue-600">{{ event.name }}</a>
-                            <p id="event-description-{{ loop.index }}"
-                               class="text-gray-600 mt-2 line-clamp-3">{{ event.description }}</p>
-                            <p id="event-date-{{ loop.index }}"
-                               class="text-gray-500 mt-4 text-sm font-medium">📅 {{ event.date }}</p>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
     </div>
-    <div id="container"
-         class="md:block min-h-screen cursor-move hidden mt-20 flex justify-center items-center">
-        <div id="menu" class="w-full flex gap-5 justify-center text-center z-50">
-            <button id="table"
-                    class="bg-blue-400/70 hover:bg-blue-500/50 text-gray-900 md:px-5 md:py-3 px-3 py-1 text-sm md:text-lg rounded-lg shadow-md transition-all backdrop-blur-sm">
-                SHUFFLE
-            </button>
-            <button id="sphere"
-                    class="bg-blue-400/70 hover:bg-blue-500/50 text-gray-900 md:px-5 md:py-3 px-3 py-1 text-sm md:text-lg rounded-lg shadow-md transition-all backdrop-blur-sm">
-                SPHERE
-            </button>
-            <a href="/gallery"
-               class="bg-green-400/70 hover:bg-green-500/50 text-gray-900 md:px-5 md:py-3 px-3 py-1 text-sm md:text-lg rounded-lg shadow-md transition-all backdrop-blur-sm">
-                Gallery
-            </a>
-            <a href="/team"
-               class="bg-green-400/70 hover:bg-green-500/50 text-gray-900 md:px-5 md:py-3 px-3 py-1 text-sm md:text-lg rounded-lg shadow-md transition-all backdrop-blur-sm">
-                View our team
-            </a>
-        </div>
-        <!-- Instructions and Link -->
-        <div class="absolute bottom-4 right-4 text-sm md:text-base text-gray-700 z-50">
-            <p class="m-0">
-                Hold <kbd class="font-mono">`Ctrl`</kbd> to zoom and pan.
+    <div class="bg-gray-100 py-16">
+        <div class="max-w-5xl mx-auto text-center">
+            <h1 class="text-3xl font-bold text-blue-600">Special Interest Groups (SIGs)</h1>
+            <p class="text-gray-700 mt-4 text-lg">
+                The AISSMS IOIT ACM Student Chapter organizes Special Interest Groups (SIGs) to
+                foster collaboration and learning in various domains. SIGs provide a
+                platform for students to explore, innovate, and overcome challenges
+                together while delving into technical and non-technical areas.
             </p>
         </div>
-    </div>
-    {% include "components/pre-footer.html" %}
-    <div>
-        <div class="image-marquee-container">
-            <div class="image-marquee-content md:h-48 h-32">
-                {% for _ in range(20) %}
-                    {% for image in images %}<img src="{{ image }}" alt="Event Image" class="bg-gray-300" />{% endfor %}
-                {% endfor %}
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <!-- Technical SIG -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <img src="{{ url_for('static', filename='img/events/sig-tech.jpeg') }}" alt="Technical SIG"
+                    class="w-full h-64 object-cover rounded-t-lg" />
+                <div class="mt-4">
+                    <h2 class="text-2xl font-semibold text-blue-500">Technical SIG</h2>
+                    <p class="text-gray-700 mt-3">
+                        Focused on enhancing technical expertise, the Technical SIG conducts
+                        seminars, hands-on sessions, and discussions on projects involving
+                        cutting-edge technologies such as Artificial Intelligence,
+                        Blockchain, and Web Development.
+                    </p>
+                    <ul class="mt-4 text-gray-600 list-disc list-inside">
+                        <li>Workshops on upcoming technologies</li>
+                        <li>Collaborative projects</li>
+                        <li>Problem-solving sessions</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Entrepreneurship SIG -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <img src="{{ url_for('static', filename='img/events/sig-ent.jpeg') }}" alt="Entrepreneurship SIG"
+                    class="w-full h-64 object-cover rounded-t-lg" />
+                <div class="mt-4">
+                    <h2 class="text-2xl font-semibold text-green-500">Entrepreneurship SIG</h2>
+                    <p class="text-gray-700 mt-3">
+                        Geared towards fostering entrepreneurial skills, the
+                        Entrepreneurship SIG hosts sessions on startup building, ideation,
+                        and problem-solving in real-world scenarios. It also includes guest
+                        lectures by successful entrepreneurs.
+                    </p>
+                    <ul class="mt-4 text-gray-600 list-disc list-inside">
+                        <li>Startup ideation workshops</li>
+                        <li>Networking opportunities</li>
+                        <li>Case studies and success stories</li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="image-marquee-container">
-            <div class="image-marquee-content md:h-48 h-32">
-                {% for _ in range(20) %}
-                    {% for image in images_2 %}<img src="{{ image }}" alt="Event Image" class="bg-gray-300" />{% endfor %}
-                {% endfor %}
+
+    </div>
+    <div class="min-h-screen" id="events">
+        <div
+            class="bg-gray-100 items-center flex md:flex-row flex-col w-full justify-between sticky top-0 pt-20 mb-5 border-b-2 border-gray-500">
+            <h1 class="md:text-3xl text-2xl pb-2 md:pb-2 font-bold text-center">All Events</h1>
+            <p id="no-results-message" class="text-center py-5 md:py-0 text-gray-500 hidden">
+                No results for the query "<span id="user-query"></span>"
+            </p>
+            <div class="mb-2 text-center">
+                <input type="text" id="search-bar" placeholder="Search by keywords..." maxlength="10"
+                    class="p-2 border border-gray-300 rounded-md" />
+                <p id="search-stats" class="text-center text-xs text-sm text-gray-500 md:mt-3 mt-2">
+                    Showing <span id="matching-count"></span> of
+                    <span id="total-count"></span> results
+                </p>
             </div>
         </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-2 mt-16" id="events-container">
+            {% for event in events %}
+            <div id="event-{{ loop.index }}"
+                class="event-card bg-white shadow-md rounded-lg overflow-hidden border border-gray-200">
+                <div class="p-4">
+                    <a id="event-link-{{ loop.index }}"
+                        href="{{ url_for('events.event_detail', event_slug=event.name) }}"
+                        class="hover:underline text-blue-600">{{ event.name }}</a>
+                    <p id="event-description-{{ loop.index }}" class="text-gray-600 mt-2 line-clamp-3">{{
+                        event.description }}</p>
+                    <p id="event-date-{{ loop.index }}" class="text-gray-500 mt-4 text-sm font-medium">📅 {{ event.date
+                        }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-    <script src="/static/js/utils.js"></script>
-    <script type="module" defer src="/static/js/home-team.js"></script>
-    <link rel="stylesheet" href="/static/css/home-gallery.css" defer />
-    <script>
-  function scrollToEvents() {
-    const target = document.getElementById("events");
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth" });
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const searchBar = document.getElementById("search-bar");
-    const eventsContainer = document.getElementById("events-container");
-    const searchStats = document.getElementById("search-stats");
-    const matchingCount = document.getElementById("matching-count");
-    const totalCount = document.getElementById("total-count");
-    const noResultsMessage = document.getElementById("no-results-message");
-    const userQuery = document.getElementById("user-query");
-
-    const totalEvents = eventsContainer.querySelectorAll(".event-card").length;
-    totalCount.textContent = totalEvents;
-
-    searchBar.addEventListener("input", function () {
-      const query = searchBar.value.toLowerCase();
-      let matches = 0;
-
-      const eventCards = Array.from(
-        eventsContainer.querySelectorAll(".event-card"),
-      );
-
-      eventCards.forEach((event) => {
-        const aId = event.id.split("-")[1];
-        const aName = document
-          .getElementById(`event-link-${aId}`)
-          .textContent.toLowerCase();
-        const aDescription = document
-          .getElementById(`event-description-${aId}`)
-          .textContent.toLowerCase();
-
-        const matchesQuery =
-          aName.includes(query) || aDescription.includes(query);
-
-        if (matchesQuery) {
-          event.style.display = "";
-          matches++;
-        } else {
-          event.style.display = "none";
+</div>
+<div id="container" class="md:block min-h-screen cursor-move hidden mt-20 flex justify-center items-center">
+    <div id="menu" class="w-full flex gap-5 justify-center text-center z-50">
+        <button id="table"
+            class="bg-blue-400/70 hover:bg-blue-500/50 text-gray-900 md:px-5 md:py-3 px-3 py-1 text-sm md:text-lg rounded-lg shadow-md transition-all backdrop-blur-sm">
+            SHUFFLE
+        </button>
+        <button id="sphere"
+            class="bg-blue-400/70 hover:bg-blue-500/50 text-gray-900 md:px-5 md:py-3 px-3 py-1 text-sm md:text-lg rounded-lg shadow-md transition-all backdrop-blur-sm">
+            SPHERE
+        </button>
+        <a href="/gallery"
+            class="bg-green-400/70 hover:bg-green-500/50 text-gray-900 md:px-5 md:py-3 px-3 py-1 text-sm md:text-lg rounded-lg shadow-md transition-all backdrop-blur-sm">
+            Gallery
+        </a>
+        <a href="/team"
+            class="bg-green-400/70 hover:bg-green-500/50 text-gray-900 md:px-5 md:py-3 px-3 py-1 text-sm md:text-lg rounded-lg shadow-md transition-all backdrop-blur-sm">
+            View our team
+        </a>
+    </div>
+    <!-- Instructions and Link -->
+    <div class="absolute bottom-4 right-4 text-sm md:text-base text-gray-700 z-50">
+        <p class="m-0">
+            Hold <kbd class="font-mono">`Ctrl`</kbd> to zoom and pan.
+        </p>
+    </div>
+</div>
+{% include "components/pre-footer.html" %}
+<div>
+    <div class="image-marquee-container">
+        <div class="image-marquee-content md:h-48 h-32">
+            {% for _ in range(20) %}
+            {% for image in images %}<img src="{{ image }}" alt="Event Image" class="bg-gray-300" />{% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="image-marquee-container">
+        <div class="image-marquee-content md:h-48 h-32">
+            {% for _ in range(20) %}
+            {% for image in images_2 %}<img src="{{ image }}" alt="Event Image" class="bg-gray-300" />{% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script src="/static/js/utils.js"></script>
+<script type="module" defer src="/static/js/home-team.js"></script>
+<link rel="stylesheet" href="/static/css/home-gallery.css" defer />
+<script>
+    function scrollToEvents() {
+        const target = document.getElementById("events");
+        if (target) {
+            target.scrollIntoView({ behavior: "smooth" });
         }
-      });
+    }
 
-      matchingCount.textContent = matches;
-      searchStats.classList.remove("hidden");
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchBar = document.getElementById("search-bar");
+        const eventsContainer = document.getElementById("events-container");
+        const searchStats = document.getElementById("search-stats");
+        const matchingCount = document.getElementById("matching-count");
+        const totalCount = document.getElementById("total-count");
+        const noResultsMessage = document.getElementById("no-results-message");
+        const userQuery = document.getElementById("user-query");
 
-      if (matches === 0) {
-        noResultsMessage.classList.remove("hidden");
-        userQuery.textContent = query;
-      } else {
-        noResultsMessage.classList.add("hidden");
-      }
+        const totalEvents = eventsContainer.querySelectorAll(".event-card").length;
+        totalCount.textContent = totalEvents;
 
-      // Scroll 500px down from the events container
-      const containerPosition =
-        eventsContainer.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: containerPosition - 200,
-        behavior: "smooth", // Smooth scroll
-      });
+        searchBar.addEventListener("input", function () {
+            const query = searchBar.value.toLowerCase();
+            let matches = 0;
+
+            const eventCards = Array.from(
+                eventsContainer.querySelectorAll(".event-card"),
+            );
+
+            eventCards.forEach((event) => {
+                const aId = event.id.split("-")[1];
+                const aName = document
+                    .getElementById(`event-link-${aId}`)
+                    .textContent.toLowerCase();
+                const aDescription = document
+                    .getElementById(`event-description-${aId}`)
+                    .textContent.toLowerCase();
+
+                const matchesQuery =
+                    aName.includes(query) || aDescription.includes(query);
+
+                if (matchesQuery) {
+                    event.style.display = "";
+                    matches++;
+                } else {
+                    event.style.display = "none";
+                }
+            });
+
+            matchingCount.textContent = matches;
+            searchStats.classList.remove("hidden");
+
+            if (matches === 0) {
+                noResultsMessage.classList.remove("hidden");
+                userQuery.textContent = query;
+            } else {
+                noResultsMessage.classList.add("hidden");
+            }
+
+            // Scroll 500px down from the events container
+            const containerPosition =
+                eventsContainer.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({
+                top: containerPosition - 200,
+                behavior: "smooth", // Smooth scroll
+            });
+        });
     });
-  });
-    </script>
+</script>
 {% endblock %}
