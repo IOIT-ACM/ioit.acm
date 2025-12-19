@@ -1,19 +1,38 @@
 events = [
     {
-        "name": "Retrofitting is Expensive: Workshop on Accessibility",
-        "description": "A comprehensive workshop introducing participants to the foundations of accessibility across both physical and digital contexts. The session explored different types of disabilities, the principles of universal design, and how accessibility can be integrated into any product-building process using agile and inclusive thinking.",
-        "date": "November 16, 2025",
-        "moredetails": "",
-        "image_url": "/static/img/gallery/events/accessibility_workshop.jpeg",
-        "instagram_link": "",
-        "facebook_link": "",
-        "topics": [
-            "Understanding various types of disabilities and the barriers they create.",
-            "Learning how accessibility applies to products, spaces, and experiences - not just digital ones.",
-            "Integrating accessibility considerations into every stage of the product-building lifecycle.",
-            "Applying agile principles to continuously improve accessibility in products and services.",
-            "Exploring universal design concepts and how they help create products usable by everyone.",
-            "Clarifying myths and discussing the real-world importance of inclusive design."
+    "name": "Bit By Keystroke - Vol 1",
+    "description": "Bit By Keystroke 2025 launched its inaugural edition, an intense typing competition testing speed, accuracy, and coding prowess! Participants faced four unique rounds across 1 hour, showcasing their typing skills through code snippets, error fixing, and memory challenges.",
+    "date": "December 19, 2025",
+    "moredetails": "",
+    "image_url": "",
+    "instagram_link": "",
+    "facebook_link": "",
+    "topics": [
+        "The first edition of a unique typing competition format.",
+        "Participants competed through 4 rounds of 15-minute challenges.",
+        "Round 0 (Boot-Up): Warm-up round to familiarize with the platform.",
+        "Round 1 (Code Typing): Type code snippets with precision and speed.",
+        "Round 2 (Error Fixing): Identify and correct buggy code under time pressure.",
+        "Round 3 (Memory Typing): Test recall abilities by typing from memory.",
+        "Real-time leaderboard tracked WPM (Words Per Minute) and accuracy scores.",
+        "Server-synchronized timing ensured fair competition across all participants."
+    ]
+    },
+    {
+    "name": "Retrofitting is Expensive: Workshop on Accessibility",
+    "description": "A comprehensive workshop introducing participants to the foundations of accessibility across both physical and digital contexts. The session explored different types of disabilities, the principles of universal design, and how accessibility can be integrated into any product-building process using agile and inclusive thinking.",
+    "date": "November 16, 2025",
+    "moredetails": "",
+    "image_url": "/static/img/gallery/events/accessibility_workshop.jpeg",
+    "instagram_link": "",
+    "facebook_link": "",
+    "topics": [
+        "Understanding various types of disabilities and the barriers they create.",
+        "Learning how accessibility applies to products, spaces, and experiences - not just digital ones.",
+        "Integrating accessibility considerations into every stage of the product-building lifecycle.",
+        "Applying agile principles to continuously improve accessibility in products and services.",
+        "Exploring universal design concepts and how they help create products usable by everyone.",
+        "Clarifying myths and discussing the real-world importance of inclusive design."
         ]
     },
     {
