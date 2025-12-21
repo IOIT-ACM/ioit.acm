@@ -1,11 +1,11 @@
 events = [
     {
     "name": "Bit By Keystroke - Vol 1",
-    "description": "Bit By Keystroke 2025 launched its inaugural edition, an intense typing competition testing speed, accuracy, and coding prowess! Participants faced four unique rounds across 1 hour, showcasing their typing skills through code snippets, error fixing, and memory challenges.",
+    "description": "Bit By Keystroke 2025 launched its inaugural edition, an intense typing competition testing speed, accuracy, and coding prowess. Built and hosted entirely on our in-house platform, the event drew 100+ participants. Across one hour, competitors navigated four distinct rounds involving code typing, error correction, and memory-based recall under time pressure.",
     "date": "December 19, 2025",
     "moredetails": "",
-    "image_url": "",
-    "instagram_link": "",
+    "image_url": "/static/img/gallery/bit-by-keystroke/1.jpeg",
+    "instagram_link": "https://www.instagram.com/p/DShkSJIjaK2",
     "facebook_link": "",
     "topics": [
         "The first edition of a unique typing competition format.",
@@ -14,9 +14,9 @@ events = [
         "Round 1 (Code Typing): Type code snippets with precision and speed.",
         "Round 2 (Error Fixing): Identify and correct buggy code under time pressure.",
         "Round 3 (Memory Typing): Test recall abilities by typing from memory.",
-        "Real-time leaderboard tracked WPM (Words Per Minute) and accuracy scores.",
-        "Server-synchronized timing ensured fair competition across all participants."
-    ]
+        "Real-time leaderboard tracked WPM (Words Per Minute) and accuracy.",
+        "The event recorded 100+ participants on an in-house built system."
+        ]
     },
     {
     "name": "Retrofitting is Expensive: Workshop on Accessibility",
@@ -24,7 +24,7 @@ events = [
     "date": "November 16, 2025",
     "moredetails": "",
     "image_url": "/static/img/gallery/events/accessibility_workshop.jpeg",
-    "instagram_link": "",
+    "instagram_link": "https://www.instagram.com/p/DRH8Y8ADK04",
     "facebook_link": "",
     "topics": [
         "Understanding various types of disabilities and the barriers they create.",
@@ -41,7 +41,7 @@ events = [
     "date": "August 26, 2025",
     "moredetails": "/leaderboard/bitbyquery_aug2025",
     "image_url": "/static/img/gallery/bit-by-query/2.jpeg",
-    "instagram_link": "",
+    "instagram_link": "https://www.instagram.com/p/DN3emthZArS",
     "facebook_link": "",
     "topics":
         [

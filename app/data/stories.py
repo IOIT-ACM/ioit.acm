@@ -1,30 +1,30 @@
 stories = [
     {
-        "title": "Capture the Flag",
-        "description": "This Capture the Flag (CTF) competition involves solving complex problems and uncovering hidden across multiple themes, such as Cryptography & Steganography, Cyber Threat Intelligence (CTI) & Open Source Intelligence (OSINT), and Reverse Engineering. Participants can collaborate in teams to decode messages, analyze cyber threat patterns, and reverse-engineer code to find flags. The competition caters to varying levels of expertise, offering step-by-step hints to help competitors progress through tasks. Each challenge is designed to test participants problem-solving and technical abilities, with the goal of sharpening their cybersecurity skills in an engaging and competitive environment. The flag type is flag{} and the event will be on for the entire day at two locations, First floor lab 112 and 4th floor lab 405, AISSMS IOIT building.",
-        "date": "Oct 4, 2024",
-        "imageURL": "ctf.jpeg",
-        "link": "https://ioittenet.com/events/ctf",
+        "title": "Bit By Keystroke - Vol 1",
+        "description": "One-hour competitive typing event testing coding accuracy, error fixing, and memory recall. Hosted entirely on our in-house platform and logged 100+ participants across four structured rounds.",
+        "date": "December 19, 2025",
+        "imageURL": "/static/img/gallery/bit-by-keystroke/1.jpeg",
+        "link": "https://www.instagram.com/p/DShkSJIjaK2"
     },
     {
-        "title": "Drone Workshop",
-        "description": "IOIT TENET hosted the drone workshop on Oct 4 2024. We provided Overview of drone assembly components, Hands-on practice with drone programming. Flight training sessions for attendees. Insights into the future of aerial innovation.",
-        "date": "Oct 4, 2024",
-        "imageURL": "drone.jpeg",
-        "link": "https://ioittenet.com/events/drone-workshop",
+        "title": "Retrofitting is Expensive: Workshop on Accessibility",
+        "description": "Workshop covering disability categories, universal design, agile inclusion, and integrating accessibility early in physical and digital product development.",
+        "date": "November 16, 2025",
+        "imageURL": "/static/img/gallery/events/accessibility_workshop.jpeg",
+        "link": "https://www.instagram.com/p/DRH8Y8ADK04"
     },
     {
-        "title": "Workshop on Intellectual Property Rights (IPRs) and IP Management",
-        "description": "A comprehensive workshop on IP rights and management practices.",
-        "date": "Aug 21, 2024",
-        "imageURL": "ipr.jpeg",
-        "link": "https://www.instagram.com/p/C-5aUVJPa2s/?igsh=aXBkZzF0ZDVkdjR5",
+        "title": "Bit By Query - Vol 2",
+        "description": "Two-hour SQL competition with 54 participants solving 100 graded problems across skill tiers, focusing on joins, aggregations, filtering, and update logic.",
+        "date": "August 26, 2025",
+        "imageURL": "/static/img/gallery/bit-by-query/2.jpeg",
+        "link": "https://www.instagram.com/p/DN3emthZArS"
     },
     {
-        "title": "ACM India Winter School 2024",
-        "description": "ACM winter school is live and it will be conducted this december 2024.",
-        "date": "Dec 2024",
-        "imageURL": "india-winter-schools.jpg",
-        "link": "https://india.acm.org/education/acm-india-winter-schools-2023-24",
-    },
+        "title": "Build on Sui: Move 101 Workshop",
+        "description": "Two-day hands-on introduction to Sui blockchain and the Move language, moving from wallet setup to smart-contract deployment and simple NFT projects.",
+        "date": "July 21, 2025",
+        "imageURL": "/static/img/gallery/events/sui_workshop.jpeg",
+        "link": ""
+    }
 ]

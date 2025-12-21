@@ -291,7 +291,7 @@
             <div class="overflow-hidden w-full">
                 {% if stories|length > 0 %}
                     <div class="md:w-full h-72 max-h-4xl overflow-hidden rounded-xl border">
-                        <img src="{{ url_for('static', filename='img/stories/' + stories[0].imageURL) }}"
+                        <img src="{{ stories[0].imageURL }}"
                              alt="{{ stories[0].title }}"
                              class="h-full w-full object-cover bg-gray-500 hover:scale-105 transition-all" />
                     </div>
@@ -311,7 +311,7 @@
                     {% if loop.index > 1 %}
                         <div class="grid md:grid-cols-2 grid-cols-1 gap-0">
                             <div class="md:w-64 w-full h-40 md:h-32 min-h-32 bg-gray-300 overflow-hidden rounded-lg shadow-xl">
-                                <img src="{{ url_for('static', filename='img/stories/' + story.imageURL) }}"
+                                <img src="{{ story.imageURL }}"
                                      alt="{{ story.title }}"
                                      class="h-full w-full md:hover:scale-105 object-cover transition-all duration-300"
                                      loading="lazy" />
