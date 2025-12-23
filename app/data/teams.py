@@ -141,6 +141,16 @@ team_data = {
             "domain": "tech",
         },
         {
+            "name": "Kshitij Kumavat",
+            "title": "Technical Member",
+            "image": "static/img/team/2025/kshitij-kumavat.jpeg",
+            "linktree": "https://linktr.ee/kshitijkumavat",
+            "github": "https://github.com/Kshitijkumavat",
+            "linkedin": "www.linkedin.com/in/kshitij-kumavat-699864326",
+            "instagram": "",
+            "domain": "tech",
+        },
+        {
             "name": "Rushikesh Mundaware",
             "title": "Technical Member",
             "image": "static/img/team/2025/rushikesh-mundaware.jpeg",
