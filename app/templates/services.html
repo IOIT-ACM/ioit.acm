@@ -1,0 +1,442 @@
+{% extends "base.html" %}
+{% block title %}Services | IOIT ACM{% endblock %}
+{% block head %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lora:wght@400;500;600&family=Montserrat:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+    <style>
+:root {
+    --acm-blue: #4DA2FF;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.bg-hero-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(1, 2, 4, 0.85) 0%,
+        rgba(1, 2, 4, 0.6) 50%,
+        rgba(1, 2, 4, 0.2) 100%
+    );
+    z-index: 1;
+}
+
+@media (min-width: 1024px) {
+    aside {
+        align-self: start;
+        position: sticky;
+        top: 6rem;
+    }
+}
+
+aside nav a {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    color: #4b5563;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+    border-left: 2px solid transparent;
+}
+
+aside nav a:hover {
+    color: #111827;
+    border-left-color: #d1d5db;
+}
+
+aside nav a.active {
+    color: var(--acm-blue);
+    font-weight: 700;
+    border-left-color: var(--acm-blue);
+}
+
+.project-card {
+    @apply bg-white border border-gray-100 rounded-3xl overflow-hidden transition-all duration-300;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.project-card:hover {
+    @apply shadow-xl;
+    background-color: #fcfcfc;
+	cursor: pointer;
+}
+
+.tech-pill {
+    @apply px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded bg-gray-100 text-gray-600 border border-gray-200;
+}
+
+.contact-card {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.font-montserrat { font-family: 'Montserrat', sans-serif; }
+.font-lora { font-family: 'Lora', serif; }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="p-4 md:p-6 lg:p-8 mt-20">
+        <section class="relative w-full md:h-[60vh] h-[70vh] min-h-[500px] max-h-[900px] flex items-center p-8 md:p-16 lg:p-24 rounded-3xl overflow-hidden bg-hero-gradient">
+            <img src="{{ url_for('static', filename='mediakit/abstract-background.jpeg') }}"
+                 alt="Abstract background"
+                 class="absolute inset-0 w-full h-full object-cover -z-10 select-none"
+                 loading="eager">
+            <div class="relative z-10 max-w-screen-xl mx-auto w-full">
+                <span class="text-blue-400 font-bold tracking-widest uppercase text-sm">Tech for Social Good</span>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-medium text-white leading-tight mt-4">
+                    Empowering
+                    <br>
+                    Non-Profits.
+                </h1>
+                <p class="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl">
+                    The IOIT ACM Student Chapter bridges the gap between technical expertise and social impact by providing pro-bono technological solutions to NGOs and community organizations.
+                </p>
+                <div class="mt-10 flex gap-8 items-center">
+                    <a href="#contact"
+                       class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-bold transition-all">Work With Us</a>
+                    <div class="hidden md:flex gap-8 items-center">
+                        <div class="w-px h-12 bg-gray-700"></div>
+                        <div>
+                            <p class="text-4xl font-medium text-white">{{ projects|length }}+</p>
+                            <p class="text-xs text-gray-400 uppercase tracking-widest mt-1">Partners</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <main class="mt-16 lg:mt-24 max-w-screen-xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 lg:gap-16">
+                <aside class="lg:col-span-3 mb-12 lg:mb-0 h-fit">
+                    <nav role="navigation">
+                        <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider px-3">Mission</h3>
+                        <ul class="mt-2 mb-6 space-y-1">
+                            <li>
+                                <a href="#about-initiative">Our Philosophy</a>
+                            </li>
+                            <li>
+                                <a href="#what-we-offer">Our Expertise</a>
+                            </li>
+                        </ul>
+                        <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider px-3">Process</h3>
+                        <ul class="mt-2 mb-6 space-y-1">
+                            <li>
+                                <a href="#how-it-works">How We Work</a>
+                            </li>
+                            <li>
+                                <a href="#projects">Success Stories</a>
+                            </li>
+                        </ul>
+                        <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider px-3">Connect</h3>
+                        <ul class="mt-2 space-y-1">
+                            <li>
+                                <a href="#contact">Get In Touch</a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/ioit-acm"
+                                   target="_blank"
+                                   class="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-black transition-colors font-medium">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                                    </svg>
+                                    GitHub
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </aside>
+                <div class="lg:col-span-9 space-y-24 md:space-y-32">
+                    <section id="about-initiative">
+                        <h2 class="text-5xl font-medium">The Initiative</h2>
+                        <p class="mt-6 text-lg text-gray-700 leading-relaxed">
+                            At IOIT ACM, we believe that technology should be an equalizer, not a barrier. Many non-profit organizations operate with limited digital infrastructure, which hinders their ability to scale their impact. Our student-led teams dedicate their skills to building custom software, managing data, and establishing digital presences for those who serve the community.
+                        </p>
+                        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="p-8 bg-gray-50 rounded-3xl border border-gray-100">
+                                <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
+                                    <svg class="w-6 h-6 text-blue-600"
+                                         fill="none"
+                                         stroke="currentColor"
+                                         viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-bold mb-3">Efficiency</h4>
+                                <p class="text-gray-600 text-sm">
+                                    Automating manual tasks so NGOs can focus on their core mission rather than paperwork.
+                                </p>
+                            </div>
+                            <div class="p-8 bg-gray-50 rounded-3xl border border-gray-100">
+                                <div class="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center mb-6">
+                                    <svg class="w-6 h-6 text-green-600"
+                                         fill="none"
+                                         stroke="currentColor"
+                                         viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-bold mb-3">Reliability</h4>
+                                <p class="text-gray-600 text-sm">Building secure, production-grade systems that are easy to maintain and scale.</p>
+                            </div>
+                            <div class="p-8 bg-gray-50 rounded-3xl border border-gray-100">
+                                <div class="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center mb-6">
+                                    <svg class="w-6 h-6 text-purple-600"
+                                         fill="none"
+                                         stroke="currentColor"
+                                         viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-bold mb-3">Visibility</h4>
+                                <p class="text-gray-600 text-sm">
+                                    Helping organizations reach more donors and volunteers through professional digital platforms.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="what-we-offer">
+                        <h2 class="text-5xl font-medium">Our Expertise</h2>
+                        <p class="mt-4 text-lg text-gray-800">
+                            We offer a wide range of technical services tailored to the unique constraints of the non-profit sector.
+                        </p>
+                        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="group p-5 border border-gray-200 rounded-3xl hover:border-blue-400 transition-all">
+                                <h3 class="text-52xl font-bold mb-4">Web & Mobile Presence</h3>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Custom NGO Portals
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Donation Integration
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Volunteer Management Apps
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="group p-5 border border-gray-200 rounded-3xl hover:border-blue-400 transition-all">
+                                <h3 class="text-2xl font-bold mb-4">Data & Operations</h3>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Inventory Tracking Systems
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Beneficiary Databases
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Data Visualization Dashboards
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="group p-5 border border-gray-200 rounded-3xl hover:border-blue-400 transition-all">
+                                <h3 class="text-2xl font-bold mb-4">IT Consulting</h3>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Cloud Migration (AWS/Azure)
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Digital Security Audits
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Workflow Optimization
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="group p-5 border border-gray-200 rounded-3xl hover:border-blue-400 transition-all">
+                                <h3 class="text-2xl font-bold mb-4">Open Source</h3>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Community Project Maintenance
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Technical Documentation
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Feature Enhancement
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="how-it-works">
+                        <h2 class="text-5xl font-medium">How We Work</h2>
+                        <div class="mt-12 space-y-8">
+                            <div class="flex gap-6">
+                                <div class="flex-none w-12 h-12 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold">
+                                    01
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold">Discovery & Consultation</h4>
+                                    <p class="text-gray-600 mt-2">
+                                        We meet with your team to understand your pain points, existing workflows, and long-term goals.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex gap-6">
+                                <div class="flex-none w-12 h-12 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold">
+                                    02
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold">Solution Design</h4>
+                                    <p class="text-gray-600 mt-2">
+                                        Our technical leads draft a proposal including the tech stack, timeline, and resource requirements.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex gap-6">
+                                <div class="flex-none w-12 h-12 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold">
+                                    03
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold">Agile Development</h4>
+                                    <p class="text-gray-600 mt-2">
+                                        Student developers build the solution in sprints, providing regular updates and demos to the NGO partners.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex gap-6">
+                                <div class="flex-none w-12 h-12 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold">
+                                    04
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold">Handover & Support</h4>
+                                    <p class="text-gray-600 mt-2">
+                                        We deploy the solution and provide training sessions to ensure your team can use the tool effectively.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-10 rounded-2xl border border-gray-200 bg-gray-50 px-6 py-4 text-sm text-gray-600 leading-relaxed italic">
+                            <span class="font-semibold text-gray-800 not-italic">Note:</span>
+                            While our primary focus is community-driven, pro-bono work, we also take on a limited number of paid contract projects for commercial entities.
+                            <a href="#contact"
+                               class="ml-1 font-bold text-blue-600 underline underline-offset-4 hover:text-blue-700 not-italic">Contact us</a>
+                        </p>
+                    </section>
+                    <section id="projects">
+                        <h2 class="text-5xl font-medium">Success Stories</h2>
+                        <p class="mt-4 text-lg text-gray-800">Real-world impact through code.</p>
+                        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {% for project in projects %}
+                                <div class="project-card">
+                                    <div class="relative h-64">
+                                        <img src="{{ url_for('static', filename='img/projects/' + project.image) }}"
+                                             class="w-full h-full object-cover"
+                                             alt="{{ project.title }}">
+                                    </div>
+                                    <div class="p-8">
+                                        <h3 class="text-2xl font-bold">{{ project.title }}</h3>
+                                        <p class="text-sm text-blue-600 font-medium mb-4 uppercase tracking-wider">{{ project.subtitle }}</p>
+                                        <p class="text-gray-600 text-sm mb-6 leading-relaxed">{{ project.description }}</p>
+                                        <a target="_blank" href="{{ project.link }}">View Project</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                    <section id="contact"
+                             class="contact-card p-12 md:p-16 rounded-[3rem] text-white">
+                        <div class="max-w-2xl">
+                            <h2 class="text-4xl md:text-5xl font-medium mb-6">Partner With Us</h2>
+                            <p class="text-gray-400 text-lg mb-10">
+                                Are you a non-profit organization looking for technical assistance? Or a commercial entity seeking professional contract work? Reach out to us today.
+                            </p>
+                            <div class="space-y-6">
+                                <div class="flex items-center gap-6">
+                                    <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-blue-400"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-400 uppercase tracking-widest">Call or WhatsApp</p>
+                                        <a href="tel:9420422512" class="text-xl font-bold">Nilay Bhandari: +91 9420422512</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-6">
+                                    <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-blue-400"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-400 uppercase tracking-widest">Email Us</p>
+                                        <a href="mailto:acm.studentbranch@aissmsioit.org"
+                                           class="text-xl font-bold">acm.studentbranch@aissmsioit.org</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-6">
+                                    <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-400 uppercase tracking-widest">Open Source</p>
+                                        <a href="https://github.com/ioit-acm"
+                                           target="_blank"
+                                           class="text-xl font-bold">github.com/ioit-acm</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const sections = [...document.querySelectorAll('main section[id]')]
+    const navLinks = document.querySelectorAll('aside nav a')
+    const offset = 150
+    let currentId = null
+
+    const onScroll = () => {
+        const scrollPos = window.scrollY + offset
+        let active = null
+
+        for (const section of sections) {
+            if (section.offsetTop <= scrollPos) {
+                active = section
+            } else {
+                break
+            }
+        }
+
+        if (!active || active.id === currentId) return
+        currentId = active.id
+
+        navLinks.forEach(link => {
+            const isActive = link.getAttribute('href') === `#${currentId}`
+            link.classList.toggle('active', isActive)
+            if (isActive) {
+                link.setAttribute('aria-current', 'true')
+            } else {
+                link.removeAttribute('aria-current')
+            }
+        })
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+})
+    </script>
+{% endblock %}
