@@ -85,7 +85,7 @@ aside nav a.active {
 {% block content %}
     <div class="p-4 md:p-6 lg:p-8 mt-20">
         <section class="relative w-full md:h-[60vh] h-[70vh] min-h-[500px] max-h-[900px] flex items-center p-8 md:p-16 lg:p-24 rounded-3xl overflow-hidden bg-hero-gradient">
-            <img src="{{ url_for('static', filename='mediakit/abstract-background.jpeg') }}"
+            <img src="{{ url_for('static', filename='services.jpeg') }}"
                  alt="Abstract background"
                  class="absolute inset-0 w-full h-full object-cover -z-10 select-none"
                  loading="eager">
@@ -330,7 +330,7 @@ aside nav a.active {
                                 <div class="project-card">
                                     <div class="relative h-64">
                                         <img src="{{ url_for('static', filename='img/projects/' + project.image) }}"
-                                             class="w-full h-full object-cover"
+                                             class="w-full h-full object-cover bg-gray-300"
                                              alt="{{ project.title }}">
                                     </div>
                                     <div class="p-8">
