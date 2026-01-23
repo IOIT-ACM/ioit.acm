@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resources | IOIT ACM</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/tailwind.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+    />
+    <style>
+      body {
+        background-color: #05070a;
+        color: #ffffff;
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+      }
+      .resource-btn {
+        background-color: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition:
+          background-color 0.2s ease,
+          border-color 0.2s ease;
+      }
+      .resource-btn:hover {
+        background-color: rgba(255, 255, 255, 0.07);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+      .letter-spacing-custom {
+        letter-spacing: 0.15em;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col items-center justify-center p-6">
+    <div class="w-full max-w-xl flex flex-col items-center">
+      <div class="mb-8">
+        <img
+          src="{{ url_for('static', filename='img/assets/acm.png') }}"
+          alt="ACM Logo"
+          class="h-20 w-auto opacity-90"
+        />
+      </div>
+
+      <div class="text-center mb-10">
+        <h1
+          class="text-lg font-bold uppercase letter-spacing-custom text-gray-400 mb-2"
+        >
+          AISSMS IOIT ACM
+        </h1>
+        <p class="text-[14px] uppercase tracking-[0.3em] text-gray-500">
+          Resources • Forms • Links
+        </p>
+      </div>
+
+      <div class="w-full space-y-8 mx-auto max-w-3xl">
+        {% for category in categories %}
+        <div class="space-y-3">
+          <h2
+            class="text-[9px] uppercase tracking-[0.2em] text-gray-600 font-bold ml-1"
+          >
+            {{ category.category }}
+          </h2>
+          <div class="space-y-2">
+            {% for link in category.links %}
+            <a
+              href="{{ link.url }}"
+              {%
+              if
+              link.is_external
+              %}target="_blank"
+              rel="noopener noreferrer"
+              {%
+              endif
+              %}
+              class="resource-btn block w-full py-4 px-6 rounded-xl text-center no-underline"
+            >
+              <span
+                class="md:text-md text-sm font-medium uppercase tracking-widest text-gray-200"
+              >
+                {{ link.title }}
+              </span>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="mt-16 flex space-x-6 text-gray-500">
+        <a
+          href="https://instagram.com/ioit__acm"
+          target="_blank"
+          class="hover:text-white transition-colors"
+          ><i class="fab fa-instagram text-sm"></i
+        ></a>
+        <a
+          href="https://linkedin.com/company/ioit-acm/"
+          target="_blank"
+          class="hover:text-white transition-colors"
+          ><i class="fab fa-linkedin text-sm"></i
+        ></a>
+        <a
+          href="https://x.com/IOIT_ACM"
+          target="_blank"
+          class="hover:text-white transition-colors"
+          ><i class="fab fa-x-twitter text-sm"></i
+        ></a>
+        <a
+          href="https://github.com/ioit-acm"
+          target="_blank"
+          class="hover:text-white transition-colors"
+          ><i class="fab fa-github text-sm"></i
+        ></a>
+      </div>
+
+      <footer class="mt-12 text-center">
+        <p class="text-[9px] uppercase tracking-[0.2em] text-gray-600">
+          © 2026 IOIT ACM
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
