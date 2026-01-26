@@ -1,5 +1,23 @@
 events = [
     {
+    "name": "Bit By Design - Vol 1",
+    "description": "Bit By Design 2026 marked the first edition of a focused, time-bound web design competition centered on clarity, creativity, and design reasoning. Participants worked individually on a shared design prompt using a mandatory Figma template, creating original web interfaces under strict constraints.",
+    "date": " January 26, 2026",
+    "moredetails": "https://bbd.ioit.acm.org/",
+    "image_url": "/static/img/gallery/bit-by-design.jpeg",
+    "instagram_link": "https://www.instagram.com/p/DT0Q50uDI4J",
+    "facebook_link": "",
+    "topics": [
+        "Individual participation with a strict time-bound design phase.",
+        "Participants interpreted a shared design prompt and challenge brief.",
+        "Customization allowed for colors, typography, and visual styling.",
+        "All designs created live during the event duration.",
+        "Anonymous, structured peer-evaluation and voting system.",
+        "Evaluation based on clarity, hierarchy, originality, and design reasoning.",
+        "Event hosted on a custom-built platform for submissions and voting."
+        ]
+    },
+    {
     "name": "Bit By Keystroke - Vol 1",
     "description": "Bit By Keystroke 2025 launched its inaugural edition, an intense typing competition testing speed, accuracy, and coding prowess. Built and hosted entirely on our in-house platform, the event drew 100+ participants. Across one hour, competitors navigated four distinct rounds involving code typing, error correction, and memory-based recall under time pressure.",
     "date": "December 19, 2025",
