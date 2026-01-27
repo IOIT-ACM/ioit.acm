@@ -25,7 +25,7 @@ team_data = {
             "title": "Administrator",
             "image": "static/img/team/2025/devika-mule.jpeg",
             "linktree": "https://linktr.ee/devikamule8",
-            "github": "",
+            "github": "https://github.com/DevikaMule",
             "linkedin": "https://www.linkedin.com/in/devika-mule-223224312",
             "instagram": "https://www.instagram.com/sonam_0518/",
             "domain": "core",
