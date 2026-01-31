@@ -1,5 +1,15 @@
 resource_data = [
     {
+        "category": "Youth Parliament",
+        "links": [
+            {
+                "title": "Register for Youth Parliament",
+                "url": "https://unstop.com/p/ioit-youth-parliament-2026-aissms-ioit-acm-1631021",
+                "is_external": True,
+            },
+        ],
+    },
+    {
         "category": "Bit By Series",
         "links": [
             {
