@@ -5,8 +5,6 @@ import json
 import re
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from app.db import db
-from ..models import Recruitment
 
 load_dotenv()
 
@@ -33,13 +31,6 @@ def load_questions_config():
 @recruitment_bp.route("/recruitment", methods=["GET"])
 def acm_recruitment_form():
     return render_template("closed.html")  # form closed
-    # questions_config = load_questions_config()
-    # return render_template("acm.volunteers.html", questions_config=questions_config)
-    # return render_template("acm.recruitment.html", questions_config=questions_config)
-
-
-# Table format:
-# fullName,branch,year,mobile,roleType,experience,whyApply,date,ts_q1,ts_q2,ts_q3,mh_q1,mh_q2,mh_q3,mh_q4,wt_q1,wt_q2,wt_q3,dt_q1,dt_q2,dt_q3,tt_q1,tt_q2,tt_q3,em_q1,em_q2,em_q3
 
 
 @recruitment_bp.route("/recruitment", methods=["POST"])
@@ -95,43 +86,7 @@ def handle_acm_recruitment():
         ist_now = datetime.utcnow() + timedelta(hours=5, minutes=30)
         data["date"] = ist_now.isoformat()
 
-        static_fields = {
-            "fullName": data["fullName"],
-            "branch": data["branch"],
-            "year": data["year"],
-            "mobile": data["mobile"],
-            "roleType": data["roleType"],
-            "experience": data.get("experience", ""),
-            "whyApply": data["whyApply"],
-            "date": ist_now,
-        }
-
-        dynamic_fields = dict(
-            (k, v)
-            for k, v in data.iteritems()
-            if k not in static_fields and k != "date"
-        )
-
-        try:
-            submission = Recruitment(
-                fullName=static_fields["fullName"],
-                branch=static_fields["branch"],
-                year=static_fields["year"],
-                mobile=static_fields["mobile"],
-                roleType=static_fields["roleType"],
-                experience=static_fields["experience"],
-                whyApply=static_fields["whyApply"],
-                date=static_fields["date"],
-                extra_answers=dynamic_fields,
-            )
-
-            db.session.add(submission)
-            db.session.commit()
-            print("Saved submission to database.")
-
-        except Exception as db_err:
-            print("Database error: {}".format(db_err))
-            return jsonify({"error": "Database error", "details": str(db_err)}), 500
+        # Database saving logic has been removed here.
 
         headers = {
             "Authorization": "Bearer {}".format(BEARER_TOKEN),

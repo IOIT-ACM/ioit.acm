@@ -36,18 +36,3 @@ class VirtualContest(db.Model):
     score = db.Column(db.Integer, default=0)
     solved_questions = db.Column(db.String(50), nullable=False)
     time_taken = db.Column(db.Float, nullable=False)
-
-class Recruitment(db.Model):
-    __bind_key__ = "recruitment"
-    __tablename__ = "recruitment_submissions"
-
-    id = db.Column(db.Integer, primary_key=True)
-    fullName = db.Column(db.String(255), nullable=False)
-    branch = db.Column(db.String(100), nullable=False)
-    year = db.Column(db.String(50), nullable=False)
-    mobile = db.Column(db.String(20), nullable=False)
-    roleType = db.Column(db.String(100), nullable=False)
-    experience = db.Column(db.Text, nullable=False)
-    whyApply = db.Column(db.Text, nullable=False)
-    date = db.Column(db.DateTime, nullable=False)
-    extra_answers = db.Column(db.JSON)
