@@ -1,5 +1,23 @@
 events = [
     {
+    "name": "Bit By Query - Vol 3",
+    "description": "Bit By Query 2026 marked the third edition of the flagship SQL competition, raising the bar with deeper logic, tighter time constraints, and more real-world database scenarios. Over an intense two-hour window, participants pushed their limits by solving a wide spectrum of SQL problems focused on accuracy, performance, and analytical thinking.",
+    "date": "February 5, 2026",
+    "moredetails": "",
+    "image_url": "",
+    "instagram_link": "",
+    "facebook_link": "",
+    "topics": [
+        "The third edition built upon the momentum of Vol 1 and Vol 2.",
+        "Participants competed in a fast-paced 2-hour SQL challenge.",
+        "A diverse problem set tested both conceptual clarity and execution speed.",
+        "Questions ranged from fundamentals to advanced query design.",
+        "Core focus areas included JOINS, SUBQUERIES, AGGREGATES, and DATA FILTERING.",
+        "Advanced tasks emphasized optimization and handling real-world datasets.",
+        "The event reinforced practical SQL skills used in industry scenarios."
+    ]
+    },
+    {
         "name": "Bit By Bit - Vol 2",
         "description": "Bit By Bit Vol 2 is a fast-paced competitive programming contest designed to test participants on core Data Structures and Algorithms (DSA). Hosted on HackerRank, the contest challenges students to think critically, code efficiently, and solve algorithmic problems under time pressure. Building on the success of its first edition, Vol. 2 offers a refined problem set that emphasizes correctness, optimization, and real-world problem-solving skills.",
         "date": " January 27, 2026",
