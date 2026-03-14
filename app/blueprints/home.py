@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, send_from_directory, redirect, url_for
 from app.data.events import events
 from app.data.stories import stories
-from flask import redirect, url_for
 
 # Define the blueprint
 home_bp = Blueprint("home", __name__, template_folder="../templates")
@@ -135,3 +134,8 @@ def services():
     ]
 
     return render_template("services.html", projects=projects)
+
+
+@home_bp.route("/ypagenda")
+def ypagenda():
+    return send_from_directory("static", "index.html")
