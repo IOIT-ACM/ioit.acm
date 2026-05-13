@@ -231,6 +231,7 @@ def mlfrontiers():
 def bitbydesign():
     events = [
         {"name": "Bit By Design - Vol 1", "date": "2026-01-26"},
+        {"name": "Bit By Design - Vol 2", "date": "2026-03-11"},
     ]
 
     upcoming_events = [
