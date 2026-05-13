@@ -225,3 +225,25 @@ def mlfrontiers():
         upcoming_events=upcoming_events,
         past_events=past_events,
     )
+
+
+@competitions_bp.route("/competitions/bit-by-design")
+def bitbydesign():
+    events = [
+        {"name": "Bit By Design - Vol 1", "date": "2026-01-26"},
+        {"name": "Bit By Design - Vol 2", "date": "2026-03-11"},
+    ]
+
+    upcoming_events = [
+        event for event in events if datetime.strptime(event["date"], "%Y-%m-%d") > now
+    ]
+    past_events = [
+        event for event in events if datetime.strptime(event["date"], "%Y-%m-%d") <= now
+    ]
+
+    return render_template(
+        "competitions/index/bit-by-design.html",
+        user=current_user,
+        upcoming_events=upcoming_events,
+        past_events=past_events,
+    )
