@@ -1,0 +1,104 @@
+{% extends "competitions/base.html" %}
+{% block title %}Bit by Design{% endblock %}
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div
+      class="rounded-lg mx-auto md:w-2/3 w-full md:sticky md:top-32 top-20 -z-10 h-fit"
+    >
+      <img
+        src="{{ url_for('static', filename='') }}"
+        alt="Bit by Design"
+        class="aspect-square w-full rounded-lg"
+      />
+      <h2 class="mt-5 text-xl font-semibold text-gray-800">Tags</h2>
+      <div class="flex flex-wrap mt-5 gap-2">
+        <span class="bg-green-200 text-black px-4 py-2 rounded-full text-sm">Figma</span>
+        <span class="bg-green-200 text-black px-4 py-2 rounded-full text-sm">UI/UX</span>
+        <span class="bg-green-200 text-black px-4 py-2 rounded-full text-sm">Web Design</span>
+        <span class="bg-green-200 text-black px-4 py-2 rounded-full text-sm">Competitions</span>
+      </div>
+      <hr class="border-t-2 border-gray-500 my-6 md:hidden" />
+    </div>
+
+    <div>
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Objectives</h2>
+        <p class="text-gray-700 mb-4">
+          <strong>Bit by Design</strong> is a focused, time-bound web design
+          competition centered on clarity, creativity, and design reasoning.
+          Participants work individually on a shared design prompt using a
+          mandatory Figma template, creating original web interfaces under
+          strict constraints. The competition is designed to evaluate
+          participants' ability to communicate ideas visually and reason through
+          design decisions under pressure.
+        </p>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Rules</h2>
+        <ul class="list-disc list-inside text-gray-700">
+          <li>Individual participation only — no teams.</li>
+          <li>All designs must be created using the provided mandatory Figma template.</li>
+          <li>Participants interpret a shared design prompt and challenge brief.</li>
+          <li>Customization is allowed for colors, typography, and visual styling within the template constraints.</li>
+          <li>All designs must be created live during the event duration — no pre-made work.</li>
+          <li>Submissions are evaluated through an anonymous, structured peer-evaluation and voting system.</li>
+          <li>
+            Evaluation criteria:
+            <ul class="list-disc list-inside ml-5">
+              <li><strong>Clarity:</strong> Is the design easy to understand?</li>
+              <li><strong>Hierarchy:</strong> Is information structured logically?</li>
+              <li><strong>Originality:</strong> Does it show creative thinking?</li>
+              <li><strong>Design Reasoning:</strong> Are design choices intentional and well-justified?</li>
+            </ul>
+          </li>
+          <li>The event is hosted on a custom-built platform for submissions and voting.</li>
+          <li>If you encounter any issues, refresh the page or contact the organizers.</li>
+          <li>Enjoy the competition and give it your best!</li>
+        </ul>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Calendar</h2>
+        <div class="py-5">
+          <h3 class="text-xl font-bold mb-2">Upcoming Events</h3>
+          {% if upcoming_events %}
+          <ul class="list-disc list-inside text-gray-700 mb-4">
+            {% for event in upcoming_events %}
+            <li>{{ event.name }} - {{ event.date }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p>Will be announced soon!</p>
+          {% endif %}
+
+          <hr class="border-t-2 border-gray-500 my-6 w-20" />
+
+          <h3 class="text-xl font-bold mb-2">Past Events</h3>
+          {% if past_events %}
+          <ul class="list-disc list-inside text-gray-700">
+            {% for event in past_events %}
+            <li>{{ event.name }} - {{ event.date }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p>No past events.</p>
+          {% endif %}
+        </div>
+      </section>
+
+      <section>
+  <div class="flex gap-5 flex-wrap">
+    <a href="https://bbd.ioit.acm.org/" target="_blank" class="bg-blue-400 hover:bg-blue-500 w-fit text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md flex gap-2 items-center">Visit Competition Platform</a>
+    <a href="/feedback" class="bg-green-400 hover:bg-green-500 w-fit text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md flex gap-2 items-center">Feedback Form</a>
+  </div>
+</section>
+    </div>
+  </div>
+
+  <hr class="border-t-2 border-gray-500 md:my-32 my-20" />
+
+  {% include "competitions/avaliable-contests.html" %}
+</div>
+{% endblock %}
