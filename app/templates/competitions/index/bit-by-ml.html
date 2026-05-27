@@ -1,0 +1,132 @@
+{% extends "competitions/base.html" %}
+{% block title %}Bit by ML{% endblock %}
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="rounded-lg mx-auto md:w-2/3 w-full md:sticky md:top-32 top-20 -z-10 h-fit">
+      <img
+        src="{{ url_for('static', filename='img/competitions/banner/bbml_cover.png') }}"
+        alt="Bit by ML"
+        class="aspect-square w-full rounded-lg"
+      />
+      <h2 class="mt-5 text-xl font-semibold text-gray-800">Tags</h2>
+      <div class="flex flex-wrap mt-5 gap-2">
+        <span class="bg-green-200 text-black px-4 py-2 rounded-full text-sm">Machine Learning</span>
+        <span class="bg-green-200 text-black px-4 py-2 rounded-full text-sm">Kaggle</span>
+        <span class="bg-green-200 text-black px-4 py-2 rounded-full text-sm">Data Science</span>
+        <span class="bg-green-200 text-black px-4 py-2 rounded-full text-sm">Competitions</span>
+      </div>
+      <hr class="border-t-2 border-gray-500 my-6 md:hidden" />
+    </div>
+
+    <div>
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Objectives</h2>
+        <p class="text-gray-700 mb-4">
+          <strong>Bit by ML</strong> is a machine learning competition hosted on Kaggle that bridges
+          the gap between theoretical ML concepts and real-world application, focusing on
+          "AI for Social Good." Participants work with epidemiological and climate datasets to build
+          predictive models, emphasizing practical problem-solving, model evaluation, and
+          reproducibility.
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Demystify Data Science:</strong> Demonstrate that ML is a tool for solving tangible human problems like disease prevention.</li>
+          <li><strong>Skill Development:</strong> Practice regression analysis, time-series forecasting, and data cleaning.</li>
+          <li><strong>Collaborative Learning:</strong> Encourage peer-to-peer learning through team participation and public kernel sharing on Kaggle.</li>
+        </ul>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Competition Flow</h2>
+        <ol class="list-decimal list-inside text-gray-700 space-y-2">
+          <li><strong>Launch:</strong> Problem statement release and Kaggle page goes live.</li>
+          <li><strong>Learn:</strong> Introductory workshop explaining the dataset and baseline models.</li>
+          <li><strong>Hack:</strong> One week coding period with live leaderboard tracking.</li>
+          <li><strong>Submit:</strong> Final CSV submission and code repository upload.</li>
+          <li><strong>Present:</strong> Top teams present their approach to judges.</li>
+        </ol>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Competition Structure</h2>
+        <div class="space-y-6 text-gray-700">
+          <div>
+            <h3 class="text-lg font-semibold mb-1">Phase 1: Onboarding &amp; EDA</h3>
+            <p>A starter notebook is released demonstrating how to merge city data with climate data. All teams must make at least one valid submission to the leaderboard.</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-1">Phase 2: Model Tuning &amp; Feature Engineering</h3>
+            <p>Participants experiment with algorithms (Random Forest, XGBoost, LSTM) and engineer features such as lagging temperature variables and moving averages to improve MAE scores.</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-1">Phase 3: Final Selection</h3>
+            <p>Private leaderboard is revealed. Top 5 teams submit code for review to ensure no data leakage. Winners are announced with code walkthroughs.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Rules</h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Participation is open to FY/SY/TY/Final Year students — beginners to intermediate level.</li>
+          <li>Register via Google Form; validated participants receive a Kaggle invite link.</li>
+          <li>Submit a <code>.csv</code> file with non-negative integer predictions for <code>total_cases</code>.</li>
+          <li>Performance is evaluated using Mean Absolute Error (MAE).</li>
+          <li>Public leaderboard is calculated on 30% of test data; private leaderboard on the remaining 70%.</li>
+          <li>Top 3 winners must present a code walkthrough — submissions matching existing GitHub repos will be disqualified.</li>
+          <li>No external data usage beyond what is provided.</li>
+        </ul>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Calendar</h2>
+        <div class="py-5">
+            <h3 class="text-xl font-bold mb-2">Upcoming Events</h3>
+            {% if upcoming_events %}
+            <ul class="list-disc list-inside text-gray-700 mb-4">
+            {% for event in upcoming_events %}
+            <li class="flex items-center gap-3">
+                {{ event.name }} - {{ event.date }}
+                {% if event.kaggle %}
+                <a href="{{ event.kaggle }}" target="_blank" class="text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold px-2 py-1 rounded-full transition-all">Kaggle ↗</a>
+                {% endif %}
+            </li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <p>Will be announced soon!</p>
+            {% endif %}
+
+            <hr class="border-t-2 border-gray-500 my-6 w-20" />
+
+            <h3 class="text-xl font-bold mb-2">Past Events</h3>
+            {% if past_events %}
+            <ul class="list-disc list-inside text-gray-700">
+            {% for event in past_events %}
+            <li class="flex items-center gap-3">
+                {{ event.name }} - {{ event.date }}
+                {% if event.kaggle %}
+                <a href="{{ event.kaggle }}" target="_blank" class="text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold px-2 py-1 rounded-full transition-all">Kaggle</a>
+                {% endif %}
+            </li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <p>No past events.</p>
+            {% endif %}
+        </div>
+        </section>
+
+      <section>
+        <div class="flex gap-5 flex-wrap">
+            <a href="https://www.kaggle.com/competitions/ioit-acm-bbml-v1/leaderboard" target="_blank" class="bg-blue-400 hover:bg-blue-500 w-fit text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md flex gap-2 items-center">Leaderboard of latest contest</a>
+            <a href="/feedback" class="bg-green-400 hover:bg-green-500 w-fit text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md flex gap-2 items-center">Feedback Form</a>
+        </div>
+        </section>
+    </div>
+  </div>
+
+  <hr class="border-t-2 border-gray-500 md:my-32 my-20" />
+  {% include "competitions/avaliable-contests.html" %}
+</div>
+{% endblock %}
