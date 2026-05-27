@@ -247,3 +247,24 @@ def bitbydesign():
         upcoming_events=upcoming_events,
         past_events=past_events,
     )
+
+
+@competitions_bp.route("/competitions/bit-by-ml")
+def bitbyml():
+    events = [
+        {"name": "Bit By ML", "date": "2026-01-29","kaggle": "https://www.kaggle.com/competitions/ioit-acm-bbml-v1/overview"},
+    ]
+
+    upcoming_events = [
+        event for event in events if datetime.strptime(event["date"], "%Y-%m-%d") > now
+    ]
+    past_events = [
+        event for event in events if datetime.strptime(event["date"], "%Y-%m-%d") <= now
+    ]
+
+    return render_template(
+        "competitions/index/bit-by-ml.html",
+        user=current_user,
+        upcoming_events=upcoming_events,
+        past_events=past_events,
+    )

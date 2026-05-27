@@ -158,7 +158,9 @@
                         {% for item in [{'link': '/competitions/bit-by-bit', 'text': 'Bit by
                             Bit'}, {'link': '/competitions/bit-by-query', 'text': 'Bit by
                             Query'}, {'link': '/competitions/ml-frontiers', 'text': 'ML
-                            Frontiers'}] %}
+                            Frontiers'}, {'link': '/competitions/bit-by-design', 'text': 'Bit by Design'},
+                            {'link': '/competitions/bit-by-ml', 'text': 'Bit by
+                            ML'}] %}
                             <a href="{{ item.link }}"
                                class="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors"
                                onclick="toggleNav()">{{ item.text }}</a>
@@ -225,6 +227,7 @@
             "/competitions/bit-by-query": "Bit by Query",
             "/competitions/ml-frontiers": "ML Frontiers",
             "/competitions/bit-by-design": "Bit by Design",
+            "/competitions/bit-by-ml": "Bit by ML",
             "/leaderboard": "Global Leaderboard",
             "/leaderboard/:{id}": "Leaderboard",
             "/practice": "Practice",
