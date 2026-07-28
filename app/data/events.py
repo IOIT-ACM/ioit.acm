@@ -1,4 +1,26 @@
 events = [
+
+    {
+    "name": "Github Workshop",
+    "description": "This hands-on workshop introduces students to version control from the ground up using Git and GitHub. Spanning theory, live demos, and two guided hands-on sessions, participants learn how professional developers track changes, collaborate, and manage project history in real-world workflows.",
+    "date": "July 29 - 30, 2026",
+    "moredetails": "",
+    "image_url": "",
+    "instagram_link": "",
+    "facebook_link": "",
+    "topics": [
+        "Covered why version control matters and the problems it solves compared to manual file versioning.",
+        "Explained the difference between Centralized and Distributed version control systems, and Git vs GitHub.",
+        "Broke down the core Git workflow: Working Directory, Staging Area, and Local/Remote Repositories.",
+        "Walked through essential commands including init, status, add, commit, log, and clone.",
+        "Hands-on session 1 had participants make and commit real changes to a sample project.",
+        "Covered git diff, git rm, and git restore for reviewing and undoing changes.",
+        "Hands-on session 2 focused on modifying files, staging, committing, and removing files.",
+        "Explained .gitignore and .gitkeep for managing which files Git should track.",
+        "Covered git tag for marking releases and why versioned releases matter in real projects.",
+        "Wrapped up with an open Q&A and a take-home commit exercise."
+    ]
+    },
     {
     "name": "Bit By Query - Vol 3",
     "description": "Bit By Query 2026 marked the third edition of the flagship SQL competition, raising the bar with deeper logic, tighter time constraints, and more real-world database scenarios. Over an intense two-hour window, participants pushed their limits by solving a wide spectrum of SQL problems focused on accuracy, performance, and analytical thinking.",
