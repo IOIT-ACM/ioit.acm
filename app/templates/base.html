@@ -125,6 +125,7 @@
                             "text": "About",
                             "icon": "fa-info-circle"
                         }
+
                     ] %}
                     {% for item in nav_items %}
                         <div class="group relative">
@@ -137,6 +138,31 @@
                             </a>
                         </div>
                     {% endfor %}
+                    <!-- Tools Dropdown -->
+                    <div class="group relative">
+                        <button class="flex flex-col items-center text-gray-700 hover:text-blue-600 transition bg-transparent border-none cursor-pointer">
+                            <i class="fas fa-wrench text-lg mb-1"></i>
+                            <span class="text-xs">Tools</span>
+                            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                        </button>
+                        <!-- Dropdown Menu -->
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-44 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="https://ioit.acm.org/calendar" target="_blank" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" style="text-decoration: none">
+                                    <i class="fas fa-calendar-alt w-4"></i>
+                                    ACM Calendar
+                                </a>
+                                <a href="https://os.ioit.acm.org" target="_blank" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" style="text-decoration: none">
+                                    <i class="fas fa-desktop w-4"></i>
+                                    ChapterOS
+                                </a>
+                                <a href="https://links.ioit.acm.org/" target="_blank" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" style="text-decoration: none">
+                                    <i class="fas fa-link w-4"></i>
+                                    Link Shortener
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
