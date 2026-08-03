@@ -1,5 +1,25 @@
 events = [
-
+        {
+            "name": "Ethical Hacking Workshop",
+            "description": "This beginner-friendly workshop introduces students to the fundamentals of cybersecurity and ethical hacking. Participants explore how attackers think and how ethical hackers defend systems, covering core concepts across web security, malware, cryptography, cloud security, and digital forensics, along with insights into cybersecurity career paths.",
+            "date": "August 4, 2026",
+            "moredetails": "Exclusively for Second Year students of IT, Computer Engineering, and AI & DS. Timing: 10:30 AM - 4:00 PM.",
+            "image_url": "",
+            "instagram_link": "",
+            "facebook_link": "",
+            "topics": [
+                "Introduced the fundamentals of cybersecurity and how ethical hackers think differently from malicious attackers.",
+                "Explored common cyber threats and the current threat landscape facing individuals and organizations.",
+                "Covered the OWASP Top 10, the most critical web application security risks developers need to know.",
+                "Explained different types of malware, how they spread, and how they're detected and mitigated.",
+                "Introduced core cryptography concepts and their role in securing data and communications.",
+                "Covered cloud security fundamentals and the unique challenges of protecting cloud-based systems.",
+                "Introduced digital forensics: how investigators trace, analyze, and respond to security incidents.",
+                "Discussed career opportunities in cybersecurity and paths into ethical hacking roles.",
+                "Included beginner-friendly demos to make abstract security concepts concrete and approachable.",
+                "Wrapped up with an open Q&A on getting started in cybersecurity."
+                ]
+            },
     {
     "name": "Github Workshop",
     "description": "This hands-on workshop introduces students to version control from the ground up using Git and GitHub. Spanning theory, live demos, and two guided hands-on sessions, participants learn how professional developers track changes, collaborate, and manage project history in real-world workflows.",
