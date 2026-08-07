@@ -40,17 +40,31 @@ for event in events:
 
 @events_bp.route("/events/<string:event_slug>")
 def event_detail(event_slug):
+    from datetime import datetime
     decoded_name = decode_slug(event_slug)
     event = next((e for e in events if e["name"] == decoded_name), None)
     eventname = event["name"] if event else None
     if not event:
         return render_template("event_detail_404.html", events=events)
+    is_upcoming = False
+    try:
+        date_str = event["date"].strip()
+        if " - " in date_str:
+            date_str = date_str.split(" - ")[0].strip()
+            if len(date_str.split()) == 2:
+                year = event["date"].strip().split(",")[-1].strip()
+                date_str = date_str + ", " + year
+        event_date = datetime.strptime(date_str, "%B %d, %Y")
+        is_upcoming = event_date > datetime.now()
+    except ValueError:
+        pass
     return render_template(
         "event_detail.html",
         event=event,
         events=events,
         event_slug=event_slug,
         eventname=eventname,
+        is_upcoming=is_upcoming,
     )
 
 

@@ -4,7 +4,7 @@ events = [
     "name": "Demo Upcoming Event",
     "description": "This is a demo upcoming event to showcase the new upcoming events section on the homepage. Stay tuned for more details!",
     "date": "August 27, 2026",
-    "moredetails": "",
+    "moredetails": "https://links.ioit.acm.org/haFXk",
     "image_url": "/static/img/competitions/banner/bbd.jpeg",
     "instagram_link": "",
     "facebook_link": "",
