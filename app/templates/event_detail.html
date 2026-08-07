@@ -52,8 +52,8 @@
                 Share Event
                 <i class="fas fa-share-square"></i>
             </button>
-            {% if event.moredetails and is_upcoming %}
-                <a href="{{ event.moredetails }}"
+            {% if event.registration_link and is_upcoming %}
+                <a href="{{ event.registration_link }}"
                 target="_blank"
                 class="px-3 py-2 text-sm bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold rounded-lg shadow-md flex items-center gap-2 transition-all duration-200 ease-in-out">
                     Register
@@ -65,6 +65,14 @@
                 Feedback Form
                 <i class="fas fa-arrow-up-right-from-square"></i>
             </a>
+            {% if event.moredetails %}
+                    <a href="{{ event.moredetails }}"
+                       target="_blank"
+                       class="px-3 py-2 text-sm bg-blue-600 text-white font-semibold rounded-lg shadow-md flex items-center gap-2 transition-all duration-200 ease-in-out hover:bg-blue-700">
+                        More Details
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                {% endif %}
             </div>
             <hr class="my-4 border-t-2 border-gray-300" />
             <!-- Social Media Links Section -->
