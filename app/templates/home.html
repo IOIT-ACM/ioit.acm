@@ -250,6 +250,52 @@
                 </div>
             </div>
         </section>
+        {% if upcoming_events %}
+        <section class="mt-16">
+            <div class="flex justify-between md:items-center mb-8 gap-3 md:gap-0 flex-col md:flex-row w-full">
+                <h2 class="text-3xl font-semibold text-gray-800">Upcoming Events</h2>
+                <a href="/events" class="text-blue-800 hover:text-blue-700 text-sm">View All Events</a>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for event in upcoming_events %}
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 group">
+                    <div class="overflow-hidden h-48">
+                        {% if event.image_url %}
+                        <img
+                            src="{{ event.image_url }}"
+                            alt="{{ event.name }}"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                        />
+                        {% else %}
+                        <div class="w-full h-full bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                            <i class="fas fa-calendar-alt text-white text-5xl"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="p-5">
+                        <p class="text-blue-600 text-sm font-semibold mb-1">{{ event.date }}</p>
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">{{ event.name }}</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3 mb-4">{{ event.description }}</p>
+                        <div class="flex gap-3 flex-wrap">
+                            <a href="{{ url_for('events.event_detail', event_slug=event.name) }}"
+                               class="text-sm bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg transition-all hover:no-underline">
+                                Learn More
+                            </a>
+                            {% if event.registration_link %}
+                            <a href="{{ event.registration_link }}"
+                               target="_blank"
+                               class="text-sm bg-green-400 hover:bg-green-500 text-gray-900 font-semibold px-4 py-2 rounded-lg transition-all hover:no-underline">
+                                Register
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
         {% include 'flagship_events.html' %}
         <div class="my-20">
             <div class="bg-white shadow-xl rounded-xl overflow-hidden flex flex-col sm:flex-row items-stretch">

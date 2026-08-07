@@ -3,6 +3,7 @@ events = [
             "name": "Ethical Hacking Workshop",
             "description": "This beginner-friendly workshop introduces students to the fundamentals of cybersecurity and ethical hacking. Participants explore how attackers think and how ethical hackers defend systems, covering core concepts across web security, malware, cryptography, cloud security, and digital forensics, along with insights into cybersecurity career paths.",
             "date": "August 4, 2026",
+            "registration_link": "",
             "moredetails": "Exclusively for Second Year students of IT, Computer Engineering, and AI & DS. Timing: 10:30 AM - 4:00 PM.",
             "image_url": "",
             "instagram_link": "",
