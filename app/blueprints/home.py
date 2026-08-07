@@ -2,6 +2,7 @@
 from flask import Blueprint, render_template, send_from_directory, redirect, url_for
 from app.data.events import events
 from app.data.stories import stories
+from datetime import datetime
 
 # Define the blueprint
 home_bp = Blueprint("home", __name__, template_folder="../templates")
@@ -30,9 +31,28 @@ images_2 = [
 
 @home_bp.route("/")
 def home():
+    now = datetime.now()
+    upcoming_events = []
+    past_events = []
+    for event in events:
+        try:
+            date_str = event["date"].strip()
+            if " - " in date_str:
+                date_str = date_str.split(" - ")[0].strip()
+                if len(date_str.split()) == 2:
+                    year = event["date"].strip().split(",")[-1].strip()
+                    date_str = date_str + ", " + year
+            event_date = datetime.strptime(date_str, "%B %d, %Y")
+            if event_date > now:
+                upcoming_events.append(event)
+            else:
+                past_events.append(event)
+        except ValueError:
+            past_events.append(event)
     return render_template(
         "home.html",
-        events=events[:6],
+        events=past_events[:6],
+        upcoming_events=upcoming_events,
         images=images,
         images_2=images_2,
         stories=stories[:4],
