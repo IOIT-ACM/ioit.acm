@@ -22,6 +22,7 @@ limiter = Limiter(
 def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "nqMt+o1BxO2Wkaj4ogmFtg=="
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite://"
     app.config["SQLALCHEMY_BINDS"] = database_config.get_binds()
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SESSION_COOKIE_HTTPONLY"] = True
@@ -45,7 +46,7 @@ def create_app():
         return {"current_user": current_user}
 
     with app.app_context():
-        db.create_all(bind=None)
+        db.create_all()
 
     # Register blueprints
     from app.blueprints.home import home_bp

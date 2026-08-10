@@ -6,13 +6,21 @@ db = SQLAlchemy()
 
 class DatabaseConfig:
     def __init__(self):
-        self.binds = {
-            "users": self.get_mysql_uri("users"),
-            "global_leaderboard": self.get_mysql_uri("global_leaderboard"),
-            "virtual_contest_bitbyquery_jan2025": self.get_mysql_uri(
-                "virtual_contest_bitbyquery_jan2025"
-            ),
-        }
+        db_host = os.getenv("DB_HOST")
+        if not db_host:
+            self.binds = {
+                "users": "sqlite://",
+                "global_leaderboard": "sqlite://",
+                "virtual_contest_bitbyquery_jan2025": "sqlite://",
+            }
+        else:
+            self.binds = {
+                "users": self.get_mysql_uri("users"),
+                "global_leaderboard": self.get_mysql_uri("global_leaderboard"),
+                "virtual_contest_bitbyquery_jan2025": self.get_mysql_uri(
+                    "virtual_contest_bitbyquery_jan2025"
+                ),
+            }
 
     def get_mysql_uri(self, db_name):
         """Construct the MySQL URI."""
