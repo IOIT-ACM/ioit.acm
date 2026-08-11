@@ -1,14 +1,14 @@
 {% extends "competitions/base.html" %} {% block title %}Feedback Form - IOIT
 ACM{% endblock %} {% block og_title %}Give Your Feedback{% endblock %} {% block
 og_description %} Help us improve by sharing your valuable feedback. We’d love
-to hear your suggestions, event ideas, and overall experience with the AISSMS IOIT ACM
-Student Chapter. {% endblock %} {% block og_image %}{{ url_for('static',
-filename='img/assets/feedback.jpeg') }}{% endblock %} {% block twitter_image
-%}{{ url_for('static', filename='img/assets/feedback.jpeg') }}{% endblock %} {%
-block twitter_title %}Feedback - AISSMS IOIT ACM{% endblock %} {% block
-twitter_description %} Your feedback matters to us! Share your thoughts and
-ideas to help us create a better and more inclusive AISSMS IOIT ACM community. {%
-endblock %} {% block content %}
+to hear your suggestions, event ideas, and overall experience with the AISSMS
+IOIT ACM Student Chapter. {% endblock %} {% block og_image %}{{
+url_for('static', filename='img/assets/feedback.jpeg') }}{% endblock %} {% block
+twitter_image %}{{ url_for('static', filename='img/assets/feedback.jpeg') }}{%
+endblock %} {% block twitter_title %}Feedback - AISSMS IOIT ACM{% endblock %} {%
+block twitter_description %} Your feedback matters to us! Share your thoughts
+and ideas to help us create a better and more inclusive AISSMS IOIT ACM
+community. {% endblock %} {% block content %}
 
 <div class="max-w-6xl mx-auto p-6">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -88,7 +88,7 @@ endblock %} {% block content %}
             id="name"
             name="name"
             required
-            value="{{ current_user.name }}"
+            {% if current_user.is_authenticated %}value="{{ current_user.name }}"{% endif %}
             placeholder="Enter your name"
             class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
@@ -135,41 +135,34 @@ endblock %} {% block content %}
           </select>
         </div>
 
-        <div class="flex items-center gap-3">
-          <div class="flex items-center space-x-2 mt-1">
-            <input
-              type="checkbox"
-              id="is_acm_member"
-              name="is_acm_member"
-              class="w-5 h-5 rounded-full"
-            />
-            <label
-              for="is_acm_member"
-              class="block text-sm font-medium text-gray-700"
-            >
-              Are you an ACM member?
-            </label>
-          </div>
+        <div class="flex items-center space-x-2 mt-1">
+          <input
+            type="checkbox"
+            id="is_acm_member"
+            name="is_acm_member"
+            class="w-5 h-5 rounded-full"
+          />
+          <label
+            for="is_acm_member"
+            class="block text-sm font-medium text-gray-700"
+          >
+            Are you an ACM member?
+          </label>
         </div>
 
-        <div class="flex items-center gap-3">
-          <div class="flex items-center space-x-2 mt-1">
-            <input
-              type="checkbox"
-              id="is_ioit"
-              name="is_ioit"
-              class="w-5 h-5 rounded-full"
-            />
-            <label
-              for="is_ioit"
-              class="block text-sm font-medium text-gray-700"
-            >
-              Are you from AISSMS IOIT Pune?
-            </label>
-          </div>
+        <div class="flex items-center space-x-2 mt-1">
+          <input
+            type="checkbox"
+            id="is_ioit"
+            name="is_ioit"
+            class="w-5 h-5 rounded-full"
+          />
+          <label for="is_ioit" class="block text-sm font-medium text-gray-700">
+            Are you from AISSMS IOIT Pune?
+          </label>
         </div>
 
-        <div id="eventFeedbackSection" class="hidden space-y-4 grid gap-4">
+        <div id="eventFeedbackSection" class="hidden grid gap-4">
           <div class="flex flex-col">
             <label for="event" class="text-sm font-medium text-gray-700 mt-3">
               Which event did you attend or hear about?
@@ -187,50 +180,53 @@ endblock %} {% block content %}
           </div>
 
           <div class="flex flex-col">
-            <label
-              for="eventRating"
-              class="text-sm font-medium text-gray-700 mt-3 z-40"
-            >
+            <label for="eventRating" class="text-sm font-medium text-gray-700 mt-3">
               Rate the event
             </label>
-            <input
-              type="range"
-              id="eventRating"
-              name="eventRating"
-              min="0"
-              max="100"
-              value="80"
-              class="w-full mt-1 z-40"
-            />
-            <div
-              id="emojiOverlay"
-              class="hidden fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center z-40"
-            >
-              <div class="text-center">
-                <p id="emojiDisplay" class="text-6xl z-50"></p>
-                <p
-                  id="sliderValueDisplay"
-                  class="text-xl mt-5 text-gray-700"
-                ></p>
+            <div class="flex items-center gap-3 mt-1 pt-9">
+              <div class="flex-1 relative">
+                <input
+                  type="range"
+                  id="eventRating"
+                  name="eventRating"
+                  min="0"
+                  max="100"
+                  value="80"
+                  class="w-full"
+                />
+                <span
+                  id="emojiTooltip"
+                  class="absolute pointer-events-none"
+                  style="left: 0; bottom: calc(100% + 8px); transform: translateX(-50%) translateY(4px); opacity: 0; line-height: 1; transition: opacity 0.15s ease, transform 0.15s ease;"
+                >
+                  <span id="emojiDisplay" style="font-size: 32px;"></span>
+                </span>
               </div>
+              <span
+                id="sliderValueDisplay"
+                class="text-sm text-gray-700"
+                style="min-width: 60px; text-align: right; font-variant-numeric: tabular-nums;"
+              ></span>
             </div>
           </div>
 
           <div class="flex flex-col">
             <label
-              for="eventFeedback"
+              for="eventFeedbackText"
               class="text-sm font-medium text-gray-700 mt-3"
             >
               Event Feedback
             </label>
             <textarea
-              id="eventFeedback"
+              id="eventFeedbackText"
               name="eventFeedback"
               rows="4"
               placeholder="Share your experience of the event and suggest what can we do better to give an ideal experience"
               maxlength="500"
               class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              oninput="updateCharacterCount('eventFeedback', 'eventFeedback-counter')"
+              oninput="
+                updateCharacterCount('eventFeedbackText', 'eventFeedback-counter')
+              "
             ></textarea>
             <div class="text-right text-sm text-gray-500">
               <span id="eventFeedback-counter">0</span>/500
@@ -301,7 +297,9 @@ endblock %} {% block content %}
   id="thankYouModal"
   class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 px-8 hidden"
 >
-  <div class="bg-white p-4 rounded-lg text-center max-w-md w-full relative z-[9999999999999999999]">
+  <div
+    class="bg-white p-4 rounded-lg text-center max-w-md w-full relative z-[9999999999999999999]"
+  >
     <h2 class="py-2 text-lg font-semibold">Thank you for your feedback!</h2>
     <hr class="border-t border-gray-300 my-4" />
     <p class="mb-3 text-sm text-gray-600">
@@ -326,26 +324,18 @@ endblock %} {% block content %}
 
 <script>
     function toggleFeedbackFields() {
-      const generalSection = document.getElementById("generalFeedbackSection");
-      const eventSection = document.getElementById("eventFeedbackSection");
-      const suggestionsSection = document.getElementById("suggestionsSection");
-
-      // Hide all sections initially
-      generalSection.style.display = "none";
-      eventSection.style.display = "none";
-      suggestionsSection.style.display = "none";
-
-      // Show the appropriate section based on the selected type
+      const sections = {
+        general: "generalFeedbackSection",
+        event: "eventFeedbackSection",
+        suggestions: "suggestionsSection",
+      };
       const selectedType = document.querySelector(
         'input[name="feedbackType"]:checked'
       ).value;
-
-      if (selectedType === "general") {
-        generalSection.style.display = "block";
-      } else if (selectedType === "event") {
-        eventSection.style.display = "block";
-      } else if (selectedType === "suggestions") {
-        suggestionsSection.style.display = "block";
+      for (const id in sections) {
+        document
+          .getElementById(sections[id])
+          .classList.toggle("hidden", id !== selectedType);
       }
     }
 
@@ -379,51 +369,50 @@ endblock %} {% block content %}
     });
 
     async function handleSubmit(event) {
-    event.preventDefault();
+      event.preventDefault();
 
-    const selectedType = document.querySelector(
-      'input[name="feedbackType"]:checked'
-    ).value;
-    const eventField = document.getElementById("event");
+      const selectedType = document.querySelector(
+        'input[name="feedbackType"]:checked'
+      ).value;
+      const eventField = document.getElementById("event");
 
-    // Validate event selection if the feedback type is 'event'
-    if (selectedType === "event" && !eventField.value) {
-      alert("Please select an event before submitting event feedback.");
-      return;
-    }
-
-    // Collect form data
-    const form = document.getElementById("feedbackForm");
-    const formData = new FormData(form);
-    const formObject = Object.fromEntries(formData.entries());
-
-    const submitButton = document.getElementById("submitButton");
-    submitButton.textContent = "Submitting data...";
-  submitButton.disabled = true;
-
-    try {
-      const response = await fetch("/feedback", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formObject),
-      });
-
-      if (response.ok) {
-        submitButton.textContent = "Form submitted";
-        // Show success modal or redirect
-        document.getElementById("thankYouModal").classList.remove("hidden");
-      } else {
-        submitButton.textContent = "Submit Feedback";
-        alert("Failed to submit feedback. Please try again.");
+      if (selectedType === "event" && !eventField.value) {
+        alert("Please select an event before submitting event feedback.");
+        return;
       }
-    } catch (error) {
-      console.error("Error submitting feedback:", error);
-      submitButton.textContent = "Submit Feedback";
-      alert("An error occurred. Please try again.");
+
+      const form = document.getElementById("feedbackForm");
+      const formData = new FormData(form);
+      const formObject = Object.fromEntries(formData.entries());
+      formObject.is_acm_member = document.getElementById("is_acm_member").checked ? "true" : "false";
+      formObject.is_ioit = document.getElementById("is_ioit").checked ? "true" : "false";
+
+      const submitButton = document.getElementById("submitButton");
+      submitButton.textContent = "Submitting data...";
+      submitButton.disabled = true;
+
+      try {
+        const response = await fetch("/feedback", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formObject),
+        });
+
+        if (response.ok) {
+          submitButton.textContent = "Form submitted";
+          document.getElementById("thankYouModal").classList.remove("hidden");
+        } else {
+          submitButton.textContent = "Submit Feedback";
+          alert("Failed to submit feedback. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error submitting feedback:", error);
+        submitButton.textContent = "Submit Feedback";
+        alert("An error occurred. Please try again.");
+      }
     }
-  }
 
   document.getElementById("feedbackForm").addEventListener("submit", handleSubmit);
 </script>
@@ -443,11 +432,43 @@ endblock %} {% block content %}
   ];
 
   const slider = document.getElementById("eventRating");
-  const overlay = document.getElementById("emojiOverlay");
+  const emojiTooltip = document.getElementById("emojiTooltip");
   const emojiDisplay = document.getElementById("emojiDisplay");
   const sliderValueDisplay = document.getElementById("sliderValueDisplay");
 
-  slider.addEventListener("input", () => {
+  let dragging = false;
+  let thumbSize = 16;
+
+  function measureThumb() {
+    for (const pseudo of ["::-webkit-slider-thumb", "::-moz-range-thumb"]) {
+      try {
+        const cs = getComputedStyle(slider, pseudo);
+        const w = parseFloat(cs && cs.width);
+        if (w > 0) {
+          thumbSize = w;
+          return;
+        }
+      } catch (err) {}
+    }
+  }
+
+  function positionTooltip(value) {
+    const rect = slider.getBoundingClientRect();
+    const half = emojiTooltip.offsetWidth / 2;
+    const x = thumbSize / 2 + (value / 100) * (rect.width - thumbSize);
+    const minX = Math.min(half, rect.width / 2);
+    const maxX = Math.max(rect.width - half, rect.width / 2);
+    emojiTooltip.style.left = Math.min(Math.max(x, minX), maxX) + "px";
+  }
+
+  function setTooltip(show) {
+    emojiTooltip.style.opacity = show ? "1" : "0";
+    emojiTooltip.style.transform = show
+      ? "translateX(-50%) translateY(0)"
+      : "translateX(-50%) translateY(4px)";
+  }
+
+  function updateRating() {
     const value = parseInt(slider.value, 10);
 
     const matchedEmoji = emojiRanges.find(
@@ -456,17 +477,29 @@ endblock %} {% block content %}
 
     if (matchedEmoji) {
       emojiDisplay.textContent = matchedEmoji;
-
-      const scaledFontSize = 50 + (value / 100) * 70;
-      emojiDisplay.style.fontSize = `${scaledFontSize}px`;
       sliderValueDisplay.textContent = `${value}/100`;
-      overlay.classList.remove("hidden");
+      positionTooltip(value);
+      setTooltip(dragging || slider === document.activeElement);
     }
-  });
+  }
 
-  slider.addEventListener("change", () => {
-    overlay.classList.add("hidden");
+  measureThumb();
+  slider.addEventListener("input", updateRating);
+  slider.addEventListener("pointerdown", () => {
+    dragging = true;
+    updateRating();
   });
+  slider.addEventListener("pointerup", () => {
+    dragging = false;
+    updateRating();
+  });
+  slider.addEventListener("pointercancel", () => {
+    dragging = false;
+    updateRating();
+  });
+  slider.addEventListener("focus", updateRating);
+  slider.addEventListener("blur", updateRating);
+  updateRating();
 </script>
 
 {% endblock %}
