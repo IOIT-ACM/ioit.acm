@@ -1,5 +1,24 @@
 events = [
         {
+            "name": "Responsible AI - The New Era of AI Responsibilities",
+            "description": "As Artificial Intelligence continues to transform the way we innovate, it is equally important to understand the responsibilities that come with it. This insightful session explores AI Beyond Innovation: Responsibility, with a focus on the crucial aspects of Ethics, Trust & Accountability in the evolving era of AI.",
+            "date": "August 19, 2026",
+            "registration_link": "https://links.ioit.acm.org/gbqnq",
+            "moredetails": "",
+            "image_url": "/static/img/gallery/esp/12.jpeg",
+            "instagram_link": "",
+            "facebook_link": "",
+            "topics": [
+                "Explored what it means to go 'AI Beyond Innovation' by focusing on the responsibilities that accompany technological progress.",
+                "Examined the role of Ethics in AI development and deployment.",
+                "Discussed how to build and maintain Trust in AI systems.",
+                "Covered Accountability frameworks for organizations building and using AI.",
+                "Featured insights from Monika Prakash Patil, Associate Project Manager at HSBC, drawing on industry experience.",
+                "Discussed how responsible AI practices can shape a more ethical and trustworthy future.",
+                "Provided attendees with practical understanding of responsible AI principles applicable across industries."
+                ]
+            },
+        {
             "name": "Ethical Hacking Workshop",
             "description": "This beginner-friendly workshop introduces students to the fundamentals of cybersecurity and ethical hacking. Participants explore how attackers think and how ethical hackers defend systems, covering core concepts across web security, malware, cryptography, cloud security, and digital forensics, along with insights into cybersecurity career paths.",
             "date": "August 4, 2026",
