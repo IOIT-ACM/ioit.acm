@@ -124,12 +124,19 @@
                             "link": "/about",
                             "text": "About",
                             "icon": "fa-info-circle"
+                        },
+                        {
+                            "link": "https://status.ioit.acm.org/",
+                            "text": "Status",
+                            "icon": "fa-signal",
+                            "external": true
                         }
 
                     ] %}
                     {% for item in nav_items %}
                         <div class="group relative">
                             <a href="{{ item.link }}"
+                               {% if item.external %}target="_blank" rel="noopener noreferrer"{% endif %}
                                class="flex flex-col items-center text-gray-700 hover:text-blue-600 transition"
                                style="text-decoration: none">
                                 <i class="fas {{ item.icon }} text-lg mb-1"></i>
