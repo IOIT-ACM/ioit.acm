@@ -1,5 +1,25 @@
 events = [
         {
+            "name": "Bit By Design - Vol 3",
+            "description": "Bit By Design Vol. 3 challenged participants to put their creativity and design skills to the test in a fully online, time-bound competition. Working from a given design brief, participants experimented with layout, typography, and visual style to create an impactful design that stood out for its originality and execution.",
+            "date": "August 22, 2026",
+            "registration_link": "https://links.ioit.acm.org/dbBL1",
+            "moredetails": "",
+            "image_url": "/static/img/gallery/bit-by-design/v3.webp",
+            "instagram_link": "",
+            "facebook_link": "",
+            "topics": [
+                "Online, time-bound design competition held from 10:00 AM to 4:00 PM.",
+                "Participants tackled a given design brief, experimenting with ideas to craft an impactful design.",
+                "Judged on Problem Fit, evaluating how effectively each design solved the brief.",
+                "Judged on Visual Clarity, covering layout, hierarchy, and typography.",
+                "Judged on Style Interpretation, assessing how well designs matched the brief's visual style.",
+                "Judged on Originality, rewarding fresh approaches over generic solutions.",
+                "Judged on Overall Quality, looking at how well every element tied together.",
+                "Winners recognized across three positions, with cash prizes for the top three designs."
+                ]
+            },
+        {
             "name": "Responsible AI - The New Era of AI Responsibilities",
             "description": "As Artificial Intelligence continues to transform the way we innovate, it is equally important to understand the responsibilities that come with it. This insightful session explores AI Beyond Innovation: Responsibility, with a focus on the crucial aspects of Ethics, Trust & Accountability in the evolving era of AI.",
             "date": "August 19, 2026",
@@ -61,6 +81,22 @@ events = [
         "Wrapped up with an open Q&A and a take-home commit exercise."
     ]
     },
+    {
+            "name": "Bit By Design - Vol 2",
+            "description": "Bit By Design Vol. 2 continued the time-bound web design competition series, challenging participants to interpret a shared design brief and translate it into an original interface. Building on the format of Vol. 1, participants worked individually under strict time constraints, focusing on clarity, creativity, and design reasoning.",
+            "date": "March 11, 2026",
+            "moredetails": "",
+            "image_url": "/static/img/gallery/bit-by-design/v2.webp",
+            "instagram_link": "",
+            "facebook_link": "",
+            "topics": [
+                "Individual participation with a strict time-bound design phase starting 10:00 AM.",
+                "Participants interpreted a shared design prompt and challenge brief.",
+                "Customization allowed for colors, typography, and visual styling.",
+                "All designs created live during the event duration.",
+                "Judged on clarity, hierarchy, originality, and design reasoning."
+                ]
+            },
     {
     "name": "Bit By Query - Vol 3",
     "description": "Bit By Query 2026 marked the third edition of the flagship SQL competition, raising the bar with deeper logic, tighter time constraints, and more real-world database scenarios. Over an intense two-hour window, participants pushed their limits by solving a wide spectrum of SQL problems focused on accuracy, performance, and analytical thinking.",
