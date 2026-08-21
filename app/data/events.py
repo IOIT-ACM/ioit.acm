@@ -1,5 +1,24 @@
 events = [
         {
+            "name": "Bit By Query - Vol 4",
+            "description": "Bit By Query Vol. 4 put participants' database knowledge to the test through a fast-paced challenge covering DBMS concepts, SQL queries, database fundamentals, and logical problem-solving. Designed to test speed, accuracy, and analytical thinking, the event challenged participants to crack the query and master the database.",
+            "date": "August 24, 2026",
+            "registration_link": "https://links.ioit.acm.org/9zMNP",
+            "moredetails": "",
+            "image_url": "static/img/gallery/bit-by-query/3.webp",
+            "instagram_link": "",
+            "facebook_link": "",
+            "topics": [
+                "On-campus event held in Lab No. 602 & 603 starting 3:15 PM.",
+                "Covered core DBMS concepts and database fundamentals.",
+                "Included SQL query-based questions to test practical skills.",
+                "Featured logical query-solving challenges.",
+                "Tested participants' speed and accuracy under time constraints.",
+                "Free registration open to all participants.",
+                "Winners recognized across three positions, with cash prizes for the top three participants."
+                ]
+            },
+        {
             "name": "Bit By Design - Vol 3",
             "description": "Bit By Design Vol. 3 challenged participants to put their creativity and design skills to the test in a fully online, time-bound competition. Working from a given design brief, participants experimented with layout, typography, and visual style to create an impactful design that stood out for its originality and execution.",
             "date": "August 22, 2026",
