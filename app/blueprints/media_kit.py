@@ -130,7 +130,7 @@ BRAND_KITS = OrderedDict(
             "mun",
             {
                 "name": "IOIT MUN",
-                "title": "IOIT MUN'25",
+                "title": "IOIT MUN'26",
                 "logos": [
                     {
                         "src": "static/mediakit/mun-logo-blue.png",
@@ -196,25 +196,31 @@ BRAND_KITS = OrderedDict(
                 "colors": [
                     {
                         "name": "Diplomatic Blue",
-                        "hex": "#00205B",
-                        "style": "background-color: #00205B; color: white;",
+                        "hex": "#14436C",
+                        "style": "background-color: #14436C; color: white;",
                         "class": "md:col-span-2",
                     },
                     {
                         "name": "Prestige Gold",
-                        "hex": "#D4AF37",
-                        "style": "background-color: #D4AF37; color: black;",
+                        "hex": "#E6A61F",
+                        "style": "background-color: #E6A61F; color: black;",
+                    },
+                    {
+                        "name": "Revolution Red",
+                        "hex": "#C53B27",
+                        "style": "background-color: #C53B27; color: white;" 
                     },
                     {
                         "name": "Parchment",
                         "hex": "#F5F5F5",
                         "style": "background-color: #F5F5F5; color: black;",
                     },
+                    
                 ],
                 "typeface": {
-                    "name": "Lora",
+                    "name": "League Spartan",
                     "sample_text": "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz",
-                    "class": "font-lora",
+                    "class": "font-league-spartan",
                 },
             },
         ),
