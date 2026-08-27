@@ -43,7 +43,7 @@ def home():
                     year = event["date"].strip().split(",")[-1].strip()
                     date_str = date_str + ", " + year
             event_date = datetime.strptime(date_str, "%B %d, %Y")
-            if event_date > now:
+            if event_date.date() >= datetime.now().date():
                 upcoming_events.append(event)
             else:
                 past_events.append(event)
