@@ -55,7 +55,7 @@ def event_detail(event_slug):
                 year = event["date"].strip().split(",")[-1].strip()
                 date_str = date_str + ", " + year
         event_date = datetime.strptime(date_str, "%B %d, %Y")
-        is_upcoming = event_date > datetime.now()
+        is_upcoming = event_date.date() >= datetime.now().date()
     except ValueError:
         pass
     return render_template(
