@@ -24,7 +24,7 @@ limiter = Limiter(
 
 def create_app():
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = "nqMt+o1BxO2Wkaj4ogmFtg=="
+    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev-secret-key-change-in-production")
     app.config["SQLALCHEMY_DATABASE_URI"] = database_config.binds["users"]
     app.config["SQLALCHEMY_BINDS"] = database_config.get_binds()
 
