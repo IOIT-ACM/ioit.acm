@@ -1,4 +1,4 @@
-import urllib
+import urllib.parse
 from flask import Blueprint, render_template
 from app.data.events import events
 
@@ -27,11 +27,12 @@ images_2 = [
 
 
 def safe_slug(name):
-    return urllib.quote(name.encode("utf-8"))
+    return urllib.parse.quote(name)
 
 
 def decode_slug(slug):
-    return urllib.unquote(slug).decode("utf-8")
+    return urllib.parse.unquote(slug)
+
 
 
 for event in events:
@@ -73,3 +74,42 @@ def home():
     return render_template(
         "events.html", events=events, images=images, images_2=images_2
     )
+
+
+@events_bp.route("/events/subscribe", methods=["POST"])
+def subscribe():
+    import re
+    from flask import request, jsonify, flash, redirect, url_for
+    from app.db import db
+    from app.models import Subscriber
+
+    data = request.get_json(silent=True) if request.is_json else request.form
+    email = (data.get("email") or "").strip()
+
+    email_regex = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
+    if not email or not re.match(email_regex, email):
+        if request.is_json:
+            return jsonify({"success": False, "error": "Invalid email address."}), 400
+        flash("Invalid email address.", category="error")
+        return redirect(url_for("events.home"))
+
+    subscriber = Subscriber.query.filter_by(email=email).first()
+    if subscriber:
+        if not subscriber.is_active:
+            subscriber.is_active = True
+            db.session.commit()
+            msg = "Welcome back! Your subscription has been reactivated."
+        else:
+            msg = "You are already subscribed to event notifications."
+    else:
+        new_sub = Subscriber(email=email, is_active=True)
+        db.session.add(new_sub)
+        db.session.commit()
+        msg = "Successfully subscribed to event notifications!"
+
+    if request.is_json:
+        return jsonify({"success": True, "message": msg})
+
+    flash(msg, category="success")
+    return redirect(url_for("events.home"))
+
