@@ -1,4 +1,24 @@
 events = [
+
+    {
+        "name": "Bit By Bit - Vol 4",
+        "description": "Bit By Bit Vol 4 is a fast-paced competitive programming contest designed to test participants on core Data Structures and Algorithms (DSA). Hosted on HackerRank, the contest challenges students to think critically, code efficiently, and solve algorithmic problems under time pressure. Building on the success of its first edition, Vol. 4 offers a refined problem set that emphasizes correctness, optimization, and real-world problem-solving skills.",
+        "date": " 09 September, 2026",
+        "moredetails": "https://unstop.com/p/bit-by-bit-vol-4-aissms-institute-of-information-technology-pune-maharashtra-1748847",
+        "image_url": "/static/img/gallery/bit-by-bit/16.png",
+        "instagram_link": "",
+        "facebook_link": "",
+        "topics": [
+            "Fourth edition of the Bit By Bit competitive programming series after a successful September 2026 launch.",
+            "Hosted on HackerRank with a timed, leaderboard-based competitive format.",
+            "Focused on Data Structures and Algorithms (DSA), emphasizing logic, efficiency, and accuracy.",
+            "Carefully curated problem set ranging from Easy to Hard difficulty levels.",
+            "Tested concepts such as arrays, strings, recursion, searching, sorting, and basic algorithmic thinking.",
+            "Binary scoring system encouraging correct and optimized solutions.",
+            "Participants ranked based on total score, with tie-breakers decided by submission time.",
+            "Provided students with real competitive programming exposure and performance benchmarking.",
+        ],
+    },
         {
             "name": "Bit By Query - Vol 4",
             "description": "Bit By Query Vol. 4 put participants' database knowledge to the test through a fast-paced challenge covering DBMS concepts, SQL queries, database fundamentals, and logical problem-solving. Designed to test speed, accuracy, and analytical thinking, the event challenged participants to crack the query and master the database.",
