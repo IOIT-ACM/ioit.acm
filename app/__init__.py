@@ -2,15 +2,18 @@ from flask import Flask, render_template
 from flask_login import LoginManager, current_user
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_mail import Mail
 from app.db import DatabaseConfig, db
 from app.models import User
 from sqlalchemy.exc import ProgrammingError, SQLAlchemyError, OperationalError
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
 database_config = DatabaseConfig()
 login_manager = LoginManager()
+mail = Mail()
 
 limiter = Limiter(
     key_func=get_remote_address,
@@ -22,14 +25,27 @@ limiter = Limiter(
 def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "nqMt+o1BxO2Wkaj4ogmFtg=="
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_config.binds["users"]
     app.config["SQLALCHEMY_BINDS"] = database_config.get_binds()
+
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SESSION_COOKIE_HTTPONLY"] = True
     app.config["SESSION_COOKIE_SECURE"] = True
     app.config["SESSION_PERMANENT"] = False
     app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
+    # Flask-Mail configuration
+    app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER", "localhost")
+    app.config["MAIL_PORT"] = int(os.getenv("MAIL_PORT", 1025))
+    app.config["MAIL_USE_TLS"] = os.getenv("MAIL_USE_TLS", "False").lower() in ("true", "1", "t")
+    app.config["MAIL_USE_SSL"] = os.getenv("MAIL_USE_SSL", "False").lower() in ("true", "1", "t")
+    app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME", None) or None
+    app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD", None) or None
+    app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_DEFAULT_SENDER", "events@ioit.acm.org")
+    app.config["MAIL_SUPPRESS_SEND"] = os.getenv("MAIL_SUPPRESS_SEND", "False").lower() in ("true", "1", "t")
+
     db.init_app(app)
+    mail.init_app(app)
 
     login_manager.init_app(app)
     login_manager.login_view = "auth.signin"
@@ -45,7 +61,10 @@ def create_app():
         return {"current_user": current_user}
 
     with app.app_context():
-        db.create_all(bind=None)
+        try:
+            db.create_all()
+        except Exception:
+            pass
 
     # Register blueprints
     from app.blueprints.home import home_bp
@@ -67,6 +86,7 @@ def create_app():
     from app.blueprints.interview import interviews_bp
     from app.blueprints.apps import apps_bp
     from app.blueprints.resources import resources_bp
+    from app.blueprints.admin import admin_bp
 
     limiter.limit("200 per hour")(home_bp)
     limiter.limit("200 per hour")(team_bp)
@@ -86,6 +106,7 @@ def create_app():
     limiter.limit("200 per hour")(media_kit_bp)
     limiter.limit("200 per hour")(apps_bp)
     limiter.limit("200 per hour")(resources_bp)
+    limiter.limit("30 per hour")(admin_bp)
 
     # Register blueprints
     app.register_blueprint(home_bp)
@@ -107,6 +128,7 @@ def create_app():
     app.register_blueprint(interviews_bp)
     app.register_blueprint(apps_bp)
     app.register_blueprint(resources_bp)
+    app.register_blueprint(admin_bp)
 
     # Error Handlers
     @app.errorhandler(ProgrammingError)
