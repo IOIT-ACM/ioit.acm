@@ -25,6 +25,24 @@ pip install -r requirements.txt
 npx tailwindcss -i ./app/static/css/input.css -o ./app/static/css/tailwind.css --watch
 ```
 
+3. Local Email Testing (Mailpit)
+
+For testing email notifications locally during development without sending real emails:
+- Run Mailpit locally via Docker:
+  ```bash
+  docker run -d -p 1025:1025 -p 8025:8025 axllent/mailpit
+  ```
+- Configure `.env`:
+  ```env
+  MAIL_SERVER=localhost
+  MAIL_PORT=1025
+  MAIL_USE_TLS=False
+  MAIL_USERNAME=
+  MAIL_PASSWORD=
+  ```
+- All emails sent by Flask-Mail land in Mailpit's local web UI at `http://localhost:8025`.
+
+
 ## data
 
 1. Teams
