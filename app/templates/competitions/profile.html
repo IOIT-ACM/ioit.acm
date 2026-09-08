@@ -46,6 +46,15 @@ block content %}
         </button>
       </div>
 
+      {% if user.is_admin %}
+      <div class="mt-4">
+        <a href="{{ url_for('admin.notify_dashboard') }}"
+           class="block py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow transition duration-200 flex items-center justify-center gap-2 hover:no-underline">
+          <i class="fas fa-paper-plane"></i> Send Event Notification
+        </a>
+      </div>
+      {% endif %}
+
       <h2 class="mt-20 mb-10">Your progress</h2>
 
       <div class="relative">
