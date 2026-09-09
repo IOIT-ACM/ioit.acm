@@ -1,0 +1,473 @@
+{% extends "base.html" %}
+{% block title %}Admin — Send Event Notification{% endblock %}
+{% block head %}
+<style>
+  /* ── Layout ── */
+  .admin-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem 3rem;
+  }
+  /* ── Cards ── */
+  .card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 2px 16px rgba(0,0,0,.08);
+    padding: 1.75rem 2rem;
+    margin-bottom: 1.75rem;
+  }
+  .card h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e3a5f;
+    margin-bottom: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+  }
+  /* ── Form controls ── */
+  label { display:block; font-size:.875rem; font-weight:600; color:#374151; margin-bottom:.35rem; }
+  input[type=text], textarea, select {
+    width: 100%;
+    padding: .65rem .9rem;
+    border: 1.5px solid #d1d5db;
+    border-radius: .55rem;
+    font-size: .9rem;
+    transition: border-color .2s;
+    background: #f9fafb;
+    outline: none;
+    box-sizing: border-box;
+  }
+  input[type=text]:focus, textarea:focus, select:focus {
+    border-color: #3b82f6;
+    background: #fff;
+  }
+  textarea { resize: vertical; min-height: 200px; font-family: monospace; }
+  /* ── Template mode tabs ── */
+  .mode-tabs { display:flex; gap:.6rem; flex-wrap:wrap; margin-bottom:1rem; }
+  .mode-tab {
+    padding: .45rem 1.1rem;
+    border-radius: .5rem;
+    border: 1.5px solid #d1d5db;
+    background: #f3f4f6;
+    cursor: pointer;
+    font-size: .85rem;
+    font-weight: 600;
+    color: #374151;
+    transition: all .18s;
+  }
+  .mode-tab.active {
+    background: #1d4ed8;
+    color: #fff;
+    border-color: #1d4ed8;
+  }
+  .mode-tab:hover:not(.active) { background:#dbeafe; border-color:#93c5fd; }
+  /* ── Event checklist ── */
+  .event-list { max-height: 220px; overflow-y:auto; border:1.5px solid #e5e7eb; border-radius:.55rem; padding:.5rem; background:#f9fafb; }
+  .event-item { display:flex; align-items:flex-start; gap:.55rem; padding:.4rem .3rem; border-radius:.4rem; cursor:pointer; }
+  .event-item:hover { background:#eff6ff; }
+  .event-item label { margin:0; font-weight:400; cursor:pointer; font-size:.875rem; }
+  .event-item input[type=checkbox] { margin-top:.15rem; accent-color:#1d4ed8; width:1rem; height:1rem; flex-shrink:0; }
+  /* ── Buttons ── */
+  .btn { display:inline-flex; align-items:center; gap:.45rem; padding:.6rem 1.4rem; border-radius:.6rem; font-weight:700; font-size:.9rem; cursor:pointer; border:none; transition:all .18s; }
+  .btn-primary { background:#1d4ed8; color:#fff; }
+  .btn-primary:hover { background:#1e40af; transform:translateY(-1px); }
+  .btn-secondary { background:#f3f4f6; color:#374151; border:1.5px solid #d1d5db; }
+  .btn-secondary:hover { background:#e5e7eb; }
+  .btn-danger  { background:#dc2626; color:#fff; }
+  .btn-danger:hover { background:#b91c1c; }
+  .btn:disabled { opacity:.5; cursor:not-allowed; transform:none !important; }
+  /* ── Preview panel ── */
+  #preview-panel { display:none; }
+  #preview-frame {
+    width:100%; min-height:320px; border:1.5px solid #e5e7eb;
+    border-radius:.55rem; background:#fff;
+  }
+  /* ── Modal ── */
+  .modal-backdrop {
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,.45); z-index:9999;
+    align-items:center; justify-content:center;
+  }
+  .modal-backdrop.open { display:flex; }
+  .modal-box {
+    background:#fff; border-radius:1rem;
+    padding:2rem; max-width:440px; width:90%;
+    box-shadow:0 8px 40px rgba(0,0,0,.22);
+  }
+  .modal-box h3 { font-size:1.15rem; font-weight:700; color:#1e3a5f; margin-bottom:.75rem; }
+  .modal-box p  { font-size:.9rem; color:#374151; margin-bottom:1.1rem; line-height:1.6; }
+  .modal-actions { display:flex; gap:.75rem; justify-content:flex-end; }
+  /* ── Toast ── */
+  #toast {
+    position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%) translateY(4rem);
+    background:#111827; color:#fff; padding:.7rem 1.4rem;
+    border-radius:2rem; font-size:.875rem; font-weight:600;
+    transition:transform .3s; z-index:10000; pointer-events:none;
+  }
+  #toast.show { transform:translateX(-50%) translateY(0); }
+  /* ── EmailLog table ── */
+  .log-table { width:100%; border-collapse:collapse; font-size:.875rem; }
+  .log-table th { text-align:left; padding:.55rem .75rem; background:#f3f4f6; color:#374151; font-weight:700; border-bottom:1.5px solid #e5e7eb; }
+  .log-table td { padding:.55rem .75rem; border-bottom:1px solid #f3f4f6; vertical-align:top; }
+  .log-table tr:last-child td { border-bottom:none; }
+  .badge { display:inline-block; padding:.2rem .6rem; border-radius:9999px; font-size:.75rem; font-weight:600; }
+  .badge-blue { background:#dbeafe; color:#1d4ed8; }
+  .badge-green { background:#dcfce7; color:#15803d; }
+  .badge-gray  { background:#f3f4f6; color:#374151; }
+  /* ── Recipient strip ── */
+  .stat-strip { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1rem; }
+  .stat-pill {
+    background:#eff6ff; border:1.5px solid #bfdbfe; border-radius:.55rem;
+    padding:.5rem 1rem; font-size:.875rem; display:flex; align-items:center; gap:.45rem;
+  }
+  .stat-pill span { font-weight:700; color:#1d4ed8; font-size:1.05rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-wrap">
+
+  <!-- Header -->
+  <div style="margin-bottom:1.5rem;">
+    <h1 style="font-size:1.5rem;font-weight:800;color:#1e3a5f;">
+      <i class="fas fa-paper-plane" style="color:#3b82f6;"></i>
+      Send Event Notification
+    </h1>
+    <p style="color:#6b7280;font-size:.9rem;margin-top:.3rem;">
+      Compose and broadcast a notification email to all active subscribers.
+    </p>
+  </div>
+
+  <!-- Recipient count strip -->
+  <div class="stat-strip">
+    <div class="stat-pill">
+      <i class="fas fa-users" style="color:#3b82f6;"></i>
+      Active subscribers:
+      <span id="sub-count">{{ subscriber_count }}</span>
+    </div>
+  </div>
+
+  <!-- Step 1 — Template mode -->
+  <div class="card">
+    <h2><i class="fas fa-layer-group"></i> Step 1 — Template Mode</h2>
+    <div class="mode-tabs">
+      <button type="button" class="mode-tab active" data-mode="single"     onclick="setMode('single')">Single Event</button>
+      <button type="button" class="mode-tab"        data-mode="roundup"    onclick="setMode('roundup')">Upcoming Roundup</button>
+      <button type="button" class="mode-tab"        data-mode="custom"     onclick="setMode('custom')">General / Custom</button>
+    </div>
+    <p id="mode-hint" style="font-size:.82rem;color:#6b7280;"></p>
+  </div>
+
+  <!-- Step 2 — Event selection (hidden for custom) -->
+  <div class="card" id="event-select-card">
+    <h2><i class="fas fa-calendar-check"></i> Step 2 — Select Event(s)</h2>
+    <div class="event-list" id="event-list">
+      {% for event in events %}
+      <label class="event-item">
+        <input type="checkbox" class="event-checkbox" value="{{ event.slug }}"
+               data-name="{{ event.name }}" data-date="{{ event.date }}"
+               data-desc="{{ event.description[:120] }}...">
+        <span>
+          <strong>{{ event.name }}</strong>
+          <span style="color:#9ca3af;font-size:.8rem;"> — {{ event.date }}</span>
+        </span>
+      </label>
+      {% endfor %}
+    </div>
+    <p style="font-size:.8rem;color:#9ca3af;margin-top:.4rem;">
+      <i class="fas fa-info-circle"></i>
+      For <em>Single Event</em> mode, select exactly one. For <em>Roundup</em>, select multiple.
+    </p>
+  </div>
+
+  <!-- Step 3 — Compose -->
+  <div class="card">
+    <h2><i class="fas fa-pen"></i> Step 3 — Compose</h2>
+    <div style="margin-bottom:1rem;">
+      <label for="subject">Subject line</label>
+      <input type="text" id="subject" placeholder="e.g. Upcoming ACM Event: XYZ Workshop">
+    </div>
+    <div style="margin-bottom:.5rem;display:flex;justify-content:space-between;align-items:center;">
+      <label for="body-html" style="margin:0;">Email body (HTML)</label>
+      <button type="button" class="btn btn-secondary" style="padding:.35rem .9rem;font-size:.8rem;" onclick="autofill()">
+        <i class="fas fa-magic"></i> Autofill from selection
+      </button>
+    </div>
+    <textarea id="body-html" placeholder="Write your HTML email body here, or use Autofill to pre-populate from selected events..."></textarea>
+    <div style="display:flex;gap:.75rem;margin-top:1rem;flex-wrap:wrap;">
+      <button type="button" class="btn btn-secondary" onclick="showPreview()">
+        <i class="fas fa-eye"></i> Preview Email
+      </button>
+      <button type="button" class="btn btn-primary" id="open-confirm-btn" onclick="openConfirm()">
+        <i class="fas fa-paper-plane"></i> Review & Send
+      </button>
+    </div>
+  </div>
+
+  <!-- Preview panel -->
+  <div class="card" id="preview-panel">
+    <h2><i class="fas fa-eye"></i> Email Preview</h2>
+    <p style="font-size:.82rem;color:#6b7280;margin-bottom:.75rem;">
+      This is how the email will appear to recipients.
+    </p>
+    <iframe id="preview-frame" title="Email preview" frameborder="0"></iframe>
+  </div>
+
+  <!-- EmailLog history -->
+  {% if recent_logs %}
+  <div class="card">
+    <h2><i class="fas fa-history"></i> Recent Sends</h2>
+    <div style="overflow-x:auto;">
+      <table class="log-table">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Mode</th>
+            <th>Sent by</th>
+            <th>Recipients</th>
+            <th>Sent at</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in recent_logs %}
+          <tr>
+            <td style="max-width:240px;word-break:break-word;">{{ log.subject }}</td>
+            <td>
+              {% if log.template_used == 'single' %}
+                <span class="badge badge-blue">Single</span>
+              {% elif log.template_used == 'roundup' %}
+                <span class="badge badge-green">Roundup</span>
+              {% else %}
+                <span class="badge badge-gray">Custom</span>
+              {% endif %}
+            </td>
+            <td>
+              <strong>{{ log.sender.name if log.sender else 'Admin' }}</strong>
+              <span style="color:#9ca3af;font-size:.75rem;display:block;">@{{ log.sender.username if log.sender else 'admin' }}</span>
+            </td>
+            <td>{{ log.recipient_count }}</td>
+            <td style="white-space:nowrap;color:#6b7280;">{{ log.sent_at.strftime('%d %b %Y, %H:%M') }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+
+<!-- Confirm / Send modal -->
+<div class="modal-backdrop" id="confirm-modal">
+  <div class="modal-box">
+    <h3><i class="fas fa-exclamation-triangle" style="color:#f59e0b;"></i> Confirm Send</h3>
+    <p id="confirm-summary"></p>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-secondary" onclick="closeConfirm()">Cancel</button>
+      <button type="button" class="btn btn-danger" id="send-btn" onclick="sendNotification()">
+        <i class="fas fa-paper-plane"></i>
+        <span id="send-btn-label">Send Now</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+/* ── State ── */
+let currentMode = 'single';
+
+/* ── Mode switching ── */
+const modeHints = {
+  single:  'Autofill will populate subject + body from the one selected event.',
+  roundup: 'Autofill will list all selected upcoming events in the email body.',
+  custom:  'Write your own subject and HTML body freely — no autofill.',
+};
+
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-tab').forEach(t => t.classList.toggle('active', t.dataset.mode === mode));
+  document.getElementById('mode-hint').textContent = modeHints[mode];
+  document.getElementById('event-select-card').style.display = mode === 'custom' ? 'none' : '';
+}
+
+/* ── Collect checked events ── */
+function checkedEvents() {
+  return [...document.querySelectorAll('.event-checkbox:checked')].map(cb => ({
+    slug: cb.value,
+    name: cb.dataset.name,
+    date: cb.dataset.date,
+    desc: cb.dataset.desc,
+  }));
+}
+
+/* ── Autofill ── */
+function autofill() {
+  const evs = checkedEvents();
+  const subjectEl = document.getElementById('subject');
+  const bodyEl    = document.getElementById('body-html');
+
+  if (currentMode === 'single') {
+    if (evs.length !== 1) { showToast('Select exactly one event for Single Event mode.'); return; }
+    const e = evs[0];
+    subjectEl.value = `Upcoming ACM Event: ${e.name}`;
+    bodyEl.value = singleTemplate(e);
+  } else if (currentMode === 'roundup') {
+    if (evs.length === 0) { showToast('Select at least one event for Roundup mode.'); return; }
+    subjectEl.value = `Upcoming ACM Events — Don't Miss Out!`;
+    bodyEl.value = roundupTemplate(evs);
+  } else {
+    showToast('Custom mode — please write your own content.');
+  }
+}
+
+function singleTemplate(e) {
+  return `<div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#1f2937;">
+  <h2 style="color:#1d4ed8;">${e.name}</h2>
+  <p style="color:#6b7280;"><strong>📅 Date:</strong> ${e.date}</p>
+  <p>${e.desc}</p>
+  <p>We hope to see you there! Stay tuned for more details.</p>
+  <hr style="border:none;border-top:1px solid #e5e7eb;margin:1.5rem 0;">
+  <p style="font-size:.8rem;color:#9ca3af;">
+    AISSMS IOIT ACM Student Chapter<br>
+    To unsubscribe, reply with "Unsubscribe" in the subject.
+  </p>
+</div>`;
+}
+
+function roundupTemplate(evs) {
+  const items = evs.map(e =>
+    `<li style="margin-bottom:1rem;">
+      <strong>${e.name}</strong><br>
+      <span style="color:#6b7280;">📅 ${e.date}</span><br>
+      <span style="font-size:.9em;">${e.desc}</span>
+    </li>`
+  ).join('');
+  return `<div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#1f2937;">
+  <h2 style="color:#1d4ed8;">Upcoming ACM Events</h2>
+  <p>Here's a roundup of upcoming events from AISSMS IOIT ACM:</p>
+  <ul style="padding-left:1.2rem;">${items}</ul>
+  <p>Stay tuned for more details on each event!</p>
+  <hr style="border:none;border-top:1px solid #e5e7eb;margin:1.5rem 0;">
+  <p style="font-size:.8rem;color:#9ca3af;">
+    AISSMS IOIT ACM Student Chapter<br>
+    To unsubscribe, reply with "Unsubscribe" in the subject.
+  </p>
+</div>`;
+}
+
+/* ── Preview ── */
+function showPreview() {
+  const body = document.getElementById('body-html').value.trim();
+  if (!body) { showToast('Write some email body content first.'); return; }
+  const panel = document.getElementById('preview-panel');
+  panel.style.display = 'block';
+  const frame = document.getElementById('preview-frame');
+  
+  // Set iframe content safely via srcdoc & doc write fallback
+  frame.srcdoc = body;
+  setTimeout(() => {
+    try {
+      const doc = frame.contentDocument || frame.contentWindow.document;
+      doc.open();
+      doc.write(body);
+      doc.close();
+    } catch(e) {}
+  }, 50);
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ── Confirm dialog ── */
+function openConfirm() {
+  const subject = document.getElementById('subject').value.trim();
+  const body    = document.getElementById('body-html').value.trim();
+  if (!subject) { showToast('Please enter a subject line.'); return; }
+  if (!body)    { showToast('Please write the email body.'); return; }
+
+  const evs   = currentMode === 'custom' ? [] : checkedEvents();
+  const count = parseInt(document.getElementById('sub-count').textContent, 10);
+
+  let summary = `You are about to send <strong>"${escHtml(subject)}"</strong> to <strong>${count} active subscriber${count !== 1 ? 's' : ''}</strong>.`;
+  if (evs.length) {
+    summary += `<br><br>Selected events: ${evs.map(e => `<em>${escHtml(e.name)}</em>`).join(', ')}.`;
+  }
+  summary += `<br><br>This action cannot be undone.`;
+
+  document.getElementById('confirm-summary').innerHTML = summary;
+  document.getElementById('confirm-modal').classList.add('open');
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-modal').classList.remove('open');
+  resetSendBtn();
+}
+
+/* ── Send ── */
+function sendNotification() {
+  const sendBtn   = document.getElementById('send-btn');
+  const sendLabel = document.getElementById('send-btn-label');
+  sendBtn.disabled = true;
+  sendLabel.textContent = 'Sending…';
+
+  const evs = currentMode === 'custom' ? [] : checkedEvents();
+  const payload = {
+    subject:       document.getElementById('subject').value.trim(),
+    template_used: currentMode,
+    body_html:     document.getElementById('body-html').value.trim(),
+    event_slugs:   evs.map(e => e.slug),
+  };
+
+  fetch('/events/admin/notify', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body:    JSON.stringify(payload),
+  })
+  .then(r => r.json())
+  .then(data => {
+    closeConfirm();
+    if (data.success) {
+      showToast('✅ ' + data.message, 5000);
+      // Reload page after a short delay to refresh the EmailLog table
+      setTimeout(() => location.reload(), 3000);
+    } else {
+      showToast('❌ ' + (data.error || 'Send failed.'), 6000);
+      resetSendBtn();
+    }
+  })
+  .catch(() => {
+    closeConfirm();
+    showToast('❌ Network error — please try again.', 5000);
+    resetSendBtn();
+  });
+}
+
+function resetSendBtn() {
+  const sendBtn   = document.getElementById('send-btn');
+  const sendLabel = document.getElementById('send-btn-label');
+  sendBtn.disabled = false;
+  sendLabel.textContent = 'Send Now';
+}
+
+/* ── Toast ── */
+let toastTimer = null;
+function showToast(msg, duration = 3500) {
+  const t = document.getElementById('toast');
+  t.innerHTML = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), duration);
+}
+
+/* ── Escape HTML for safe interpolation ── */
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ── Init ── */
+setMode('single');
+</script>
+{% endblock %}
