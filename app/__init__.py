@@ -45,8 +45,8 @@ def create_app():
         return {"current_user": current_user}
 
     with app.app_context():
-        db.create_all(bind=None)
-
+        for bind_key in app.config['SQLALCHEMY_BINDS'].keys():
+            db.create_all(bind_key=bind_key)
     # Register blueprints
     from app.blueprints.home import home_bp
     from app.blueprints.team import team_bp
@@ -55,7 +55,7 @@ def create_app():
     from app.blueprints.feedback import feedback_bp
     from app.blueprints.gallery import gallery_bp
     from app.blueprints.events import events_bp
-    from app.blueprints.about import about_bp
+    from app.blueprints.about about_bp
     from app.blueprints.projects import projects_bp
     from app.blueprints.opensource import opensource_bp
     from app.blueprints.competitions.competition import competitions_bp
@@ -78,10 +78,9 @@ def create_app():
     limiter.limit("200 per hour")(about_bp)
     limiter.limit("200 per hour")(projects_bp)
     limiter.limit("200 per hour")(opensource_bp)
-    limiter.limit("200 per hour")(competitions_bp)
     limiter.limit("100 per hour")(auth_bp)
     limiter.limit("200 per hour")(recruitment_bp)
-    limiter.limit("100 per hour")(api_bp)
+    limiter.limit("200 per hour")(api_bp)
     limiter.limit("80 per hour")(form_bp)
     limiter.limit("200 per hour")(media_kit_bp)
     limiter.limit("200 per hour")(apps_bp)
