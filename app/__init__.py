@@ -45,9 +45,8 @@ def create_app():
         return {"current_user": current_user}
 
     with app.app_context():
-        for bind_key in app.config["SQLALCHEMY_BINDS"].keys():
+        for bind_key in app.config['SQLALCHEMY_BINDS'].keys():
             db.create_all(bind_key=bind_key)
-
     # Register blueprints
     from app.blueprints.home import home_bp
     from app.blueprints.team import team_bp

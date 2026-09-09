@@ -15,4 +15,4 @@ dependencies = [
 ]
 
 [project.urls]
-Home = "https://ioit-acm.org/"
+Home = "https://ioit.acm.org/"

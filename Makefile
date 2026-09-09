@@ -7,7 +7,7 @@ ui:
 	npx tailwindcss -i ./app/static/css/input.css -o ./app/static/css/tailwind.css --watch --minify
 
 install:
-	uv venv
-	uv sync
+	/home/krishna/.local/bin/uv venv
+	/home/krishna/.local/bin/uv sync
 
 .PHONY: run ui install
