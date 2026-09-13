@@ -6,6 +6,7 @@ from app.db import DatabaseConfig, db
 from app.models import User
 from sqlalchemy.exc import ProgrammingError, SQLAlchemyError, OperationalError
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
@@ -21,7 +22,7 @@ limiter = Limiter(
 
 def create_app():
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = "nqMt+o1BxO2Wkaj4ogmFtg=="
+    app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
     app.config["SQLALCHEMY_BINDS"] = database_config.get_binds()
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SESSION_COOKIE_HTTPONLY"] = True
