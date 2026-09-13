@@ -55,7 +55,7 @@ def create_app():
     from app.blueprints.feedback import feedback_bp
     from app.blueprints.gallery import gallery_bp
     from app.blueprints.events import events_bp
-    from app.blueprints.about about_bp
+    from app.blueprints.about import about_bp
     from app.blueprints.projects import projects_bp
     from app.blueprints.opensource import opensource_bp
     from app.blueprints.competitions.competition import competitions_bp
@@ -78,9 +78,10 @@ def create_app():
     limiter.limit("200 per hour")(about_bp)
     limiter.limit("200 per hour")(projects_bp)
     limiter.limit("200 per hour")(opensource_bp)
+    limiter.limit("200 per hour")(competitions_bp)
     limiter.limit("100 per hour")(auth_bp)
     limiter.limit("200 per hour")(recruitment_bp)
-    limiter.limit("200 per hour")(api_bp)
+    limiter.limit("100 per hour")(api_bp)
     limiter.limit("80 per hour")(form_bp)
     limiter.limit("200 per hour")(media_kit_bp)
     limiter.limit("200 per hour")(apps_bp)
@@ -108,17 +109,6 @@ def create_app():
     app.register_blueprint(resources_bp)
 
     # Error Handlers
-    @app.errorhandler(ProgrammingError)
-    def handle_programming_error(error):
-        return (
-            render_template(
-                "errors/sql_error.html",
-                message="There was an issue with the database operation.",
-                details=str(error),
-            ),
-            500,
-        )
-
     @app.errorhandler(ProgrammingError)
     def handle_pending_rollback_error(error):
         return (

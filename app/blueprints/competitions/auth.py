@@ -14,6 +14,14 @@ def validate_name(name):
     return re.match(r"^[A-Za-z]+$", name)
 
 
+def verify_password(stored_hash, password):
+    """Werkzeug 3.x raises ValueError instead of returning False for legacy sha256 hashes."""
+    try:
+        return check_password_hash(stored_hash, password)
+    except ValueError:
+        return False
+
+
 @auth_bp.route("/signin", methods=["GET", "POST"])
 def signin():
     if current_user.is_authenticated:
@@ -29,7 +37,7 @@ def signin():
 
         user = User.query.filter_by(username=username).first()
 
-        if user and check_password_hash(user.password, password):
+        if user and verify_password(user.password, password):
             flash("Logged in successfully!", category="success")
             login_user(user, remember=True)
             return redirect(url_for("auth.profile"))
@@ -76,7 +84,7 @@ def signup():
             flash("Password must be at least 8 characters long.", category="error")
             return render_template("competitions/signup.html")
 
-        hashed_password = generate_password_hash(password1, method="sha256")
+        hashed_password = generate_password_hash(password1, method="pbkdf2:sha256")
 
         full_name = "{} {}".format(first_name, last_name)
 
@@ -150,7 +158,7 @@ def change_password():
         flash("Both fields are required.", category="error")
         return redirect(url_for("auth.profile"))
 
-    if not check_password_hash(current_user.password, current_password):
+    if not verify_password(current_user.password, current_password):
         flash("Current password is incorrect.", category="error")
         return redirect(url_for("auth.profile"))
 
@@ -159,7 +167,7 @@ def change_password():
         return redirect(url_for("auth.profile"))
 
     try:
-        current_user.password = generate_password_hash(new_password, method="sha256")
+        current_user.password = generate_password_hash(new_password, method="pbkdf2:sha256")
         db.session.commit()
 
         flash("Password updated successfully!", category="success")
@@ -180,7 +188,7 @@ def delete_profile():
         flash("Both fields are required.", category="error")
         return redirect(url_for("auth.profile"))
 
-    if not check_password_hash(current_user.password, delete_password):
+    if not verify_password(current_user.password, delete_password):
         flash("Password is incorrect.", category="error")
         return redirect(url_for("auth.profile"))
 
