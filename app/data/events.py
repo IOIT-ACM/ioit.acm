@@ -1,4 +1,82 @@
 events = [
+
+    {
+        "name": "Bit By Bit - Vol 4",
+        "description": "Bit By Bit Vol 4 is a fast-paced competitive programming contest designed to test participants on core Data Structures and Algorithms (DSA). Hosted on HackerRank, the contest challenges students to think critically, code efficiently, and solve algorithmic problems under time pressure. Building on the success of its first edition, Vol. 4 offers a refined problem set that emphasizes correctness, optimization, and real-world problem-solving skills.",
+        "date": " 09 September, 2026",
+        "moredetails": "https://unstop.com/p/bit-by-bit-vol-4-aissms-institute-of-information-technology-pune-maharashtra-1748847",
+        "image_url": "/static/img/gallery/bit-by-bit/16.png",
+        "instagram_link": "",
+        "facebook_link": "",
+        "topics": [
+            "Fourth edition of the Bit By Bit competitive programming series after a successful September 2026 launch.",
+            "Hosted on HackerRank with a timed, leaderboard-based competitive format.",
+            "Focused on Data Structures and Algorithms (DSA), emphasizing logic, efficiency, and accuracy.",
+            "Carefully curated problem set ranging from Easy to Hard difficulty levels.",
+            "Tested concepts such as arrays, strings, recursion, searching, sorting, and basic algorithmic thinking.",
+            "Binary scoring system encouraging correct and optimized solutions.",
+            "Participants ranked based on total score, with tie-breakers decided by submission time.",
+            "Provided students with real competitive programming exposure and performance benchmarking.",
+        ],
+    },
+        {
+            "name": "Bit By Query - Vol 4",
+            "description": "Bit By Query Vol. 4 put participants' database knowledge to the test through a fast-paced challenge covering DBMS concepts, SQL queries, database fundamentals, and logical problem-solving. Designed to test speed, accuracy, and analytical thinking, the event challenged participants to crack the query and master the database.",
+            "date": "August 24, 2026",
+            "registration_link": "https://links.ioit.acm.org/9zMNP",
+            "moredetails": "",
+            "image_url": "static/img/gallery/bit-by-query/3.webp",
+            "instagram_link": "",
+            "facebook_link": "",
+            "topics": [
+                "On-campus event held in Lab No. 602 & 603 starting 3:15 PM.",
+                "Covered core DBMS concepts and database fundamentals.",
+                "Included SQL query-based questions to test practical skills.",
+                "Featured logical query-solving challenges.",
+                "Tested participants' speed and accuracy under time constraints.",
+                "Free registration open to all participants.",
+                "Winners recognized across three positions, with cash prizes for the top three participants."
+                ]
+            },
+        {
+            "name": "Bit By Design - Vol 3",
+            "description": "Bit By Design Vol. 3 challenged participants to put their creativity and design skills to the test in a fully online, time-bound competition. Working from a given design brief, participants experimented with layout, typography, and visual style to create an impactful design that stood out for its originality and execution.",
+            "date": "August 22, 2026",
+            "registration_link": "https://links.ioit.acm.org/dbBL1",
+            "moredetails": "",
+            "image_url": "/static/img/gallery/bit-by-design/v3.webp",
+            "instagram_link": "",
+            "facebook_link": "",
+            "topics": [
+                "Online, time-bound design competition held from 10:00 AM to 4:00 PM.",
+                "Participants tackled a given design brief, experimenting with ideas to craft an impactful design.",
+                "Judged on Problem Fit, evaluating how effectively each design solved the brief.",
+                "Judged on Visual Clarity, covering layout, hierarchy, and typography.",
+                "Judged on Style Interpretation, assessing how well designs matched the brief's visual style.",
+                "Judged on Originality, rewarding fresh approaches over generic solutions.",
+                "Judged on Overall Quality, looking at how well every element tied together.",
+                "Winners recognized across three positions, with cash prizes for the top three designs."
+                ]
+            },
+        {
+            "name": "Responsible AI - The New Era of AI Responsibilities",
+            "description": "As Artificial Intelligence continues to transform the way we innovate, it is equally important to understand the responsibilities that come with it. This insightful session explores AI Beyond Innovation: Responsibility, with a focus on the crucial aspects of Ethics, Trust & Accountability in the evolving era of AI.",
+            "date": "August 19, 2026",
+            "registration_link": "https://links.ioit.acm.org/gbqnq",
+            "moredetails": "",
+            "image_url": "/static/img/gallery/esp/12.jpeg",
+            "instagram_link": "",
+            "facebook_link": "",
+            "topics": [
+                "Explored what it means to go 'AI Beyond Innovation' by focusing on the responsibilities that accompany technological progress.",
+                "Examined the role of Ethics in AI development and deployment.",
+                "Discussed how to build and maintain Trust in AI systems.",
+                "Covered Accountability frameworks for organizations building and using AI.",
+                "Featured insights from Monika Prakash Patil, Associate Project Manager at HSBC, drawing on industry experience.",
+                "Discussed how responsible AI practices can shape a more ethical and trustworthy future.",
+                "Provided attendees with practical understanding of responsible AI principles applicable across industries."
+                ]
+            },
         {
             "name": "Ethical Hacking Workshop",
             "description": "This beginner-friendly workshop introduces students to the fundamentals of cybersecurity and ethical hacking. Participants explore how attackers think and how ethical hackers defend systems, covering core concepts across web security, malware, cryptography, cloud security, and digital forensics, along with insights into cybersecurity career paths.",
@@ -42,6 +120,22 @@ events = [
         "Wrapped up with an open Q&A and a take-home commit exercise."
     ]
     },
+    {
+            "name": "Bit By Design - Vol 2",
+            "description": "Bit By Design Vol. 2 continued the time-bound web design competition series, challenging participants to interpret a shared design brief and translate it into an original interface. Building on the format of Vol. 1, participants worked individually under strict time constraints, focusing on clarity, creativity, and design reasoning.",
+            "date": "March 11, 2026",
+            "moredetails": "",
+            "image_url": "/static/img/gallery/bit-by-design/v2.webp",
+            "instagram_link": "",
+            "facebook_link": "",
+            "topics": [
+                "Individual participation with a strict time-bound design phase starting 10:00 AM.",
+                "Participants interpreted a shared design prompt and challenge brief.",
+                "Customization allowed for colors, typography, and visual styling.",
+                "All designs created live during the event duration.",
+                "Judged on clarity, hierarchy, originality, and design reasoning."
+                ]
+            },
     {
     "name": "Bit By Query - Vol 3",
     "description": "Bit By Query 2026 marked the third edition of the flagship SQL competition, raising the bar with deeper logic, tighter time constraints, and more real-world database scenarios. Over an intense two-hour window, participants pushed their limits by solving a wide spectrum of SQL problems focused on accuracy, performance, and analytical thinking.",
