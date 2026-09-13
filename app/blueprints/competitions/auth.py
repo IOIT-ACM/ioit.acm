@@ -35,7 +35,7 @@ def signin():
             flash("Username and password are required.", category="error")
             return render_template("competitions/login.html")
 
-        user = User.query.filter_by(username=username).first()
+        user = db.session.execute(db.select(User).filter_by(username=username)).scalar_one_or_none()
 
         if user and verify_password(user.password, password):
             flash("Logged in successfully!", category="success")
@@ -74,7 +74,7 @@ def signup():
         first_name = first_name.capitalize()
         last_name = last_name.capitalize()
 
-        if User.query.filter_by(username=username).first():
+        if db.session.execute(db.select(User).filter_by(username=username)).scalar_one_or_none():
             flash("Username already exists.", category="error")
             return render_template("competitions/signup.html")
         if password1 != confirm_password:
