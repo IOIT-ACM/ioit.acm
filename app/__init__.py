@@ -46,8 +46,8 @@ def create_app():
         return {"current_user": current_user}
 
     with app.app_context():
-        db.create_all(bind=None)
-
+        for bind_key in app.config['SQLALCHEMY_BINDS'].keys():
+            db.create_all(bind_key=bind_key)
     # Register blueprints
     from app.blueprints.home import home_bp
     from app.blueprints.team import team_bp
@@ -110,17 +110,6 @@ def create_app():
     app.register_blueprint(resources_bp)
 
     # Error Handlers
-    @app.errorhandler(ProgrammingError)
-    def handle_programming_error(error):
-        return (
-            render_template(
-                "errors/sql_error.html",
-                message="There was an issue with the database operation.",
-                details=str(error),
-            ),
-            500,
-        )
-
     @app.errorhandler(ProgrammingError)
     def handle_pending_rollback_error(error):
         return (
