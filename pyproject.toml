@@ -1,0 +1,18 @@
+[project]
+name = "ioit-acm"
+version = "1.0.0"
+requires-python = ">=3.12"
+dependencies = [
+    "Flask>=2.3.0",
+    "gunicorn>=21.2.0",
+    "requests>=2.28.0",
+    "python-dotenv>=1.0.0",
+    "Flask-SQLAlchemy>=3.1.0",
+    "flask-login>=0.6.0",
+    "pymysql>=1.0.0",
+    "flask-limiter>=3.2.0",
+    "Flask-Mail>=0.8.0",
+]
+
+[project.urls]
+Home = "https://ioit.acm.org/"

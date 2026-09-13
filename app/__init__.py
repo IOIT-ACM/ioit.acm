@@ -6,6 +6,7 @@ from app.db import DatabaseConfig, db
 from app.models import User
 from sqlalchemy.exc import ProgrammingError, SQLAlchemyError, OperationalError
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
@@ -21,7 +22,7 @@ limiter = Limiter(
 
 def create_app():
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = "nqMt+o1BxO2Wkaj4ogmFtg=="
+    app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
     app.config["SQLALCHEMY_BINDS"] = database_config.get_binds()
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SESSION_COOKIE_HTTPONLY"] = True
@@ -38,15 +39,15 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.get(int(user_id))
+        return db.session.get(User, int(user_id))
 
     @app.context_processor
     def inject_user():
         return {"current_user": current_user}
 
     with app.app_context():
-        db.create_all(bind=None)
-
+        for bind_key in app.config['SQLALCHEMY_BINDS'].keys():
+            db.create_all(bind_key=bind_key)
     # Register blueprints
     from app.blueprints.home import home_bp
     from app.blueprints.team import team_bp
@@ -109,17 +110,6 @@ def create_app():
     app.register_blueprint(resources_bp)
 
     # Error Handlers
-    @app.errorhandler(ProgrammingError)
-    def handle_programming_error(error):
-        return (
-            render_template(
-                "errors/sql_error.html",
-                message="There was an issue with the database operation.",
-                details=str(error),
-            ),
-            500,
-        )
-
     @app.errorhandler(ProgrammingError)
     def handle_pending_rollback_error(error):
         return (
