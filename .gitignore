@@ -163,3 +163,7 @@ cython_debug/
 .DS_STORE
 node_modules
 *.pls-tmp*
+
+# Admin-uploaded email images (runtime data, not source)
+app/static/uploads/notify/*
+!app/static/uploads/notify/.gitkeep

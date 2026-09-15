@@ -1,0 +1,42 @@
+{% extends "base.html" %} {% block title %}403 - Forbidden{% endblock %} {% block
+content %}
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Nunito', sans-serif;
+  }
+</style>
+
+<div class="flex items-center justify-center min-h-screen pt-16 pb-16 bg-gradient-to-br from-gray-100 to-blue-100 px-4">
+  <div class="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-4 md:px-0">
+
+    <div class="flex justify-center">
+      <img src="{{ url_for('static', filename='errors/401.png') }}"
+        alt="Forbidden Access"
+        class="w-80 md:w-72 h-auto"/>
+    </div>
+
+    <div class="text-center md:text-center">
+      <h1 class="text-6xl md:text-7xl font-extrabold text-gray-900 mb-4 tracking-tight" style="font-family: 'Orbitron', sans-serif;">
+       403</h1>
+
+      <p class="text-lg md:text-2xl text-gray-700 mb-1">
+         Access Restricted. 
+      </p>
+      <p class="text-lg md:text-2xl text-gray-700 mb-4 leading-relaxed">
+         You do not have administrative privileges to view this page.
+      </p>
+
+      <div class="flex justify-center">
+        <a
+          href="/"
+          class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-6 py-2 rounded-lg shadow-md transition-transform transform hover:no-underline backdrop-blur-sm text-sm md:text-base"
+        >
+          Go Back Home
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
