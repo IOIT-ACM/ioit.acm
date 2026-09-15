@@ -1,4 +1,4 @@
-import urllib.parse
+import urllib
 from flask import Blueprint, render_template
 from app.data.events import events
 
@@ -27,11 +27,11 @@ images_2 = [
 
 
 def safe_slug(name):
-    return urllib.parse.quote(name)
+    return urllib.quote(name.encode("utf-8"))
 
 
 def decode_slug(slug):
-    return urllib.parse.unquote(slug)
+    return urllib.unquote(slug).decode("utf-8")
 
 
 

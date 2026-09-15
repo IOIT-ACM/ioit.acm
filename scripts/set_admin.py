@@ -14,18 +14,18 @@ def set_admin(username, grant=True, app=None):
     with app.app_context():
         user = db.session.query(User).filter_by(username=username).first()
         if not user:
-            print(f"Error: User with username '{username}' not found.")
+            print("Error: User with username '{}' not found.".format(username))
             return False
 
         user.is_admin = grant
         status_str = "an admin" if grant else "no longer an admin"
         try:
             db.session.commit()
-            print(f"Success: User '{username}' is now {status_str}.")
+            print("Success: User '{}' is now {}.".format(username, status_str))
             return True
         except Exception as e:
             db.session.rollback()
-            print(f"Error updating user '{username}': {e}")
+            print("Error updating user '{}': {}".format(username, e))
             return False
 
 
