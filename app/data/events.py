@@ -3,9 +3,9 @@ events = [
     {
         "name": "Bit By Bit - Vol 4",
         "description": "Bit By Bit Vol 4 is a fast-paced competitive programming contest designed to test participants on core Data Structures and Algorithms (DSA). Hosted on HackerRank, the contest challenges students to think critically, code efficiently, and solve algorithmic problems under time pressure. Building on the success of its first edition, Vol. 4 offers a refined problem set that emphasizes correctness, optimization, and real-world problem-solving skills.",
-        "date": " 09 September, 2026",
+        "date": "September 09, 2026",
         "moredetails": "https://unstop.com/p/bit-by-bit-vol-4-aissms-institute-of-information-technology-pune-maharashtra-1748847",
-        "image_url": "/static/img/gallery/bit-by-bit/16.png",
+        "image_url": "/static/img/gallery/bit-by-bit/16.webp",
         "instagram_link": "",
         "facebook_link": "",
         "topics": [
