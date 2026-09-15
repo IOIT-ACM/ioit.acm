@@ -236,53 +236,42 @@ function autofill() {
   const subjectEl = document.getElementById('subject');
   const bodyEl    = document.getElementById('body-html');
 
-  if (currentMode === 'single') {
-    if (evs.length !== 1) { showToast('Select exactly one event for Single Event mode.'); return; }
-    const e = evs[0];
-    subjectEl.value = `Upcoming ACM Event: ${e.name}`;
-    bodyEl.value = singleTemplate(e);
-  } else if (currentMode === 'roundup') {
-    if (evs.length === 0) { showToast('Select at least one event for Roundup mode.'); return; }
-    subjectEl.value = `Upcoming ACM Events — Don't Miss Out!`;
-    bodyEl.value = roundupTemplate(evs);
-  } else {
+  if (currentMode !== 'single' && currentMode !== 'roundup') {
     showToast('Custom mode — please write your own content.');
+    return;
   }
-}
+  if (currentMode === 'single' && evs.length !== 1) {
+    showToast('Select exactly one event for Single Event mode.');
+    return;
+  }
+  if (currentMode === 'roundup' && evs.length === 0) {
+    showToast('Select at least one event for Roundup mode.');
+    return;
+  }
 
-function singleTemplate(e) {
-  return `<div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#1f2937;">
-  <h2 style="color:#1d4ed8;">${e.name}</h2>
-  <p style="color:#6b7280;"><strong>📅 Date:</strong> ${e.date}</p>
-  <p>${e.desc}</p>
-  <p>We hope to see you there! Stay tuned for more details.</p>
-  <hr style="border:none;border-top:1px solid #e5e7eb;margin:1.5rem 0;">
-  <p style="font-size:.8rem;color:#9ca3af;">
-    AISSMS IOIT ACM Student Chapter<br>
-    To unsubscribe, reply with "Unsubscribe" in the subject.
-  </p>
-</div>`;
-}
+  const autofillBtn = document.getElementById('autofill-btn');
+  autofillBtn.disabled = true;
 
-function roundupTemplate(evs) {
-  const items = evs.map(e =>
-    `<li style="margin-bottom:1rem;">
-      <strong>${e.name}</strong><br>
-      <span style="color:#6b7280;">📅 ${e.date}</span><br>
-      <span style="font-size:.9em;">${e.desc}</span>
-    </li>`
-  ).join('');
-  return `<div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#1f2937;">
-  <h2 style="color:#1d4ed8;">Upcoming ACM Events</h2>
-  <p>Here's a roundup of upcoming events from AISSMS IOIT ACM:</p>
-  <ul style="padding-left:1.2rem;">${items}</ul>
-  <p>Stay tuned for more details on each event!</p>
-  <hr style="border:none;border-top:1px solid #e5e7eb;margin:1.5rem 0;">
-  <p style="font-size:.8rem;color:#9ca3af;">
-    AISSMS IOIT ACM Student Chapter<br>
-    To unsubscribe, reply with "Unsubscribe" in the subject.
-  </p>
-</div>`;
+  fetch('/events/admin/notify/render', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body:    JSON.stringify({ mode: currentMode, event_slugs: evs.map(e => e.slug) }),
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.success) {
+      subjectEl.value = data.subject;
+      bodyEl.value = data.body_html;
+    } else {
+      showToast('❌ ' + (data.error || 'Could not generate template.'));
+    }
+  })
+  .catch(() => {
+    showToast('❌ Network error — please try again.');
+  })
+  .finally(() => {
+    autofillBtn.disabled = false;
+  });
 }
 
 /* ── Preview ── */
@@ -292,17 +281,8 @@ function showPreview() {
   const panel = document.getElementById('preview-panel');
   panel.style.display = 'block';
   const frame = document.getElementById('preview-frame');
-  
-  // Set iframe content safely via srcdoc & doc write fallback
+
   frame.srcdoc = body;
-  setTimeout(() => {
-    try {
-      const doc = frame.contentDocument || frame.contentWindow.document;
-      doc.open();
-      doc.write(body);
-      doc.close();
-    } catch(e) {}
-  }, 50);
 
   panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
