@@ -1,130 +1,189 @@
 {% extends "base.html" %}
-{% block title %}Admin — Send Event Notification{% endblock %}
+{% block title %}Admin - Send Event Notification{% endblock %}
 {% block head %}
 <style>
-  /* Only states that plain inline-style/class toggling handles better than utilities */
-  #preview-panel { display: none; }
   .modal-backdrop { display: none; }
   .modal-backdrop.open { display: flex; }
   #toast { transform: translate(-50%, 4rem); }
   #toast.show { transform: translate(-50%, 0); }
+  .mode-option.active { border-color: #60a5fa; background-color: #eff6ff; }
+  .mode-option:not(.active) { border-color: #e5e7eb; }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto px-4 pt-24 md:pt-28 pb-16">
+<div class="max-w-[1500px] mx-auto px-4 pt-24 md:pt-28 pb-16 overflow-x-hidden">
 
   <!-- Header -->
-  <div class="mb-8">
-    <h1 class="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-3">
-      <i class="fas fa-paper-plane text-blue-500"></i>
-      Send Event Notification
-    </h1>
-    <p class="text-gray-500 text-sm mt-1">
-      Compose and broadcast a notification email to all active subscribers.
-    </p>
-  </div>
-
-  <!-- Recipient count strip -->
-  <div class="flex flex-wrap gap-3 mb-6">
-    <div class="bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 text-sm inline-flex items-center gap-2">
+  <div class="flex flex-wrap items-start justify-between gap-4 mb-8">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-3">
+        <i class="fas fa-paper-plane text-blue-500"></i>
+        Send Event Notification
+      </h1>
+      <p class="text-gray-500 text-sm mt-1">
+        Compose and broadcast a notification email to active subscribers.
+      </p>
+    </div>
+    <button type="button" id="browse-subscribers-btn"
+            class="bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg px-4 py-2.5 text-sm inline-flex items-center gap-2 transition-colors">
       <i class="fas fa-users text-blue-500"></i>
-      Active subscribers:
+      Active subscribers
       <span id="sub-count" class="font-bold text-blue-600 text-base">{{ subscriber_count }}</span>
-    </div>
+      <i class="fas fa-chevron-right text-blue-300 text-xs ml-1"></i>
+    </button>
   </div>
 
-  <!-- Step 1 — Template mode -->
-  <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6 mb-6">
-    <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2 mb-4">
-      <i class="fas fa-layer-group text-blue-500"></i> Step 1 — Template Mode
-    </h2>
-    <div class="flex flex-wrap gap-2 mb-3">
-      <button type="button"
-              class="mode-tab bg-blue-400 text-gray-900 border-blue-400 px-4 py-2 rounded-lg border font-semibold text-sm transition-all hover:bg-blue-500"
-              data-mode="single" onclick="setMode('single')">Single Event</button>
-      <button type="button"
-              class="mode-tab bg-gray-100 text-gray-700 border-gray-300 px-4 py-2 rounded-lg border font-semibold text-sm transition-all hover:bg-blue-50 hover:border-blue-300"
-              data-mode="roundup" onclick="setMode('roundup')">Upcoming Roundup</button>
-      <button type="button"
-              class="mode-tab bg-gray-100 text-gray-700 border-gray-300 px-4 py-2 rounded-lg border font-semibold text-sm transition-all hover:bg-blue-50 hover:border-blue-300"
-              data-mode="custom" onclick="setMode('custom')">General / Custom</button>
-    </div>
-    <p id="mode-hint" class="text-sm text-gray-500"></p>
-  </div>
+  <!-- Three column workspace -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start lg:items-stretch lg:min-h-[calc(100vh-280px)]">
 
-  <!-- Step 2 — Event selection (hidden for custom) -->
-  <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6 mb-6" id="event-select-card">
-    <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2 mb-4">
-      <i class="fas fa-calendar-check text-blue-500"></i> Step 2 — Select Event(s)
-    </h2>
-    <div class="max-h-56 overflow-y-auto border border-gray-200 rounded-lg p-2 bg-gray-50" id="event-list">
-      {% for event in events %}
-      <label class="flex items-start gap-2 px-2 py-2 rounded-md hover:bg-blue-50 cursor-pointer">
-        <input type="checkbox" class="event-checkbox mt-1 w-4 h-4 accent-blue-500 shrink-0" value="{{ event.slug }}"
-               data-name="{{ event.name }}" data-date="{{ event.date }}"
-               data-desc="{{ event.description[:120] }}...">
-        <span class="text-sm text-gray-700">
-          <strong class="text-gray-800">{{ event.name }}</strong>
-          <span class="text-gray-400 text-xs"> — {{ event.date }}</span>
-        </span>
-      </label>
-      {% endfor %}
-    </div>
-    <p class="text-xs text-gray-400 mt-2">
-      <i class="fas fa-info-circle"></i>
-      For <em>Single Event</em> mode, select exactly one. For <em>Roundup</em>, select multiple.
-    </p>
-  </div>
+    <!-- Left column: Template mode + Event selector -->
+    <div class="lg:col-span-3 flex flex-col gap-6 lg:sticky lg:top-24 lg:self-start min-w-0">
 
-  <!-- Step 3 — Compose -->
-  <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6 mb-6">
-    <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2 mb-4">
-      <i class="fas fa-pen text-blue-500"></i> Step 3 — Compose
-    </h2>
-    <div class="mb-4">
-      <label for="subject" class="block text-sm font-semibold text-gray-700 mb-1">Subject line</label>
-      <input type="text" id="subject" placeholder="e.g. Upcoming ACM Event: XYZ Workshop"
-             class="w-full p-2.5 text-sm bg-gray-50 text-gray-900 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-colors">
-    </div>
-    <div class="flex justify-between items-center mb-2 flex-wrap gap-2">
-      <label for="body-html" class="text-sm font-semibold text-gray-700 m-0">Email body (HTML)</label>
-      <button type="button" id="autofill-btn" class="text-xs font-semibold text-blue-600 hover:text-blue-700 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-1" onclick="autofill()">
-        <i class="fas fa-magic"></i> Autofill from selection
-      </button>
-    </div>
-    <textarea id="body-html" placeholder="Write your HTML email body here, or use Autofill to pre-populate from selected events..."
-              class="w-full min-h-[200px] p-3 text-sm font-mono bg-gray-50 text-gray-900 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-colors resize-y"></textarea>
-    <div class="flex gap-3 mt-4 flex-wrap">
-      <button type="button"
-              class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-5 py-2.5 rounded-lg border border-gray-300 inline-flex items-center gap-2 transition-all text-sm"
-              onclick="showPreview()">
-        <i class="fas fa-eye"></i> Preview Email
-      </button>
-      <button type="button"
-              class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-5 py-2.5 rounded-lg shadow-md inline-flex items-center gap-2 transition-all text-sm"
-              id="open-confirm-btn" onclick="openConfirm()">
-        <i class="fas fa-paper-plane"></i> Review & Send
-      </button>
-    </div>
-  </div>
+      <!-- Template mode -->
+      <div class="bg-white rounded-xl shadow-md border border-gray-200 p-5">
+        <h2 class="text-sm font-bold text-gray-800 flex items-center gap-2 mb-4">
+          <span class="w-5 h-5 rounded-full bg-blue-500 text-white text-xs font-bold inline-flex items-center justify-center shrink-0">1</span>
+          Template mode
+        </h2>
+        <div class="space-y-2" id="mode-options">
+          <label class="mode-option active flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors" data-mode="single">
+            <input type="radio" name="template-mode" value="single" class="mt-1 w-4 h-4 accent-blue-500 shrink-0" checked>
+            <span>
+              <span class="block text-sm font-semibold text-gray-800">Single event</span>
+              <span class="block text-xs text-gray-500">Announce one event.</span>
+            </span>
+          </label>
+          <label class="mode-option flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors" data-mode="roundup">
+            <input type="radio" name="template-mode" value="roundup" class="mt-1 w-4 h-4 accent-blue-500 shrink-0">
+            <span>
+              <span class="block text-sm font-semibold text-gray-800">Upcoming roundup</span>
+              <span class="block text-xs text-gray-500">List several events in one email.</span>
+            </span>
+          </label>
+          <label class="mode-option flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors" data-mode="custom">
+            <input type="radio" name="template-mode" value="custom" class="mt-1 w-4 h-4 accent-blue-500 shrink-0">
+            <span>
+              <span class="block text-sm font-semibold text-gray-800">General / custom</span>
+              <span class="block text-xs text-gray-500">Write your own content freely.</span>
+            </span>
+          </label>
+        </div>
+        <p id="mode-hint" class="text-xs text-gray-400 mt-3 leading-relaxed"></p>
+      </div>
 
-  <!-- Preview panel -->
-  <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6 mb-6" id="preview-panel">
-    <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2 mb-2">
-      <i class="fas fa-eye text-blue-500"></i> Email Preview
-    </h2>
-    <p class="text-sm text-gray-500 mb-3">
-      This is how the email will appear to recipients.
-    </p>
-    <iframe id="preview-frame" title="Email preview" class="w-full min-h-[320px] rounded-lg border border-gray-200 bg-white"></iframe>
+      <!-- Event selector -->
+      <div class="bg-white rounded-xl shadow-md border border-gray-200 p-5" id="event-select-card">
+        <h2 class="text-sm font-bold text-gray-800 flex items-center gap-2 mb-4">
+          <span class="w-5 h-5 rounded-full bg-blue-500 text-white text-xs font-bold inline-flex items-center justify-center shrink-0">2</span>
+          <span id="event-select-title">Select event</span>
+        </h2>
+
+        <div class="relative mb-3">
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+          <input type="text" id="event-search" placeholder="Search events by name..."
+                 class="w-full pl-8 pr-8 py-2 text-sm bg-gray-50 text-gray-900 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-colors">
+          <button type="button" id="event-search-clear" hidden
+                  class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs">
+            <i class="fas fa-times-circle"></i>
+          </button>
+        </div>
+
+        <div id="event-results" class="max-h-72 overflow-y-auto border border-gray-200 rounded-lg divide-y divide-gray-50 bg-gray-50/40"></div>
+
+        <button type="button" id="event-load-more" hidden data-offset="0"
+                class="w-full mt-2 text-xs font-semibold text-blue-600 hover:text-blue-700 py-1.5">
+          Load more events
+        </button>
+
+        <p id="event-results-summary" class="text-xs text-gray-400 mt-2"></p>
+
+        <div class="mt-3 pt-3 border-t border-gray-100">
+          <p class="text-xs font-semibold text-gray-600 mb-2">Selected</p>
+          <div id="selected-chips" class="flex flex-wrap gap-1.5"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center column: Compose -->
+    <div class="lg:col-span-5 flex flex-col min-w-0">
+      <div class="bg-white rounded-xl shadow-md border border-gray-200 p-5 flex flex-col flex-1 min-h-0 min-w-0">
+        <h2 class="text-sm font-bold text-gray-800 flex items-center gap-2 mb-4">
+          <span class="w-5 h-5 rounded-full bg-blue-500 text-white text-xs font-bold inline-flex items-center justify-center shrink-0">3</span>
+          Compose
+        </h2>
+
+        <div class="mb-4">
+          <label for="subject" class="block text-sm font-semibold text-gray-700 mb-1">Subject line</label>
+          <input type="text" id="subject" placeholder="e.g. Upcoming ACM Event: XYZ Workshop"
+                 class="w-full p-2.5 text-sm bg-gray-50 text-gray-900 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-colors">
+        </div>
+
+        <div class="flex justify-between items-center mb-2 flex-wrap gap-2">
+          <label for="body-html" class="text-sm font-semibold text-gray-700 m-0">Email body (HTML)</label>
+          <div class="flex items-center gap-3">
+            <button type="button" id="autofill-btn" class="text-xs font-semibold text-blue-600 hover:text-blue-700 disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center gap-1" onclick="autofill()">
+              <i class="fas fa-magic"></i> Autofill
+            </button>
+            <button type="button" id="insert-image-btn" class="text-xs font-semibold text-blue-600 hover:text-blue-700 disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center gap-1">
+              <i class="fas fa-image"></i> Insert image
+            </button>
+            <input type="file" id="image-input" accept="image/png,image/jpeg,image/gif,image/webp" hidden>
+          </div>
+        </div>
+        <textarea id="body-html" placeholder="Write your HTML email body here, use Autofill to pre-populate from the selected event, or drag an image in..."
+                  class="w-full flex-1 min-w-0 min-h-[240px] p-3 text-sm font-mono bg-gray-50 text-gray-900 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-colors resize-y"></textarea>
+        <p class="text-xs text-gray-400 mt-1.5">You can also drag and drop an image straight onto the box above.</p>
+
+        <details class="mt-4 border border-gray-200 rounded-lg" id="extra-recipients-details">
+          <summary class="px-3 py-2 text-sm font-semibold text-gray-700 cursor-pointer select-none inline-flex items-center gap-2">
+            <i class="fas fa-user-plus text-blue-500"></i> Add extra recipients for this campaign
+          </summary>
+          <div class="px-3 pb-3">
+            <textarea id="extra-recipients" rows="2" placeholder="extra1@example.com, extra2@example.com"
+                      class="w-full p-2.5 text-sm bg-gray-50 text-gray-900 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-colors resize-y"></textarea>
+            <p class="text-xs text-gray-400 mt-1.5">Separate addresses with commas or new lines. These only receive this one campaign, they are not added to your subscriber list.</p>
+          </div>
+        </details>
+
+        <div class="flex gap-3 mt-4 flex-wrap">
+          <button type="button"
+                  class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-5 py-2.5 rounded-lg shadow-md inline-flex items-center gap-2 transition-all text-sm"
+                  id="open-confirm-btn" onclick="openConfirm()">
+            <i class="fas fa-paper-plane"></i> Review and send
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column: Preview -->
+    <div class="lg:col-span-4 flex flex-col min-w-0">
+      <div class="bg-white rounded-xl shadow-md border border-gray-200 p-5 flex flex-col flex-1 min-h-0 min-w-0">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-sm font-bold text-gray-800 flex items-center gap-2">
+            <i class="fas fa-eye text-blue-500"></i> Live preview
+          </h2>
+          <button type="button" id="refresh-preview-btn" class="text-xs text-gray-400 hover:text-gray-600" title="Refresh preview">
+            <i class="fas fa-rotate"></i>
+          </button>
+        </div>
+        <div class="border-b border-gray-100 pb-3 mb-3">
+          <div class="text-[11px] uppercase tracking-wide text-gray-400">Subject</div>
+          <div id="preview-subject" class="text-sm font-semibold text-gray-800 truncate">Untitled email</div>
+        </div>
+        <div id="preview-placeholder" class="flex-1 min-w-0 min-h-[240px] rounded-lg border border-dashed border-gray-200 flex items-center justify-center text-center text-sm text-gray-400 px-6">
+          Start composing and your email will appear here.
+        </div>
+        <iframe id="preview-frame" title="Email preview" sandbox="allow-same-origin" style="display:none" class="w-full flex-1 min-w-0 min-h-[240px] rounded-lg border border-gray-200 bg-white"></iframe>
+      </div>
+    </div>
   </div>
 
   <!-- EmailLog history -->
   {% if recent_logs %}
-  <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6">
+  <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6 mt-6">
     <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2 mb-4">
-      <i class="fas fa-history text-blue-500"></i> Recent Sends
+      <i class="fas fa-history text-blue-500"></i> Recent sends
     </h2>
     <div class="overflow-x-auto">
       <table class="w-full text-sm text-left">
@@ -170,7 +229,7 @@
 <div class="modal-backdrop fixed inset-0 bg-black/45 z-[9999] items-center justify-center" id="confirm-modal">
   <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-[90%]">
     <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2 mb-3">
-      <i class="fas fa-exclamation-triangle text-amber-500"></i> Confirm Send
+      <i class="fas fa-exclamation-triangle text-amber-500"></i> Confirm send
     </h3>
     <p id="confirm-summary" class="text-sm text-gray-600 leading-relaxed mb-5"></p>
     <div class="flex gap-3 justify-end flex-wrap">
@@ -178,12 +237,47 @@
               class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-5 py-2.5 rounded-lg border border-gray-300 text-sm transition-all"
               onclick="closeConfirm()">Cancel</button>
       <button type="button"
-              class="bg-rose-600 hover:bg-rose-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-5 py-2.5 rounded-lg shadow-md inline-flex items-center gap-2 text-sm transition-all"
+              class="bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-5 py-2.5 rounded-lg shadow-md inline-flex items-center gap-2 text-sm transition-all"
               id="send-btn" onclick="sendNotification()">
         <i class="fas fa-paper-plane"></i>
-        <span id="send-btn-label">Send Now</span>
+        <span id="send-btn-label">Send now</span>
       </button>
     </div>
+  </div>
+</div>
+
+<!-- Subscribers browser modal -->
+<div class="modal-backdrop fixed inset-0 bg-black/45 z-[9999] items-center justify-center" id="subscribers-modal">
+  <div class="bg-white rounded-2xl shadow-2xl p-6 max-w-lg w-[90%] max-h-[85vh] flex flex-col">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+        <i class="fas fa-users text-blue-500"></i> Subscribers
+      </h3>
+      <button type="button" class="text-gray-400 hover:text-gray-600" onclick="closeSubscribers()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="flex gap-2 mb-3">
+      <div class="relative flex-1">
+        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+        <input type="text" id="subscriber-search" placeholder="Search by email..."
+               class="w-full pl-8 pr-3 py-2 text-sm bg-gray-50 text-gray-900 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-colors">
+      </div>
+      <select id="subscriber-status" class="text-sm bg-gray-50 text-gray-900 rounded-lg border border-gray-300 px-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option value="all">All</option>
+        <option value="active" selected>Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+
+    <div id="subscriber-results" class="flex-1 overflow-y-auto border border-gray-200 rounded-lg divide-y divide-gray-50"></div>
+
+    <button type="button" id="subscriber-load-more" hidden data-offset="0"
+            class="w-full mt-2 text-xs font-semibold text-blue-600 hover:text-blue-700 py-1.5">
+      Load more subscribers
+    </button>
+    <p id="subscriber-results-summary" class="text-xs text-gray-400 mt-2"></p>
   </div>
 </div>
 
@@ -194,50 +288,184 @@
 <script>
 /* ── State ── */
 let currentMode = 'single';
+let selectedEvents = new Map();   // slug -> { slug, name, date, image_url }
+let lastResults = [];             // events currently rendered in the results list
+let searchTimer = null;
+let searchSeq = 0;
+let previewTimer = null;
 
-/* ── Mode switching ── */
 const modeHints = {
-  single:  'Autofill will populate subject + body from the one selected event.',
-  roundup: 'Autofill will list all selected upcoming events in the email body.',
-  custom:  'Write your own subject and HTML body freely — no autofill.',
+  single:  'Autofill will populate the subject and body from the one selected event.',
+  roundup: 'Autofill will list every selected upcoming event in the email body.',
+  custom:  'Write your own subject and HTML body freely, no autofill.',
 };
 
-function setMode(mode) {
-  currentMode = mode;
-  document.querySelectorAll('.mode-tab').forEach(t => {
-    const isActive = t.dataset.mode === mode;
-    t.classList.toggle('bg-blue-400', isActive);
-    t.classList.toggle('text-gray-900', isActive);
-    t.classList.toggle('border-blue-400', isActive);
-    t.classList.toggle('hover:bg-blue-500', isActive);
-    t.classList.toggle('bg-gray-100', !isActive);
-    t.classList.toggle('text-gray-700', !isActive);
-    t.classList.toggle('border-gray-300', !isActive);
-    t.classList.toggle('hover:bg-blue-50', !isActive);
-    t.classList.toggle('hover:border-blue-300', !isActive);
-  });
-  document.getElementById('mode-hint').textContent = modeHints[mode];
-  document.getElementById('event-select-card').style.display = mode === 'custom' ? 'none' : '';
+/* ── Escaping ── */
+function escHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-/* ── Collect checked events ── */
-function checkedEvents() {
-  return [...document.querySelectorAll('.event-checkbox:checked')].map(cb => ({
-    slug: cb.value,
-    name: cb.dataset.name,
-    date: cb.dataset.date,
-    desc: cb.dataset.desc,
-  }));
+/* ── Mode switching ── */
+function setMode(mode) {
+  const changed = mode !== currentMode;
+  currentMode = mode;
+
+  document.querySelectorAll('.mode-option').forEach(el => {
+    el.classList.toggle('active', el.dataset.mode === mode);
+  });
+  document.getElementById('mode-hint').textContent = modeHints[mode];
+  document.getElementById('event-select-card').hidden = mode === 'custom';
+  document.getElementById('autofill-btn').disabled = mode === 'custom';
+  document.getElementById('event-select-title').textContent = mode === 'roundup' ? 'Select events' : 'Select event';
+
+  if (changed) {
+    selectedEvents.clear();
+    renderSelectedChips();
+  }
+  if (mode !== 'custom') {
+    rerenderList();
+  }
 }
+
+document.querySelectorAll('input[name="template-mode"]').forEach(input => {
+  input.addEventListener('change', () => setMode(input.value));
+});
+
+/* ── Event search ── */
+function scheduleSearch() {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => runSearch(0, false), 300);
+}
+
+function runSearch(offset, append) {
+  const q = document.getElementById('event-search').value.trim();
+  const seq = ++searchSeq;
+  const listEl = document.getElementById('event-results');
+
+  if (!append) {
+    listEl.innerHTML = '<div class="text-sm text-gray-400 text-center py-6"><i class="fas fa-spinner fa-spin"></i> Searching...</div>';
+  }
+
+  fetch('/events/admin/notify/events/search?q=' + encodeURIComponent(q) + '&limit=15&offset=' + offset)
+    .then(r => r.json())
+    .then(data => {
+      if (seq !== searchSeq) return;
+      if (!data.success) {
+        listEl.innerHTML = '<div class="text-sm text-red-500 py-4 text-center">Could not load events.</div>';
+        return;
+      }
+      if (append) {
+        lastResults = lastResults.concat(data.results);
+      } else {
+        lastResults = data.results;
+      }
+      rerenderList();
+
+      const loadMoreBtn = document.getElementById('event-load-more');
+      loadMoreBtn.dataset.offset = String(offset + data.results.length);
+      loadMoreBtn.hidden = !data.has_more;
+
+      const summaryEl = document.getElementById('event-results-summary');
+      summaryEl.textContent = data.total === 0
+        ? 'No events match your search.'
+        : 'Showing ' + lastResults.length + ' of ' + data.total + ' event' + (data.total !== 1 ? 's' : '') + '.';
+    })
+    .catch(() => {
+      if (seq === searchSeq) {
+        listEl.innerHTML = '<div class="text-sm text-red-500 py-4 text-center">Network error, please try again.</div>';
+      }
+    });
+}
+
+function eventRowHtml(ev) {
+  const checked = selectedEvents.has(ev.slug);
+  const inputType = currentMode === 'roundup' ? 'checkbox' : 'radio';
+  const inputName = currentMode === 'roundup' ? 'event-checkbox' : 'event-radio';
+  return '' +
+    '<label class="flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-colors ' + (checked ? 'bg-blue-50' : 'hover:bg-white') + '" data-slug="' + escHtml(ev.slug) + '">' +
+      '<input type="' + inputType + '" name="' + inputName + '" value="' + escHtml(ev.slug) + '" class="event-input w-4 h-4 accent-blue-500 shrink-0"' + (checked ? ' checked' : '') + '>' +
+      '<img src="' + escHtml(ev.image_url) + '" alt="" loading="lazy" class="w-9 h-9 rounded-md object-cover shrink-0 bg-gray-100" onerror="this.style.visibility=\'hidden\'">' +
+      '<span class="min-w-0 flex-1">' +
+        '<span class="block text-sm font-medium text-gray-800 truncate">' + escHtml(ev.name) + '</span>' +
+        '<span class="block text-xs text-gray-400 truncate">' + escHtml(ev.date) + '</span>' +
+      '</span>' +
+    '</label>';
+}
+
+function rerenderList() {
+  const listEl = document.getElementById('event-results');
+  listEl.innerHTML = lastResults.length
+    ? lastResults.map(eventRowHtml).join('')
+    : '<div class="text-sm text-gray-400 text-center py-6">No events found.</div>';
+}
+
+document.getElementById('event-search').addEventListener('input', () => {
+  document.getElementById('event-search-clear').hidden = !document.getElementById('event-search').value;
+  scheduleSearch();
+});
+document.getElementById('event-search-clear').addEventListener('click', () => {
+  const input = document.getElementById('event-search');
+  input.value = '';
+  document.getElementById('event-search-clear').hidden = true;
+  runSearch(0, false);
+});
+document.getElementById('event-load-more').addEventListener('click', () => {
+  const offset = parseInt(document.getElementById('event-load-more').dataset.offset || '0', 10);
+  runSearch(offset, true);
+});
+
+document.getElementById('event-results').addEventListener('change', e => {
+  const input = e.target;
+  if (!input.classList.contains('event-input')) return;
+  const slug = input.value;
+  const ev = lastResults.find(r => r.slug === slug);
+  if (!ev) return;
+
+  if (input.checked) {
+    if (currentMode === 'single') selectedEvents.clear();
+    selectedEvents.set(slug, ev);
+  } else {
+    selectedEvents.delete(slug);
+  }
+  renderSelectedChips();
+  rerenderList();
+});
+
+/* ── Selected chips ── */
+function renderSelectedChips() {
+  const container = document.getElementById('selected-chips');
+  const entries = [...selectedEvents.values()];
+  if (!entries.length) {
+    container.innerHTML = '<span class="text-xs text-gray-400">Nothing selected yet.</span>';
+    return;
+  }
+  container.innerHTML = entries.map(ev =>
+    '<span class="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-full pl-3 pr-1.5 py-1 text-xs font-medium max-w-full">' +
+      '<span class="truncate max-w-[9rem]">' + escHtml(ev.name) + '</span>' +
+      '<button type="button" class="chip-remove w-4 h-4 rounded-full hover:bg-blue-200 inline-flex items-center justify-center shrink-0" data-slug="' + escHtml(ev.slug) + '" aria-label="Remove">' +
+        '<i class="fas fa-times text-[10px]"></i>' +
+      '</button>' +
+    '</span>'
+  ).join('');
+}
+
+document.getElementById('selected-chips').addEventListener('click', e => {
+  const btn = e.target.closest('.chip-remove');
+  if (!btn) return;
+  selectedEvents.delete(btn.dataset.slug);
+  renderSelectedChips();
+  rerenderList();
+});
 
 /* ── Autofill ── */
 function autofill() {
-  const evs = checkedEvents();
+  const evs = [...selectedEvents.values()];
   const subjectEl = document.getElementById('subject');
   const bodyEl    = document.getElementById('body-html');
 
   if (currentMode !== 'single' && currentMode !== 'roundup') {
-    showToast('Custom mode — please write your own content.');
+    showToast('Custom mode, please write your own content.');
     return;
   }
   if (currentMode === 'single' && evs.length !== 1) {
@@ -262,29 +490,119 @@ function autofill() {
     if (data.success) {
       subjectEl.value = data.subject;
       bodyEl.value = data.body_html;
+      schedulePreview();
     } else {
-      showToast('❌ ' + (data.error || 'Could not generate template.'));
+      showToast(data.error || 'Could not generate template.');
     }
   })
   .catch(() => {
-    showToast('❌ Network error — please try again.');
+    showToast('Network error, please try again.');
   })
   .finally(() => {
     autofillBtn.disabled = false;
   });
 }
 
-/* ── Preview ── */
-function showPreview() {
-  const body = document.getElementById('body-html').value.trim();
-  if (!body) { showToast('Write some email body content first.'); return; }
-  const panel = document.getElementById('preview-panel');
-  panel.style.display = 'block';
+/* ── Image upload ── */
+function insertAtCursor(textarea, text) {
+  const start = textarea.selectionStart ?? textarea.value.length;
+  const end = textarea.selectionEnd ?? textarea.value.length;
+  const value = textarea.value;
+  textarea.value = value.slice(0, start) + text + value.slice(end);
+  const pos = start + text.length;
+  textarea.selectionStart = textarea.selectionEnd = pos;
+  textarea.focus();
+}
+
+function uploadImage(file) {
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    showToast('Please choose an image file.');
+    return;
+  }
+
+  const btn = document.getElementById('insert-image-btn');
+  const originalHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+
+  const formData = new FormData();
+  formData.append('image', file);
+
+  fetch('/events/admin/notify/upload-image', { method: 'POST', body: formData })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        insertAtCursor(document.getElementById('body-html'), '<img src="' + data.url + '" alt="" style="max-width:100%;height:auto;">');
+        schedulePreview();
+        showToast('Image uploaded and inserted.');
+      } else {
+        showToast(data.error || 'Upload failed.');
+      }
+    })
+    .catch(() => showToast('Network error, please try again.'))
+    .finally(() => {
+      btn.disabled = false;
+      btn.innerHTML = originalHtml;
+    });
+}
+
+document.getElementById('insert-image-btn').addEventListener('click', () => {
+  document.getElementById('image-input').click();
+});
+document.getElementById('image-input').addEventListener('change', e => {
+  uploadImage(e.target.files[0]);
+  e.target.value = '';
+});
+
+const bodyTextarea = document.getElementById('body-html');
+bodyTextarea.addEventListener('dragover', e => {
+  e.preventDefault();
+  bodyTextarea.classList.add('ring-2', 'ring-blue-400');
+});
+bodyTextarea.addEventListener('dragleave', () => {
+  bodyTextarea.classList.remove('ring-2', 'ring-blue-400');
+});
+bodyTextarea.addEventListener('drop', e => {
+  e.preventDefault();
+  bodyTextarea.classList.remove('ring-2', 'ring-blue-400');
+  const file = e.dataTransfer.files && e.dataTransfer.files[0];
+  if (file) uploadImage(file);
+});
+
+/* ── Live preview ── */
+function schedulePreview() {
+  clearTimeout(previewTimer);
+  previewTimer = setTimeout(updatePreview, 300);
+}
+
+function updatePreview() {
+  const body = document.getElementById('body-html').value;
+  const subject = document.getElementById('subject').value.trim();
+  document.getElementById('preview-subject').textContent = subject || 'Untitled email';
+
   const frame = document.getElementById('preview-frame');
-
+  const placeholder = document.getElementById('preview-placeholder');
+  if (!body.trim()) {
+    frame.style.display = 'none';
+    placeholder.style.display = 'flex';
+    return;
+  }
+  placeholder.style.display = 'none';
+  frame.style.display = 'block';
   frame.srcdoc = body;
+}
 
-  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+document.getElementById('subject').addEventListener('input', schedulePreview);
+bodyTextarea.addEventListener('input', schedulePreview);
+document.getElementById('refresh-preview-btn').addEventListener('click', updatePreview);
+
+/* ── Extra recipients ── */
+function parseExtraRecipientsClient() {
+  return document.getElementById('extra-recipients').value
+    .split(/[,\n]+/)
+    .map(s => s.trim())
+    .filter(Boolean);
 }
 
 /* ── Confirm dialog ── */
@@ -294,14 +612,18 @@ function openConfirm() {
   if (!subject) { showToast('Please enter a subject line.'); return; }
   if (!body)    { showToast('Please write the email body.'); return; }
 
-  const evs   = currentMode === 'custom' ? [] : checkedEvents();
+  const evs   = currentMode === 'custom' ? [] : [...selectedEvents.values()];
   const count = parseInt(document.getElementById('sub-count').textContent, 10);
+  const extras = parseExtraRecipientsClient();
 
-  let summary = `You are about to send <strong>"${escHtml(subject)}"</strong> to <strong>${count} active subscriber${count !== 1 ? 's' : ''}</strong>.`;
-  if (evs.length) {
-    summary += `<br><br>Selected events: ${evs.map(e => `<em>${escHtml(e.name)}</em>`).join(', ')}.`;
+  let summary = 'You are about to send <strong>"' + escHtml(subject) + '"</strong> to <strong>' + count + ' active subscriber' + (count !== 1 ? 's' : '') + '</strong>.';
+  if (extras.length) {
+    summary += ' Plus <strong>' + extras.length + ' extra recipient' + (extras.length !== 1 ? 's' : '') + '</strong> for this campaign.';
   }
-  summary += `<br><br>This action cannot be undone.`;
+  if (evs.length) {
+    summary += '<br><br>Selected events: ' + evs.map(e => '<em>' + escHtml(e.name) + '</em>').join(', ') + '.';
+  }
+  summary += '<br><br>This action cannot be undone.';
 
   document.getElementById('confirm-summary').innerHTML = summary;
   document.getElementById('confirm-modal').classList.add('open');
@@ -317,14 +639,15 @@ function sendNotification() {
   const sendBtn   = document.getElementById('send-btn');
   const sendLabel = document.getElementById('send-btn-label');
   sendBtn.disabled = true;
-  sendLabel.textContent = 'Sending…';
+  sendLabel.textContent = 'Sending...';
 
-  const evs = currentMode === 'custom' ? [] : checkedEvents();
+  const evs = currentMode === 'custom' ? [] : [...selectedEvents.values()];
   const payload = {
-    subject:       document.getElementById('subject').value.trim(),
-    template_used: currentMode,
-    body_html:     document.getElementById('body-html').value.trim(),
-    event_slugs:   evs.map(e => e.slug),
+    subject:          document.getElementById('subject').value.trim(),
+    template_used:    currentMode,
+    body_html:        document.getElementById('body-html').value.trim(),
+    event_slugs:      evs.map(e => e.slug),
+    extra_recipients: parseExtraRecipientsClient(),
   };
 
   fetch('/events/admin/notify', {
@@ -336,17 +659,16 @@ function sendNotification() {
   .then(data => {
     closeConfirm();
     if (data.success) {
-      showToast('✅ ' + data.message, 5000);
-      // Reload page after a short delay to refresh the EmailLog table
+      showToast(data.message, 5000);
       setTimeout(() => location.reload(), 3000);
     } else {
-      showToast('❌ ' + (data.error || 'Send failed.'), 6000);
+      showToast(data.error || 'Send failed.', 6000);
       resetSendBtn();
     }
   })
   .catch(() => {
     closeConfirm();
-    showToast('❌ Network error — please try again.', 5000);
+    showToast('Network error, please try again.', 5000);
     resetSendBtn();
   });
 }
@@ -355,25 +677,103 @@ function resetSendBtn() {
   const sendBtn   = document.getElementById('send-btn');
   const sendLabel = document.getElementById('send-btn-label');
   sendBtn.disabled = false;
-  sendLabel.textContent = 'Send Now';
+  sendLabel.textContent = 'Send now';
 }
 
 /* ── Toast ── */
 let toastTimer = null;
 function showToast(msg, duration = 3500) {
   const t = document.getElementById('toast');
-  t.innerHTML = msg;
+  t.textContent = msg;
   t.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), duration);
 }
 
-/* ── Escape HTML for safe interpolation ── */
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+/* ── Subscribers browser ── */
+let subscriberSearchTimer = null;
+let subscriberSearchSeq = 0;
+
+function openSubscribers() {
+  document.getElementById('subscribers-modal').classList.add('open');
+  runSubscriberSearch(0, false);
 }
+
+function closeSubscribers() {
+  document.getElementById('subscribers-modal').classList.remove('open');
+}
+
+function subscriberRowHtml(s) {
+  const statusBadge = s.is_active
+    ? '<span class="inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold bg-green-100 text-green-700">Active</span>'
+    : '<span class="inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold bg-gray-100 text-gray-500">Inactive</span>';
+  return '' +
+    '<div class="flex items-center justify-between gap-3 px-3 py-2.5">' +
+      '<div class="min-w-0">' +
+        '<div class="text-sm font-medium text-gray-800 truncate">' + escHtml(s.email) + '</div>' +
+        '<div class="text-xs text-gray-400">' + escHtml(s.subscribed_at || '') + '</div>' +
+      '</div>' +
+      statusBadge +
+    '</div>';
+}
+
+function runSubscriberSearch(offset, append) {
+  const q = document.getElementById('subscriber-search').value.trim();
+  const status = document.getElementById('subscriber-status').value;
+  const seq = ++subscriberSearchSeq;
+  const listEl = document.getElementById('subscriber-results');
+
+  if (!append) {
+    listEl.innerHTML = '<div class="text-sm text-gray-400 text-center py-6"><i class="fas fa-spinner fa-spin"></i> Searching...</div>';
+  }
+
+  fetch('/events/admin/notify/subscribers/search?q=' + encodeURIComponent(q) + '&status=' + encodeURIComponent(status) + '&limit=20&offset=' + offset)
+    .then(r => r.json())
+    .then(data => {
+      if (seq !== subscriberSearchSeq) return;
+      if (!data.success) {
+        listEl.innerHTML = '<div class="text-sm text-red-500 py-4 text-center">Could not load subscribers.</div>';
+        return;
+      }
+      const rowsHtml = data.results.map(subscriberRowHtml).join('');
+      if (append) {
+        listEl.insertAdjacentHTML('beforeend', rowsHtml);
+      } else {
+        listEl.innerHTML = rowsHtml || '<div class="text-sm text-gray-400 text-center py-6">No subscribers found.</div>';
+      }
+
+      const shown = (append ? listEl.children.length : data.results.length);
+      const loadMoreBtn = document.getElementById('subscriber-load-more');
+      loadMoreBtn.dataset.offset = String(offset + data.results.length);
+      loadMoreBtn.hidden = !data.has_more;
+
+      document.getElementById('subscriber-results-summary').textContent = data.total === 0
+        ? 'No subscribers found.'
+        : 'Showing ' + shown + ' of ' + data.total + ' subscriber' + (data.total !== 1 ? 's' : '') + '.';
+    })
+    .catch(() => {
+      if (seq === subscriberSearchSeq) {
+        listEl.innerHTML = '<div class="text-sm text-red-500 py-4 text-center">Network error, please try again.</div>';
+      }
+    });
+}
+
+function scheduleSubscriberSearch() {
+  clearTimeout(subscriberSearchTimer);
+  subscriberSearchTimer = setTimeout(() => runSubscriberSearch(0, false), 300);
+}
+
+document.getElementById('browse-subscribers-btn').addEventListener('click', openSubscribers);
+document.getElementById('subscriber-search').addEventListener('input', scheduleSubscriberSearch);
+document.getElementById('subscriber-status').addEventListener('change', () => runSubscriberSearch(0, false));
+document.getElementById('subscriber-load-more').addEventListener('click', () => {
+  const offset = parseInt(document.getElementById('subscriber-load-more').dataset.offset || '0', 10);
+  runSubscriberSearch(offset, true);
+});
 
 /* ── Init ── */
 setMode('single');
+runSearch(0, false);
+updatePreview();
 </script>
 {% endblock %}
