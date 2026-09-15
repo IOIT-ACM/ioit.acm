@@ -80,10 +80,16 @@ def home():
 def subscribe():
     import re
     from flask import request, jsonify, flash, redirect, url_for
+    from sqlalchemy.exc import IntegrityError
     from app.db import db
     from app.models import Subscriber
 
     data = request.get_json(silent=True) if request.is_json else request.form
+    if data is None:
+        if request.is_json:
+            return jsonify({"success": False, "error": "Invalid email address."}), 400
+        flash("Invalid email address.", category="error")
+        return redirect(url_for("events.home"))
     email = (data.get("email") or "").strip()
 
     email_regex = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
@@ -104,8 +110,12 @@ def subscribe():
     else:
         new_sub = Subscriber(email=email, is_active=True)
         db.session.add(new_sub)
-        db.session.commit()
-        msg = "Successfully subscribed to event notifications!"
+        try:
+            db.session.commit()
+            msg = "Successfully subscribed to event notifications!"
+        except IntegrityError:
+            db.session.rollback()
+            msg = "You are already subscribed to event notifications."
 
     if request.is_json:
         return jsonify({"success": True, "message": msg})

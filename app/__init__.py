@@ -63,8 +63,8 @@ def create_app():
     with app.app_context():
         try:
             db.create_all()
-        except Exception:
-            pass
+        except Exception as e:
+            app.logger.warning("db.create_all() failed during startup: %s", e)
 
     # Register blueprints
     from app.blueprints.home import home_bp
