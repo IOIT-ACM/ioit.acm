@@ -59,7 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
   renderer.shadowMap.enabled = true;
 
   const createCubes = () => {
-    cubes.forEach((cube) => scene.remove(cube));
+    cubes.forEach((cube) => {
+      scene.remove(cube);
+    });
     cubes = [];
 
     const geometry = new RoundedBoxGeometry(1, 1, 1, 2, 0.15);

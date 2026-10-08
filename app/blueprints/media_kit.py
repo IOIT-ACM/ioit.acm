@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template
 from collections import OrderedDict
+
+from flask import Blueprint, render_template
 
 media_kit_bp = Blueprint(
     "media_kit", __name__, template_folder="../templates", static_folder="../static"

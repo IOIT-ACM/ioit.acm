@@ -1,9 +1,11 @@
-from datetime import datetime, timedelta
-from flask import Blueprint, render_template, request, jsonify
-from app.data.events import events
-import requests
 import os
+from datetime import datetime, timedelta
+
+import requests
 from dotenv import load_dotenv
+from flask import Blueprint, jsonify, render_template, request
+
+from app.data.events import events
 
 feedback_bp = Blueprint("feedback", __name__, template_folder="../templates")
 

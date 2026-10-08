@@ -1,9 +1,10 @@
 import csv
-import requests
-import time
 import os
-from flask import Blueprint, render_template
+import time
+
+import requests
 from dotenv import load_dotenv
+from flask import Blueprint, render_template
 
 membership_bp = Blueprint("membership", __name__, template_folder="../templates")
 

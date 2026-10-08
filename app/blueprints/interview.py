@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template
 
-
 interviews_bp = Blueprint("interviews", __name__, template_folder="../templates")
 
 

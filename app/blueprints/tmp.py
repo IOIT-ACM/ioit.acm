@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, request, make_response, jsonify
 import os
-import requests
 from datetime import datetime, timedelta
+
+import requests
+from flask import Blueprint, jsonify, make_response, render_template, request
 
 form_bp = Blueprint(
     "ioit_acm_forms",

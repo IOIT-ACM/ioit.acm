@@ -1,12 +1,16 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "organizeImports": {
-    "enabled": true
+  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "complexity": {
         "noForEach": "off"
       },
@@ -21,6 +25,12 @@
     "indentWidth": 2
   },
   "files": {
-    "include": ["app/static/js/**/*.js"]
+    "includes": [
+      "app/static/js/**/*.js",
+      "app/static/sw.js",
+      "tailwind.config.js",
+      "biome.json",
+      "package.json"
+    ]
   }
 }

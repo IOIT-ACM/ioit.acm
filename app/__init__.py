@@ -1,12 +1,14 @@
+import os
+
+from dotenv import load_dotenv
 from flask import Flask, render_template
-from flask_login import LoginManager, current_user
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_login import LoginManager, current_user
+from sqlalchemy.exc import OperationalError, ProgrammingError, SQLAlchemyError
+
 from app.db import DatabaseConfig, db
 from app.models import User
-from sqlalchemy.exc import ProgrammingError, SQLAlchemyError, OperationalError
-from dotenv import load_dotenv
-import os
 
 load_dotenv()
 
@@ -49,25 +51,25 @@ def create_app():
         for bind_key in app.config["SQLALCHEMY_BINDS"].keys():
             db.create_all(bind_key=bind_key)
     # Register blueprints
-    from app.blueprints.home import home_bp
-    from app.blueprints.team import team_bp
-    from app.blueprints.membership import membership_bp
-    from app.blueprints.join import join_bp
+    from app.blueprints.about import about_bp
+    from app.blueprints.api import api_bp
+    from app.blueprints.apps import apps_bp
+    from app.blueprints.competitions.auth import auth_bp
+    from app.blueprints.competitions.competition import competitions_bp
+    from app.blueprints.events import events_bp
     from app.blueprints.feedback import feedback_bp
     from app.blueprints.gallery import gallery_bp
-    from app.blueprints.events import events_bp
-    from app.blueprints.about import about_bp
-    from app.blueprints.projects import projects_bp
-    from app.blueprints.opensource import opensource_bp
-    from app.blueprints.competitions.competition import competitions_bp
-    from app.blueprints.competitions.auth import auth_bp
-    from app.blueprints.recruitment import recruitment_bp
-    from app.blueprints.api import api_bp
-    from app.blueprints.tmp import form_bp
-    from app.blueprints.media_kit import media_kit_bp
+    from app.blueprints.home import home_bp
     from app.blueprints.interview import interviews_bp
-    from app.blueprints.apps import apps_bp
+    from app.blueprints.join import join_bp
+    from app.blueprints.media_kit import media_kit_bp
+    from app.blueprints.membership import membership_bp
+    from app.blueprints.opensource import opensource_bp
+    from app.blueprints.projects import projects_bp
+    from app.blueprints.recruitment import recruitment_bp
     from app.blueprints.resources import resources_bp
+    from app.blueprints.team import team_bp
+    from app.blueprints.tmp import form_bp
 
     limiter.limit("200 per hour")(home_bp)
     limiter.limit("200 per hour")(team_bp)

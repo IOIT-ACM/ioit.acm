@@ -9,5 +9,17 @@ ui:
 install:
 	uv venv
 	uv sync
+	npm install
+	uv run pre-commit install
 
-.PHONY: run ui install
+lint:
+	uv run ruff check .
+	uv run ruff format --check .
+	npx biome check .
+
+format:
+	uv run ruff check --fix .
+	uv run ruff format .
+	npx biome check --write .
+
+.PHONY: run ui install lint format

@@ -1,5 +1,7 @@
 import urllib.parse
+
 from flask import Blueprint, render_template
+
 from app.data.events import events
 
 events_bp = Blueprint("events", __name__, template_folder="../templates")

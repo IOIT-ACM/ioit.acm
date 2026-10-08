@@ -21,9 +21,11 @@ Home = "https://ioit.acm.org/"
 target-version = "py312"
 
 [tool.ruff.lint]
-select = ["E", "F", "W"]
+select = ["E", "F", "W", "I"]
 ignore = ["E501", "F403", "F405"]
 
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6",
+    "ruff>=0.16.10",
+]

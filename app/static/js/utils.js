@@ -14,7 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
-    lazyVideos.forEach((video) => observer.observe(video));
+    lazyVideos.forEach((video) => {
+      observer.observe(video);
+    });
   }
 });
 
