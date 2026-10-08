@@ -16,3 +16,16 @@ dependencies = [
 
 [project.urls]
 Home = "https://ioit.acm.org/"
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501", "F403", "F405"]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6",
+    "ruff>=0.16.10",
+]

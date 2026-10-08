@@ -1,5 +1,5 @@
 team_data = {
-        "2025": [
+    "2025": [
         {
             "name": "Aditya Godse",
             "title": "Chair",

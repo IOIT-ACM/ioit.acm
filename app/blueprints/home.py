@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-from flask import Blueprint, render_template, send_from_directory, redirect, url_for
+from datetime import datetime
+
+from flask import Blueprint, redirect, render_template, send_from_directory, url_for
+
 from app.data.events import events
 from app.data.stories import stories
-from datetime import datetime
 
 # Define the blueprint
 home_bp = Blueprint("home", __name__, template_folder="../templates")
@@ -31,7 +33,6 @@ images_2 = [
 
 @home_bp.route("/")
 def home():
-    now = datetime.now()
     upcoming_events = []
     past_events = []
     for event in events:

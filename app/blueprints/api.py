@@ -1,5 +1,6 @@
-from flask import Blueprint, jsonify, make_response, request
 import os
+
+from flask import Blueprint, jsonify, make_response
 
 api_bp = Blueprint("api", __name__, url_prefix="/api")
 

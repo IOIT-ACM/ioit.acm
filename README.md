@@ -25,6 +25,23 @@ uv sync
 npx tailwindcss -i ./app/static/css/input.css -o ./app/static/css/tailwind.css --watch
 ```
 
+## linting and formatting
+
+Python is linted and formatted with [ruff](https://docs.astral.sh/ruff/), JavaScript with [biome](https://biomejs.dev/). Both run automatically on commit through [pre-commit](https://pre-commit.com/).
+
+```
+uv sync
+npm install
+uv run pre-commit install
+```
+
+To run them by hand:
+
+```
+make lint     # check only
+make format   # apply fixes
+```
+
 ## data
 
 1. Teams

@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, url_for
 from collections import OrderedDict
+
+from flask import Blueprint, render_template
 
 media_kit_bp = Blueprint(
     "media_kit", __name__, template_folder="../templates", static_folder="../static"
@@ -208,14 +209,13 @@ BRAND_KITS = OrderedDict(
                     {
                         "name": "Revolution Red",
                         "hex": "#C53B27",
-                        "style": "background-color: #C53B27; color: white;" 
+                        "style": "background-color: #C53B27; color: white;",
                     },
                     {
                         "name": "Parchment",
                         "hex": "#F5F5F5",
                         "style": "background-color: #F5F5F5; color: black;",
                     },
-                    
                 ],
                 "typeface": {
                     "name": "League Spartan",
