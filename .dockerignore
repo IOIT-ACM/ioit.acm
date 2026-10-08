@@ -1,7 +1,11 @@
-.venv
-venv
-.git
-__pycache__
-*.pyc
+.git/
+.github/
+.venv/
+venv/
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
 .env
-node_modules
+.env.*
+!.env.example

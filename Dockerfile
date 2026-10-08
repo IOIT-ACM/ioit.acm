@@ -13,4 +13,4 @@ RUN uv sync --frozen
 
 COPY . /app
 
-CMD ["uv", "run", "gunicorn", "-b", "0.0.0.0:5001", "wsgi:app"]
+CMD ["uv", "run", "gunicorn", "--bind", "0.0.0.0:5001", "wsgi:app"]
