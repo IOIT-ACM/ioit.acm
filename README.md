@@ -19,10 +19,19 @@ _Footer_
 uv sync
 ```
 
-2. TailwindCSS (run `npm install`)
+2. Node.js (v26, see `.nvmrc`) for frontend libraries and TailwindCSS
 
 ```
-npx tailwindcss -i ./app/static/css/input.css -o ./app/static/css/tailwind.css --watch
+npm ci
+npm run vendor
+```
+
+Frontend libraries (Three.js, Font Awesome, Lucide, Chart.js, htmx, fabric.js, Remix Icon, Moment.js) are npm dependencies. `npm run vendor` copies the files the templates load into `app/static/vendor/`, which is gitignored, so rerun it after changing `package.json`. To use another Three.js addon, add it to `scripts/vendor.mjs`.
+
+To rebuild `tailwind.css` while editing templates:
+
+```
+npm run watch:css
 ```
 
 ## linting and formatting
