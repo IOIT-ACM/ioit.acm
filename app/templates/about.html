@@ -28,18 +28,17 @@ block og_title %}About AISSMS IOIT ACM Student Chapter
                     <div id="rotate"
                          class="aspect-square bg-blue-500 w-1/2 h-auto transform absolute border border-white rounded-xl">
                     </div>
-                    <div class="aspect-square overflow-hidden bg-blue-500 w-full h-auto transform -rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400">
-                        <video id="about-video"
-                               src="{{ url_for('static', filename='img/about/clip.mp4') }}"
-                               alt="About Us Image"
-                               class="object-cover h-full w-full cursor-pointer"
-                               muted
-                               autoplay
-                               loop
-                               playsinline>
-                        </video>
+                    <div class="aspect-square overflow-hidden bg-white w-full h-auto transform -rotate-45 rounded-3xl border-4 border-white shadow-lg shadow-blue-400 flex items-center justify-center">
+                        <img src="{{ url_for('static', filename='img/assets/acm.png') }}"
+                             alt="AISSMS IOIT ACM Student Chapter Logo"
+                             class="rotate-45"
+                             style="width: 60%;
+                                    height: 60%;
+                                    object-fit: contain;
+                                    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));" />
                     </div>
-                    <div class="aspect-square absolute md:bottom-3 bottom-2 md:right-2 right-1 bg-blue-500 w-1/3 h-auto transform rotate-45 border border-white rounded-xl backdrop-blur-sm backdrop-opacity-80 bg-opacity-60 animate-rotate">
+                    <div class="aspect-square absolute md:right-2 right-1 bg-blue-500 w-1/3 h-auto transform rotate-45 border border-white rounded-xl backdrop-blur-sm backdrop-opacity-80 bg-opacity-60 animate-rotate"
+                         style="bottom: -3.5rem;">
                     </div>
                 </div>
             </div>
@@ -233,16 +232,6 @@ block og_title %}About AISSMS IOIT ACM Student Chapter
             </div>
             <script type="module" src="/static/js/award-three.js"></script>
             <script>
-  const video = document.getElementById("about-video");
-
-  video.addEventListener("click", () => {
-    if (video.muted) {
-      video.muted = false;
-    } else {
-      video.muted = true;
-    }
-  });
-
   const rotatingDiv = document.getElementById("rotate");
 
   window.addEventListener("scroll", function () {
