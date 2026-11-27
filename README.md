@@ -51,6 +51,63 @@ make lint     # check only
 make format   # apply fixes
 ```
 
+## rate limiting
+
+Rate limits are enforced with [Flask-Limiter](https://flask-limiter.readthedocs.io/). Where the counters live is set by `RATELIMIT_STORAGE_URI`:
+
+| Environment | `RATELIMIT_STORAGE_URI` | Notes |
+| --- | --- | --- |
+| Local development | unset (defaults to `memory://`) | Counters live in the Python process. Fine for one dev server. |
+| Production | `redis+unix:///home/<user>/redis/redis.sock` | Counters are shared by every worker process. |
+| Any Redis over TCP | `redis://[:password@]host:6379/0` | Use `rediss://` for TLS. |
+
+With `memory://`, every worker process (LiteSpeed `lswsgi` processes or Gunicorn workers) keeps its own counters, so a client gets the full limit once per process. Redis gives all processes one shared count.
+
+If Redis is unreachable the app does not fail requests. It falls back to per-process in-memory limits and switches back once Redis responds again. Keys are prefixed with `ioit-acm` so the Redis instance can be shared with other apps.
+
+### Running Redis on the cPanel host
+
+The host has no system Redis service, but CloudLinux ships a Redis 6.2 binary at `/opt/alt/redis/bin/redis-server` that can run under the account user without root. It uses about 5 threads, which count towards the account's process limit.
+
+1. Create `~/redis/redis.conf`, replacing `<user>` with the account name. It listens on a private unix socket only, keeps no data on disk and caps memory:
+
+   ```
+   port 0
+   unixsocket /home/<user>/redis/redis.sock
+   unixsocketperm 700
+   daemonize yes
+   pidfile /home/<user>/redis/redis.pid
+   logfile /home/<user>/redis/redis.log
+   dir /home/<user>/redis
+   save ""
+   appendonly no
+   maxmemory 32mb
+   maxmemory-policy volatile-ttl
+   ```
+
+2. Start it and check it responds:
+
+   ```
+   /opt/alt/redis/bin/redis-server ~/redis/redis.conf
+   /opt/alt/redis/bin/redis-cli -s ~/redis/redis.sock ping   # PONG
+   ```
+
+3. Keep it running with cron (`crontab -e`). This starts Redis after a reboot and restarts it within 5 minutes if it stops:
+
+   ```
+   */5 * * * * /opt/alt/redis/bin/redis-cli -s /home/<user>/redis/redis.sock ping >/dev/null 2>&1 || /opt/alt/redis/bin/redis-server /home/<user>/redis/redis.conf
+   ```
+
+4. Add `RATELIMIT_STORAGE_URI=redis+unix:///home/<user>/redis/redis.sock` to the app's `.env` and restart the app.
+
+### Tests
+
+The Redis tests need a server and are skipped unless `TEST_REDIS_URL` is set. CI runs them against a Redis 6.2 service container.
+
+```
+TEST_REDIS_URL=redis://localhost:6379/15 uv run pytest
+```
+
 ## data
 
 1. Teams

@@ -15,10 +15,10 @@ load_dotenv()
 database_config = DatabaseConfig()
 login_manager = LoginManager()
 
+# Storage is configured in create_app() from RATELIMIT_STORAGE_URI.
 limiter = Limiter(
     key_func=get_remote_address,
     default_limits=["200 per hour"],
-    storage_uri="memory://",
 )
 
 
@@ -31,6 +31,22 @@ def create_app():
     app.config["SESSION_COOKIE_SECURE"] = True
     app.config["SESSION_PERMANENT"] = False
     app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+
+    # Rate limit counters. memory:// keeps a separate count in every worker
+    # process, so production should point this at Redis to share them, e.g.
+    # redis+unix:///home/<user>/redis/redis.sock (see README).
+    app.config["RATELIMIT_STORAGE_URI"] = (
+        os.environ.get("RATELIMIT_STORAGE_URI") or "memory://"
+    )
+    app.config["RATELIMIT_KEY_PREFIX"] = "ioit-acm"
+    # Fail fast instead of stalling requests when Redis is slow or down.
+    app.config["RATELIMIT_STORAGE_OPTIONS"] = {
+        "socket_connect_timeout": 0.5,
+        "socket_timeout": 0.5,
+    }
+    # If Redis is unreachable, keep serving with per-process in-memory limits
+    # and switch back once it recovers, rather than failing every request.
+    app.config["RATELIMIT_IN_MEMORY_FALLBACK_ENABLED"] = True
 
     db.init_app(app)
 
