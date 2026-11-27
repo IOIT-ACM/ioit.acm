@@ -3,6 +3,8 @@ from datetime import datetime
 from flask import Blueprint, render_template
 from flask_login import current_user
 
+from app.db import db
+
 from ...models import *
 
 now = datetime.now()
@@ -23,7 +25,9 @@ def competitions():
 ###
 @competitions_bp.route("/leaderboard")
 def global_leaderboard():
-    leaderboard = GlobalLeaderboard.query.order_by(GlobalLeaderboard.score.desc()).all()
+    leaderboard = db.session.scalars(
+        db.select(GlobalLeaderboard).order_by(GlobalLeaderboard.score.desc())
+    ).all()
     user_branches = sorted(set(entry.branch for entry in leaderboard))
     return render_template(
         "competitions/leaderboard.html",

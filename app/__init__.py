@@ -5,6 +5,7 @@ from flask import Flask, render_template
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_login import LoginManager, current_user
+from flask_mail import Mail
 from sqlalchemy.exc import OperationalError, ProgrammingError, SQLAlchemyError
 
 from app.db import DatabaseConfig, db
@@ -14,6 +15,7 @@ load_dotenv()
 
 database_config = DatabaseConfig()
 login_manager = LoginManager()
+mail = Mail()
 
 # Storage is configured in create_app() from RATELIMIT_STORAGE_URI.
 limiter = Limiter(
@@ -25,7 +27,9 @@ limiter = Limiter(
 def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_config.binds["users"]
     app.config["SQLALCHEMY_BINDS"] = database_config.get_binds()
+
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SESSION_COOKIE_HTTPONLY"] = True
     app.config["SESSION_COOKIE_SECURE"] = True
@@ -48,7 +52,30 @@ def create_app():
     # and switch back once it recovers, rather than failing every request.
     app.config["RATELIMIT_IN_MEMORY_FALLBACK_ENABLED"] = True
 
+    # Flask-Mail configuration
+    app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER", "localhost")
+    app.config["MAIL_PORT"] = int(os.getenv("MAIL_PORT", 1025))
+    app.config["MAIL_USE_TLS"] = os.getenv("MAIL_USE_TLS", "False").lower() in (
+        "true",
+        "1",
+        "t",
+    )
+    app.config["MAIL_USE_SSL"] = os.getenv("MAIL_USE_SSL", "False").lower() in (
+        "true",
+        "1",
+        "t",
+    )
+    app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME", None) or None
+    app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD", None) or None
+    app.config["MAIL_DEFAULT_SENDER"] = os.getenv(
+        "MAIL_DEFAULT_SENDER", "events@ioit.acm.org"
+    )
+    app.config["MAIL_SUPPRESS_SEND"] = os.getenv(
+        "MAIL_SUPPRESS_SEND", "False"
+    ).lower() in ("true", "1", "t")
+
     db.init_app(app)
+    mail.init_app(app)
 
     login_manager.init_app(app)
     login_manager.login_view = "auth.signin"
@@ -64,10 +91,15 @@ def create_app():
         return {"current_user": current_user}
 
     with app.app_context():
-        for bind_key in app.config["SQLALCHEMY_BINDS"].keys():
-            db.create_all(bind_key=bind_key)
+        try:
+            for bind_key in app.config["SQLALCHEMY_BINDS"].keys():
+                db.create_all(bind_key=bind_key)
+        except Exception as e:
+            app.logger.warning("db.create_all() failed during startup: %s", e)
+
     # Register blueprints
     from app.blueprints.about import about_bp
+    from app.blueprints.admin import admin_bp
     from app.blueprints.api import api_bp
     from app.blueprints.apps import apps_bp
     from app.blueprints.competitions.auth import auth_bp
@@ -105,6 +137,7 @@ def create_app():
     limiter.limit("200 per hour")(media_kit_bp)
     limiter.limit("200 per hour")(apps_bp)
     limiter.limit("200 per hour")(resources_bp)
+    limiter.limit("30 per hour")(admin_bp)
 
     # Register blueprints
     app.register_blueprint(home_bp)
@@ -126,6 +159,7 @@ def create_app():
     app.register_blueprint(interviews_bp)
     app.register_blueprint(apps_bp)
     app.register_blueprint(resources_bp)
+    app.register_blueprint(admin_bp)
 
     # Error Handlers
     @app.errorhandler(ProgrammingError)

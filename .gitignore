@@ -169,3 +169,7 @@ local_*.db
 
 # Frontend libraries copied from node_modules by `npm run vendor`
 app/static/vendor/
+
+# Admin-uploaded email images (runtime data, not source)
+app/static/uploads/notify/*
+!app/static/uploads/notify/.gitkeep

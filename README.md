@@ -34,6 +34,23 @@ To rebuild `tailwind.css` while editing templates:
 npm run watch:css
 ```
 
+3. Local Email Testing (Mailpit)
+
+For testing email notifications locally during development without sending real emails:
+- Run Mailpit locally via Docker:
+  ```bash
+  docker run -d -p 1025:1025 -p 8025:8025 axllent/mailpit
+  ```
+- Configure `.env`:
+  ```env
+  MAIL_SERVER=localhost
+  MAIL_PORT=1025
+  MAIL_USE_TLS=False
+  MAIL_USERNAME=
+  MAIL_PASSWORD=
+  ```
+- All emails sent by Flask-Mail land in Mailpit's local web UI at `http://localhost:8025`.
+
 ## linting and formatting
 
 Python is linted and formatted with [ruff](https://docs.astral.sh/ruff/), JavaScript with [biome](https://biomejs.dev/). Both run automatically on commit through [pre-commit](https://pre-commit.com/).
