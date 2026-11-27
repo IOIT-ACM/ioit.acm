@@ -27,6 +27,16 @@ school_participants = [
         "school": "ACM India Summer School 2025",
     },
     {
+        "name": "Kshitij Kumavat",
+        "imageurl": "Kshitij.jpeg",
+        "school": "ACM India Summer School 2026",
+    },
+    {
+        "name": "Jeevika Agrawal",
+        "imageurl": "jeevika.jpeg",
+        "school": "ACM India Summer School 2026",
+    },
+    {
         "name": "Chaitali Khachane",
         "imageurl": "chaitali.jpeg",
         "school": "ACM India Winter School 2023",
@@ -58,7 +68,7 @@ school_participants = [
     },
     {
         "name": "Tanmayee Mali",
-        "imageurl": "tanmay-mali.jpeg",
+        "imageurl": "tanmayee-mali.jpeg",
         "school": "ACM India Winter School 2022",
     },
 ]
