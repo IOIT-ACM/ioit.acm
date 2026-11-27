@@ -76,6 +76,27 @@ def calender_redirect():
 def services():
     projects = [
         {
+            "title": "Sahabhag",
+            "subtitle": "Volunteer Education Platform",
+            "description": "Volunteer-education matching platform connecting volunteers with educational institutes across India, so they can share their skills where they are needed.",
+            "image": "sahabhag.jpeg",
+            "link": "https://sahabhag-web.vercel.app/",
+        },
+        {
+            "title": "Devrai Vidnyan Ashram",
+            "subtitle": "Science Education Website",
+            "description": "Official website for an institute promoting scientific thinking, creativity and reading habits among students, with information on its camps, competitions and activities.",
+            "image": "devrai.jpeg",
+            "link": "https://devrai-web.vercel.app/",
+        },
+        {
+            "title": "Jeevan Utsav Kendra",
+            "subtitle": "NGO Website",
+            "description": "Website for an NGO in Nargol dedicated to organic farming, holistic education and Jeevan Vidya, with details on its residential camps and registration.",
+            "image": "jeevan_utsav.jpeg",
+            "link": "https://jeevan-utsav-web.vercel.app/",
+        },
+        {
             "title": "ManWithIndies",
             "subtitle": "Wildlife Rescue Portal",
             "description": "End-to-end digital portal replacing manual paper-based wildlife rescue reporting. Supports GPS tracking and workflow digitization.",
