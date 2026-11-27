@@ -17,13 +17,15 @@ CACHE_EXPIRY = 86400  # 1 day
 school_participants = [
     {"name": "Sakshi Mane", "imageurl": "sakshi-mane.jpeg", "school": "ACM India Summer School 2025"},
     {"name": "Devang Gandhi", "imageurl": "devang.jpeg", "school": "ACM India Summer School 2025"},
+    {"name": "Kshitij Kumavat", "imageurl": "Kshitij.jpeg", "school": "ACM India Summer School 2026"},
+    {"name": "Jeevika Agrawal", "imageurl": "jeevika.jpeg", "school": "ACM India Summer School 2026"},
     {"name": "Chaitali Khachane", "imageurl": "chaitali.jpeg", "school": "ACM India Winter School 2023"},
     {"name": "Sadgi Pandey", "imageurl": "sadgi.jpeg", "school": "ACM India Winter School 2023"},
     {"name": "Anjali Shukla", "imageurl": "anjali-shukla.jpeg", "school": "ACM India Summer School 2023"},
     {"name": "Sana Naqvi", "imageurl": "sana-naqvi.jpeg", "school": "ACM India Summer School on Compilers for AI/ML Programs"},
     {"name": "Shravani Shewale", "imageurl": "shravani-shewale.jpeg", "school": "ACM India Summer School 2022"},
     {"name": "Yash Vyavhare", "imageurl": "yash-v.jpeg", "school": "ACM India Summer School 2022"},
-    {"name": "Tanmayee Mali", "imageurl": "tanmay-mali.jpeg", "school": "ACM India Winter School 2022"},
+    {"name": "Tanmayee Mali", "imageurl": "tanmayee-mali.jpeg", "school": "ACM India Winter School 2022"},
 ]
 
 
