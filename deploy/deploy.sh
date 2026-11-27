@@ -12,8 +12,11 @@
 set -euo pipefail
 
 REPO_DIR="${REPO_DIR:-$HOME/ioit.acm}"
-APP_ROOT="${APP_ROOT:-$HOME/website}"
-VENV="${VENV:-$HOME/virtualenv/website/3.12}"
+# The app folder is named after its Python version: LiteSpeed caches each
+# app's Python home by folder, so a Python upgrade needs a new app folder
+# (see README, "Upgrading Python").
+APP_ROOT="${APP_ROOT:-$HOME/website-312}"
+VENV="${VENV:-$HOME/virtualenv/website-312/3.12}"
 UV="${UV:-$HOME/.local/bin/uv}"
 HEALTH_URL="${HEALTH_URL:-https://ioit.acm.org/}"
 PREVIOUS_DIR="${PREVIOUS_DIR:-$HOME/releases/website/previous}"
