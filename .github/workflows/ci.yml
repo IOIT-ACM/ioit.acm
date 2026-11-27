@@ -1,0 +1,106 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - refactor
+  pull_request:
+
+permissions:
+  contents: read
+
+# Cancel superseded runs on the same PR or branch. Deploys are excluded below so
+# a production deploy is never interrupted halfway.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@v10.4.0
+        with:
+          enable-cache: true
+
+      - name: Install Python dependencies
+        run: uv sync --locked
+
+      - name: Ruff lint
+        run: uv run ruff check --output-format=github .
+
+      - name: Ruff format
+        run: uv run ruff format --check .
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Biome
+        run: npx biome ci .
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@v10.4.0
+        with:
+          enable-cache: true
+
+      - name: Install Python dependencies
+        run: uv sync --locked
+
+      - name: Run tests
+        run: uv run pytest
+
+  deploy:
+    name: Deploy
+    needs: [lint, test]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    steps:
+      - name: Checkout repo (to read commit message)
+        uses: actions/checkout@v7
+
+      - name: Get last commit message
+        id: vars
+        run: |
+          msg=$(git log -1 --pretty=%B)
+          {
+            echo 'commit_msg<<EOF'
+            echo "$msg"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+          if echo "$msg" | grep -Eiq "update[[:space:]]+dependencies|deps"; then
+            echo "with_deps=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "with_deps=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.2.5
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            if [ "${{ steps.vars.outputs.with_deps }}" = "true" ]; then
+              bash "$HOME/deploy.sh" --with-deps
+            else
+              bash "$HOME/deploy.sh"
+            fi

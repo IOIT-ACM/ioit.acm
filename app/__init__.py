@@ -167,7 +167,7 @@ def create_app():
 
     @app.errorhandler(429)
     def rate_limit_exceeded(e):
-        return render_template("errors/429.html", error=e.description), 400
+        return render_template("errors/429.html", error=e.description), 429
 
     @app.errorhandler(Exception)
     def handle_generic_exception(error):
