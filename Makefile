@@ -4,12 +4,16 @@ run:
 	uv run flask run --host=0.0.0.0 --port=5000 --reload
 
 ui:
-	npx tailwindcss -i ./app/static/css/input.css -o ./app/static/css/tailwind.css --watch --minify
+	npm run watch:css
+
+vendor:
+	npm run vendor
 
 install:
 	uv venv
 	uv sync
 	npm install
+	npm run vendor
 	uv run pre-commit install
 
 test:
@@ -25,4 +29,4 @@ format:
 	uv run ruff format .
 	npx biome check --write .
 
-.PHONY: run ui install test lint format
+.PHONY: run ui vendor install test lint format

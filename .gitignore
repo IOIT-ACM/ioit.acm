@@ -166,3 +166,6 @@ node_modules
 
 # SQLite files created when USE_SQLITE=true (tests, local dev)
 local_*.db
+
+# Frontend libraries copied from node_modules by `npm run vendor`
+app/static/vendor/

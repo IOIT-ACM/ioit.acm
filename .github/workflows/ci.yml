@@ -38,7 +38,7 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version-file: .nvmrc
           cache: npm
 
       - name: Install Node dependencies
@@ -59,6 +59,16 @@ jobs:
 
       - name: Install Python dependencies
         run: uv sync --locked
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Vendor frontend libraries
+        run: |
+          npm ci --omit=dev
+          npm run vendor
 
       - name: Run tests
         run: uv run pytest

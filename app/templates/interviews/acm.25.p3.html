@@ -8,14 +8,13 @@
       name="description"
       content="Stay updated with the ACM Recruitment Phase 3 interview queue. View the live interview status, see who's currently on call, and check the complete order of upcoming candidates."
     />
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="{{ url_for('static', filename='vendor/lucide/lucide.min.js') }}"></script>
     <meta property="og:type" content="website" />
     <meta property="og:title" content="ACM Recruitment Phase 3 Interviews" />
     <meta
@@ -105,6 +104,8 @@
         }
       }
     </style>
+    <!-- Loaded last so utilities override the inline styles above, as the Tailwind Play CDN did -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}" />
   </head>
   <body class="text-white/90 antialiased">
     <header
