@@ -4,14 +4,25 @@ import os
 import re
 import uuid
 from datetime import datetime, timedelta
-from flask import Blueprint, current_app, render_template, request, jsonify, flash, redirect, url_for
-from flask_login import login_required, current_user
+
+from flask import (
+    Blueprint,
+    current_app,
+    flash,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
+from flask_login import current_user, login_required
 from flask_mail import Message
-from app import mail, limiter
-from app.db import db
-from app.models import Subscriber, EmailLog
-from app.utils import admin_required
+
+from app import limiter, mail
 from app.data.events import events
+from app.db import db
+from app.models import EmailLog, Subscriber
+from app.utils import admin_required
 
 admin_bp = Blueprint("admin", __name__, template_folder="../templates")
 
@@ -63,7 +74,7 @@ def abs_image_url(path):
         return path
     relative = path.lstrip("/")
     if relative.startswith("static/"):
-        relative = relative[len("static/"):]
+        relative = relative[len("static/") :]
     return url_for("static", filename=relative, _external=True)
 
 
@@ -86,8 +97,12 @@ def sniff_image_extension(head):
 @admin_required
 @limiter.limit("60 per minute")
 def notify_dashboard():
-    active_subscriber_count = Subscriber.query.filter_by(is_active=True).count()
-    recent_logs = EmailLog.query.order_by(EmailLog.sent_at.desc()).limit(15).all()
+    active_subscriber_count = db.session.scalar(
+        db.select(db.func.count()).select_from(Subscriber).filter_by(is_active=True)
+    )
+    recent_logs = db.session.scalars(
+        db.select(EmailLog).order_by(EmailLog.sent_at.desc()).limit(15)
+    ).all()
     return render_template(
         "admin/notify.html",
         subscriber_count=active_subscriber_count,
@@ -120,21 +135,26 @@ def search_notify_events():
         matches = list(events)
 
     total = len(matches)
-    page = matches[offset:offset + limit]
+    page = matches[offset : offset + limit]
 
-    results = [{
-        "slug": e.get("slug"),
-        "name": e["name"],
-        "date": (e.get("date") or "").strip(),
-        "image_url": abs_image_url(e.get("image_url")),
-    } for e in page]
+    results = [
+        {
+            "slug": e.get("slug"),
+            "name": e["name"],
+            "date": (e.get("date") or "").strip(),
+            "image_url": abs_image_url(e.get("image_url")),
+        }
+        for e in page
+    ]
 
-    return jsonify({
-        "success": True,
-        "results": results,
-        "total": total,
-        "has_more": offset + len(page) < total,
-    })
+    return jsonify(
+        {
+            "success": True,
+            "results": results,
+            "total": total,
+            "has_more": offset + len(page) < total,
+        }
+    )
 
 
 @admin_bp.route("/events/admin/notify/subscribers/search", methods=["GET"])
@@ -157,30 +177,45 @@ def search_subscribers():
         offset = 0
     offset = max(0, offset)
 
-    subscriber_query = Subscriber.query
+    subscriber_query = db.select(Subscriber)
     if status == "active":
         subscriber_query = subscriber_query.filter_by(is_active=True)
     elif status == "inactive":
         subscriber_query = subscriber_query.filter_by(is_active=False)
     if query:
-        subscriber_query = subscriber_query.filter(Subscriber.email.ilike("%{}%".format(query)))
+        subscriber_query = subscriber_query.filter(
+            Subscriber.email.ilike("%{}%".format(query))
+        )
 
-    total = subscriber_query.count()
-    rows = subscriber_query.order_by(Subscriber.subscribed_at.desc()).offset(offset).limit(limit).all()
+    total = db.session.scalar(
+        db.select(db.func.count()).select_from(subscriber_query.subquery())
+    )
+    rows = db.session.scalars(
+        subscriber_query.order_by(Subscriber.subscribed_at.desc())
+        .offset(offset)
+        .limit(limit)
+    ).all()
 
-    results = [{
-        "id": s.id,
-        "email": s.email,
-        "is_active": s.is_active,
-        "subscribed_at": s.subscribed_at.strftime("%d %b %Y, %H:%M") if s.subscribed_at else None,
-    } for s in rows]
+    results = [
+        {
+            "id": s.id,
+            "email": s.email,
+            "is_active": s.is_active,
+            "subscribed_at": s.subscribed_at.strftime("%d %b %Y, %H:%M")
+            if s.subscribed_at
+            else None,
+        }
+        for s in rows
+    ]
 
-    return jsonify({
-        "success": True,
-        "results": results,
-        "total": total,
-        "has_more": offset + len(rows) < total,
-    })
+    return jsonify(
+        {
+            "success": True,
+            "results": results,
+            "total": total,
+            "has_more": offset + len(rows) < total,
+        }
+    )
 
 
 @admin_bp.route("/events/admin/notify/upload-image", methods=["POST"])
@@ -194,13 +229,20 @@ def upload_notify_image():
 
     ext = file.filename.rsplit(".", 1)[-1].lower() if "." in file.filename else ""
     if ext not in ALLOWED_IMAGE_EXTENSIONS:
-        return jsonify({"success": False, "error": "Unsupported file type. Use PNG, JPG, GIF or WEBP."}), 400
+        return jsonify(
+            {
+                "success": False,
+                "error": "Unsupported file type. Use PNG, JPG, GIF or WEBP.",
+            }
+        ), 400
 
     head = file.stream.read(16)
     file.stream.seek(0)
     detected = sniff_image_extension(head)
     if detected is None:
-        return jsonify({"success": False, "error": "That file does not look like a valid image."}), 400
+        return jsonify(
+            {"success": False, "error": "That file does not look like a valid image."}
+        ), 400
 
     file.stream.seek(0, os.SEEK_END)
     size = file.stream.tell()
@@ -208,7 +250,9 @@ def upload_notify_image():
     if size == 0:
         return jsonify({"success": False, "error": "The uploaded file is empty."}), 400
     if size > MAX_IMAGE_SIZE:
-        return jsonify({"success": False, "error": "Image is too large. Maximum size is 5 MB."}), 400
+        return jsonify(
+            {"success": False, "error": "Image is too large. Maximum size is 5 MB."}
+        ), 400
 
     upload_dir = os.path.join(current_app.root_path, "static", "uploads", "notify")
     try:
@@ -219,7 +263,9 @@ def upload_notify_image():
     filename = "{}.{}".format(uuid.uuid4().hex, detected)
     file.save(os.path.join(upload_dir, filename))
 
-    image_url = url_for("static", filename="uploads/notify/{}".format(filename), _external=True)
+    image_url = url_for(
+        "static", filename="uploads/notify/{}".format(filename), _external=True
+    )
     return jsonify({"success": True, "url": image_url})
 
 
@@ -230,7 +276,9 @@ def upload_notify_image():
 def render_notification():
     data = request.get_json(silent=True)
     if data is None:
-        return jsonify({"success": False, "error": "Invalid or missing JSON body."}), 400
+        return jsonify(
+            {"success": False, "error": "Invalid or missing JSON body."}
+        ), 400
 
     mode = (data.get("mode") or "").strip()
     slugs = data.get("event_slugs") or []
@@ -242,7 +290,12 @@ def render_notification():
 
     if mode == "single":
         if len(selected) != 1:
-            return jsonify({"success": False, "error": "Select exactly one event for Single Event mode."}), 400
+            return jsonify(
+                {
+                    "success": False,
+                    "error": "Select exactly one event for Single Event mode.",
+                }
+            ), 400
         event = selected[0]
         subject = "Upcoming ACM Event: {}".format(event["name"])
         body_html = render_template(
@@ -256,7 +309,12 @@ def render_notification():
         )
     elif mode == "roundup":
         if not selected:
-            return jsonify({"success": False, "error": "Select at least one event for Roundup mode."}), 400
+            return jsonify(
+                {
+                    "success": False,
+                    "error": "Select at least one event for Roundup mode.",
+                }
+            ), 400
         subject = " Don't Miss Out these upcoming ACM events!"
         body_html = render_template(
             "email/notification.html",
@@ -268,7 +326,9 @@ def render_notification():
             abs_image_url=abs_image_url,
         )
     else:
-        return jsonify({"success": False, "error": "Custom mode has no autofill template."}), 400
+        return jsonify(
+            {"success": False, "error": "Custom mode has no autofill template."}
+        ), 400
 
     return jsonify({"success": True, "subject": subject, "body_html": body_html})
 
@@ -281,14 +341,20 @@ def send_notification():
     data = request.get_json(silent=True) if request.is_json else request.form
     if data is None:
         if request.is_json:
-            return jsonify({"success": False, "error": "Invalid or missing JSON body."}), 400
+            return jsonify(
+                {"success": False, "error": "Invalid or missing JSON body."}
+            ), 400
         flash("Invalid or missing form data.", category="error")
         return redirect(url_for("admin.notify_dashboard"))
 
     subject = (data.get("subject") or "").strip()
     template_used = (data.get("template_used") or "custom").strip()
     body_html = (data.get("body_html") or "").strip()
-    selected_slugs = data.getlist("event_slugs") if hasattr(data, "getlist") else data.get("event_slugs", [])
+    selected_slugs = (
+        data.getlist("event_slugs")
+        if hasattr(data, "getlist")
+        else data.get("event_slugs", [])
+    )
 
     if isinstance(selected_slugs, list):
         event_slugs_str = ",".join(selected_slugs)
@@ -297,19 +363,25 @@ def send_notification():
 
     if not subject or not body_html:
         if request.is_json:
-            return jsonify({"success": False, "error": "Subject and body content are required."}), 400
+            return jsonify(
+                {"success": False, "error": "Subject and body content are required."}
+            ), 400
         flash("Subject and body content are required.", category="error")
         return redirect(url_for("admin.notify_dashboard"))
 
     extra_emails, invalid_emails = parse_extra_recipients(data.get("extra_recipients"))
     if invalid_emails:
-        error_msg = "These extra recipient addresses don't look valid: {}".format(", ".join(invalid_emails[:5]))
+        error_msg = "These extra recipient addresses don't look valid: {}".format(
+            ", ".join(invalid_emails[:5])
+        )
         if request.is_json:
             return jsonify({"success": False, "error": error_msg}), 400
         flash(error_msg, category="error")
         return redirect(url_for("admin.notify_dashboard"))
     if len(extra_emails) > MAX_EXTRA_RECIPIENTS:
-        error_msg = "You can add at most {} extra recipients per campaign.".format(MAX_EXTRA_RECIPIENTS)
+        error_msg = "You can add at most {} extra recipients per campaign.".format(
+            MAX_EXTRA_RECIPIENTS
+        )
         if request.is_json:
             return jsonify({"success": False, "error": error_msg}), 400
         flash(error_msg, category="error")
@@ -317,10 +389,12 @@ def send_notification():
 
     # Server-side 60-second duplicate broadcast guard using EmailLog
     cutoff = datetime.utcnow() - timedelta(seconds=60)
-    recent_duplicate = EmailLog.query.filter(
-        EmailLog.subject == subject,
-        EmailLog.body_snapshot == body_html,
-        EmailLog.sent_at >= cutoff
+    recent_duplicate = db.session.scalars(
+        db.select(EmailLog).filter(
+            EmailLog.subject == subject,
+            EmailLog.body_snapshot == body_html,
+            EmailLog.sent_at >= cutoff,
+        )
     ).first()
 
     if recent_duplicate:
@@ -330,7 +404,9 @@ def send_notification():
         flash(error_msg, category="error")
         return redirect(url_for("admin.notify_dashboard"))
 
-    active_subscribers = Subscriber.query.filter_by(is_active=True).all()
+    active_subscribers = db.session.scalars(
+        db.select(Subscriber).filter_by(is_active=True)
+    ).all()
     subscriber_emails = [sub.email for sub in active_subscribers]
     seen_emails = {e.lower() for e in subscriber_emails}
     one_off_emails = [e for e in extra_emails if e.lower() not in seen_emails]
@@ -338,7 +414,12 @@ def send_notification():
 
     if not recipient_emails:
         if request.is_json:
-            return jsonify({"success": False, "error": "No active subscribers or extra recipients to send to."}), 400
+            return jsonify(
+                {
+                    "success": False,
+                    "error": "No active subscribers or extra recipients to send to.",
+                }
+            ), 400
         flash("No active subscribers or extra recipients to send to.", category="error")
         return redirect(url_for("admin.notify_dashboard"))
 
@@ -352,7 +433,9 @@ def send_notification():
         mail.send(msg)
     except Exception as e:
         if request.is_json:
-            return jsonify({"success": False, "error": "Failed to send emails: {}".format(str(e))}), 500
+            return jsonify(
+                {"success": False, "error": "Failed to send emails: {}".format(str(e))}
+            ), 500
         flash("Failed to send emails: {}".format(str(e)), category="error")
         return redirect(url_for("admin.notify_dashboard"))
 
@@ -376,11 +459,13 @@ def send_notification():
         )
 
     if request.is_json:
-        return jsonify({
-            "success": True,
-            "message": success_message,
-            "log_id": email_log.id,
-        })
+        return jsonify(
+            {
+                "success": True,
+                "message": success_message,
+                "log_id": email_log.id,
+            }
+        )
 
     flash(success_message, category="success")
     return redirect(url_for("admin.notify_dashboard"))

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
-from app.data.teams import team_data
 
+from app.data.teams import team_data
 
 about_bp = Blueprint("abour", __name__, template_folder="../templates")
 

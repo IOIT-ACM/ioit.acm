@@ -1,9 +1,10 @@
 import csv
-import requests
-import time
 import os
-from flask import Blueprint, render_template
+import time
+
+import requests
 from dotenv import load_dotenv
+from flask import Blueprint, render_template
 
 membership_bp = Blueprint("membership", __name__, template_folder="../templates")
 
@@ -15,15 +16,51 @@ CACHE_EXPIRY = 86400  # 1 day
 
 
 school_participants = [
-    {"name": "Sakshi Mane", "imageurl": "sakshi-mane.jpeg", "school": "ACM India Summer School 2025"},
-    {"name": "Devang Gandhi", "imageurl": "devang.jpeg", "school": "ACM India Summer School 2025"},
-    {"name": "Chaitali Khachane", "imageurl": "chaitali.jpeg", "school": "ACM India Winter School 2023"},
-    {"name": "Sadgi Pandey", "imageurl": "sadgi.jpeg", "school": "ACM India Winter School 2023"},
-    {"name": "Anjali Shukla", "imageurl": "anjali-shukla.jpeg", "school": "ACM India Summer School 2023"},
-    {"name": "Sana Naqvi", "imageurl": "sana-naqvi.jpeg", "school": "ACM India Summer School on Compilers for AI/ML Programs"},
-    {"name": "Shravani Shewale", "imageurl": "shravani-shewale.jpeg", "school": "ACM India Summer School 2022"},
-    {"name": "Yash Vyavhare", "imageurl": "yash-v.jpeg", "school": "ACM India Summer School 2022"},
-    {"name": "Tanmayee Mali", "imageurl": "tanmay-mali.jpeg", "school": "ACM India Winter School 2022"},
+    {
+        "name": "Sakshi Mane",
+        "imageurl": "sakshi-mane.jpeg",
+        "school": "ACM India Summer School 2025",
+    },
+    {
+        "name": "Devang Gandhi",
+        "imageurl": "devang.jpeg",
+        "school": "ACM India Summer School 2025",
+    },
+    {
+        "name": "Chaitali Khachane",
+        "imageurl": "chaitali.jpeg",
+        "school": "ACM India Winter School 2023",
+    },
+    {
+        "name": "Sadgi Pandey",
+        "imageurl": "sadgi.jpeg",
+        "school": "ACM India Winter School 2023",
+    },
+    {
+        "name": "Anjali Shukla",
+        "imageurl": "anjali-shukla.jpeg",
+        "school": "ACM India Summer School 2023",
+    },
+    {
+        "name": "Sana Naqvi",
+        "imageurl": "sana-naqvi.jpeg",
+        "school": "ACM India Summer School on Compilers for AI/ML Programs",
+    },
+    {
+        "name": "Shravani Shewale",
+        "imageurl": "shravani-shewale.jpeg",
+        "school": "ACM India Summer School 2022",
+    },
+    {
+        "name": "Yash Vyavhare",
+        "imageurl": "yash-v.jpeg",
+        "school": "ACM India Summer School 2022",
+    },
+    {
+        "name": "Tanmayee Mali",
+        "imageurl": "tanmay-mali.jpeg",
+        "school": "ACM India Winter School 2022",
+    },
 ]
 
 
@@ -46,11 +83,13 @@ def fetch_membership_data():
 
         for row in reader:
             row = {k.strip(): v.strip() for k, v in row.items()}
-            members.append({
-                "Membership ID": row.get("Membership ID", ""),
-                "Full Name": row.get("Full Name", "").title(),
-                "Expiration Date": row.get("Expiration Date", ""),
-            })
+            members.append(
+                {
+                    "Membership ID": row.get("Membership ID", ""),
+                    "Full Name": row.get("Full Name", "").title(),
+                    "Expiration Date": row.get("Expiration Date", ""),
+                }
+            )
 
         cache["data"] = members
         cache["timestamp"] = time.time()

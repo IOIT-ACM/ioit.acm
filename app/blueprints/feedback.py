@@ -1,8 +1,11 @@
+import os
 from datetime import datetime, timedelta
-from flask import Blueprint, render_template, request, jsonify
-from app.data.events import events
-import requests, os
+
+import requests
 from dotenv import load_dotenv
+from flask import Blueprint, jsonify, render_template, request
+
+from app.data.events import events
 
 feedback_bp = Blueprint("feedback", __name__, template_folder="../templates")
 
@@ -35,7 +38,11 @@ def handle_feedback():
     if feedback_type == "event" and not data.get("event"):
         return {"error": "Please select an event"}, 400
 
-    text_fields = {"general": "feedback", "event": "eventFeedback", "suggestions": "events"}
+    text_fields = {
+        "general": "feedback",
+        "event": "eventFeedback",
+        "suggestions": "events",
+    }
     if not (data.get(text_fields.get(feedback_type, "")) or "").strip():
         return {"error": "Feedback text is required"}, 400
 
@@ -68,7 +75,9 @@ def handle_feedback():
 
     if API_URL:
         try:
-            response = requests.post(API_URL, json={"data": [data]}, headers=headers, timeout=10)
+            response = requests.post(
+                API_URL, json={"data": [data]}, headers=headers, timeout=10
+            )
             response.raise_for_status()
             response.json()
         except (requests.RequestException, ValueError) as e:

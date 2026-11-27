@@ -119,7 +119,7 @@ endblock %} {% block content %}
   {% endif %}
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='vendor/chart.js/chart.umd.min.js') }}"></script>
 <script>
   document.getElementById('branchFilter').addEventListener('change', filterData);
   document.getElementById('searchInput').addEventListener('input', filterData);

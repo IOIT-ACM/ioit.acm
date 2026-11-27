@@ -1,8 +1,10 @@
 import unittest
+
+from flask import Blueprint
+
 from app import create_app, db
 from app.models import User
 from app.utils import admin_required
-from flask import Blueprint, Flask
 
 
 class AdminRequiredTestCase(unittest.TestCase):
@@ -28,7 +30,9 @@ class AdminRequiredTestCase(unittest.TestCase):
         with self.app.app_context():
             db.create_all()
             # Clean up existing test users if present
-            User.query.filter(User.username.in_(["normaluser", "adminuser"])).delete()
+            db.session.execute(
+                db.delete(User).where(User.username.in_(["normaluser", "adminuser"]))
+            )
             db.session.commit()
 
             # Create normal user
@@ -55,14 +59,18 @@ class AdminRequiredTestCase(unittest.TestCase):
 
     def tearDown(self):
         with self.app.app_context():
-            User.query.filter(User.username.in_(["normaluser", "adminuser"])).delete()
+            db.session.execute(
+                db.delete(User).where(User.username.in_(["normaluser", "adminuser"]))
+            )
             db.session.commit()
 
     def login(self, username, password="hashedpassword"):
         # Helper to log in user using test client session
         with self.client.session_transaction() as sess:
             with self.app.app_context():
-                user = User.query.filter_by(username=username).first()
+                user = db.session.scalars(
+                    db.select(User).filter_by(username=username)
+                ).first()
                 sess["_user_id"] = str(user.id)
 
     def test_unauthenticated_access_returns_403(self):

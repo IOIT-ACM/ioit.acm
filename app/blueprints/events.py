@@ -1,5 +1,7 @@
-import urllib
+import urllib.parse
+
 from flask import Blueprint, render_template
+
 from app.data.events import events
 
 events_bp = Blueprint("events", __name__, template_folder="../templates")
@@ -14,6 +16,7 @@ images = [
     "https://ioit.acm.org/tenet/mun/2024/7.jpeg",
     "https://ioit.acm.org/tenet/mun/2024/8.jpeg",
 ]
+
 images_2 = [
     "https://ioit.acm.org/tenet/mun/2024/9.jpeg",
     "https://ioit.acm.org/tenet/mun/2024/10.jpeg",
@@ -27,12 +30,11 @@ images_2 = [
 
 
 def safe_slug(name):
-    return urllib.quote(name.encode("utf-8"))
+    return urllib.parse.quote(name.encode("utf-8"))
 
 
 def decode_slug(slug):
-    return urllib.unquote(slug).decode("utf-8")
-
+    return urllib.parse.unquote(slug)
 
 
 for event in events:
@@ -42,6 +44,7 @@ for event in events:
 @events_bp.route("/events/<string:event_slug>")
 def event_detail(event_slug):
     from datetime import datetime
+
     decoded_name = decode_slug(event_slug)
     event = next((e for e in events if e["name"] == decoded_name), None)
     eventname = event["name"] if event else None
@@ -79,8 +82,10 @@ def home():
 @events_bp.route("/events/subscribe", methods=["POST"])
 def subscribe():
     import re
-    from flask import request, jsonify, flash, redirect, url_for
+
+    from flask import flash, jsonify, redirect, request, url_for
     from sqlalchemy.exc import IntegrityError
+
     from app.db import db
     from app.models import Subscriber
 
@@ -99,7 +104,9 @@ def subscribe():
         flash("Invalid email address.", category="error")
         return redirect(url_for("events.home"))
 
-    subscriber = Subscriber.query.filter_by(email=email).first()
+    subscriber = db.session.scalars(
+        db.select(Subscriber).filter_by(email=email)
+    ).first()
     if subscriber:
         if not subscriber.is_active:
             subscriber.is_active = True
@@ -122,4 +129,3 @@ def subscribe():
 
     flash(msg, category="success")
     return redirect(url_for("events.home"))
-

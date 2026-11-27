@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -12,7 +12,7 @@ def set_admin(username, grant=True, app=None):
         app = create_app()
 
     with app.app_context():
-        user = db.session.query(User).filter_by(username=username).first()
+        user = db.session.scalars(db.select(User).filter_by(username=username)).first()
         if not user:
             print("Error: User with username '{}' not found.".format(username))
             return False
@@ -46,4 +46,3 @@ if __name__ == "__main__":
 
     success = set_admin(target_username, grant=grant_admin)
     sys.exit(0 if success else 1)
-

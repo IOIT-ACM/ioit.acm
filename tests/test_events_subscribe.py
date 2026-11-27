@@ -1,8 +1,10 @@
-import unittest
-import os
 import json
+import os
+import unittest
+
 from app import create_app, db
 from app.models import Subscriber
+
 
 class EventsSubscribeTestCase(unittest.TestCase):
     def setUp(self):
@@ -14,12 +16,12 @@ class EventsSubscribeTestCase(unittest.TestCase):
 
         with self.app.app_context():
             db.create_all()
-            Subscriber.query.delete()
+            db.session.execute(db.delete(Subscriber))
             db.session.commit()
 
     def tearDown(self):
         with self.app.app_context():
-            Subscriber.query.delete()
+            db.session.execute(db.delete(Subscriber))
             db.session.commit()
 
     def test_subscribe_new_email_json(self):
@@ -34,7 +36,9 @@ class EventsSubscribeTestCase(unittest.TestCase):
         self.assertIn("Successfully subscribed", data["message"])
 
         with self.app.app_context():
-            sub = Subscriber.query.filter_by(email="test@example.com").first()
+            sub = db.session.scalars(
+                db.select(Subscriber).filter_by(email="test@example.com")
+            ).first()
             self.assertIsNotNone(sub)
             self.assertTrue(sub.is_active)
 
@@ -54,7 +58,9 @@ class EventsSubscribeTestCase(unittest.TestCase):
         self.assertIn("already subscribed", data["message"])
 
         with self.app.app_context():
-            subs = Subscriber.query.filter_by(email="existing@example.com").all()
+            subs = db.session.scalars(
+                db.select(Subscriber).filter_by(email="existing@example.com")
+            ).all()
             self.assertEqual(len(subs), 1)
 
     def test_subscribe_inactive_email_reactivates(self):
@@ -73,7 +79,9 @@ class EventsSubscribeTestCase(unittest.TestCase):
         self.assertIn("reactivated", data["message"])
 
         with self.app.app_context():
-            sub = Subscriber.query.filter_by(email="inactive@example.com").first()
+            sub = db.session.scalars(
+                db.select(Subscriber).filter_by(email="inactive@example.com")
+            ).first()
             self.assertTrue(sub.is_active)
 
     def test_subscribe_invalid_email(self):
@@ -86,6 +94,7 @@ class EventsSubscribeTestCase(unittest.TestCase):
         data = response.get_json()
         self.assertFalse(data["success"])
         self.assertIn("Invalid email", data["error"])
+
 
 if __name__ == "__main__":
     unittest.main()

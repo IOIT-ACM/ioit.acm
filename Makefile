@@ -1,15 +1,32 @@
 run:
 	FLASK_APP=app \
 	FLASK_DEBUG=1 \
-	. venv/bin/activate && flask run --host=0.0.0.0 --port=5000 --reload
+	uv run flask run --host=0.0.0.0 --port=5000 --reload
 
 ui:
-	npx tailwindcss -i ./app/static/css/input.css -o ./app/static/css/tailwind.css --watch --minify
+	npm run watch:css
 
-insall:
-	python2 -m venv venv
-	@echo "Installing python dependencies"
-	. venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt
-	@echo "Setting up frontend dependencies..."
+vendor:
+	npm run vendor
+
+install:
+	uv venv
+	uv sync
 	npm install
-	@echo "Setup complete. Activate venv with: . venv/bin/activate"
+	npm run vendor
+	uv run pre-commit install
+
+test:
+	uv run pytest
+
+lint:
+	uv run ruff check .
+	uv run ruff format --check .
+	npx biome check .
+
+format:
+	uv run ruff check --fix .
+	uv run ruff format .
+	npx biome check --write .
+
+.PHONY: run ui vendor install test lint format

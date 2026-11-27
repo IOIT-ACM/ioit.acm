@@ -1,0 +1,37 @@
+[project]
+name = "ioit-acm"
+version = "1.0.0"
+requires-python = ">=3.12"
+dependencies = [
+    "Flask>=2.3.0",
+    "gunicorn>=21.2.0",
+    "requests>=2.28.0",
+    "python-dotenv>=1.0.0",
+    "Flask-SQLAlchemy>=3.1.0",
+    "flask-login>=0.6.0",
+    "pymysql>=1.0.0",
+    "flask-limiter[redis]>=3.2.0",
+    "Flask-Mail>=0.8.0",
+]
+
+[project.urls]
+Home = "https://ioit.acm.org/"
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501", "F403", "F405"]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6",
+    "pytest>=9.2.0",
+    "ruff>=0.16.10",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"

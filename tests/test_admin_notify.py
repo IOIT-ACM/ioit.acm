@@ -1,7 +1,8 @@
 import unittest
-from app import create_app, db
-from app.models import User, Subscriber, EmailLog
 from unittest.mock import patch
+
+from app import create_app, db
+from app.models import EmailLog, Subscriber, User
 
 
 class AdminNotifyTestCase(unittest.TestCase):
@@ -67,7 +68,9 @@ class AdminNotifyTestCase(unittest.TestCase):
         mock_send.assert_called_once()
 
         # Confirm EmailLog record created
-        log = EmailLog.query.filter_by(subject="Test Broadcast Subject").first()
+        log = db.session.scalars(
+            db.select(EmailLog).filter_by(subject="Test Broadcast Subject")
+        ).first()
         self.assertIsNotNone(log)
         self.assertEqual(log.sent_by_user_id, self.admin.id)
         self.assertEqual(log.recipient_count, 1)
@@ -98,7 +101,9 @@ class AdminNotifyTestCase(unittest.TestCase):
         self.assertEqual(mock_send.call_count, 1)
 
         # Confirm only 1 EmailLog exists
-        logs = EmailLog.query.filter_by(subject="Duplicate Test Subject").all()
+        logs = db.session.scalars(
+            db.select(EmailLog).filter_by(subject="Duplicate Test Subject")
+        ).all()
         self.assertEqual(len(logs), 1)
 
 

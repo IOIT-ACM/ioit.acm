@@ -3,7 +3,7 @@
     IOIT ACM Collage Maker{%
     endblock %}
     {% block head %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+        <script src="{{ url_for('static', filename='vendor/fabric/fabric.min.js') }}"></script>
         <style>
   .glass-surface {
     background-color: rgba(40, 40, 52, 0.4);

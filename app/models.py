@@ -1,6 +1,7 @@
 from datetime import datetime
-from app import db
+
 from flask_login import UserMixin
+
 from app.db import db
 
 
@@ -62,4 +63,3 @@ class EmailLog(db.Model):
     recipient_count = db.Column(db.Integer, nullable=False, default=0)
 
     sender = db.relationship("User", backref=db.backref("sent_email_logs", lazy=True))
-

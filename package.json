@@ -1,5 +1,31 @@
 {
+  "name": "ioit-acm",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontend assets for the AISSMS IOIT ACM Student Chapter website",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "vendor": "node scripts/vendor.mjs",
+    "build:css": "tailwindcss -i ./app/static/css/input.css -o ./app/static/css/tailwind.css",
+    "watch:css": "tailwindcss -i ./app/static/css/input.css -o ./app/static/css/tailwind.css --watch",
+    "lint": "biome check .",
+    "format": "biome check --write ."
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "6.7.1",
+    "chart.js": "4.6.2",
+    "fabric": "5.3.0",
+    "htmx.org": "1.9.2",
+    "lucide": "1.82.0",
+    "moment": "2.31.0",
+    "remixicon": "3.5.0",
+    "three": "0.171.0"
+  },
   "devDependencies": {
+    "@biomejs/biome": "2.5.15",
     "tailwindcss": "^3.4.15"
   }
 }

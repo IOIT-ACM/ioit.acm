@@ -1,13 +1,15 @@
+import os
+
+from dotenv import load_dotenv
 from flask import Flask, render_template
-from flask_login import LoginManager, current_user
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_login import LoginManager, current_user
 from flask_mail import Mail
+from sqlalchemy.exc import OperationalError, ProgrammingError, SQLAlchemyError
+
 from app.db import DatabaseConfig, db
 from app.models import User
-from sqlalchemy.exc import ProgrammingError, SQLAlchemyError, OperationalError
-from dotenv import load_dotenv
-import os
 
 load_dotenv()
 
@@ -15,34 +17,69 @@ database_config = DatabaseConfig()
 login_manager = LoginManager()
 mail = Mail()
 
+# Storage is configured in create_app() from RATELIMIT_STORAGE_URI.
 limiter = Limiter(
     key_func=get_remote_address,
     default_limits=["200 per hour"],
-    storage_uri="memory://",
 )
 
 
 def create_app():
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev-secret-key-change-in-production")
+    app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
     app.config["SQLALCHEMY_DATABASE_URI"] = database_config.binds["users"]
     app.config["SQLALCHEMY_BINDS"] = database_config.get_binds()
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    # MariaDB closes idle connections, which left pooled connections dead and
+    # caused PendingRollbackError in production. Check each connection before
+    # use and replace connections before the server times them out.
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_pre_ping": True,
+        "pool_recycle": 280,
+    }
     app.config["SESSION_COOKIE_HTTPONLY"] = True
     app.config["SESSION_COOKIE_SECURE"] = True
     app.config["SESSION_PERMANENT"] = False
     app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
+    # Rate limit counters. memory:// keeps a separate count in every worker
+    # process, so production should point this at Redis to share them, e.g.
+    # redis+unix:///home/<user>/redis/redis.sock (see README).
+    app.config["RATELIMIT_STORAGE_URI"] = (
+        os.environ.get("RATELIMIT_STORAGE_URI") or "memory://"
+    )
+    app.config["RATELIMIT_KEY_PREFIX"] = "ioit-acm"
+    # Fail fast instead of stalling requests when Redis is slow or down.
+    app.config["RATELIMIT_STORAGE_OPTIONS"] = {
+        "socket_connect_timeout": 0.5,
+        "socket_timeout": 0.5,
+    }
+    # If Redis is unreachable, keep serving with per-process in-memory limits
+    # and switch back once it recovers, rather than failing every request.
+    app.config["RATELIMIT_IN_MEMORY_FALLBACK_ENABLED"] = True
+
     # Flask-Mail configuration
     app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER", "localhost")
     app.config["MAIL_PORT"] = int(os.getenv("MAIL_PORT", 1025))
-    app.config["MAIL_USE_TLS"] = os.getenv("MAIL_USE_TLS", "False").lower() in ("true", "1", "t")
-    app.config["MAIL_USE_SSL"] = os.getenv("MAIL_USE_SSL", "False").lower() in ("true", "1", "t")
+    app.config["MAIL_USE_TLS"] = os.getenv("MAIL_USE_TLS", "False").lower() in (
+        "true",
+        "1",
+        "t",
+    )
+    app.config["MAIL_USE_SSL"] = os.getenv("MAIL_USE_SSL", "False").lower() in (
+        "true",
+        "1",
+        "t",
+    )
     app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME", None) or None
     app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD", None) or None
-    app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_DEFAULT_SENDER", "events@ioit.acm.org")
-    app.config["MAIL_SUPPRESS_SEND"] = os.getenv("MAIL_SUPPRESS_SEND", "False").lower() in ("true", "1", "t")
+    app.config["MAIL_DEFAULT_SENDER"] = os.getenv(
+        "MAIL_DEFAULT_SENDER", "events@ioit.acm.org"
+    )
+    app.config["MAIL_SUPPRESS_SEND"] = os.getenv(
+        "MAIL_SUPPRESS_SEND", "False"
+    ).lower() in ("true", "1", "t")
 
     db.init_app(app)
     mail.init_app(app)
@@ -54,7 +91,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.get(int(user_id))
+        return db.session.get(User, int(user_id))
 
     @app.context_processor
     def inject_user():
@@ -62,31 +99,32 @@ def create_app():
 
     with app.app_context():
         try:
-            db.create_all()
+            for bind_key in app.config["SQLALCHEMY_BINDS"].keys():
+                db.create_all(bind_key=bind_key)
         except Exception as e:
             app.logger.warning("db.create_all() failed during startup: %s", e)
 
     # Register blueprints
-    from app.blueprints.home import home_bp
-    from app.blueprints.team import team_bp
-    from app.blueprints.membership import membership_bp
-    from app.blueprints.join import join_bp
+    from app.blueprints.about import about_bp
+    from app.blueprints.admin import admin_bp
+    from app.blueprints.api import api_bp
+    from app.blueprints.apps import apps_bp
+    from app.blueprints.competitions.auth import auth_bp
+    from app.blueprints.competitions.competition import competitions_bp
+    from app.blueprints.events import events_bp
     from app.blueprints.feedback import feedback_bp
     from app.blueprints.gallery import gallery_bp
-    from app.blueprints.events import events_bp
-    from app.blueprints.about import about_bp
-    from app.blueprints.projects import projects_bp
-    from app.blueprints.opensource import opensource_bp
-    from app.blueprints.competitions.competition import competitions_bp
-    from app.blueprints.competitions.auth import auth_bp
-    from app.blueprints.recruitment import recruitment_bp
-    from app.blueprints.api import api_bp
-    from app.blueprints.tmp import form_bp
-    from app.blueprints.media_kit import media_kit_bp
+    from app.blueprints.home import home_bp
     from app.blueprints.interview import interviews_bp
-    from app.blueprints.apps import apps_bp
+    from app.blueprints.join import join_bp
+    from app.blueprints.media_kit import media_kit_bp
+    from app.blueprints.membership import membership_bp
+    from app.blueprints.opensource import opensource_bp
+    from app.blueprints.projects import projects_bp
+    from app.blueprints.recruitment import recruitment_bp
     from app.blueprints.resources import resources_bp
-    from app.blueprints.admin import admin_bp
+    from app.blueprints.team import team_bp
+    from app.blueprints.tmp import form_bp
 
     limiter.limit("200 per hour")(home_bp)
     limiter.limit("200 per hour")(team_bp)
@@ -131,17 +169,6 @@ def create_app():
     app.register_blueprint(admin_bp)
 
     # Error Handlers
-    @app.errorhandler(ProgrammingError)
-    def handle_programming_error(error):
-        return (
-            render_template(
-                "errors/sql_error.html",
-                message="There was an issue with the database operation.",
-                details=str(error),
-            ),
-            500,
-        )
-
     @app.errorhandler(ProgrammingError)
     def handle_pending_rollback_error(error):
         return (
@@ -197,7 +224,7 @@ def create_app():
 
     @app.errorhandler(429)
     def rate_limit_exceeded(e):
-        return render_template("errors/429.html", error=e.description), 400
+        return render_template("errors/429.html", error=e.description), 429
 
     @app.errorhandler(Exception)
     def handle_generic_exception(error):

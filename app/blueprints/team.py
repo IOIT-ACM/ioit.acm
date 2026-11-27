@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, jsonify, abort
+from flask import Blueprint, abort, jsonify, render_template, request
+
 from app.data.teams import team_data
 
 # Define the blueprint

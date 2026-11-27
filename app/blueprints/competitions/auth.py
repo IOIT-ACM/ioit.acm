@@ -1,9 +1,12 @@
 import re
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, logout_user, current_user, login_required
-from app.models import User
+
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
+from werkzeug.security import check_password_hash, generate_password_hash
+
 from app.db import db
+from app.models import User
+
 from ...models import User as Users
 
 auth_bp = Blueprint("auth", __name__)
@@ -12,6 +15,14 @@ auth_bp = Blueprint("auth", __name__)
 def validate_name(name):
     """Helper function to validate names containing only alphabets"""
     return re.match(r"^[A-Za-z]+$", name)
+
+
+def verify_password(stored_hash, password):
+    """Werkzeug 3.x raises ValueError instead of returning False for legacy sha256 hashes."""
+    try:
+        return check_password_hash(stored_hash, password)
+    except ValueError:
+        return False
 
 
 @auth_bp.route("/signin", methods=["GET", "POST"])
@@ -27,9 +38,11 @@ def signin():
             flash("Username and password are required.", category="error")
             return render_template("competitions/login.html")
 
-        user = User.query.filter_by(username=username).first()
+        user = db.session.execute(
+            db.select(User).filter_by(username=username)
+        ).scalar_one_or_none()
 
-        if user and check_password_hash(user.password, password):
+        if user and verify_password(user.password, password):
             flash("Logged in successfully!", category="success")
             login_user(user, remember=True)
             return redirect(url_for("auth.profile"))
@@ -66,7 +79,9 @@ def signup():
         first_name = first_name.capitalize()
         last_name = last_name.capitalize()
 
-        if User.query.filter_by(username=username).first():
+        if db.session.execute(
+            db.select(User).filter_by(username=username)
+        ).scalar_one_or_none():
             flash("Username already exists.", category="error")
             return render_template("competitions/signup.html")
         if password1 != confirm_password:
@@ -76,7 +91,7 @@ def signup():
             flash("Password must be at least 8 characters long.", category="error")
             return render_template("competitions/signup.html")
 
-        hashed_password = generate_password_hash(password1, method="sha256")
+        hashed_password = generate_password_hash(password1, method="pbkdf2:sha256")
 
         full_name = "{} {}".format(first_name, last_name)
 
@@ -133,7 +148,7 @@ def update_profile():
         db.session.commit()
 
         flash("Profile updated successfully!", category="success")
-    except Exception as e:
+    except Exception:
         db.session.rollback()
         flash("An error occurred while updating your profile.", category="error")
 
@@ -150,7 +165,7 @@ def change_password():
         flash("Both fields are required.", category="error")
         return redirect(url_for("auth.profile"))
 
-    if not check_password_hash(current_user.password, current_password):
+    if not verify_password(current_user.password, current_password):
         flash("Current password is incorrect.", category="error")
         return redirect(url_for("auth.profile"))
 
@@ -159,11 +174,13 @@ def change_password():
         return redirect(url_for("auth.profile"))
 
     try:
-        current_user.password = generate_password_hash(new_password, method="sha256")
+        current_user.password = generate_password_hash(
+            new_password, method="pbkdf2:sha256"
+        )
         db.session.commit()
 
         flash("Password updated successfully!", category="success")
-    except Exception as e:
+    except Exception:
         db.session.rollback()
         flash("An error occurred while updating your password.", category="error")
 
@@ -180,7 +197,7 @@ def delete_profile():
         flash("Both fields are required.", category="error")
         return redirect(url_for("auth.profile"))
 
-    if not check_password_hash(current_user.password, delete_password):
+    if not verify_password(current_user.password, delete_password):
         flash("Password is incorrect.", category="error")
         return redirect(url_for("auth.profile"))
 
@@ -193,7 +210,7 @@ def delete_profile():
         db.session.commit()
         flash("Profile deleted successfully.", category="success")
         return redirect(url_for("auth.signin"))
-    except Exception as e:
+    except Exception:
         db.session.rollback()
         flash("An error occurred while deleting your profile.", category="error")
         return redirect(url_for("auth.profile"))
@@ -201,7 +218,7 @@ def delete_profile():
 
 @auth_bp.route("/members")
 def acm_users():
-    members = Users.query.order_by(Users.name.desc()).all()
+    members = db.session.scalars(db.select(Users).order_by(Users.name.desc())).all()
     user_branches = sorted(set(member.branch for member in members))
     return render_template(
         "members.html",

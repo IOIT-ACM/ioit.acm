@@ -1,0 +1,12 @@
+.git/
+.github/
+.venv/
+venv/
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.env.*
+!.env.example
+app/static/vendor/
