@@ -31,6 +31,13 @@ def create_app():
     app.config["SQLALCHEMY_BINDS"] = database_config.get_binds()
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    # MariaDB closes idle connections, which left pooled connections dead and
+    # caused PendingRollbackError in production. Check each connection before
+    # use and replace connections before the server times them out.
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_pre_ping": True,
+        "pool_recycle": 280,
+    }
     app.config["SESSION_COOKIE_HTTPONLY"] = True
     app.config["SESSION_COOKIE_SECURE"] = True
     app.config["SESSION_PERMANENT"] = False

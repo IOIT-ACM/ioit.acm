@@ -95,25 +95,6 @@ jobs:
       group: deploy-production
       cancel-in-progress: false
     steps:
-      - name: Checkout repo (to read commit message)
-        uses: actions/checkout@v7
-
-      - name: Get last commit message
-        id: vars
-        run: |
-          msg=$(git log -1 --pretty=%B)
-          {
-            echo 'commit_msg<<EOF'
-            echo "$msg"
-            echo 'EOF'
-          } >> "$GITHUB_OUTPUT"
-
-          if echo "$msg" | grep -Eiq "update[[:space:]]+dependencies|deps"; then
-            echo "with_deps=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "with_deps=false" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.2.5
         with:
@@ -121,9 +102,10 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          command_timeout: 20m
+          # Deploy exactly the commit that passed lint and test.
           script: |
-            if [ "${{ steps.vars.outputs.with_deps }}" = "true" ]; then
-              bash "$HOME/deploy.sh" --with-deps
-            else
-              bash "$HOME/deploy.sh"
-            fi
+            set -e
+            git -C "$HOME/ioit.acm" fetch --quiet origin
+            git -C "$HOME/ioit.acm" reset --quiet --hard ${{ github.sha }}
+            bash "$HOME/ioit.acm/deploy/deploy.sh"
