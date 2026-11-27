@@ -1,173 +1,86 @@
-<div class="mt-12">
-    <h2 class="text-3xl md:4xl font-bold text-center mb-8 text-gray-800">Flagship Events</h2>
-    <div class="grid container gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 cursor-pointer">
-        <!-- IOIT TENET 2025 -->
-        <div
-            class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
-            <div class="flex flex-col items-center">
-                <div
-                    class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
-                    <!-- Image -->
-                    <img src="https://ioit.acm.org/tenet/25/gallery/img016.webp" alt="IOIT TENET 2025"
-                        class="h-full w-full object-cover absolute" loading="lazy" />
-                    <!-- Video -->
-                    <video data-src="/static/vid/tenet25.mp4" muted loop
-                        class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
-                    </video>
+{#
+  Flagship Events: the latest TENET and IOIT MUN editions as two equal featured cards,
+  then one row per series for earlier editions. To add a year, add its entries at the
+  top of `editions` (newest first). `video` is optional and plays on hover.
+#}
+{% set editions = [
+    {"series": "TENET", "year": "2026", "title": "IOIT TENET 2026", "link": "https://ioittenet.com/",
+     "image": url_for('static', filename='img/gallery/tenet-2026/inauguration.jpeg'), "video": "",
+     "description": "The third edition of TENET hosted by AISSMS IOIT ACM student chapter in October 2026, featuring robotics, coding, experience zones, and global diplomacy."},
+    {"series": "MUN", "year": "2026", "title": "IOIT MUN 2026", "link": "https://mun.ioittenet.com/",
+     "image": url_for('static', filename='img/gallery/tenet-2026/mun.jpeg'), "video": "",
+     "description": "Fourth edition of IOIT MUN hosted in October 2026 by AISSMS IOIT ACM as part of TENET'26, with committees including UNSC, WTO, UNCSW, and AIPPM."},
+    {"series": "TENET", "year": "2025", "title": "IOIT TENET 2025", "link": "https://ioittenet.com/",
+     "image": "https://ioit.acm.org/tenet/25/gallery/img016.webp", "video": "/static/vid/tenet25.mp4",
+     "description": "The second edition of TENET hosted by AISSMS IOIT ACM student chapter, featuring technology, entrepreneurship, global diplomacy, and e-sports."},
+    {"series": "TENET", "year": "2025", "title": "TENET HACK 2025", "link": "https://hack.ioittenet.com/",
+     "image": "https://ioit.acm.org/tenet/25/gallery/img025.webp", "video": "/static/vid/hack25.mp4",
+     "description": "A 12-hour intensive hackathon inspired by The Matrix where developers collaborated to push technological boundaries and build innovative solutions."},
+    {"series": "MUN", "year": "2025", "title": "IOIT MUN 2025", "link": "https://mun.ioittenet.com/",
+     "image": "https://mun.ioittenet.com/img/content/mun.jpg", "video": "/static/vid/mun25.mp4",
+     "description": "Third edition of IOIT MUN hosted in October 2025 by AISSMS IOIT ACM, featuring committees addressing diverse global issues and diplomatic bodies."},
+    {"series": "TENET", "year": "2024", "title": "IOIT TENET 2024", "link": "https://ioittenet.com/",
+     "image": "https://ioit.acm.org/tenet/gallery/24/drone/12.jpeg", "video": "/static/vid/tenet24.mp4",
+     "description": "The inaugural edition of TENET hosted by AISSMS IOIT ACM student chapter, featuring technology, entrepreneurship, global diplomacy, and e-sports."},
+    {"series": "MUN", "year": "2024", "title": "IOIT MUN 2024", "link": "https://mun.ioittenet.com/",
+     "image": "https://ioit.acm.org/tenet/mun/2024/9.jpeg", "video": "/static/vid/mun24.mp4",
+     "description": "Second edition of IOIT MUN hosted in October 2024 by AISSMS IOIT ACM, featuring committees addressing diverse global issues and diplomatic bodies."},
+    {"series": "MUN", "year": "2023", "title": "IOIT MUN 2023", "link": "https://mun.ioittenet.com/",
+     "image": "https://ioit.acm.org/tenet/gallery/24/mun-closing/15.jpeg", "video": "/static/vid/mun23.mp4",
+     "description": "Inaugural edition of IOIT MUN hosted by AISSMS IOIT ACM with 5 committees, where students role-play as diplomats addressing global issues."},
+] %}
+{% set featured = editions[:2] %}
+{% set series_rows = [
+    {"name": "TENET", "subtitle": "Technology, entrepreneurship and esports fest", "cols": "md:grid-cols-3",
+     "items": editions[2:] | selectattr("series", "equalto", "TENET") | list},
+    {"name": "IOIT MUN", "subtitle": "Model United Nations since 2023", "cols": "md:grid-cols-3",
+     "items": editions[2:] | selectattr("series", "equalto", "MUN") | list},
+] %}
+<section class="flagship-events mt-12">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-gray-800">Flagship Events</h2>
+    <!-- Latest editions -->
+    <div class="grid md:grid-cols-2 gap-6">
+        {% for f in featured %}
+            <div class="flex flex-col bg-white rounded-3xl shadow-xl overflow-hidden">
+                <div class="aspect-video relative">
+                    <img src="{{ f.image }}" alt="{{ f.title }}" loading="lazy"
+                         class="absolute inset-0 h-full w-full object-cover" />
+                    <div class="absolute bottom-0 left-0 right-0 bg-blue-600 px-6 md:px-8 py-2 text-sm font-semibold text-white">Latest edition, Oct {{ f.year }}</div>
                 </div>
-                <div class="text-center">
-                    <a href="https://ioittenet.com/"
-                        class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT TENET
-                        2025</a>
-                    <p class="text-gray-800 mt-2">
-                        The second edition of TENET hosted by AISSMS IOIT ACM student chapter,
-                        featuring technology, entrepreneurship, global diplomacy, and e-sports.
-                    </p>
-                    <a href="https://ioittenet.com/"
-                        class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
-                        More &rarr;</a>
-                </div>
-            </div>
-        </div>
-        <!-- TENET HACK 2025 -->
-        <div
-            class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
-            <div class="flex flex-col items-center">
-                <div
-                    class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
-                    <!-- Image -->
-                    <img src="https://ioit.acm.org/tenet/25/gallery/img025.webp" alt="TENET HACK 2025"
-                        class="h-full w-full object-cover absolute" loading="lazy" />
-                    <!-- Video -->
-                    <video data-src="/static/vid/hack25.mp4" muted loop
-                        class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
-                    </video>
-                </div>
-                <div class="text-center">
-                    <a href="https://hack.ioittenet.com/"
-                        class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">TENET HACK
-                        2025</a>
-                    <p class="text-gray-800 mt-2">
-                        A 12-hour intensive hackathon inspired by The Matrix where developers
-                        collaborated to push technological boundaries and build innovative solutions.
-                    </p>
-                    <a href="https://hack.ioittenet.com/"
-                        class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
-                        More &rarr;</a>
+                <div class="flex flex-col flex-1 p-6 md:p-8">
+                    <h3 class="text-2xl md:text-3xl font-bold text-gray-900">{{ f.title }}</h3>
+                    <p class="mt-3 text-gray-600 flex-1">{{ f.description }}</p>
+                    <a href="{{ f.link }}" target="_blank" rel="noopener noreferrer"
+                       class="mt-5 self-start inline-block px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 hover:no-underline">Explore {{ "IOIT MUN" if f.series == "MUN" else "TENET" }} &rarr;</a>
                 </div>
             </div>
-        </div>
-        <!-- IOIT TENET 2024 -->
-        <div
-            class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
-            <div class="flex flex-col items-center">
-                <div
-                    class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
-                    <!-- Image -->
-                    <img src="https://ioit.acm.org/tenet/gallery/24/drone/12.jpeg" alt="IOIT TENET 2024"
-                        class="h-full w-full object-cover absolute" loading="lazy" />
-                    <!-- Video -->
-                    <video data-src="/static/vid/tenet24.mp4" muted loop
-                        class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
-                    </video>
-                </div>
-                <div class="text-center">
-                    <a href="https://ioittenet.com/"
-                        class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT TENET
-                        2024</a>
-                    <p class="text-gray-800 mt-2">
-                        The inaugural edition of TENET hosted by AISSMS IOIT ACM student chapter,
-                        featuring technology, entrepreneurship, global diplomacy, and e-sports.
-                    </p>
-                    <a href="https://ioittenet.com/"
-                        class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
-                        More &rarr;</a>
-                </div>
-            </div>
-        </div>
-        <!-- IOIT MUN 2025 -->
-        <div
-            class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
-            <div class="flex flex-col items-center">
-                <div
-                    class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
-                    <!-- Image -->
-                    <img src="https://mun.ioittenet.com/img/content/mun.jpg" alt="IOIT MUN 2024"
-                        class="h-full w-full object-cover absolute" loading="lazy" />
-                    <!-- Video -->
-                    <video data-src="/static/vid/mun25.mp4" muted loop
-                        class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
-                    </video>
-                </div>
-                <div class="text-center">
-                    <a href="https://mun.ioittenet.com/"
-                        class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT MUN
-                        2025</a>
-                    <p class="text-gray-800 mt-2">
-                        Third edition of IOIT MUN hosted in October 2025 by AISSMS IOIT ACM,
-                        featuring committees addressing diverse global issues and diplomatic bodies.
-                    </p>
-                    <a href="https://mun.ioittenet.com/"
-                        class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
-                        More &rarr;</a>
-                </div>
-            </div>
-        </div>
-        <!-- IOIT MUN 2024 -->
-        <div
-            class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
-            <div class="flex flex-col items-center">
-                <div
-                    class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
-                    <!-- Image -->
-                    <img src="https://ioit.acm.org/tenet/mun/2024/9.jpeg" alt="IOIT MUN 2024"
-                        class="h-full w-full object-cover absolute" loading="lazy" />
-                    <!-- Video -->
-                    <video data-src="/static/vid/mun24.mp4" muted loop
-                        class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
-                    </video>
-                </div>
-                <div class="text-center">
-                    <a href="https://mun.ioittenet.com/"
-                        class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT MUN
-                        2024</a>
-                    <p class="text-gray-800 mt-2">
-                        Second edition of IOIT MUN hosted in October 2024 by AISSMS IOIT ACM,
-                        featuring committees addressing diverse global issues and diplomatic bodies.
-                    </p>
-                    <a href="https://mun.ioittenet.com/"
-                        class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
-                        More &rarr;</a>
-                </div>
-            </div>
-        </div>
-        <!-- IOIT MUN 2023 -->
-        <div
-            class="bg-white p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 ease-in-out video-hover-group group">
-            <div class="flex flex-col items-center">
-                <div
-                    class="md:w-64 md:h-64 h-44 w-full rounded-lg mb-4 shadow-lg overflow-hidden relative cursor-pointer">
-                    <!-- Image -->
-                    <img src="https://ioit.acm.org/tenet/gallery/24/mun-closing/15.jpeg" alt="IOIT MUN 2023"
-                        class="h-full w-full object-cover absolute" loading="lazy" />
-                    <!-- Video -->
-                    <video data-src="/static/vid/mun23.mp4" muted loop
-                        class="h-full w-full object-cover absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 lazy-video">
-                    </video>
-                </div>
-                <div class="text-center">
-                    <a href="https://mun.ioittenet.com/"
-                        class="text-2xl font-semibold text-blue-900 inline-block hover:no-underline">IOIT MUN
-                        2023</a>
-                    <p class="text-gray-800 mt-2">
-                        Inaugural edition of IOIT MUN hosted by AISSMS IOIT ACM with 5 committees,
-                        where students role-play as diplomats addressing global issues.
-                    </p>
-                    <a href="https://mun.ioittenet.com/"
-                        class="text-blue-800 mt-4 inline-block px-3 py-2 border border-blue-900 hover:bg-gray-200 rounded-lg transition-all hover:no-underline">Learn
-                        More &rarr;</a>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
-</div>
+    <!-- Editions by series -->
+    {% for row in series_rows %}
+        <div class="mt-12">
+            <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 mb-4">
+                <h3 class="text-2xl font-bold text-gray-900">{{ row.name }}</h3>
+                <span class="text-sm text-gray-500">{{ row.subtitle }}</span>
+            </div>
+            <div class="grid grid-cols-2 {{ row.cols }} gap-4">
+                {% for e in row["items"] %}
+                    <a href="{{ e.link }}" target="_blank" rel="noopener noreferrer" title="{{ e.description }}"
+                       class="relative block aspect-[4/3] overflow-hidden rounded-2xl bg-gray-900 group video-hover-group hover:no-underline">
+                        <img src="{{ e.image }}" alt="{{ e.title }}" loading="lazy"
+                             class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                        {% if e.video %}
+                            <video data-src="{{ e.video }}" muted loop playsinline
+                                   class="lazy-video absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"></video>
+                        {% endif %}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+                            <span class="inline-block text-xs font-semibold tracking-widest uppercase bg-white/20 backdrop-blur-sm rounded-full px-2 py-0.5">{{ e.year }}</span>
+                            <h4 class="mt-2 text-base md:text-xl font-semibold leading-tight">{{ e.title }}</h4>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</section>
