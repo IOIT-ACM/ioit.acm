@@ -86,36 +86,22 @@ If Redis is unreachable the app does not fail requests. It falls back to per-pro
 
 The host has no system Redis service, but CloudLinux ships a Redis 6.2 binary at `/opt/alt/redis/bin/redis-server` that can run under the account user without root. It uses about 5 threads, which count towards the account's process limit.
 
-1. Create `~/redis/redis.conf`, replacing `<user>` with the account name. It listens on a private unix socket only, keeps no data on disk and caps memory:
+`deploy/redis-keepalive.sh` starts it when it is not answering, on a private unix socket only (no TCP port), with nothing kept on disk and memory capped at 32MB. Every start is logged to `~/redis/keepalive.log`.
+
+1. Run it once and check Redis responds:
 
    ```
-   port 0
-   unixsocket /home/<user>/redis/redis.sock
-   unixsocketperm 700
-   daemonize yes
-   pidfile /home/<user>/redis/redis.pid
-   logfile /home/<user>/redis/redis.log
-   dir /home/<user>/redis
-   save ""
-   appendonly no
-   maxmemory 32mb
-   maxmemory-policy volatile-ttl
-   ```
-
-2. Start it and check it responds:
-
-   ```
-   /opt/alt/redis/bin/redis-server ~/redis/redis.conf
+   bash ~/ioit.acm/deploy/redis-keepalive.sh
    /opt/alt/redis/bin/redis-cli -s ~/redis/redis.sock ping   # PONG
    ```
 
-3. Keep it running with cron (`crontab -e`). This starts Redis after a reboot and restarts it within 5 minutes if it stops:
+2. Keep it running with cron (`crontab -e`). This starts Redis after a reboot and restarts it within 5 minutes if it stops:
 
    ```
-   */5 * * * * /opt/alt/redis/bin/redis-cli -s /home/<user>/redis/redis.sock ping >/dev/null 2>&1 || /opt/alt/redis/bin/redis-server /home/<user>/redis/redis.conf
+   */5 * * * * bash $HOME/ioit.acm/deploy/redis-keepalive.sh
    ```
 
-4. Add `RATELIMIT_STORAGE_URI=redis+unix:///home/<user>/redis/redis.sock` to the app's `.env` and restart the app.
+3. Add `RATELIMIT_STORAGE_URI=redis+unix:///home/<user>/redis/redis.sock` to the app's `.env` and restart the app.
 
 ### Tests
 
@@ -124,6 +110,36 @@ The Redis tests need a server and are skipped unless `TEST_REDIS_URL` is set. CI
 ```
 TEST_REDIS_URL=redis://localhost:6379/15 uv run pytest
 ```
+
+## deployment
+
+Production runs on shared cPanel hosting (CloudLinux, LiteSpeed). The app is a Python 3.12 app from cPanel's **Setup Python App**, with its app root at `~/website`. The account has a 200 process limit that also counts threads, so lint and tests run in GitHub Actions and the server only installs and copies files.
+
+### How a deploy works
+
+Every push to `master` runs the `CI` workflow. Once `Lint` and `Test` pass, the `Deploy` job connects over SSH, checks out that exact commit in `~/ioit.acm` and runs [`deploy/deploy.sh`](deploy/deploy.sh), which:
+
+1. Installs Python dependencies from `uv.lock` into `~/virtualenv/website/3.12` with uv, only when `uv.lock` changed. uv runs with capped concurrency.
+2. Runs `npm ci --omit=dev` when `package-lock.json` changed, then `npm run vendor`.
+3. Saves the live `app/`, `wsgi.py` and `passenger_wsgi.py` to `~/releases/website/previous`.
+4. Copies `app/`, `wsgi.py` and `passenger_wsgi.py` into `~/website` and restarts the app (`tmp/restart.txt`). `app/static/uploads/` is never overwritten or deleted, since it holds files uploaded through the admin pages.
+5. Requests `https://ioit.acm.org/`. If it does not return 200 within about 30 seconds, it restores the saved release, restarts again and fails the job.
+
+Only one deploy runs at a time. To deploy by hand, run the same commands as the workflow:
+
+```
+git -C ~/ioit.acm fetch origin
+git -C ~/ioit.acm reset --hard origin/master
+bash ~/ioit.acm/deploy/deploy.sh
+```
+
+### One-time server setup
+
+- **Python app**: in cPanel **Setup Python App**, the app for `ioit.acm.org` uses Python 3.12 with app root `website`, startup file `passenger_wsgi.py` and entry point `application`.
+- **uv**: a pinned uv binary in `~/.local/bin/uv`.
+- **Node**: the version in `.nvmrc`, installed with `nvm install`.
+- **Redis**: see [rate limiting](#running-redis-on-the-cpanel-host).
+- **Environment**: `~/website/.env` holds the production values for every key in `.env.example`.
 
 ## data
 
