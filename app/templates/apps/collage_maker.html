@@ -419,6 +419,10 @@
   }
 
   function initCanvas() {
+    // Fabric 7 defaults to a centre origin; the layout maths here assumes top-left.
+    fabric.FabricObject.ownDefaults.originX = "left";
+    fabric.FabricObject.ownDefaults.originY = "top";
+
     const canvasEl = document.getElementById("canvas");
     canvas = new fabric.Canvas(canvasEl, {
       backgroundColor: "#FFFFFF",
@@ -458,8 +462,7 @@
         }
 
         if (HEADER_IMAGE_URL) {
-            fabric.Image.fromURL(
-                HEADER_IMAGE_URL,
+            fabric.FabricImage.fromURL(HEADER_IMAGE_URL, { crossOrigin: "anonymous" }).then(
                 (img) => {
                     img.set({
                         left: collagePadding,
@@ -473,10 +476,13 @@
                     img.scaleToWidth(availableWidth);
                     headerObject = img;
                     canvas.add(headerObject);
-                    headerObject.moveTo(999);
+                    canvas.bringObjectToFront(headerObject);
                     resolve();
                 },
-                { crossOrigin: "anonymous" }
+                (error) => {
+                    console.error("Could not load the header image:", error);
+                    resolve();
+                },
             );
         } else {
             resolve();
@@ -536,8 +542,7 @@
     newWidth = Math.max(newWidth, 100);
     newHeight = Math.max(newHeight, 100);
 
-    canvas.setWidth(newWidth);
-    canvas.setHeight(newHeight);
+    canvas.setDimensions({ width: newWidth, height: newHeight });
 
     redrawCanvasContent();
   }
@@ -676,8 +681,7 @@
   }
 
   function addImageToCanvas(imgSrc) {
-    fabric.Image.fromURL(
-      imgSrc,
+    fabric.FabricImage.fromURL(imgSrc, { crossOrigin: "anonymous" }).then(
       (img) => {
         img.selectable = false;
         img.evented = false;
@@ -694,7 +698,7 @@
           canvas.renderAll();
         }
       },
-      { crossOrigin: "anonymous" },
+      (error) => console.error("Could not load image:", error),
     );
   }
 
@@ -719,7 +723,7 @@
 
   function handleZoom(opt) {
     const e = opt.e;
-    const target = canvas.findTarget(e);
+    const { target } = canvas.findTarget(e);
     if (!target || typeof target.frameIndex === 'undefined') return;
     e.preventDefault();
     e.stopPropagation();
@@ -730,7 +734,16 @@
     const minScale = Math.max(frame.w / target.width, frame.h / target.height);
     if (zoom < minScale) zoom = minScale;
 
-    target.zoomToPoint(new fabric.Point(e.offsetX, e.offsetY), zoom);
+    // Scale the image towards the cursor so the point under it stays in place.
+    const pointer = canvas.getScenePoint(e);
+    const ratio = zoom / target.scaleX;
+    target.set({
+      scaleX: zoom,
+      scaleY: zoom,
+      left: pointer.x - (pointer.x - target.left) * ratio,
+      top: pointer.y - (pointer.y - target.top) * ratio,
+    });
+    target.setCoords();
     handlePan({ target });
     canvas.requestRenderAll();
   }
@@ -869,7 +882,7 @@
     canvas.on('mouse:down', function(options) {
         if (options.target) return;
 
-        const pointer = canvas.getPointer(options.e);
+        const pointer = canvas.getScenePoint(options.e);
         let clickedImage = null;
 
         const images = canvas.getObjects('image').filter(obj => !obj.isHeaderOverlay);
@@ -942,7 +955,8 @@
     document.querySelectorAll(".delete-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         canvas.getActiveObjects().forEach((obj) => canvas.remove(obj));
-        canvas.discardActiveObject().renderAll();
+        canvas.discardActiveObject();
+        canvas.renderAll();
       });
     });
 
@@ -983,7 +997,8 @@
             if (activeObjects.length > 0) {
                 e.preventDefault();
                 canvas.getActiveObjects().forEach((obj) => canvas.remove(obj));
-                canvas.discardActiveObject().renderAll();
+                canvas.discardActiveObject();
+                canvas.renderAll();
             }
         }
     });

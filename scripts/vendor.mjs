@@ -36,7 +36,7 @@ const files = [
   ["lucide/dist/umd/lucide.min.js", "lucide/lucide.min.js"],
   ["chart.js/dist/chart.umd.min.js", "chart.js/chart.umd.min.js"],
   ["htmx.org/dist/htmx.min.js", "htmx/htmx.min.js"],
-  ["fabric/dist/fabric.min.js", "fabric/fabric.min.js"],
+  ["fabric/dist/index.min.js", "fabric/fabric.min.js"],
   ["moment/min/moment.min.js", "moment/moment.min.js"],
 
   ["remixicon/fonts/remixicon.css", "remixicon/remixicon.css"],
