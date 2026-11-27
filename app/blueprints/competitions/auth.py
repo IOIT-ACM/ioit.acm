@@ -218,7 +218,7 @@ def delete_profile():
 
 @auth_bp.route("/members")
 def acm_users():
-    members = Users.query.order_by(Users.name.desc()).all()
+    members = db.session.scalars(db.select(Users).order_by(Users.name.desc())).all()
     user_branches = sorted(set(member.branch for member in members))
     return render_template(
         "members.html",
