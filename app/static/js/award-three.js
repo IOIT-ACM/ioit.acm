@@ -42,10 +42,10 @@ scene.add(book);
 camera.position.z = 10;
 
 let isDragging = false;
-let previousMousePosition = { x: 0, y: 0 };
-let dragRotation = { x: 0, y: 0 };
+const previousMousePosition = { x: 0, y: 0 };
+const dragRotation = { x: 0, y: 0 };
 
-let continuousRotationSpeed = { x: 0.01, y: 0.01 };
+const continuousRotationSpeed = { x: 0.01, y: 0.01 };
 
 // Mouse Event Listeners
 canvas.addEventListener("mousedown", (event) => {

@@ -36,7 +36,6 @@
     <link rel="shortcut icon" href="/static/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png" />
     <link rel="manifest" href="/static/site.webmanifest" />
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap"
@@ -126,6 +125,8 @@
             transform: scale(1);
         }
     </style>
+    <!-- Loaded last so utilities override the inline styles above, as the Tailwind Play CDN did -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}" />
 </head>
 
 <body class="min-h-screen">

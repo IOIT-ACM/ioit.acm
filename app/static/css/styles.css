@@ -117,3 +117,23 @@ a:hover {
 #interactive-cubes {
   touch-action: auto;
 }
+
+/*
+ * Colors for .subscribe-message state classes, set from subscribe-form.js.
+ * Plain CSS on purpose: Tailwind's content scan only covers *.html, so
+ * utility classes added dynamically from a .js file never get compiled.
+ */
+.subscribe-msg-success {
+  background-color: #059669;
+  color: #fff;
+}
+
+.subscribe-msg-warning {
+  background-color: #d97706;
+  color: #fff;
+}
+
+.subscribe-msg-error {
+  background-color: #e11d48;
+  color: #fff;
+}

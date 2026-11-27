@@ -71,18 +71,15 @@
         <link rel="stylesheet"
               href="{{ url_for('static', filename='css/styles.css') }}" />
         <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
-              integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
-              crossorigin="anonymous"
-              referrerpolicy="no-referrer" />
+              href="{{ url_for('static', filename='vendor/fontawesome/css/all.min.css') }}" />
         <!-- Scripts -->
-        <script src="https://unpkg.com/htmx.org@1.9.2" defer></script>
+        <script src="{{ url_for('static', filename='vendor/htmx/htmx.min.js') }}" defer></script>
         <!--import maps-->
         <script type="importmap">
       {
         "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/"
+          "three": "{{ url_for('static', filename='vendor/three/three.module.js') }}",
+          "three/addons/": "{{ url_for('static', filename='vendor/three/addons/') }}"
         }
       }
         </script>
@@ -124,12 +121,13 @@
                             "link": "/about",
                             "text": "About",
                             "icon": "fa-info-circle"
-                        }
+                        },
 
                     ] %}
                     {% for item in nav_items %}
                         <div class="group relative">
                             <a href="{{ item.link }}"
+                               {% if item.external %}target="_blank" rel="noopener noreferrer"{% endif %}
                                class="flex flex-col items-center text-gray-700 hover:text-blue-600 transition"
                                style="text-decoration: none">
                                 <i class="fas {{ item.icon }} text-lg mb-1"></i>
@@ -138,6 +136,18 @@
                             </a>
                         </div>
                     {% endfor %}
+                    {% if current_user.is_authenticated %}
+                        <!-- User Item -->
+                        <div class="group relative">
+                            <a href="/profile"
+                               class="flex flex-col items-center text-blue-700 font-semibold hover:text-blue-900 transition"
+                               style="text-decoration: none">
+                                <i class="fas fa-user-circle text-lg mb-1"></i>
+                                <span class="text-xs">Profile</span>
+                                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full {{ 'w-full' if request.path == '/profile' else '' }}"></span>
+                            </a>
+                        </div>
+                    {% endif %}
                     <!-- Tools Dropdown -->
                     <div class="group relative">
                         <button class="flex flex-col items-center text-gray-700 hover:text-blue-600 transition bg-transparent border-none cursor-pointer">
@@ -146,8 +156,18 @@
                             <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
                         </button>
                         <!-- Dropdown Menu -->
-                        <div class="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-44 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div class="absolute top-full right-0 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 mt-3 w-44 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                             <div class="py-2">
+                                {% if not current_user.is_authenticated %}
+                                    <a href="{{ url_for('auth.signin') }}" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" style="text-decoration: none">
+                                        <i class="fas fa-sign-in-alt w-4"></i>
+                                        Login
+                                    </a>
+                                {% endif %}
+                                <a href="https://status.ioit.acm.org" target="_blank" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" style="text-decoration: none">
+                                    <i class="fas fa-signal w-4"></i>
+                                    Status Page
+                                </a>
                                 <a href="https://ioit.acm.org/calendar" target="_blank" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" style="text-decoration: none">
                                     <i class="fas fa-calendar-alt w-4"></i>
                                     ACM Calendar
@@ -159,6 +179,15 @@
                                 <a href="https://links.ioit.acm.org/" target="_blank" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" style="text-decoration: none">
                                     <i class="fas fa-link w-4"></i>
                                     Link Shortener
+                                </a>
+
+                                <a href="https://roomline.ioit.acm.org/" target="_blank" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" style="text-decoration: none">
+                                    <i class="fas fa-th-large w-4"></i>
+                                   Roomline 
+                                </a>
+                                <a href="{{ url_for('apps.collage_maker') }}" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" style="text-decoration: none">
+                                    <i class="fas fa-object-group w-4"></i>
+                                    Collage Maker
                                 </a>
                             </div>
                         </div>
