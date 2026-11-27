@@ -27,5 +27,11 @@ ignore = ["E501", "F403", "F405"]
 [dependency-groups]
 dev = [
     "pre-commit>=4.6",
+    "pytest>=9.2.0",
     "ruff>=0.16.10",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"
