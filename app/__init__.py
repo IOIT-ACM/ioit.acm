@@ -115,6 +115,7 @@ def create_app():
     from app.blueprints.admin import admin_bp
     from app.blueprints.api import api_bp
     from app.blueprints.apps import apps_bp
+    from app.blueprints.clerk_auth import clerk_bp, init_clerk
     from app.blueprints.competitions.auth import auth_bp
     from app.blueprints.competitions.competition import competitions_bp
     from app.blueprints.events import events_bp
@@ -173,6 +174,8 @@ def create_app():
     app.register_blueprint(apps_bp)
     app.register_blueprint(resources_bp)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(clerk_bp)
+    init_clerk(app)
 
     # Error Handlers
     @app.errorhandler(ProgrammingError)

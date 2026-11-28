@@ -1,117 +1,25 @@
-import re
-
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-from flask_login import current_user, login_required, login_user, logout_user
-from werkzeug.security import check_password_hash, generate_password_hash
+from flask_login import current_user, login_required, logout_user
 
 from app.db import db
-from app.models import User
 
 from ...models import User as Users
 
 auth_bp = Blueprint("auth", __name__)
 
 
-def validate_name(name):
-    """Helper function to validate names containing only alphabets"""
-    return re.match(r"^[A-Za-z]+$", name)
-
-
-def verify_password(stored_hash, password):
-    """Werkzeug 3.x raises ValueError instead of returning False for legacy sha256 hashes."""
-    try:
-        return check_password_hash(stored_hash, password)
-    except ValueError:
-        return False
-
-
-@auth_bp.route("/signin", methods=["GET", "POST"])
+@auth_bp.route("/signin")
 def signin():
+    """Accounts live in the chapter's Clerk instance; this page links there."""
     if current_user.is_authenticated:
         return redirect(url_for("auth.profile"))
-
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-
-        if not username or not password:
-            flash("Username and password are required.", category="error")
-            return render_template("competitions/login.html")
-
-        user = db.session.execute(
-            db.select(User).filter_by(username=username)
-        ).scalar_one_or_none()
-
-        if user and verify_password(user.password, password):
-            flash("Logged in successfully!", category="success")
-            login_user(user, remember=True)
-            return redirect(url_for("auth.profile"))
-        elif user:
-            flash("Incorrect password, try again.", category="error")
-        else:
-            flash(
-                "Username does not exist. Sign up to create a new account.",
-                category="error",
-            )
-
     return render_template("competitions/login.html")
 
 
-@auth_bp.route("/signup", methods=["GET", "POST"])
+@auth_bp.route("/signup")
 def signup():
-    if current_user.is_authenticated:
-        return redirect(url_for("auth.profile"))
-
-    if request.method == "POST":
-        first_name = request.form.get("firstName").strip()
-        last_name = request.form.get("lastName").strip()
-        username = request.form.get("username").strip()
-        branch = request.form.get("branch").strip()
-        acm_id = request.form.get("acmId").strip()
-        mobile_no = request.form.get("mobileNo").strip()
-        password1 = request.form.get("password1").strip()
-        confirm_password = request.form.get("confirmPassword").strip()
-
-        if not validate_name(first_name) or not validate_name(last_name):
-            flash("Name can only contain alphabetic characters.", category="error")
-            return render_template("competitions/signup.html")
-
-        first_name = first_name.capitalize()
-        last_name = last_name.capitalize()
-
-        if db.session.execute(
-            db.select(User).filter_by(username=username)
-        ).scalar_one_or_none():
-            flash("Username already exists.", category="error")
-            return render_template("competitions/signup.html")
-        if password1 != confirm_password:
-            flash("Passwords do not match.", category="error")
-            return render_template("competitions/signup.html")
-        if len(password1) < 8:
-            flash("Password must be at least 8 characters long.", category="error")
-            return render_template("competitions/signup.html")
-
-        hashed_password = generate_password_hash(password1, method="pbkdf2:sha256")
-
-        full_name = "{} {}".format(first_name, last_name)
-
-        new_user = User(
-            name=full_name,
-            username=username,
-            branch=branch,
-            acm_id=acm_id or None,
-            mobile_no=mobile_no,
-            password=hashed_password,
-        )
-        db.session.add(new_user)
-        db.session.commit()
-
-        flash(
-            "Account created successfully for {}!".format(full_name), category="success"
-        )
-        return redirect(url_for("auth.signin"))
-
-    return render_template("competitions/signup.html")
+    # New members create their account on the Clerk sign-in page.
+    return redirect(url_for("clerk_auth.login"))
 
 
 @auth_bp.route("/signout")
@@ -155,51 +63,10 @@ def update_profile():
     return redirect(url_for("auth.profile"))
 
 
-@auth_bp.route("/change_password", methods=["POST"])
-@login_required
-def change_password():
-    current_password = request.form.get("current_password")
-    new_password = request.form.get("new_password")
-
-    if not current_password or not new_password:
-        flash("Both fields are required.", category="error")
-        return redirect(url_for("auth.profile"))
-
-    if not verify_password(current_user.password, current_password):
-        flash("Current password is incorrect.", category="error")
-        return redirect(url_for("auth.profile"))
-
-    if len(new_password) < 8:
-        flash("New password must be at least 8 characters long.", category="error")
-        return redirect(url_for("auth.profile"))
-
-    try:
-        current_user.password = generate_password_hash(
-            new_password, method="pbkdf2:sha256"
-        )
-        db.session.commit()
-
-        flash("Password updated successfully!", category="success")
-    except Exception:
-        db.session.rollback()
-        flash("An error occurred while updating your password.", category="error")
-
-    return redirect(url_for("auth.profile"))
-
-
 @auth_bp.route("/delete_profile", methods=["POST"])
 @login_required
 def delete_profile():
-    delete_password = request.form.get("delete_password")
     delete_confirmation = request.form.get("delete_confirmation")
-
-    if not delete_password or not delete_confirmation:
-        flash("Both fields are required.", category="error")
-        return redirect(url_for("auth.profile"))
-
-    if not verify_password(current_user.password, delete_password):
-        flash("Password is incorrect.", category="error")
-        return redirect(url_for("auth.profile"))
 
     if delete_confirmation != "rm -rf {}".format(current_user.username):
         flash("Confirmation text is incorrect.", category="error")
