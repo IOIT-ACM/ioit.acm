@@ -251,3 +251,12 @@ def test_changes_need_the_csrf_token(app, client, clean):
     )
     with app.app_context():
         assert db.session.get(Event, event_id) is not None
+
+
+def test_event_pages_work_when_the_server_leaves_the_path_encoded(app, client, clean):
+    # LiteSpeed passes /events/IOIT%20MUN%20%2726 to the app still encoded; the
+    # test client decodes once, so encode twice to reproduce that.
+    add_event(app, "IOIT MUN '26", date(2026, 10, 24))
+    page = client.get("/events/IOIT%2520MUN%2520%252726")
+    assert b"Event Not Found" not in page.data
+    assert b"IOIT MUN &#39;26" in page.data

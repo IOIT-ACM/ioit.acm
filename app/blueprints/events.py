@@ -1,3 +1,5 @@
+import urllib.parse
+
 from flask import Blueprint, render_template
 
 from app import events_store
@@ -29,8 +31,10 @@ images_2 = [
 
 @events_bp.route("/events/<string:event_slug>")
 def event_detail(event_slug):
-    # Flask has already decoded the path, so this is the event's name.
-    event = events_store.find_by_name(event_slug)
+    # LiteSpeed hands the path to the app still percent-encoded, so decode it
+    # here as well; harmless where it is already decoded, since no event name
+    # contains a "%".
+    event = events_store.find_by_name(urllib.parse.unquote(event_slug))
     if not event:
         return render_template(
             "event_detail_404.html", events=events_store.all_events()
