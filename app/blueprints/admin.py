@@ -18,8 +18,7 @@ from flask import (
 from flask_login import current_user, login_required
 from flask_mail import Message
 
-from app import limiter, mail
-from app.data.events import events
+from app import events_store, limiter, mail
 from app.db import db
 from app.models import EmailLog, Subscriber
 from app.utils import admin_required
@@ -129,10 +128,11 @@ def search_notify_events():
         offset = 0
     offset = max(0, offset)
 
+    events = events_store.all_events()
     if query:
         matches = [e for e in events if query in e["name"].lower()]
     else:
-        matches = list(events)
+        matches = events
 
     total = len(matches)
     page = matches[offset : offset + limit]
@@ -286,7 +286,7 @@ def render_notification():
         slugs = [slugs]
 
     slug_set = set(slugs)
-    selected = [e for e in events if e.get("slug") in slug_set]
+    selected = [e for e in events_store.all_events() if e["slug"] in slug_set]
 
     if mode == "single":
         if len(selected) != 1:

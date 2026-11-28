@@ -173,3 +173,5 @@ app/static/vendor/
 # Admin-uploaded email images (runtime data, not source)
 app/static/uploads/notify/*
 !app/static/uploads/notify/.gitkeep
+app/static/uploads/events/*
+!app/static/uploads/events/.gitkeep

@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-
 from flask import Blueprint, redirect, render_template, send_from_directory, url_for
 
-from app.data.events import events
+from app import events_store
 from app.data.stories import stories
 
 # Define the blueprint
@@ -33,23 +31,9 @@ images_2 = [
 
 @home_bp.route("/")
 def home():
-    upcoming_events = []
-    past_events = []
-    for event in events:
-        try:
-            date_str = event["date"].strip()
-            if " - " in date_str:
-                date_str = date_str.split(" - ")[0].strip()
-                if len(date_str.split()) == 2:
-                    year = event["date"].strip().split(",")[-1].strip()
-                    date_str = date_str + ", " + year
-            event_date = datetime.strptime(date_str, "%B %d, %Y")
-            if event_date.date() >= datetime.now().date():
-                upcoming_events.append(event)
-            else:
-                past_events.append(event)
-        except ValueError:
-            past_events.append(event)
+    events = events_store.all_events()
+    upcoming_events = [e for e in events if events_store.is_upcoming(e)]
+    past_events = [e for e in events if not events_store.is_upcoming(e)]
     return render_template(
         "home.html",
         events=past_events[:6],

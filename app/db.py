@@ -18,7 +18,10 @@ class DatabaseConfig:
     def get_mysql_uri(self, db_name):
         """Construct the MySQL URI."""
         if os.getenv("USE_SQLITE", "false").lower() == "true":
-            db_dir = os.path.dirname(os.path.dirname(__file__))
+            # SQLITE_DIR lets the tests use a throwaway folder.
+            db_dir = os.getenv("SQLITE_DIR") or os.path.dirname(
+                os.path.dirname(__file__)
+            )
             return "sqlite:///" + os.path.join(db_dir, "local_{}.db".format(db_name))
         db_host = os.getenv("DB_HOST", "localhost")
         db_user = os.getenv("DB_USER", "root")

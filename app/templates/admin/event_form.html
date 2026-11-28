@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% set editing = event.id is not none %}
+{% block title %}Admin - {{ 'Edit' if editing else 'Add' }} event{% endblock %}
+
+{# After a failed submit, show what was typed; otherwise the saved values. #}
+{% macro value(field, saved) -%}
+  {{ form.get(field) if form else (saved if saved is not none else '') }}
+{%- endmacro %}
+
+{% set input_class = "mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100" %}
+{% set label_class = "block text-sm font-medium text-gray-700" %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 pt-24 md:pt-28 pb-16">
+  <a href="{{ url_for('admin_events.list_events') }}" class="text-sm text-blue-600 hover:underline">&larr; All events</a>
+  <h1 class="mt-3 mb-6 text-2xl md:text-3xl font-bold text-gray-800">
+    {{ 'Edit ' ~ event.name if editing else 'Add an event' }}
+  </h1>
+
+  {% include "admin/_flashes.html" %}
+
+  <form method="post" enctype="multipart/form-data"
+        action="{{ url_for('admin_events.edit_event', event_id=event.id) if editing else url_for('admin_events.new_event') }}"
+        class="space-y-6 rounded-xl border border-gray-200 bg-white p-6">
+    <div>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+      <label for="name" class="{{ label_class }}">Name</label>
+      <input id="name" name="name" required maxlength="255" value="{{ value('name', event.name) }}" class="{{ input_class }}" />
+      <p class="mt-1 text-xs text-gray-500">Also the page link (/events/&lt;name&gt;). Renaming changes the link.</p>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <label for="start_date" class="{{ label_class }}">Start date</label>
+        <input id="start_date" name="start_date" type="date" required
+               value="{{ value('start_date', event.start_date.isoformat() if event.start_date else '') }}" class="{{ input_class }}" />
+      </div>
+      <div>
+        <label for="end_date" class="{{ label_class }}">End date <span class="font-normal text-gray-400">(multi-day events only)</span></label>
+        <input id="end_date" name="end_date" type="date"
+               value="{{ value('end_date', event.end_date.isoformat() if event.end_date else '') }}" class="{{ input_class }}" />
+      </div>
+    </div>
+
+    <div>
+      <label for="description" class="{{ label_class }}">Description</label>
+      <textarea id="description" name="description" rows="4" class="{{ input_class }}">{{ value('description', event.description) }}</textarea>
+    </div>
+
+    <fieldset class="space-y-3">
+      <legend class="{{ label_class }}">Image</legend>
+      {% set current_image = value('image_url', event.image_url) %}
+      {% if current_image %}
+        <img src="{{ current_image }}" alt="" class="h-32 rounded-lg border border-gray-200 object-cover" />
+      {% endif %}
+      <div>
+        <label for="image" class="text-sm text-gray-600">Upload a new image (PNG, JPG, GIF or WEBP, up to 5 MB)</label>
+        <input id="image" name="image" type="file" accept="image/png,image/jpeg,image/gif,image/webp"
+               class="mt-1 block w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:text-blue-700" />
+      </div>
+      <div>
+        <label for="image_url" class="text-sm text-gray-600">or use an image link</label>
+        <input id="image_url" name="image_url" value="{{ current_image }}" placeholder="https://... or /static/..." class="{{ input_class }}" />
+      </div>
+    </fieldset>
+
+    <div>
+      <label for="topics" class="{{ label_class }}">Highlights</label>
+      <textarea id="topics" name="topics" rows="4" placeholder="One per line" class="{{ input_class }}">{{ value('topics', event.topics_text) }}</textarea>
+      <p class="mt-1 text-xs text-gray-500">Shown as bullet points on the event page.</p>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      {% for field, label in [('moredetails', 'More details link'), ('registration_link', 'Registration link'), ('instagram_link', 'Instagram post'), ('facebook_link', 'Facebook post')] %}
+        <div>
+          <label for="{{ field }}" class="{{ label_class }}">{{ label }}</label>
+          <input id="{{ field }}" name="{{ field }}" type="text" inputmode="url" placeholder="https://" value="{{ value(field, event[field]) }}" class="{{ input_class }}" />
+        </div>
+      {% endfor %}
+    </div>
+    <p class="text-xs text-gray-500">The registration link only shows while the event is upcoming.</p>
+
+    <div class="flex flex-wrap items-center justify-end gap-3 border-t border-gray-100 pt-5">
+      <a href="{{ url_for('admin_events.list_events') }}" class="rounded-lg px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:no-underline">Cancel</a>
+      <button type="submit" class="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700">
+        {{ 'Save changes' if editing else 'Add event' }}
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}
