@@ -3261,6 +3261,10 @@ video {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 
+.\[justify-content\:safe_center\] {
+  justify-content: safe center;
+}
+
 .after\:absolute::after {
   content: var(--tw-content);
   position: absolute;
@@ -4333,8 +4337,8 @@ video {
     padding-bottom: 0.5rem;
   }
 
-  .md\:pt-0 {
-    padding-top: 0px;
+  .md\:pt-24 {
+    padding-top: 6rem;
   }
 
   .md\:pt-28 {
