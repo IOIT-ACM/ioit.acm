@@ -126,67 +126,9 @@ block content %}
       </div>
     </form>
 
-    <form id="change-password-form" class="hidden text-left mt-10" method="POST"
-      action="{{ url_for('auth.change_password') }}">
-      <h3 class="text-2xl font-bold mb-6">Change Password</h3>
-      <div class="mb-4">
-        <label for="current_password" class="block font-medium text-gray-700">Current Password</label>
-        <div class="relative">
-          <input type="password" id="current_password" name="current_password"
-            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
-            required />
-          <button type="button" class="absolute inset-y-0 right-0 px-3 py-2 text-gray-600"
-            onclick="togglePasswordVisibility('current_password')">
-            <i class="fas fa-eye"></i>
-          </button>
-        </div>
-      </div>
-      <div class="mb-4">
-        <label for="new_password" class="block font-medium text-gray-700">New Password</label>
-        <div class="relative">
-          <input type="password" id="new_password" name="new_password"
-            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
-            required />
-          <button type="button" class="absolute inset-y-0 right-0 px-3 py-2 text-gray-600"
-            onclick="togglePasswordVisibility('new_password')">
-            <i class="fas fa-eye"></i>
-          </button>
-        </div>
-      </div>
-      <div class="mb-4">
-        <label for="confirm_new_password" class="block font-medium text-gray-700">Confirm New Password</label>
-        <div class="relative">
-          <input type="password" id="confirm_new_password" name="confirm_new_password"
-            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
-            required />
-          <button type="button" class="absolute inset-y-0 right-0 px-3 py-2 text-gray-600"
-            onclick="togglePasswordVisibility('confirm_new_password')">
-            <i class="fas fa-eye"></i>
-          </button>
-        </div>
-      </div>
-      <div class="text-right">
-        <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition">
-          Update Password
-        </button>
-      </div>
-    </form>
-
     <form id="delete-profile-form" class="hidden text-left mt-10" method="POST"
       action="{{ url_for('auth.delete_profile') }}">
       <h3 class="text-2xl font-bold mb-6">Delete Profile</h3>
-      <div class="mb-4">
-        <label for="delete_password" class="block font-medium text-gray-700">Password</label>
-        <div class="relative">
-          <input type="password" id="delete_password" name="delete_password"
-            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
-            required />
-          <button type="button" class="absolute inset-y-0 right-0 px-3 py-2 text-gray-600"
-            onclick="togglePasswordVisibility('delete_password')">
-            <i class="fas fa-eye"></i>
-          </button>
-        </div>
-      </div>
       <div class="mb-4">
         <label for="delete_confirmation" class="block font-medium text-gray-700">Type
           `<code>rm -rf {{ user.username }}</code>` to confirm</label>
@@ -323,9 +265,6 @@ block content %}
       document.getElementById("profile-view").classList.add("hidden");
       document.getElementById("edit-profile-form").classList.remove("hidden");
       document
-        .getElementById("change-password-form")
-        .classList.remove("hidden");
-      document
         .getElementById("delete-profile-btn-container")
         .classList.remove("hidden");
     });
@@ -335,7 +274,6 @@ block content %}
     .addEventListener("click", function () {
       document.getElementById("profile-view").classList.remove("hidden");
       document.getElementById("edit-profile-form").classList.add("hidden");
-      document.getElementById("change-password-form").classList.add("hidden");
       document
         .getElementById("delete-profile-btn-container")
         .classList.add("hidden");
@@ -347,13 +285,6 @@ block content %}
     .addEventListener("click", function () {
       document.getElementById("delete-profile-form").classList.remove("hidden");
     });
-
-  function togglePasswordVisibility(fieldId) {
-    const field = document.getElementById(fieldId);
-    const type =
-      field.getAttribute("type") === "password" ? "text" : "password";
-    field.setAttribute("type", type);
-  }
 
   function confirmLogout(event) {
     event.preventDefault();

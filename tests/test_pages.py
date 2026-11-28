@@ -21,7 +21,6 @@ PAGES = [
     "/resources",
     "/services",
     "/signin",
-    "/signup",
     "/team",
 ]
 
