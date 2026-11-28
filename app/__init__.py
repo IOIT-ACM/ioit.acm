@@ -103,6 +103,12 @@ def create_app():
                 db.create_all(bind_key=bind_key)
         except Exception as e:
             app.logger.warning("db.create_all() failed during startup: %s", e)
+        # The server loads the app once and forks the workers from it. Close the
+        # connections opened above so each worker starts with an empty pool
+        # instead of sharing these sockets, which broke with "MySQL server has
+        # gone away (Broken pipe)".
+        for engine in db.engines.values():
+            engine.dispose()
 
     # Register blueprints
     from app.blueprints.about import about_bp
