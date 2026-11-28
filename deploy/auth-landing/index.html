@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IOIT ACM Account</title>
+  <meta name="description" content="One account for the AISSMS IOIT ACM Student Chapter website and forms." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="acm-logo-white.png" />
+  <style>
+    :root {
+      --bg: #111827;
+      --card: #1f2937;
+      --line: #374151;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.5;
+    }
+    main {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    img { width: 64px; height: auto; }
+    h1 { font-size: 1.375rem; margin: 16px 0 4px; }
+    p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    nav { display: grid; gap: 10px; margin-top: 24px; }
+    a.button {
+      display: block;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    a.button:hover { background: #273244; }
+    a.primary { background: var(--accent); border-color: var(--accent); }
+    a.primary:hover { background: var(--accent-hover); }
+    a.button span { display: block; font-weight: 400; font-size: 0.8rem; color: var(--muted); }
+    a.primary span { color: #dbeafe; }
+    footer { margin-top: 24px; font-size: 0.85rem; color: var(--muted); }
+    footer a { color: var(--text); }
+  </style>
+</head>
+<body>
+  <main>
+    <img src="acm-logo-white.png" alt="IOIT ACM" />
+    <h1>IOIT ACM Account</h1>
+    <p>One account for the AISSMS IOIT ACM Student Chapter website and forms.</p>
+    <nav>
+      <a class="button primary" href="https://accounts.auth.ioit.acm.org/user">
+        Manage your account
+        <span>Profile, email, password, sessions and sign out</span>
+      </a>
+      <a class="button" href="https://ioit.acm.org/signin">
+        Sign in to ioit.acm.org
+        <span>Competitions and your member profile</span>
+      </a>
+      <a class="button" href="https://ioit.acm.org/auth/signup">
+        Create an account
+        <span>Anyone can join</span>
+      </a>
+      <a class="button" href="https://ioit.acm.org/">
+        Go to the chapter website
+      </a>
+    </nav>
+    <footer>
+      Trouble signing in? Contact <a href="mailto:webmaster@ioit.acm.org">webmaster@ioit.acm.org</a>
+    </footer>
+  </main>
+</body>
+</html>
