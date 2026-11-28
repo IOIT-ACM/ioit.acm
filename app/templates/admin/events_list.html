@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Admin - Events{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 pt-24 md:pt-28 pb-16">
+  <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-3">
+        <i class="fas fa-calendar-alt text-blue-500"></i>
+        Events
+      </h1>
+      <p class="text-gray-500 text-sm mt-1">
+        {{ events|length }} events. Changes show on the home page, /events and each event page straight away.
+      </p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <a href="{{ url_for('admin.notify_dashboard') }}"
+         class="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:no-underline">
+        <i class="fas fa-paper-plane text-blue-500"></i> Send notification
+      </a>
+      <a href="{{ url_for('admin_events.new_event') }}"
+         class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 hover:no-underline">
+        <i class="fas fa-plus"></i> Add event
+      </a>
+    </div>
+  </div>
+
+  {% include "admin/_flashes.html" %}
+
+  <label for="event-search" class="sr-only">Search events</label>
+  <input id="event-search" type="search" placeholder="Search by name or date"
+         class="mb-4 w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100" />
+
+  <div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
+    <ul id="event-rows" class="divide-y divide-gray-100">
+      {% for event in events %}
+        <li class="event-row flex flex-wrap items-center gap-4 px-4 py-3"
+            data-search="{{ (event.name ~ ' ' ~ event.date)|lower }}">
+          <img src="{{ event.image_url or url_for('static', filename='img/assets/acm.png') }}" alt=""
+               loading="lazy" class="h-12 w-16 flex-none rounded-md bg-gray-100 object-cover" />
+          <div class="min-w-0 flex-1">
+            <a href="{{ url_for('events.event_detail', event_slug=event.name) }}"
+               class="block break-words font-medium text-gray-800 hover:text-blue-600 sm:truncate">{{ event.name }}</a>
+            <p class="text-sm text-gray-500">{{ event.date }}</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="{{ url_for('admin_events.edit_event', event_id=event.id) }}"
+               class="rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 hover:no-underline">Edit</a>
+            <form method="post" action="{{ url_for('admin_events.delete_event', event_id=event.id) }}"
+                  class="delete-form" data-name="{{ event.name }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+              <button type="submit"
+                      class="rounded-lg border border-red-200 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50">Delete</button>
+            </form>
+          </div>
+        </li>
+      {% else %}
+        <li class="px-4 py-8 text-center text-sm text-gray-500">No events yet. Add the first one.</li>
+      {% endfor %}
+    </ul>
+    <p id="no-matches" class="hidden px-4 py-8 text-center text-sm text-gray-500">No events match.</p>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const input = document.getElementById("event-search");
+    const rows = document.querySelectorAll(".event-row");
+    const empty = document.getElementById("no-matches");
+    document.querySelectorAll(".delete-form").forEach(function (form) {
+      form.addEventListener("submit", function (e) {
+        if (!confirm("Delete " + form.dataset.name + "? This cannot be undone.")) e.preventDefault();
+      });
+    });
+    input.addEventListener("input", function () {
+      const q = input.value.trim().toLowerCase();
+      let shown = 0;
+      rows.forEach(function (row) {
+        const match = !q || row.dataset.search.includes(q);
+        row.style.display = match ? "" : "none";
+        if (match) shown++;
+      });
+      empty.classList.toggle("hidden", shown > 0 || rows.length === 0);
+    });
+  })();
+</script>
+{% endblock %}

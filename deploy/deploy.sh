@@ -93,7 +93,7 @@ publish() {
 		--exclude=/static/uploads/ \
 		"$1/app/" "$APP_ROOT/app/"
 	cp -p "$1/wsgi.py" "$1/passenger_wsgi.py" "$APP_ROOT/"
-	mkdir -p "$APP_ROOT/app/static/uploads/notify" "$APP_ROOT/tmp"
+	mkdir -p "$APP_ROOT/app/static/uploads/notify" "$APP_ROOT/app/static/uploads/events" "$APP_ROOT/tmp"
 	touch "$APP_ROOT/tmp/restart.txt"
 }
 

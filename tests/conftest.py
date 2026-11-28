@@ -1,8 +1,11 @@
 import os
+import tempfile
 
 # Must be set before `app` is imported: the DB binds and secret key are read at
 # import time, and CI has no MySQL server.
 os.environ.setdefault("USE_SQLITE", "true")
+# A fresh database for every test run, so tests never touch local_*.db.
+os.environ["SQLITE_DIR"] = tempfile.mkdtemp(prefix="ioit-acm-tests-")
 os.environ.setdefault("SECRET_KEY", "test-secret-key")
 # Keep a developer's real IdP keys in .env out of the tests (load_dotenv does not
 # override variables that are already set).

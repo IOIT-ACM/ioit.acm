@@ -5,7 +5,7 @@ import requests
 from dotenv import load_dotenv
 from flask import Blueprint, jsonify, render_template, request
 
-from app.data.events import events
+from app import events_store
 
 feedback_bp = Blueprint("feedback", __name__, template_folder="../templates")
 
@@ -19,7 +19,7 @@ BEARER_TOKEN = os.getenv("FEEDBACK_FORM_BEARER_TOKEN")
 
 @feedback_bp.route("/feedback", methods=["GET"])
 def feedback_form():
-    event_names = sorted([event["name"] for event in events])
+    event_names = sorted(event["name"] for event in events_store.all_events())
     return render_template("feedback.html", event_names=event_names)
 
 

@@ -10,6 +10,7 @@ from sqlalchemy.exc import OperationalError, ProgrammingError, SQLAlchemyError
 
 from app.db import DatabaseConfig, db
 from app.models import User
+from app.utils import csrf_token
 
 load_dotenv()
 
@@ -113,6 +114,7 @@ def create_app():
     # Register blueprints
     from app.blueprints.about import about_bp
     from app.blueprints.admin import admin_bp
+    from app.blueprints.admin_events import admin_events_bp
     from app.blueprints.api import api_bp
     from app.blueprints.apps import apps_bp
     from app.blueprints.clerk_auth import clerk_bp, init_clerk
@@ -174,6 +176,7 @@ def create_app():
     app.register_blueprint(apps_bp)
     app.register_blueprint(resources_bp)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(admin_events_bp)
     app.register_blueprint(clerk_bp)
     init_clerk(app)
 
@@ -245,5 +248,19 @@ def create_app():
             ),
             500,
         )
+
+    app.jinja_env.globals["csrf_token"] = csrf_token
+
+    @app.cli.command("import-events")
+    def import_events_command():
+        """Copy the events from app/data/events_seed.py into the database,
+        skipping any already there. Safe to run more than once."""
+        from app import events_store
+        from app.data.events_seed import events as seed
+
+        with app.app_context():
+            db.create_all(bind_key="users")
+            added, skipped = events_store.import_events(seed)
+        print(f"Imported {added} events, {skipped} already present.")
 
     return app

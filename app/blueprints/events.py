@@ -1,8 +1,6 @@
-import urllib.parse
-
 from flask import Blueprint, render_template
 
-from app.data.events import events
+from app import events_store
 
 events_bp = Blueprint("events", __name__, template_folder="../templates")
 
@@ -29,53 +27,31 @@ images_2 = [
 ]
 
 
-def safe_slug(name):
-    return urllib.parse.quote(name.encode("utf-8"))
-
-
-def decode_slug(slug):
-    return urllib.parse.unquote(slug)
-
-
-for event in events:
-    event["slug"] = safe_slug(event["name"])
-
-
 @events_bp.route("/events/<string:event_slug>")
 def event_detail(event_slug):
-    from datetime import datetime
-
-    decoded_name = decode_slug(event_slug)
-    event = next((e for e in events if e["name"] == decoded_name), None)
-    eventname = event["name"] if event else None
+    # Flask has already decoded the path, so this is the event's name.
+    event = events_store.find_by_name(event_slug)
     if not event:
-        return render_template("event_detail_404.html", events=events)
-    is_upcoming = False
-    try:
-        date_str = event["date"].strip()
-        if " - " in date_str:
-            date_str = date_str.split(" - ")[0].strip()
-            if len(date_str.split()) == 2:
-                year = event["date"].strip().split(",")[-1].strip()
-                date_str = date_str + ", " + year
-        event_date = datetime.strptime(date_str, "%B %d, %Y")
-        is_upcoming = event_date.date() >= datetime.now().date()
-    except ValueError:
-        pass
+        return render_template(
+            "event_detail_404.html", events=events_store.all_events()
+        )
     return render_template(
         "event_detail.html",
         event=event,
-        events=events,
+        events=events_store.all_events(),
         event_slug=event_slug,
-        eventname=eventname,
-        is_upcoming=is_upcoming,
+        eventname=event["name"],
+        is_upcoming=events_store.is_upcoming(event),
     )
 
 
 @events_bp.route("/events")
 def home():
     return render_template(
-        "events.html", events=events, images=images, images_2=images_2
+        "events.html",
+        events=events_store.all_events(),
+        images=images,
+        images_2=images_2,
     )
 
 

@@ -63,3 +63,40 @@ class EmailLog(db.Model):
     recipient_count = db.Column(db.Integer, nullable=False, default=0)
 
     sender = db.relationship("User", backref=db.backref("sent_email_logs", lazy=True))
+
+
+class Event(db.Model):
+    """A chapter event shown on the home page, /events and the event pages.
+
+    Managed by admins at /events/admin/manage. `name` doubles as the URL: event
+    pages live at /events/<name>.
+    """
+
+    __bind_key__ = "users"
+    __tablename__ = "events"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), unique=True, nullable=False)
+    description = db.Column(db.Text, nullable=False, default="")
+    start_date = db.Column(db.Date, nullable=False, index=True)
+    # Null for a one day event.
+    end_date = db.Column(db.Date, nullable=True)
+    image_url = db.Column(db.String(500), nullable=False, default="")
+    moredetails = db.Column(db.String(500), nullable=False, default="")
+    registration_link = db.Column(db.String(500), nullable=False, default="")
+    instagram_link = db.Column(db.String(500), nullable=False, default="")
+    facebook_link = db.Column(db.String(500), nullable=False, default="")
+    # Bullet points for the event page, one per line.
+    topics_text = db.Column(db.Text, nullable=False, default="")
+    created_at = db.Column(
+        db.DateTime, server_default=db.func.current_timestamp(), nullable=False
+    )
+    updated_at = db.Column(
+        db.DateTime,
+        server_default=db.func.current_timestamp(),
+        onupdate=db.func.current_timestamp(),
+        nullable=False,
+    )
+
+    @property
+    def topics(self):
+        return [t.strip() for t in self.topics_text.splitlines() if t.strip()]

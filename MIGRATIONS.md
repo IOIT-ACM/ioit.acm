@@ -67,3 +67,24 @@ Before this feature goes live on any environment:
 
 - If this project adopts a real migration tool (Flask-Migrate/Alembic) in the future, these manual steps should be converted into a proper migration file at that time, and this document can be retired.
 - Local development should use Mailpit (or Maildev) for mail testing — see the feature task spec for setup — so no real subscriber emails are sent accidentally during development.
+
+---
+
+# Events in the database
+
+Events used to live in `app/data/events.py`. They are now rows in the `events`
+table (bind `users`), edited by admins at `/events/admin/manage`.
+
+- The `events` table is new, so `db.create_all()` creates it on the next start.
+  No manual SQL is needed.
+- Copy the existing events in once per environment (safe to repeat; names that
+  already exist are skipped):
+
+  ```
+  FLASK_APP=app flask import-events
+  ```
+
+  The source list is kept at `app/data/events_seed.py` for this and for local
+  development; it is not read by the site any more.
+- Images uploaded in the editor are stored in `app/static/uploads/events/`,
+  which `deploy/deploy.sh` keeps across deploys, like `uploads/notify/`.
