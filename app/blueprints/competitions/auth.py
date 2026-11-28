@@ -18,8 +18,8 @@ def signin():
 
 @auth_bp.route("/signup")
 def signup():
-    # New members create their account on the Clerk sign-in page.
-    return redirect(url_for("clerk_auth.login"))
+    # New members create their account on Clerk's sign-up page.
+    return redirect(url_for("clerk_auth.signup"))
 
 
 @auth_bp.route("/signout")

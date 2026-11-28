@@ -156,7 +156,7 @@ def test_password_signin_and_signup_are_gone(client):
     assert b"405 Method Not Allowed" in resp.data
     resp = client.get("/signup")
     assert resp.status_code == 302
-    assert resp.headers["Location"].endswith("/auth/login")
+    assert resp.headers["Location"].endswith("/auth/signup")
     assert b'type="password"' not in client.get("/signin").data
 
 
@@ -303,3 +303,18 @@ def test_without_role_sync_config_admin_flag_is_untouched(
         lambda *a, **k: pytest.fail("Clerk API called without config"),
     )
     assert sign_in_as_existing(app, client, clerk, monkeypatch, True) is True
+
+
+def test_create_account_opens_clerk_sign_up_and_returns_to_login(client, clerk):
+    assert b"Create an account" in client.get("/signin").data
+    resp = client.get("/auth/signup")
+    assert resp.status_code == 302
+    assert resp.headers["Location"] == (
+        "https://accounts.auth.ioit.acm.org/sign-up"
+        "?redirect_url=http%3A%2F%2Flocalhost%2Fauth%2Flogin"
+    )
+
+
+def test_create_account_needs_clerk_configured(client):
+    assert b"Create an account" not in client.get("/signin").data
+    assert client.get("/auth/signup").headers["Location"].endswith("/signin")

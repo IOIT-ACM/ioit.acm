@@ -10,6 +10,7 @@ os.environ["IDP_CLIENT_ID"] = ""
 os.environ["IDP_CLIENT_SECRET"] = ""
 os.environ["CLERK_SECRET_KEY"] = ""
 os.environ["IDP_ORG"] = ""
+os.environ["IDP_SIGNUP_URL"] = ""
 
 import pytest  # noqa: E402
 

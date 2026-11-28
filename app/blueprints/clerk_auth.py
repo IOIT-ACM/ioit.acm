@@ -18,6 +18,7 @@ it applies at the member's next sign-in.
 
 import os
 import secrets
+from urllib.parse import urlencode
 
 import requests
 from authlib.integrations.base_client.errors import OAuthError
@@ -36,6 +37,8 @@ DEFAULT_DISCOVERY_URL = (
     "https://clerk.auth.ioit.acm.org/.well-known/openid-configuration"
 )
 CLERK_API = "https://api.clerk.com/v1"
+# Clerk's hosted sign-up page (Account Portal). Override with IDP_SIGNUP_URL.
+DEFAULT_SIGNUP_URL = "https://accounts.auth.ioit.acm.org/sign-up"
 
 
 def clerk_admin_status(clerk_user_id):
@@ -135,6 +138,24 @@ def login():
         return redirect(url_for("auth.signin"))
     redirect_uri = url_for("clerk_auth.callback", _external=True)
     return oauth.clerk.authorize_redirect(redirect_uri)
+
+
+@clerk_bp.route("/signup")
+def signup():
+    """Open Clerk's sign-up page directly.
+
+    The OAuth flow always starts on Clerk's sign-in screen, so new members are
+    sent to the hosted sign-up page instead, which returns them to /auth/login.
+    They are signed in to Clerk by then, so that sign-in passes straight through.
+    """
+    if current_user.is_authenticated:
+        return redirect(url_for("auth.profile"))
+    if not clerk_enabled():
+        flash("Sign in with IOIT ACM is not available right now.", category="error")
+        return redirect(url_for("auth.signin"))
+    signup_url = os.environ.get("IDP_SIGNUP_URL") or DEFAULT_SIGNUP_URL
+    return_to = url_for("clerk_auth.login", _external=True)
+    return redirect(f"{signup_url}?{urlencode({'redirect_url': return_to})}")
 
 
 @clerk_bp.route("/callback")

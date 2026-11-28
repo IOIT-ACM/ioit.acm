@@ -33,16 +33,18 @@ block content %}
           class="flex w-full items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-bold py-3 px-4 rounded-lg transition duration-300 hover:no-underline"
         >
           <img
-            src="{{ url_for('static', filename='img/assets/acm.png') }}"
+            src="{{ url_for('static', filename='img/assets/acm-logo-white.png') }}"
             alt=""
-            class="h-5 w-5 object-contain"
+            class="h-8 w-8 object-contain"
           />
           Sign in with IOIT ACM
         </a>
-        <p class="mt-4 text-sm text-gray-600">
-          New here? You can create your account on the same page. Existing
-          members can sign in with the email they registered with.
-        </p>
+        <a
+          href="{{ url_for('clerk_auth.signup') }}"
+          class="mt-3 flex w-full items-center justify-center border-2 border-gray-900 text-gray-900 hover:bg-gray-100 font-bold py-3 px-4 rounded-lg transition duration-300 hover:no-underline"
+        >
+          Create an account
+        </a>
         {% else %}
         <p class="text-gray-700">Sign in is temporarily unavailable.</p>
         {% endif %}
