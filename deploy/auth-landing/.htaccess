@@ -1,0 +1,8 @@
+# auth.ioit.acm.org: static landing page for the chapter's Clerk account.
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Any other path (for example a Clerk fallback) shows the landing page.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ /index.html [L]
+Options -Indexes
