@@ -4,7 +4,7 @@
 {% endblock
 %}
 {% block content %}
-    <div class="relative min-h-screen h-auto flex pt-12 md:pt-0 items-center justify-center text-center bg-cover bg-center parallax"
+    <div class="relative min-h-screen h-auto flex flex-col pt-12 md:pt-0 items-center justify-center text-center bg-cover bg-center parallax"
          style="background-image: url('{{ url_for('static', filename='img/assets/desktop-bg.jpg') }}')">
         <!-- Overlay with gradient -->
         <div style="position: absolute;
@@ -154,8 +154,8 @@
                 </div>
             </div>
         </div>
-        <!-- Button -->
-        <div class="absolute text-base bottom-4 right-4 align-center md:flex flex-col gap-3 hidden gsap-reveal">
+        <!-- Buttons: a row under the hero, or the bottom right corner when there is room -->
+        <div class="relative z-20 hidden md:flex flex-row flex-wrap justify-center gap-3 mt-12 pb-12 text-base gsap-reveal roomy:absolute roomy:bottom-4 roomy:right-4 roomy:flex-col roomy:mt-0 roomy:pb-0">
             <a href="/join"
                class="bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-md transition-transform transform hover:no-underline">
                 Become a member

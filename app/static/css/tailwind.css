@@ -2568,6 +2568,10 @@ video {
   padding-bottom: 2rem;
 }
 
+.pb-12 {
+  padding-bottom: 3rem;
+}
+
 .pb-16 {
   padding-bottom: 4rem;
 }
@@ -3758,20 +3762,6 @@ video {
   --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity, 1));
 }
 
-@media not all and (min-width: 768px) {
-  .max-md\:text-sm {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-  }
-}
-
-@media not all and (min-width: 640px) {
-  .max-sm\:text-2xl {
-    font-size: 1.5rem;
-    line-height: 2rem;
-  }
-}
-
 @media (min-width: 640px) {
   .sm\:left-1\/2 {
     left: 50%;
@@ -4537,5 +4527,31 @@ video {
   .lg\:text-8xl {
     font-size: 6rem;
     line-height: 1;
+  }
+}
+
+@media (min-width: 1600px) and (min-height: 850px) {
+  .roomy\:absolute {
+    position: absolute;
+  }
+
+  .roomy\:bottom-4 {
+    bottom: 1rem;
+  }
+
+  .roomy\:right-4 {
+    right: 1rem;
+  }
+
+  .roomy\:mt-0 {
+    margin-top: 0px;
+  }
+
+  .roomy\:flex-col {
+    flex-direction: column;
+  }
+
+  .roomy\:pb-0 {
+    padding-bottom: 0px;
   }
 }

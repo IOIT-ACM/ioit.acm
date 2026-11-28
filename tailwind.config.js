@@ -6,6 +6,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        // Wide and tall enough for the home hero buttons to sit in the corner
+        // without overlapping the hero content.
+        roomy: { raw: "(min-width: 1600px) and (min-height: 850px)" },
+      },
       animation: {
         "grow-shrink": "growShrink 3s ease-in-out infinite",
       },
