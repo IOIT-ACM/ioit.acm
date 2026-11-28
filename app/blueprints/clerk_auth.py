@@ -134,7 +134,7 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for("auth.profile"))
     if not clerk_enabled():
-        flash("Sign in with IOIT ACM is not available right now.", category="error")
+        flash("Sign in with IOIT ACM Platforms is not available right now.", category="error")
         return redirect(url_for("auth.signin"))
     redirect_uri = url_for("clerk_auth.callback", _external=True)
     # From the sign-in button, ask Clerk to show its sign-in screen even when
@@ -156,7 +156,7 @@ def signup():
     if current_user.is_authenticated:
         return redirect(url_for("auth.profile"))
     if not clerk_enabled():
-        flash("Sign in with IOIT ACM is not available right now.", category="error")
+        flash("Sign in with IOIT ACM Platforms is not available right now.", category="error")
         return redirect(url_for("auth.signin"))
     signup_url = os.environ.get("IDP_SIGNUP_URL") or DEFAULT_SIGNUP_URL
     return_to = url_for("clerk_auth.login", _external=True)
@@ -183,7 +183,7 @@ def callback():
     email = (claims.get("email") or "").strip().lower()
     if not email or not claims.get("email_verified"):
         flash(
-            "Your IOIT ACM account needs a verified email to sign in.",
+            "Your IOIT ACM Platforms account needs a verified email to sign in.",
             category="error",
         )
         return redirect(url_for("auth.signin"))

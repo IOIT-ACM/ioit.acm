@@ -61,7 +61,7 @@ def logged_in_username(client, app):
 
 def test_button_hidden_and_login_disabled_without_config(client):
     page = client.get("/signin").data
-    assert b"Sign in with IOIT ACM" not in page
+    assert b"Sign in with IOIT ACM Platforms" not in page
     assert b"temporarily unavailable" in page
     resp = client.get("/auth/login")
     assert resp.status_code == 302
@@ -69,7 +69,7 @@ def test_button_hidden_and_login_disabled_without_config(client):
 
 
 def test_login_redirects_to_clerk(client, clerk):
-    assert b"Sign in with IOIT ACM" in client.get("/signin").data
+    assert b"Sign in with IOIT ACM Platforms" in client.get("/signin").data
     resp = client.get("/auth/login")
     assert resp.status_code == 302
     assert resp.headers["Location"].startswith(
