@@ -23,7 +23,7 @@ from urllib.parse import urlencode
 import requests
 from authlib.integrations.base_client.errors import OAuthError
 from authlib.integrations.flask_client import OAuth
-from flask import Blueprint, current_app, flash, redirect, url_for
+from flask import Blueprint, current_app, flash, redirect, request, url_for
 from flask_login import current_user, login_user
 from werkzeug.security import generate_password_hash
 
@@ -137,6 +137,11 @@ def login():
         flash("Sign in with IOIT ACM is not available right now.", category="error")
         return redirect(url_for("auth.signin"))
     redirect_uri = url_for("clerk_auth.callback", _external=True)
+    # From the sign-in button, ask Clerk to show its sign-in screen even when
+    # someone is already signed in there, so they can pick another account.
+    # Not after sign-up: that would sign the new member straight back out.
+    if request.args.get("choose") == "1":
+        return oauth.clerk.authorize_redirect(redirect_uri, prompt="login")
     return oauth.clerk.authorize_redirect(redirect_uri)
 
 

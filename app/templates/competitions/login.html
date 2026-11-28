@@ -29,7 +29,7 @@ block content %}
         <hr class="border-t-2 border-gray-500 my-6 w-20" />
         {% if clerk_enabled() %}
         <a
-          href="{{ url_for('clerk_auth.login') }}"
+          href="{{ url_for('clerk_auth.login', choose=1) }}"
           class="flex w-full items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-bold py-3 px-4 rounded-lg transition duration-300 hover:no-underline"
         >
           <img

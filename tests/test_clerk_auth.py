@@ -318,3 +318,10 @@ def test_create_account_opens_clerk_sign_up_and_returns_to_login(client, clerk):
 def test_create_account_needs_clerk_configured(client):
     assert b"Create an account" not in client.get("/signin").data
     assert client.get("/auth/signup").headers["Location"].endswith("/signin")
+
+
+def test_sign_in_button_lets_people_choose_an_account(client, clerk):
+    assert b"/auth/login?choose=1" in client.get("/signin").data
+    assert "prompt=login" in client.get("/auth/login?choose=1").headers["Location"]
+    # The return from sign-up keeps the fresh Clerk session.
+    assert "prompt=" not in client.get("/auth/login").headers["Location"]
